@@ -1,0 +1,59 @@
+@use "../abstracts" as *;
+
+/*=============== BUTTONS COMPONENT ===============*/
+.btn {
+   position: relative;
+   border-radius: 0.4rem;
+   background: #d3d3d3;
+   color: #000;
+   font-size: var(--h3-font-size);
+   padding: 0.6rem 1.5rem;
+}
+.logout-btn {
+   @include flex(center, space-between, 0.2rem);
+   width: auto;
+   width: 100px;
+   padding: 0.6rem 1.5rem;
+   transition: padding-inline 0.3s, color 0.3s;
+   .logout-icon {
+      position: absolute;
+      top: 50%;
+      right: -0.5rem;
+      width: 24px;
+      height: 24px;
+      opacity: 0;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.5s;
+   }
+   &:hover {
+      padding-inline: 0.7rem 1.5rem;
+      color: #fff;
+      background-color: $danger-color;
+      .logout-icon {
+         opacity: 1;
+      }
+   }
+}
+/*=============== BREAKPOINTS ===============*/
+/* MEDIUM */
+@media (max-width: 992px) {
+   .logout-btn {
+      width: 90px;
+      .logout-icon {
+         width: 20px;
+         height: 20px;
+         right: -0.2rem;
+      }
+   }
+}
+/* SMALL */
+@media (max-width: 768px) {
+   .logout-btn {
+      background-color: $body-color;
+      .logout-icon {
+         width: 20px;
+         height: 20px;
+         right: -0.2rem;
+      }
+   }
+}
