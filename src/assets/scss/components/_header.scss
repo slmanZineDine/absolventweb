@@ -2,13 +2,11 @@
 
 /*=============== HEADER COMPONENT ===============*/
 $nav-border-bottom: 2px;
-body {
-   height: 3000px;
-}
 .header {
    position: fixed;
-   z-index: $z-fixed;
+   background-color: $body-color;
    width: 100%;
+   z-index: $z-fixed;
    &.scroll-header {
       .nav {
          border-bottom: 0 solid #000;

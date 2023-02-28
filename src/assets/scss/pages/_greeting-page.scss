@@ -1,0 +1,31 @@
+@use "../abstracts" as *;
+
+/*===================== GREETING PAGE =====================*/
+.greeting-page {
+   min-height: 100vh;
+   @include flex(center, center);
+   .container {
+      @include flex(center, space-between, 0.8rem);
+      .content {
+         width: 70%;
+         .greeting-msg {
+            font-size: 2rem;
+            color: $title-color;
+         }
+         .website-info {
+            font-size: 1.1rem;
+            margin-block: 1.3rem 3rem;
+            text-indent: 1.5rem;
+            padding-left: 1rem;
+         }
+         .auth-btn {
+            .auth-box {
+               margin-bottom: 1.5rem;
+               .text {
+                  margin-bottom: 1rem;
+               }
+            }
+         }
+      }
+   }
+}

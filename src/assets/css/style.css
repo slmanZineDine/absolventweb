@@ -31,6 +31,7 @@ html {
 body {
   font-family: "Poppins", sans-serif;
   background-color: #eaeaea;
+  height: 3000px;
 }
 
 ul {
@@ -96,14 +97,11 @@ textarea:focus {
   }
 }
 /*=============== HEADER COMPONENT ===============*/
-body {
-  height: 3000px;
-}
-
 .header {
   position: fixed;
-  z-index: 100;
+  background-color: #eaeaea;
   width: 100%;
+  z-index: 100;
 }
 .header.scroll-header .nav {
   border-bottom: 0 solid #000;
@@ -334,4 +332,37 @@ body {
     height: 20px;
     right: -0.2rem;
   }
+}
+/*===================== GREETING PAGE =====================*/
+.greeting-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+.greeting-page .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+.greeting-page .container .content {
+  width: 70%;
+}
+.greeting-page .container .content .greeting-msg {
+  font-size: 2rem;
+  color: #085f7b;
+}
+.greeting-page .container .content .website-info {
+  font-size: 1.1rem;
+  margin-block: 1.3rem 3rem;
+  text-indent: 1.5rem;
+  padding-left: 1rem;
+}
+.greeting-page .container .content .auth-btn .auth-box {
+  margin-bottom: 1.5rem;
+}
+.greeting-page .container .content .auth-btn .auth-box .text {
+  margin-bottom: 1rem;
 }/*# sourceMappingURL=style.css.map */
