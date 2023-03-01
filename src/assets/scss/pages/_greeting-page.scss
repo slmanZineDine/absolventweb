@@ -2,8 +2,6 @@
 
 /*===================== GREETING PAGE =====================*/
 .greeting-page {
-   min-height: 100vh;
-   @include flex(center, center);
    .container {
       @include flex(center, space-between, 0.8rem);
       .content {
@@ -29,3 +27,23 @@
       }
    }
 }
+
+/*=============== BREAKPOINTS ===============*/
+/* SMALL */
+@media (max-width: 768px) {
+   .greeting-page .container {
+      flex-direction: column-reverse;
+   }
+   .greeting-page .container .content {
+      margin-top: 2rem;
+   }
+   .greeting-page .container .content .greeting-msg,
+   .greeting-page .container .content .website-info {
+      text-align: center;
+      padding-left: 0;
+   }
+}
+/* EXTRA SMALL */
+// @media (max-width: 576px) {
+
+// }

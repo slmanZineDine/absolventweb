@@ -1,15 +1,15 @@
-import { Logo } from "../components/Logo";
 import unvLogo from "../assets/imgs/university-logo.png";
-import { Form } from "components/Form";
+import Form from "../components/Form";
+import { Logo } from "../components/Logo";
 
-const Login = () => {
+const Auth = ({ authProcess }) => {
    return (
       <div className="auth">
          <div className="container">
             <div className="content">
                <div className="form">
                   <Logo />
-                  <Form />
+                  <Form authProcess={authProcess} />
                </div>
                <div className="university-logo">
                   <img src={unvLogo} alt="university-logo" />
@@ -20,4 +20,4 @@ const Login = () => {
    );
 };
 
-export default Login;
+export default Auth;

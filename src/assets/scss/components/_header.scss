@@ -33,9 +33,11 @@ $nav-border-bottom: 2px;
                   font-weight: bold;
                   padding-inline: 1rem;
                   height: $header-height;
+                  color: #000;
                   cursor: pointer;
                   transition: color 0.3s, background-color 0.3s;
-                  &:hover {
+                  &:hover,
+                  &.active {
                      color: #fff;
                      background-color: $main-color;
                      border-radius: 0.3rem;

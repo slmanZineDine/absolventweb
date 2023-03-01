@@ -1,5 +1,7 @@
 import Header from "../components/Header";
 import unvLogo from "../assets/imgs/university-logo.png";
+import loginIcon from "../assets/imgs/icons/loginIcon.png";
+import registerIcon from "../assets/imgs/icons/registerIcon.png";
 import { Link } from "react-router-dom";
 const Greeting = () => {
    return (
@@ -23,6 +25,11 @@ const Greeting = () => {
                         </p>
                         <Link to="/register" className="btn register-btn">
                            Register
+                           <img
+                              src={loginIcon}
+                              alt="logout-icon"
+                              className="log-icon"
+                           />
                         </Link>
                      </div>
                      <div className="login auth-box">
@@ -31,6 +38,11 @@ const Greeting = () => {
                         </p>
                         <Link to="/login" className="btn login-btn">
                            Login
+                           <img
+                              src={registerIcon}
+                              alt="logout-icon"
+                              className="log-icon"
+                           />
                         </Link>
                      </div>
                   </div>

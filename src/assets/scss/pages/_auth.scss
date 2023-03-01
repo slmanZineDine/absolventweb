@@ -67,8 +67,10 @@
                         padding-left: 4rem;
                      }
                   }
-                  &:last-of-type {
+                  &[type="checkbox"] {
                      @include flex(center, flex-start);
+                  }
+                  &:last-of-type {
                      margin-block: 1.5rem;
                   }
                }
