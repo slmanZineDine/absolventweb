@@ -6,7 +6,9 @@
 
 // COMPONENTS
 @use "./components/header";
+@use "./components/logo";
 @use "./components/buttons";
 
 // PAGES
 @use "./pages/greeting-page";
+@use "./pages/Login";

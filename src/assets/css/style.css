@@ -5,12 +5,20 @@
 /*=============== VARIABLES ===============*/
 :root {
   --biggest-font-size: 2rem;
+  --h2-font-size: 1.25rem;
   --h3-font-size: 1.125rem;
+  --normal-font-size: 0.938rem;
 }
 @media (max-width: 992px) {
   :root {
     --biggest-font-size: 1.5rem;
     --h3-font-size: 1rem;
+  }
+}
+@media (max-width: 576px) {
+  :root {
+    --h2-font-size: 1rem;
+    --h3-font-size: 0.9rem;
   }
 }
 
@@ -31,7 +39,6 @@ html {
 body {
   font-family: "Poppins", sans-serif;
   background-color: #eaeaea;
-  height: 3000px;
 }
 
 ul {
@@ -116,23 +123,6 @@ textarea:focus {
   gap: 0.5rem;
   transition: border-bottom 0.08s;
 }
-.header .nav .logo .logo-text {
-  background-image: linear-gradient(90.22deg, #0081aa 27.58%, #000000 63.99%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-  font-size: var(--biggest-font-size);
-  font-weight: bold;
-  font-family: "Michroma", sans-serif;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.35);
-  animation: logo-text-animation-fir 0.75s ease forwards;
-}
-.header .nav .logo .logo-text:hover {
-  animation: logo-text-animation-sec 0.5s ease-in forwards;
-}
 .header .nav .menu {
   display: flex;
   align-items: center;
@@ -200,31 +190,6 @@ textarea:focus {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
-/*=============== ANIMATION ===============*/
-/* Animation shown when entering the page and after the hover animation. */
-@keyframes logo-text-animation-fir {
-  0% {
-    background-size: 650%;
-  }
-  40% {
-    background-size: 650%;
-  }
-  100% {
-    background-size: 100%;
-  }
-}
-/* Animation shown when hovering over the text. */
-@keyframes logo-text-animation-sec {
-  0% {
-    background-size: 100%;
-  }
-  80% {
-    background-size: 650%;
-  }
-  100% {
-    background-size: 650%;
-  }
-}
 /*=============== BREAKPOINTS ===============*/
 /* MEDIUM */
 @media (max-width: 992px) {
@@ -271,6 +236,50 @@ textarea:focus {
     width: 100%;
   }
 }
+/*=============== LOGO COMPONENT ===============*/
+.logo .logo-text {
+  background-image: linear-gradient(90.22deg, #0081aa 27.58%, #000000 63.99%);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+  font-size: var(--biggest-font-size);
+  font-weight: bold;
+  font-family: "Michroma", sans-serif;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.35);
+  animation: logo-text-animation-fir 0.75s ease forwards;
+}
+.logo .logo-text:hover {
+  animation: logo-text-animation-sec 0.5s ease-in forwards;
+}
+
+/*=============== ANIMATION ===============*/
+/* Animation shown when entering the page and after the hover animation. */
+@keyframes logo-text-animation-fir {
+  0% {
+    background-size: 650%;
+  }
+  40% {
+    background-size: 650%;
+  }
+  100% {
+    background-size: 100%;
+  }
+}
+/* Animation shown when hovering over the text. */
+@keyframes logo-text-animation-sec {
+  0% {
+    background-size: 100%;
+  }
+  80% {
+    background-size: 650%;
+  }
+  100% {
+    background-size: 650%;
+  }
+}
 /*=============== BUTTONS COMPONENT ===============*/
 .btn {
   position: relative;
@@ -308,6 +317,17 @@ textarea:focus {
 }
 .logout-btn:hover .logout-icon {
   opacity: 1;
+}
+
+.login-page-btn {
+  color: #fff;
+  background-image: linear-gradient(91.18deg, #2575be 0%, rgba(78, 182, 227, 0.85) 99.99%, rgba(20, 124, 183, 0.89) 100%);
+  border: 1px solid #000000;
+  box-shadow: 0px 10px 4px rgba(104, 193, 231, 0.3);
+  width: 90%;
+}
+.login-page-btn:hover {
+  background-image: linear-gradient(91.18deg, rgba(37, 117, 190, 0.4392156863) 0%, rgba(78, 182, 227, 0.55) 99.99%, rgba(20, 124, 183, 0.59) 100%);
 }
 
 /*=============== BREAKPOINTS ===============*/
@@ -365,4 +385,181 @@ textarea:focus {
 }
 .greeting-page .container .content .auth-btn .auth-box .text {
   margin-bottom: 1rem;
+}
+
+/*===================== LOGIN PAGE =====================*/
+.auth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+.auth .container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding-block: 2rem;
+}
+.auth .container .content {
+  display: flex;
+  align-items: initial;
+  justify-content: space-between;
+  gap: 0;
+  background-color: #fff;
+  border-radius: 0.4rem;
+  width: 100%;
+}
+.auth .container .content .form {
+  width: 50%;
+  padding: 1rem 2rem;
+}
+.auth .container .content .form .form-element {
+  margin-top: 3rem;
+}
+.auth .container .content .form .form-element label {
+  display: block;
+  margin-bottom: 0.4rem;
+  padding-left: 1rem;
+  font-weight: bold;
+  font-size: var(--h2-font-size);
+}
+.auth .container .content .form .form-element label[for=remember-me] {
+  display: inline;
+  font-size: var(--h3-font-size);
+  font-weight: normal;
+  color: rgba(20, 155, 231, 0.9882352941);
+  margin-bottom: 0;
+}
+.auth .container .content .form .form-element .form-group {
+  margin-top: 1rem;
+  position: relative;
+}
+.auth .container .content .form .form-element .form-group .custom-select {
+  position: relative;
+  padding-left: 2rem;
+  padding-block: 1rem;
+  border: 1px solid #000;
+  border-radius: 0.2rem;
+  width: 90%;
+  color: #000;
+  font-size: var(--h3-font-size);
+  background-color: #cecece;
+  cursor: pointer;
+  transition: opacity 0.4s;
+}
+.auth .container .content .form .form-element .form-group .custom-select .arrow {
+  position: absolute;
+  top: 50%;
+  right: 1.2rem;
+  display: block;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-left: 4px solid #000;
+  border-bottom: 4px solid #000;
+  transform-origin: center;
+  transform: translateY(-50%) rotate(-45deg);
+}
+.auth .container .content .form .form-element .form-group .custom-select .select {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 100%;
+  height: 0;
+  border-radius: 0 0 0.2rem 0.2rem;
+  text-align: center;
+  background-color: #cecece;
+  transition: height 0.4s;
+  overflow: hidden;
+}
+.auth .container .content .form .form-element .form-group .custom-select .select .option {
+  padding: 1rem;
+  border-bottom: 1px solid #000;
+  font-size: var(--normal-font-size);
+}
+.auth .container .content .form .form-element .form-group .custom-select .select .option:hover {
+  background-color: rgba(255, 255, 255, 0.5019607843);
+}
+.auth .container .content .form .form-element .form-group .custom-select .select .option:first-of-type {
+  border-top: 1px solid #000;
+}
+.auth .container .content .form .form-element .form-group .custom-select .select.show-options {
+  height: 144px;
+  z-index: 10;
+}
+.auth .container .content .form .form-element .form-group .form-input {
+  background-color: #cecece;
+  width: 90%;
+  height: 48px;
+  padding-left: 1.5rem;
+  padding-block: 0.7rem;
+  border-radius: 3rem;
+  border: 1px solid #000;
+  font-size: var(--h3-font-size);
+}
+.auth .container .content .form .form-element .form-group .form-input[type=checkbox] {
+  height: 17px;
+  width: 17px;
+}
+.auth .container .content .form .form-element .form-group ::placeholder {
+  font-size: var(--h3-font-size);
+}
+.auth .container .content .form .form-element .form-group .img-input {
+  position: absolute;
+  bottom: 0;
+  left: -0.5rem;
+  height: 48px;
+  width: 48px;
+  border: 1px solid #000;
+  border-radius: 50%;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+.auth .container .content .form .form-element .form-group .img-input + .form-input {
+  padding-left: 4rem;
+}
+.auth .container .content .form .form-element .form-group:last-of-type {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0;
+  margin-block: 1.5rem;
+}
+.auth .container .content .university-logo {
+  width: 50%;
+  min-height: 100%;
+  background-image: linear-gradient(180.29deg, rgba(24, 57, 173, 0) 0.25%, rgba(0, 114, 177, 0.47) 23.96%, #003959 45.77%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+
+/*=============== BREAKPOINTS ===============*/
+/* SMALL */
+@media (max-width: 768px) {
+  .auth .container .content {
+    flex-direction: column-reverse;
+  }
+  .auth .container .content .form {
+    width: 100%;
+  }
+  .auth .container .content .university-logo {
+    width: 100%;
+    height: 200px;
+  }
+}
+/* EXTRA SMALL */
+@media (max-width: 576px) {
+  .auth .container .content .form .form-element .form-group .form-input {
+    height: 45px;
+    padding-block: 0.6rem;
+  }
+  .auth .container .content .form .form-element .form-group .img-input {
+    height: 45px;
+    width: 45px;
+  }
 }/*# sourceMappingURL=style.css.map */

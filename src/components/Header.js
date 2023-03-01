@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import logoutIcon from "../assets/imgs/icons/logoutIcon.png";
+import { Logo } from "./Logo";
 
 const Header = () => {
    const [toggleMenu, setToggleMenu] = useState(false);
@@ -15,9 +16,7 @@ const Header = () => {
    return (
       <header className="header" ref={headerElement}>
          <nav className="nav container">
-            <Link to="/" className="logo">
-               <span className="logo-text">AbsolentWeb</span>
-            </Link>
+            <Logo />
             <div className="menu">
                <ul className={`links ${toggleMenu ? "show" : ""}`}>
                   <li className="item">

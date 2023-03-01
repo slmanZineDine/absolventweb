@@ -1,5 +1,6 @@
 import Header from "../components/Header";
 import unvLogo from "../assets/imgs/university-logo.png";
+import { Link } from "react-router-dom";
 const Greeting = () => {
    return (
       <>
@@ -20,13 +21,17 @@ const Greeting = () => {
                         <p className="text">
                            register if you dont have account
                         </p>
-                        <button className="btn register-btn">Register</button>
+                        <Link to="/register" className="btn register-btn">
+                           Register
+                        </Link>
                      </div>
                      <div className="login auth-box">
                         <p className="text">
                            login if yor already have account
                         </p>
-                        <button className="btn login-btn">Login</button>
+                        <Link to="/login" className="btn login-btn">
+                           Login
+                        </Link>
                      </div>
                   </div>
                </div>
