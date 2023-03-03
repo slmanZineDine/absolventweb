@@ -11,7 +11,7 @@
 }
 @media (max-width: 992px) {
   :root {
-    --biggest-font-size: 1.5rem;
+    --biggest-font-size: 1.4rem;
     --h3-font-size: 1rem;
   }
 }
@@ -156,9 +156,10 @@ input[type=number] {
   justify-content: center;
   gap: 0;
   font-weight: bold;
+  color: #000;
+  white-space: nowrap;
   padding-inline: 1rem;
   height: 80px;
-  color: #000;
   cursor: pointer;
   transition: color 0.3s, background-color 0.3s;
 }
@@ -208,7 +209,7 @@ input[type=number] {
 /* MEDIUM */
 @media (max-width: 992px) {
   .header .nav .menu .links .item a {
-    padding-inline: 0.7rem;
+    padding-inline: 0.5rem;
   }
 }
 /* SMALL */
@@ -311,7 +312,9 @@ input[type=number] {
   width: 100px;
   padding: 0.6rem 1.5rem;
   background: #d3d3d3;
+  color: #fff;
   transition: padding-inline 0.3s, color 0.3s;
+  color: #000;
 }
 .logout-btn .log-icon {
   position: absolute;
@@ -339,7 +342,8 @@ input[type=number] {
   gap: 0.2rem;
   width: 120px;
   padding: 0.6rem 1.5rem;
-  background: #009688;
+  background: #28a745;
+  color: #fff;
   transition: padding-inline 0.3s, color 0.3s;
 }
 .login-btn .log-icon {
@@ -355,7 +359,7 @@ input[type=number] {
 .login-btn:hover {
   padding-inline: 0.7rem 1.5rem;
   color: #fff;
-  background-color: rgba(0, 150, 136, 0.5647058824);
+  background-color: #28a745;
 }
 .login-btn:hover .log-icon {
   opacity: 1;
@@ -368,7 +372,8 @@ input[type=number] {
   gap: 0.2rem;
   width: 120px;
   padding: 0.6rem 1.5rem;
-  background: #0075ff;
+  background: #007bff;
+  color: #fff;
   transition: padding-inline 0.3s, color 0.3s;
 }
 .register-btn .log-icon {
@@ -384,7 +389,7 @@ input[type=number] {
 .register-btn:hover {
   padding-inline: 0.7rem 1.5rem;
   color: #fff;
-  background-color: rgba(0, 117, 255, 0.5647058824);
+  background-color: #007bff;
 }
 .register-btn:hover .log-icon {
   opacity: 1;
@@ -396,9 +401,10 @@ input[type=number] {
   border: 1px solid #000000;
   box-shadow: 0px 10px 4px rgba(104, 193, 231, 0.3);
   width: 90%;
+  margin-block: 2.5rem 1.5rem;
 }
 .login-page-btn:hover {
-  background-image: linear-gradient(91.18deg, rgba(37, 117, 190, 0.4392156863) 0%, rgba(78, 182, 227, 0.55) 99.99%, rgba(20, 124, 183, 0.59) 100%);
+  background: linear-gradient(to right, #003959 0%, #003959 100%);
 }
 
 /*=============== BREAKPOINTS ===============*/
@@ -423,32 +429,188 @@ input[type=number] {
     height: 20px;
     right: -0.2rem;
   }
+  .login-page-btn {
+    width: 100%;
+  }
 }
+/*=============== SPINNING COMPONENT ===============*/
+/* Absolute Center Spinner */
+.loading {
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  overflow: visible;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+/* Transparent Overlay */
+.loading:before {
+  content: "";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* :not(:required) hides these rules from IE9 and below */
+.loading:not(:required) {
+  /* hide "loading..." text */
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+
+.loading:not(:required):after {
+  content: "";
+  display: block;
+  font-size: 10px;
+  width: 1em;
+  height: 1em;
+  margin-top: -0.5em;
+  -webkit-animation: spinner 1500ms infinite linear;
+  -moz-animation: spinner 1500ms infinite linear;
+  -ms-animation: spinner 1500ms infinite linear;
+  -o-animation: spinner 1500ms infinite linear;
+  animation: spinner 1500ms infinite linear;
+  border-radius: 0.5em;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+  box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+}
+
+/* Animation */
+@-webkit-keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-moz-keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+/*=============== ERROR COMPONENT ===============*/
+.checking-message {
+  position: fixed;
+  bottom: 2rem;
+  right: -25rem;
+  padding: 1rem;
+  border-radius: 0.2rem;
+  transition: right 0.5s;
+  z-index: 51;
+  color: #fff;
+}
+.checking-message.show {
+  right: 2rem;
+  background-color: red;
+}
+.checking-message.show-done {
+  right: 2rem;
+  background-color: green;
+}
+
 /*===================== GREETING PAGE =====================*/
 .greeting-page .container {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.8rem;
+  padding-block: 2rem 2rem;
 }
 .greeting-page .container .content {
-  width: 70%;
+  width: 80%;
 }
 .greeting-page .container .content .greeting-msg {
-  font-size: 2rem;
+  font-size: var(--biggest-font-size);
+  font-weight: bold;
   color: #085f7b;
 }
 .greeting-page .container .content .website-info {
-  font-size: 1.1rem;
-  margin-block: 1.3rem 3rem;
+  font-size: var(--h3-font-size);
   text-indent: 1.5rem;
-  padding-left: 1rem;
+  line-height: 1.5;
+  width: 90%;
+  margin-block: 1.3rem 4rem;
 }
-.greeting-page .container .content .auth-btn .auth-box {
-  margin-bottom: 1.5rem;
+.greeting-page .container .content .auth-btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
 }
-.greeting-page .container .content .auth-btn .auth-box .text {
-  margin-bottom: 1rem;
+.greeting-page .container .content .auth-btn p {
+  font-weight: bold;
+  background-color: #fff;
+  border-radius: 50%;
+  width: 33px;
+  height: 33px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
 }
 
 /*=============== BREAKPOINTS ===============*/
@@ -464,6 +626,10 @@ input[type=number] {
   .greeting-page .container .content .website-info {
     text-align: center;
     padding-left: 0;
+    width: 100%;
+  }
+  .greeting-page .container .content .auth-btn {
+    justify-content: center;
   }
 }
 /* EXTRA SMALL */
@@ -527,6 +693,11 @@ input[type=number] {
   background-color: #cecece;
   cursor: pointer;
   transition: opacity 0.4s;
+}
+@media (max-width: 768px) {
+  .auth .container .content .form .form-element .form-group .custom-select {
+    width: 100%;
+  }
 }
 .auth .container .content .form .form-element .form-group .custom-select .arrow {
   position: absolute;
@@ -610,6 +781,14 @@ input[type=number] {
 .auth .container .content .form .form-element .form-group:last-of-type {
   margin-block: 1.5rem;
 }
+.auth .container .content .form .form-element .note {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+.auth .container .content .form .form-element .note .link {
+  color: #2575be;
+  font-weight: bold;
+}
 .auth .container .content .university-logo {
   width: 50%;
   min-height: 100%;
@@ -618,6 +797,10 @@ input[type=number] {
   align-items: center;
   justify-content: center;
   gap: 0;
+}
+
+.login-page {
+  min-height: 100vh;
 }
 
 /*=============== BREAKPOINTS ===============*/
@@ -633,11 +816,15 @@ input[type=number] {
     width: 100%;
     height: 200px;
   }
+  .auth .container .content .form .form-element .form-group .form-input {
+    width: 100%;
+  }
 }
 /* EXTRA SMALL */
 @media (max-width: 576px) {
   .auth .container .content .form .form-element .form-group .form-input {
     height: 45px;
+    width: 100%;
     padding-block: 0.6rem;
   }
   .auth .container .content .form .form-element .form-group .img-input {

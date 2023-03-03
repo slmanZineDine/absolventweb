@@ -10,12 +10,13 @@
 }
 .logout-btn {
    @include authBtn(#d3d3d3, $danger-color);
+   color: #000;
 }
 .login-btn {
-   @include authBtn(#009688, #00968890, 120px);
+   @include authBtn(#28a745, #28a745, 120px);
 }
 .register-btn {
-   @include authBtn(#0075ff, #0075ff90, 120px);
+   @include authBtn(#007bff, #007bff, 120px);
 }
 .login-page-btn {
    color: #fff;
@@ -28,13 +29,9 @@
    border: 1px solid #000000;
    box-shadow: 0px 10px 4px rgba(104, 193, 231, 0.3);
    width: $input-width;
+   margin-block: 2.5rem 1.5rem;
    &:hover {
-      background-image: linear-gradient(
-         91.18deg,
-         #2575be70 0%,
-         rgba(78, 182, 227, 0.55) 99.99%,
-         rgba(20, 124, 183, 0.59) 100%
-      );
+      background: linear-gradient(to right, #003959 0%, #003959 100%);
    }
 }
 /*=============== BREAKPOINTS ===============*/
@@ -58,5 +55,8 @@
          height: 20px;
          right: -0.2rem;
       }
+   }
+   .login-page-btn {
+      width: 100%;
    }
 }

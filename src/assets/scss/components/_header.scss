@@ -31,9 +31,10 @@ $nav-border-bottom: 2px;
                a {
                   @include flex(center, center);
                   font-weight: bold;
+                  color: #000;
+                  white-space: nowrap;
                   padding-inline: 1rem;
                   height: $header-height;
-                  color: #000;
                   cursor: pointer;
                   transition: color 0.3s, background-color 0.3s;
                   &:hover,
@@ -90,7 +91,7 @@ $nav-border-bottom: 2px;
 /* MEDIUM */
 @media (max-width: 992px) {
    .header .nav .menu .links .item a {
-      padding-inline: 0.7rem;
+      padding-inline: 0.5rem;
    }
 }
 /* SMALL */

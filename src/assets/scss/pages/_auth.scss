@@ -74,6 +74,14 @@
                      margin-block: 1.5rem;
                   }
                }
+               .note {
+                  text-align: center;
+                  margin-top: 1.5rem;
+                  .link {
+                     color: #2575be;
+                     font-weight: bold;
+                  }
+               }
             }
          }
          .university-logo {
@@ -90,6 +98,9 @@
       }
    }
 }
+.login-page {
+   min-height: 100vh;
+}
 /*=============== BREAKPOINTS ===============*/
 
 /* SMALL */
@@ -104,11 +115,15 @@
       width: 100%;
       height: 200px;
    }
+   .auth .container .content .form .form-element .form-group .form-input {
+      width: 100%;
+   }
 }
 /* EXTRA SMALL */
 @media (max-width: 576px) {
    .auth .container .content .form .form-element .form-group .form-input {
       height: 45px;
+      width: 100%;
       padding-block: 0.6rem;
    }
    .auth .container .content .form .form-element .form-group .img-input {

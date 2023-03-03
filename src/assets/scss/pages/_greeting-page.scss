@@ -4,24 +4,30 @@
 .greeting-page {
    .container {
       @include flex(center, space-between, 0.8rem);
+      padding-block: 2rem 2rem;
       .content {
-         width: 70%;
+         width: 80%;
          .greeting-msg {
-            font-size: 2rem;
+            font-size: var(--biggest-font-size);
+            font-weight: bold;
             color: $title-color;
          }
          .website-info {
-            font-size: 1.1rem;
-            margin-block: 1.3rem 3rem;
+            font-size: var(--h3-font-size);
             text-indent: 1.5rem;
-            padding-left: 1rem;
+            line-height: 1.5;
+            width: 90%;
+            margin-block: 1.3rem 4rem;
          }
          .auth-btn {
-            .auth-box {
-               margin-bottom: 1.5rem;
-               .text {
-                  margin-bottom: 1rem;
-               }
+            @include flex(center, flex-start, 1rem);
+            p {
+               font-weight: bold;
+               background-color: #fff;
+               border-radius: 50%;
+               width: 33px;
+               height: 33px;
+               @include flex(center, center);
             }
          }
       }
@@ -41,6 +47,10 @@
    .greeting-page .container .content .website-info {
       text-align: center;
       padding-left: 0;
+      width: 100%;
+   }
+   .greeting-page .container .content .auth-btn {
+      justify-content: center;
    }
 }
 /* EXTRA SMALL */

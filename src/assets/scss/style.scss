@@ -8,6 +8,8 @@
 @use "./components/header";
 @use "./components/logo";
 @use "./components/buttons";
+@use "./components/spinning";
+@use "./components/checking";
 
 // PAGES
 @use "./pages/greeting-page";
