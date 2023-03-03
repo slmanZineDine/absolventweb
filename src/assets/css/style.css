@@ -831,4 +831,45 @@ input[type=number] {
     height: 45px;
     width: 45px;
   }
-}/*# sourceMappingURL=style.css.map */
+}
+/*===================== HOME PAGE PAGE =====================*/
+.homepage-student .container {
+  height: calc(100vh - 80px - 5rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.homepage-student .container .content {
+  width: 80%;
+}
+.homepage-student .container .content .title {
+  color: #085f7b;
+  font-size: var(--h2-font-size);
+  margin-bottom: 2rem;
+}
+.homepage-student .container .content .steps .step {
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+  font-size: var(--h3-font-size);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+.homepage-student .container .content .steps .step .link {
+  white-space: nowrap;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+/*=============== BREAKPOINTS ===============*/
+/* MEDIUM */
+@media (max-width: 992px) {
+  .homepage-student .container {
+    flex-direction: column-reverse;
+    justify-content: center;
+    gap: 3rem;
+  }
+}
+/*===================== LIST OF TIPICS PAGE PAGE =====================*//*# sourceMappingURL=style.css.map */

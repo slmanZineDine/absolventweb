@@ -72,7 +72,7 @@ const Register = () => {
          address: addressInput.current.value,
          facultatea: facultyInput.current.value,
          specializare: specializareInput.current.value,
-         // ================ Dev mod ==================
+         // ================ Dev mode ==================
          // name: "name1",
          // email: "num008@gmail.com",
          // password: "123456",
@@ -197,7 +197,7 @@ const Register = () => {
                      <div className="form-group">
                         <label htmlFor="phone">Phone</label>
                         <div className="img-input">
-                           <img src={phoneIcon} alt="lock-icon" />
+                           <img src={phoneIcon} alt="phone-icon" />
                         </div>
                         <input
                            type="number"
@@ -211,7 +211,7 @@ const Register = () => {
                      <div className="form-group">
                         <label htmlFor="address">Address</label>
                         <div className="img-input">
-                           <img src={addressIcon} alt="lock-icon" />
+                           <img src={addressIcon} alt="address-icon" />
                         </div>
                         <input
                            type="text"
