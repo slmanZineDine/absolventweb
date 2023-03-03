@@ -47,11 +47,11 @@ const Login = () => {
    const handleLogin = (e) => {
       e.preventDefault();
       const userLoginInfo = {
-         // email: emailInput.current.value,
-         // password: passwordInput.current.value,
+         email: emailInput.current.value,
+         password: passwordInput.current.value,
          // ================ Dev mode ==================
-         email: "testee1@gmail.com",
-         password: "123456",
+         // email: "testee1@gmail.com",
+         // password: "123456",
       };
 
       if (fieldsValidation(userLoginInfo)) {
