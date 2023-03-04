@@ -6,6 +6,8 @@ import Register from "./auth/Register";
 import Greeting from "./pages/Greeting";
 import HomePage from "./pages/HomePage";
 import ListOfTopics from "./pages/ListOfTopics";
+import Profile from "./pages/Profile";
+import Workspace from "./pages/Workspace";
 function App() {
    return (
       <>
@@ -15,6 +17,8 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/homepage" element={<HomePage />} />
             <Route path="/list-of-topics" element={<ListOfTopics />} />
+            <Route path="/workspace" element={<Workspace />} />
+            <Route path="/profile" element={<Profile />} />
          </Routes>
       </>
    );

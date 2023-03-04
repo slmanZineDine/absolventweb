@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 
 const Checking = ({ message, showClass, removeShowClass }) => {
    const element = useRef(null);
-   // console.log(element);
+   console.log(message);
    useEffect(() => {
       setTimeout((_) => {
          if (element.current) {

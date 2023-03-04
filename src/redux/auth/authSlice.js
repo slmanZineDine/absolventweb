@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { registerUser, userLogin } from "./authActions";
+import { registerUser, userLogin, userLogout } from "./authActions";
 
 // initialize userToken from local storage
 const userToken = localStorage.getItem("userToken")
@@ -17,15 +17,7 @@ const initialState = {
 const authSlice = createSlice({
    name: "user",
    initialState,
-   reducers: {
-      logout: (state) => {
-         localStorage.clear();
-         state.loading = false;
-         state.userInfo = null;
-         state.userToken = null;
-         state.error = null;
-      },
-   },
+   reducers: {},
    extraReducers: {
       // login user
       [userLogin.pending]: (state) => {
@@ -35,8 +27,7 @@ const authSlice = createSlice({
       [userLogin.fulfilled]: (state, { payload }) => {
          state.loading = false;
          state.userInfo = payload;
-         localStorage.setItem("user", JSON.stringify(payload));
-         state.userToken = payload.userToken;
+         state.userToken = payload.token;
          state.success = true;
       },
       [userLogin.rejected]: (state, { payload }) => {
@@ -49,15 +40,23 @@ const authSlice = createSlice({
          state.error = null;
       },
       [registerUser.fulfilled]: (state, { payload }) => {
-         console.log(payload);
          state.loading = false;
          state.userInfo = payload;
-         localStorage.setItem("user", JSON.stringify(payload));
-         state.success = true; // registration successful
+         state.userToken = payload.token;
+         state.success = true;
       },
       [registerUser.rejected]: (state, { payload }) => {
          state.loading = false;
          state.error = payload;
+      },
+      // logout user
+      [userLogout.pending]: (state) => {
+         state.loading = true;
+      },
+      [userLogout.fulfilled]: (state) => {
+         state.loading = false;
+         state.userToken = null;
+         window.location.reload();
       },
    },
 });

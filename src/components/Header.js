@@ -1,27 +1,31 @@
 import { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import logoutIcon from "../assets/imgs/icons/logoutIcon.png";
 import { navLinks } from "../data/navlLinks";
-import { useNavigate } from "react-router-dom";
-import { logout } from "../redux/auth/authSlice";
-import Checking from "./Checking";
 import { Logo } from "./Logo";
+import { userLogout } from "../redux/auth/authActions";
+import Spinning from "./Spinning";
+import swal from "sweetalert";
 
 const Header = ({ userType, hideLinks }) => {
    const [toggleMenu, setToggleMenu] = useState(false);
    const headerElement = useRef(null);
+
+   // Redux Hook
    const dispatch = useDispatch();
+   const userInfo = useSelector((state) => state.auth);
 
-   // Specify Checking message
-   const [CheckingMsg, setCheckingMsg] = useState("");
-   // Add show class to Checking component
-   const [addShowClass, setAddShowClass] = useState("");
-   // To romove show class and rerender the component
-   const removeShowClass = () => setAddShowClass("");
-
-   // Router Hook
-   const navigate = useNavigate();
+   // Sweet alert labrary
+   const processChecking = async (msg, icon, theClassName) => {
+      await swal(msg, {
+         buttons: false,
+         timer: 3000,
+         icon: icon,
+         className: theClassName,
+         closeOnEsc: false,
+      });
+   };
 
    // Add scoll-header class to show shadow on the navbar border bottom
    window.onscroll = () => {
@@ -32,6 +36,7 @@ const Header = ({ userType, hideLinks }) => {
             : ele.classList.remove("scroll-header");
       }
    };
+
    return (
       <header className="header" ref={headerElement}>
          <nav className="nav container">
@@ -47,25 +52,28 @@ const Header = ({ userType, hideLinks }) => {
                         </li>
                      ))}
                      <li>
-                        <button
-                           className="btn logout-btn"
-                           onClick={(_) => {
-                              dispatch(logout());
-                              setCheckingMsg("Logging out Success");
-                              setAddShowClass("show-done");
-                              setTimeout(() => {
-                                 navigate("/", { replace: true });
-                              }, 1500);
-                              window.location.reload();
-                           }}
-                        >
-                           Logout
-                           <img
-                              src={logoutIcon}
-                              alt="logout-icon"
-                              className="log-icon"
-                           />
-                        </button>
+                        {userInfo.loading ? (
+                           <Spinning />
+                        ) : (
+                           <button
+                              className="btn logout-btn"
+                              onClick={(_) => {
+                                 dispatch(userLogout({}));
+                                 processChecking(
+                                    "Logging out Success",
+                                    "success",
+                                    "done"
+                                 );
+                              }}
+                           >
+                              Logout
+                              <img
+                                 src={logoutIcon}
+                                 alt="logout-icon"
+                                 className="log-icon"
+                              />
+                           </button>
+                        )}
                      </li>
                   </ul>
                   <div
@@ -81,11 +89,6 @@ const Header = ({ userType, hideLinks }) => {
                </div>
             )}
          </nav>
-         <Checking
-            message={CheckingMsg}
-            showClass={addShowClass}
-            removeShowClass={removeShowClass}
-         />
       </header>
    );
 };

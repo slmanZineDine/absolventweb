@@ -6,7 +6,6 @@ import { Link, Navigate } from "react-router-dom";
 
 const Greeting = () => {
    const user = localStorage.getItem("user");
-   const userType = JSON.parse(user)?.type;
    if (user) {
       return <Navigate to="/homepage" />;
    } else {

@@ -19,9 +19,9 @@ export const userLogin = createAsyncThunk(
             config
          );
 
-         // store user's token in local storage
+         // store user in local storage
          localStorage.setItem("userToken", data.token);
-
+         localStorage.setItem("user", JSON.stringify(data));
          return data;
       } catch (error) {
          // return custom error message from API if any
@@ -52,9 +52,34 @@ export const registerUser = createAsyncThunk(
 
          // store user's token in local storage
          localStorage.setItem("userToken", data.token);
-
+         // store user in local storage
+         localStorage.setItem("user", JSON.stringify(data));
          return data;
       } catch (error) {
+         if (error.response && error.response.data.message) {
+            return rejectWithValue(error.response.data.message);
+         } else {
+            return rejectWithValue(error.message);
+         }
+      }
+   }
+);
+export const userLogout = createAsyncThunk(
+   "user/logout",
+   async ({}, { rejectWithValue }) => {
+      try {
+         const config = {
+            headers: {
+               Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+            },
+         };
+         const { data } = await axios.get(`${baseURL}/api/logout`, config);
+         localStorage.clear();
+         console.log("done");
+         return data;
+      } catch (error) {
+         console.log("error");
+         // return custom error message from API if any
          if (error.response && error.response.data.message) {
             return rejectWithValue(error.response.data.message);
          } else {

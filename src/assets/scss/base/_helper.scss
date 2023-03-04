@@ -8,6 +8,19 @@
    padding-top: calc($header-height + 2rem);
    padding-bottom: 2rem;
 }
+/* Sweet alert library */
+.red-bg {
+   background-color: red;
+   .swal-text {
+      color: #fff;
+   }
+}
+.done {
+   .swal-text {
+      color: #000;
+   }
+}
+
 /*=============== BREAKPOINTS ===============*/
 /* EXTRA SMALL */
 // @media (max-width: 576px) {

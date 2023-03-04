@@ -2,12 +2,13 @@ import unvLogo from "../assets/imgs/university-logo.png";
 import mailIcon from "../assets/imgs/icons/mailIcon.png";
 import lockIcon from "../assets/imgs/icons/lockIcon.png";
 import { Logo } from "../components/Logo";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../redux/auth/authActions";
 import { Link, useNavigate } from "react-router-dom";
 import Spinning from "../components/Spinning";
-import Checking from "../components/Checking";
+import swal from "sweetalert";
+
 const Login = () => {
    // Select input elements
    const emailInput = useRef(null);
@@ -19,26 +20,30 @@ const Login = () => {
 
    // Router Hook
    const navigate = useNavigate();
-
-   // Specify Checking message
-   const [CheckingMsg, setCheckingMsg] = useState("");
-   // Add show class to Checking component
-   const [addShowClass, setAddShowClass] = useState("");
-   // To romove show class and rerender the component
-   const removeShowClass = () => setAddShowClass("");
+   // Sweet alert labrary
+   const processChecking = async (msg, icon, theClassName) => {
+      await swal(msg, {
+         buttons: false,
+         timer: 3000,
+         icon: icon,
+         className: theClassName,
+         closeOnEsc: false,
+      });
+   };
 
    // Vaidation
    const fieldsValidation = (userInput) => {
       const emailValidation = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       if (!Object.values(userInput).every((e) => e !== "")) {
-         setCheckingMsg("Please fill all fields.");
-         setAddShowClass("show");
+         processChecking("Please fill all fields.", "warning", "red-bg");
       } else if (!emailValidation.test(userInput.email)) {
-         setCheckingMsg("You have entered an invalid email address.");
-         setAddShowClass("show");
+         processChecking(
+            "You have entered an invalid email address.",
+            "warning",
+            "red-bg"
+         );
       } else if (userInput.password.length < 6) {
-         setCheckingMsg("Your password is too short.");
-         setAddShowClass("show");
+         processChecking("Your password is too short.", "warning", "red-bg");
       } else {
          return true;
       }
@@ -50,7 +55,7 @@ const Login = () => {
          email: emailInput.current.value,
          password: passwordInput.current.value,
          // ================ Dev mode ==================
-         // email: "testee1@gmail.com",
+         // email: "slman@gmail.com",
          // password: "123456",
       };
 
@@ -61,14 +66,10 @@ const Login = () => {
 
    useEffect(() => {
       if (userInfo.error) {
-         setCheckingMsg(userInfo.error);
-         setAddShowClass("show");
+         processChecking(userInfo.error, "error", "red-bg");
       } else if (userInfo.success) {
-         setCheckingMsg("Logging in Success");
-         setAddShowClass("show-done");
-         setTimeout(() => {
-            navigate("/homepage", { replace: true });
-         }, 1500);
+         processChecking("Logging in Success", "success", "done");
+         navigate("/homepage", { replace: true });
       }
    }, [userInfo.error, userInfo.success]);
    return (
@@ -127,11 +128,6 @@ const Login = () => {
                            Register
                         </Link>
                      </p>
-                     <Checking
-                        message={CheckingMsg}
-                        showClass={addShowClass}
-                        removeShowClass={removeShowClass}
-                     />
                   </form>
                </div>
                <div className="university-logo">

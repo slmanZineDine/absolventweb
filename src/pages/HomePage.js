@@ -55,7 +55,14 @@ const HomePage = () => {
             </>
          );
       } else if (userType === "coordonator") {
-         return <h1>coordonator view</h1>;
+         return (
+            <>
+               <Header userType={userType} />
+               <main className="main">
+                  <h1>coordonator view</h1>;
+               </main>
+            </>
+         );
       } else if (userType === "adimn") {
          return <h1>admin view</h1>;
       } else {

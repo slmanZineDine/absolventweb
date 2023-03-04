@@ -8,14 +8,15 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Spinning from "../components/Spinning";
-import Checking from "../components/Checking";
 import { registerUser } from "../redux/auth/authActions";
+import swal from "sweetalert";
 
 const Register = () => {
    // To select user type
    const userTypeSelect = useRef(null);
    const userTypes = ["student", "coordonator", "admin"];
    const [selectedType, setSelectedType] = useState(null);
+   // const getSelectedType = (type) => setSelectedType(type);
 
    // Select input elements
    const nameInput = useRef(null);
@@ -33,29 +34,32 @@ const Register = () => {
 
    // Router Hook
    const navigate = useNavigate();
-
-   // Specify Checking message
-   const [CheckingMsg, setCheckingMsg] = useState("");
-   // Add show class to Checking component
-   const [addShowClass, setAddShowClass] = useState("");
-   // To romove show class and rerender the component
-   const removeShowClass = () => setAddShowClass("");
+   // Sweet alert labrary
+   const processChecking = async (msg, icon, theClassName) => {
+      await swal(msg, {
+         buttons: false,
+         timer: 3000,
+         icon: icon,
+         className: theClassName,
+         closeOnEsc: false,
+      });
+   };
 
    // Vaidation
    const fieldsValidation = (userInput) => {
       const emailValidation = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       if (!Object.values(userInput).every((e) => e !== "")) {
-         setCheckingMsg("Please fill all fields.");
-         setAddShowClass("show");
+         processChecking("Please fill all fields.", "warning", "red-bg");
       } else if (!emailValidation.test(userInput.email)) {
-         setCheckingMsg("You have entered an invalid email address.");
-         setAddShowClass("show");
+         processChecking(
+            "You have entered an invalid email address.",
+            "warning",
+            "red-bg"
+         );
       } else if (userInput.password.length < 6) {
-         setCheckingMsg("Your password is too short.");
-         setAddShowClass("show");
+         processChecking("Your password is too short.", "warning", "red-bg");
       } else if (userInput.password !== userInput["password_confirmation"]) {
-         setCheckingMsg("passwords are not identical.");
-         setAddShowClass("show");
+         processChecking("passwords are not identical.", "warning", "red-bg");
       } else {
          return true;
       }
@@ -74,7 +78,7 @@ const Register = () => {
          specializare: specializareInput.current.value,
          // ================ Dev mode ==================
          // name: "name1",
-         // email: "num008@gmail.com",
+         // email: "num00812212@gmail.com",
          // password: "123456",
          // password_confirmation: "123456",
          // phone: "123456",
@@ -93,14 +97,10 @@ const Register = () => {
    };
    useEffect(() => {
       if (userInfo.error) {
-         setCheckingMsg(userInfo.error);
-         setAddShowClass("show");
+         processChecking(userInfo.error, "error", "red-bg");
       } else if (userInfo.success) {
-         setCheckingMsg("Register Success");
-         setAddShowClass("show-done");
-         setTimeout(() => {
-            navigate("/homepage", { replace: true });
-         }, 1500);
+         processChecking("Register Success", "success", "done");
+         navigate("/homepage", { replace: true });
       }
    }, [userInfo.error, userInfo.success]);
    return (
@@ -262,11 +262,6 @@ const Register = () => {
                            Login
                         </Link>
                      </p>
-                     <Checking
-                        message={CheckingMsg}
-                        showClass={addShowClass}
-                        removeShowClass={removeShowClass}
-                     />
                   </form>
                </div>
                <div className="university-logo">
