@@ -864,4 +864,38 @@ input[type=number] {
     gap: 3rem;
   }
 }
-/*===================== LIST OF TIPICS PAGE PAGE =====================*//*# sourceMappingURL=style.css.map */
+/*===================== LIST OF TIPICS PAGE PAGE =====================*/
+.list-of-topics-page .container .table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #000;
+  text-align: center;
+}
+.list-of-topics-page .container .table .main-row .main-cell {
+  font-weight: bold;
+  background-color: #b4ebd7;
+  border: 1px solid #000;
+}
+.list-of-topics-page .container .table .row .cell {
+  border: 1px solid #000;
+}
+.list-of-topics-page .container .table .row .title,
+.list-of-topics-page .container .table .row .details {
+  text-align: left;
+}
+.list-of-topics-page .container .table .main-cell,
+.list-of-topics-page .container .table .cell {
+  padding: 1rem;
+}
+
+/*=============== BREAKPOINTS ===============*/
+/* MEDIUM */
+/* SMALL */
+@media (max-width: 768px) {
+  .cover {
+    overflow-x: scroll;
+  }
+  .list-of-topics-page .container .table {
+    width: 720px;
+  }
+}/*# sourceMappingURL=style.css.map */

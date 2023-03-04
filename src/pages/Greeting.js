@@ -3,6 +3,7 @@ import unvLogo from "../assets/imgs/university-logo.png";
 import loginIcon from "../assets/imgs/icons/loginIcon.png";
 import registerIcon from "../assets/imgs/icons/registerIcon.png";
 import { Link, Navigate } from "react-router-dom";
+import UniversityLogo from "../components/UniversityLogo";
 
 const Greeting = () => {
    const user = localStorage.getItem("user");
@@ -43,9 +44,7 @@ const Greeting = () => {
                         </Link>
                      </div>
                   </div>
-                  <div className="university-logo">
-                     <img src={unvLogo} alt="university-logo" />
-                  </div>
+                  <UniversityLogo />
                </div>
             </main>
          </>

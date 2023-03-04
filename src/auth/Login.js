@@ -8,6 +8,7 @@ import { userLogin } from "../redux/auth/authActions";
 import { Link, useNavigate } from "react-router-dom";
 import Spinning from "../components/Spinning";
 import swal from "sweetalert";
+import UniversityLogo from "../components/UniversityLogo";
 
 const Login = () => {
    // Select input elements
@@ -55,7 +56,7 @@ const Login = () => {
          email: emailInput.current.value,
          password: passwordInput.current.value,
          // ================ Dev mode ==================
-         // email: "slman@gmail.com",
+         // email: "doctor11@gmail.com",
          // password: "123456",
       };
 
@@ -130,9 +131,7 @@ const Login = () => {
                      </p>
                   </form>
                </div>
-               <div className="university-logo">
-                  <img src={unvLogo} alt="university-logo" />
-               </div>
+               <UniversityLogo />
             </div>
          </div>
       </div>

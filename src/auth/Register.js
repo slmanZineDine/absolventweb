@@ -10,6 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Spinning from "../components/Spinning";
 import { registerUser } from "../redux/auth/authActions";
 import swal from "sweetalert";
+import UniversityLogo from "../components/UniversityLogo";
 
 const Register = () => {
    // To select user type
@@ -264,9 +265,7 @@ const Register = () => {
                      </p>
                   </form>
                </div>
-               <div className="university-logo">
-                  <img src={unvLogo} alt="university-logo" />
-               </div>
+               <UniversityLogo />
             </div>
          </div>
       </div>

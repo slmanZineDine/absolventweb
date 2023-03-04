@@ -75,10 +75,8 @@ export const userLogout = createAsyncThunk(
          };
          const { data } = await axios.get(`${baseURL}/api/logout`, config);
          localStorage.clear();
-         console.log("done");
          return data;
       } catch (error) {
-         console.log("error");
          // return custom error message from API if any
          if (error.response && error.response.data.message) {
             return rejectWithValue(error.response.data.message);

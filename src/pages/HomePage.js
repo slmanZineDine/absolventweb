@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import stepsIcon from "../assets/imgs/icons/stepsIcon.png";
 import statusIcon from "../assets/imgs/icons/statusIcon.png";
 import universityLogo from "../assets/imgs/university-logo.png";
+import UniversityLogo from "../components/UniversityLogo";
 
 const HomePage = () => {
    const user = localStorage.getItem("user");
@@ -43,13 +44,7 @@ const HomePage = () => {
                            </li>
                         </ul>
                      </div>
-                     <div className="logo-img">
-                        <img
-                           src={universityLogo}
-                           alt="university-logo"
-                           className="logo"
-                        />
-                     </div>
+                     <UniversityLogo />
                   </div>
                </main>
             </>
