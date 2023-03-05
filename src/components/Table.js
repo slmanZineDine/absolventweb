@@ -15,11 +15,11 @@ const Table = ({ data, cols }) => {
             </thead>
             <tbody className="tbody">
                {data?.length > 0
-                  ? data.map((topic, i) => {
+                  ? data.map((row, i) => {
                        // row
                        return (
                           <tr key={i} className="row">
-                             {topic.map(
+                             {row.map(
                                 (
                                    cell,
                                    i // columns

@@ -31,6 +31,6 @@
 ### Event
 
 `Done` - Auth Login, Register, Logout\
-`Working` - Create and modify the graduation project [only_Doctor]\
+`Done` - Create and modify and the graduation project [only_Doctor]\
 `0` - Send Request to a Doctor and Checking request status [only_Student]\
 `0` - Workspace Create Post, Comments, Task, Meeting [Doctor_Student]

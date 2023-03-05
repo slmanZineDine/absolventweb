@@ -26,6 +26,32 @@ export const getTopics = createAsyncThunk(
       }
    }
 );
+// Getting topic by Id
+export const getTopicById = createAsyncThunk(
+   "topics/getTopicById",
+   async (TopicId, { rejectWithValue }) => {
+      try {
+         const config = {
+            headers: {
+               Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+            },
+         };
+
+         const { data } = await axios.get(
+            `${baseURL}/api/teme/${TopicId}`,
+            config
+         );
+         return data;
+      } catch (error) {
+         // return custom error message from API if any
+         if (error.response && error.response.data.message) {
+            return rejectWithValue(error.response.data.message);
+         } else {
+            return rejectWithValue(error.message);
+         }
+      }
+   }
+);
 // Getting doctor's topics
 export const getTopicsByDoctorId = createAsyncThunk(
    "topics/getTopicsByDoctorId",
@@ -53,28 +79,55 @@ export const getTopicsByDoctorId = createAsyncThunk(
    }
 );
 // Adding a new topic
-// export const addNewTopic = createAsyncThunk(
-//    "topics/addNewTopic",
-//    async (topic, { rejectWithValue }) => {
-//       try {
-//          const config = {
-//             headers: {
-//                Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-//             },
-//          };
+export const addNewTopic = createAsyncThunk(
+   "topics/addNewTopic",
+   async (topic, { rejectWithValue }) => {
+      try {
+         const config = {
+            headers: {
+               Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+            },
+         };
 
-//          const { data } = await axios.get(
-//             `${baseURL}/api/teme/coordonator/${doctorId}`,
-//             config
-//          );
-//          return data;
-//       } catch (error) {
-//          // return custom error message from API if any
-//          if (error.response && error.response.data.message) {
-//             return rejectWithValue(error.response.data.message);
-//          } else {
-//             return rejectWithValue(error.message);
-//          }
-//       }
-//    }
-// );
+         const { data } = await axios.post(
+            `${baseURL}/api/teme`,
+            topic,
+            config
+         );
+         return data;
+      } catch (error) {
+         // return custom error message from API if any
+         if (error.response && error.response.data.message) {
+            return rejectWithValue(error.response.data.message);
+         } else {
+            return rejectWithValue(error.message);
+         }
+      }
+   }
+);
+// Deletion a topic
+export const deleteTopic = createAsyncThunk(
+   "topics/deleteTopic",
+   async (topicId, { rejectWithValue }) => {
+      try {
+         const config = {
+            headers: {
+               Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+            },
+         };
+
+         const data = await axios.delete(
+            `${baseURL}/api/teme/${topicId}`,
+            config
+         );
+         return topicId;
+      } catch (error) {
+         // return custom error message from API if any
+         if (error.response && error.response.data.message) {
+            return rejectWithValue(error.response.data.message);
+         } else {
+            return rejectWithValue(error.message);
+         }
+      }
+   }
+);

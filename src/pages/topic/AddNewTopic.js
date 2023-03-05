@@ -1,10 +1,24 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
 import UniversityLogo from "../../components/UniversityLogo";
+import { addNewTopic } from "../../redux/topics/topicsActions";
+import { useRef } from "react";
 
 const AddNewTopic = () => {
+   // Select input elements
+   const titleInput = useRef(null);
+   const detailsInput = useRef(null);
+   const specInput = useRef(null);
+
+   // Get user inof form local storage
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
+   // Redux Hook
+   const dispatch = useDispatch();
+   const topics = useSelector((state) => state.topics.doctorTopics);
+   // Router Hook
+   const navigate = useNavigate();
    if (user && userType === "coordonator") {
       return (
          <>
@@ -20,6 +34,7 @@ const AddNewTopic = () => {
                               type="text"
                               placeholder="Scrie aici"
                               className="input-field"
+                              ref={titleInput}
                            />
                         </li>
                         <li className="item">
@@ -27,6 +42,7 @@ const AddNewTopic = () => {
                            <textarea
                               placeholder="Scrie aici"
                               className="textarea"
+                              ref={detailsInput}
                            ></textarea>
                         </li>
                         <li className="item">
@@ -35,9 +51,24 @@ const AddNewTopic = () => {
                               type="text"
                               placeholder="Scrie aici"
                               className="input-field"
+                              ref={specInput}
                            />
                         </li>
-                        <button className="btn save-btn">Save</button>
+                        <button
+                           className="btn save-btn"
+                           onClick={(_) => {
+                              dispatch(
+                                 addNewTopic({
+                                    title: titleInput.current.value,
+                                    detalii: detailsInput.current.value,
+                                    specializare: specInput.current.value,
+                                 })
+                              );
+                              navigate("/profile");
+                           }}
+                        >
+                           Save
+                        </button>
                      </ul>
                   </div>
                   <UniversityLogo />

@@ -1,4 +1,3 @@
-import unvLogo from "../assets/imgs/university-logo.png";
 import mailIcon from "../assets/imgs/icons/mailIcon.png";
 import lockIcon from "../assets/imgs/icons/lockIcon.png";
 import { Logo } from "../components/Logo";

@@ -1,9 +1,12 @@
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../components/Header";
 import UniversityLogo from "../components/UniversityLogo";
 import Table from "../components/Table";
-import { getTopicsByDoctorId } from "../redux/topics/topicsActions";
+import {
+   deleteTopic,
+   getTopicsByDoctorId,
+} from "../redux/topics/topicsActions";
 import { useEffect } from "react";
 
 const Profile = () => {
@@ -38,13 +41,14 @@ const Profile = () => {
    // Redux Hook
    const dispatch = useDispatch();
    const topics = useSelector((state) => state.topics.doctorTopics);
+   // Router Hook
+   const navigate = useNavigate();
    useEffect(() => {
       if (user) {
          const doctorId = JSON.parse(user).coordonator.id;
          dispatch(getTopicsByDoctorId(doctorId));
       }
    }, []);
-
    if (user) {
       // Select Main Column in a table
       const tableCol = ["Nr", "Tema", "Detalii", "Specializare", "Process"];
@@ -58,15 +62,31 @@ const Profile = () => {
                   e["detalii"],
                   e["specializare"],
                   <div className="btn">
-                     <Link to="edite-topic">
-                        <button className="btn edite-btn">Edite</button>
-                     </Link>
-                     <button className="btn delete-btn">Delet</button>
+                     <button
+                        className="btn edite-btn"
+                        onClick={() => {
+                           navigate("edite-topic", {
+                              state: { id: e.id },
+                           });
+                        }}
+                     >
+                        Edite
+                     </button>
+                     <button
+                        className="btn delete-btn"
+                        onClick={() => {
+                           // console.log(e.id);
+                           dispatch(deleteTopic(e.id));
+                        }}
+                     >
+                        Delete
+                     </button>
                   </div>,
                ];
             });
          }
       };
+      // console.log(tableData(topics));
       return (
          <>
             <Header userType={userType} />
@@ -92,16 +112,9 @@ const Profile = () => {
                {userType === "coordonator" ? (
                   <section className="section topics">
                      <div className="container">
-                        {/* 
-                           - button navigate you to another page to add a new topic
-                           - table to doctor's topics
-                           - every topics contains in last column to button edite, delete
-                           - edite navigate you to another page to edite specific topic
-                     */}
                         <Link to="add-new-topic">
                            <button className="btn add-btn">Add</button>
                         </Link>
-
                         <Table data={tableData(topics)} cols={tableCol} />
                      </div>
                   </section>
