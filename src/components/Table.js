@@ -1,4 +1,6 @@
 const Table = ({ data, cols }) => {
+   // Data: [Array] array of arrays contains data to put it in the table
+   // Cols: [Array] contains cols name
    return (
       <div className="cover">
          <table className="table">

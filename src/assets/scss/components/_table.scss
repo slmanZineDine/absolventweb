@@ -1,0 +1,43 @@
+@use "../abstracts" as *;
+
+/*=============== TABLE COMPONENT ===============*/
+.table {
+   width: 100%;
+   border-collapse: collapse;
+   border: 1px solid #000;
+   text-align: center;
+   .main-row {
+      .main-cell {
+         font-weight: bold;
+         background-color: #b4ebd7;
+         border: 1px solid #000;
+      }
+   }
+   .row {
+      .cell {
+         border: 1px solid #000;
+      }
+      .title,
+      .details {
+         text-align: left;
+      }
+   }
+   .main-cell,
+   .cell {
+      padding: 1rem;
+   }
+}
+/*=============== BREAKPOINTS ===============*/
+/* SMALL */
+@media (max-width: 768px) {
+   .cover {
+      overflow-x: scroll;
+      // styling scrollbar later
+      //   &::-webkit-scrollbar {
+      //     width: 0;
+      //  }
+   }
+   .cover .table {
+      width: 720px;
+   }
+}

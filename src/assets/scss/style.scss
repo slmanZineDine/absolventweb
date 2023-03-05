@@ -8,6 +8,7 @@
 @use "./components/header";
 @use "./components/logo";
 @use "./components/buttons";
+@use "./components/table";
 @use "./components/spinning";
 
 // PAGES
@@ -15,3 +16,4 @@
 @use "./pages/auth";
 @use "./pages/homepage";
 @use "./pages/list-of-topics";
+@use "./pages/topic";

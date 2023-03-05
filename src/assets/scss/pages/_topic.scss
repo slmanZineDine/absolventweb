@@ -1,0 +1,97 @@
+@use "../abstracts" as *;
+
+/*=============== TOPIC COMPONENT ===============*/
+.topic-page {
+   padding-bottom: 4rem;
+   .container {
+      @include flex(center, space-between, 0.4rem);
+      .content {
+         width: 60%;
+         .title {
+            @include flex(center, flex-start, 1rem);
+            font-size: var(--h2-font-size);
+            margin-bottom: 2rem;
+            &::before {
+               content: "";
+               display: block;
+               width: 17px;
+               height: 17px;
+               border: 1px solid #000;
+               border-radius: 50%;
+               background-color: #b4ebd7;
+            }
+         }
+         .box {
+            background-color: #fff;
+            padding: 1rem 1.7rem;
+            border-radius: 1rem;
+            .item {
+               @include flex(center, space-between, 1rem);
+               padding-block: 0.8rem;
+               &_title {
+                  font-size: var(--h3-font-size);
+                  font-weight: normal;
+               }
+               &:nth-of-type(2) {
+                  .item_title {
+                     align-self: flex-start;
+                  }
+               }
+               .input-field,
+               .textarea {
+                  background-color: #b4ebd7;
+                  padding-block: 0.8rem;
+                  padding-left: 1rem;
+                  border: 1px solid #000;
+                  border-radius: 1rem;
+                  width: 60%;
+               }
+               .textarea {
+                  resize: none;
+                  height: 150px;
+                  // styling scrollbar later
+                  //   &::-webkit-scrollbar {
+                  //     width: 0;
+                  //  }
+               }
+            }
+            .save-btn {
+               margin-top: 1.5rem;
+               margin-inline: auto;
+               display: block;
+            }
+         }
+      }
+      .university-logo {
+         width: 40%;
+      }
+   }
+}
+/*=============== BREAKPOINTS ===============*/
+/* CUSTOM SIZE */
+@media (max-width: 700px) {
+   .topic-page .container {
+      flex-direction: column-reverse;
+   }
+   .topic-page .container .content {
+      width: 100%;
+   }
+   .topic-page .container .university-logo {
+      width: 100%;
+      margin-bottom: 3rem;
+      @include flex(center, center);
+   }
+}
+/* EXTRA SMALL */
+@media (max-width: 576px) {
+   .topic-page .container .content .box .item {
+      flex-direction: column;
+   }
+   .topic-page .container .content .box .item .item_title {
+      align-self: flex-start;
+   }
+   .topic-page .container .content .box .item .input-field,
+   .topic-page .container .content .box .item .textarea {
+      width: 100%;
+   }
+}

@@ -1,6 +1,5 @@
-import { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
 import "./assets/css/style.css";
+import { Outlet, Route, Routes } from "react-router-dom";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 import Greeting from "./pages/Greeting";
@@ -8,6 +7,8 @@ import HomePage from "./pages/HomePage";
 import ListOfTopics from "./pages/ListOfTopics";
 import Profile from "./pages/Profile";
 import Workspace from "./pages/Workspace";
+import AddNewTopic from "./pages/topic/AddNewTopic";
+import { EditeTopic } from "./pages/topic/EditeTopic";
 function App() {
    return (
       <>
@@ -18,7 +19,11 @@ function App() {
             <Route path="/homepage" element={<HomePage />} />
             <Route path="/list-of-topics" element={<ListOfTopics />} />
             <Route path="/workspace" element={<Workspace />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile" element={<Outlet />}>
+               <Route index element={<Profile />} />
+               <Route path="add-new-topic" element={<AddNewTopic />} />
+               <Route path="edite-topic" element={<EditeTopic />} />
+            </Route>
          </Routes>
       </>
    );

@@ -1,6 +1,10 @@
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "../components/Header";
 import UniversityLogo from "../components/UniversityLogo";
+import Table from "../components/Table";
+import { getTopicsByDoctorId } from "../redux/topics/topicsActions";
+import { useEffect } from "react";
 
 const Profile = () => {
    const user = localStorage.getItem("user");
@@ -16,7 +20,7 @@ const Profile = () => {
       "Specializare",
    ];
    // Extract data compatible with user Details
-   const tableData = (data) => {
+   const profileData = (data) => {
       if (data?.length > 0) {
          return data.map((e) => {
             return [
@@ -31,7 +35,38 @@ const Profile = () => {
       }
    };
 
+   // Redux Hook
+   const dispatch = useDispatch();
+   const topics = useSelector((state) => state.topics.doctorTopics);
+   useEffect(() => {
+      if (user) {
+         const doctorId = JSON.parse(user).coordonator.id;
+         dispatch(getTopicsByDoctorId(doctorId));
+      }
+   }, []);
+
    if (user) {
+      // Select Main Column in a table
+      const tableCol = ["Nr", "Tema", "Detalii", "Specializare", "Process"];
+      // Extract data compatible with table columns
+      const tableData = (data) => {
+         if (data?.length > 0) {
+            return data.map((e, i) => {
+               return [
+                  i + 1,
+                  e["title"],
+                  e["detalii"],
+                  e["specializare"],
+                  <div className="btn">
+                     <Link to="edite-topic">
+                        <button className="btn edite-btn">Edite</button>
+                     </Link>
+                     <button className="btn delete-btn">Delet</button>
+                  </div>,
+               ];
+            });
+         }
+      };
       return (
          <>
             <Header userType={userType} />
@@ -40,7 +75,7 @@ const Profile = () => {
                   <div className="container">
                      <div className="user-info">
                         <ul className="detils">
-                           {tableData([JSON.parse(user)])?.[0].map((e, i) => (
+                           {profileData([JSON.parse(user)])?.[0].map((e, i) => (
                               <li key={i} className="item">
                                  <h3 className="title">{userDetails[i]}</h3>
                                  {/* Reading mode */}
@@ -57,14 +92,17 @@ const Profile = () => {
                {userType === "coordonator" ? (
                   <section className="section topics">
                      <div className="container">
-                        {/* Code below to get doctor id and then add it to api to get all doctor topic and put it inside table */}
-                        {console.log(JSON.parse(user).coordonator.id)}
                         {/* 
                            - button navigate you to another page to add a new topic
                            - table to doctor's topics
                            - every topics contains in last column to button edite, delete
                            - edite navigate you to another page to edite specific topic
                      */}
+                        <Link to="add-new-topic">
+                           <button className="btn add-btn">Add</button>
+                        </Link>
+
+                        <Table data={tableData(topics)} cols={tableCol} />
                      </div>
                   </section>
                ) : null}

@@ -2,7 +2,6 @@ import { Link, Navigate } from "react-router-dom";
 import Header from "../components/Header";
 import stepsIcon from "../assets/imgs/icons/stepsIcon.png";
 import statusIcon from "../assets/imgs/icons/statusIcon.png";
-import universityLogo from "../assets/imgs/university-logo.png";
 import UniversityLogo from "../components/UniversityLogo";
 
 const HomePage = () => {
@@ -54,12 +53,23 @@ const HomePage = () => {
             <>
                <Header userType={userType} />
                <main className="main">
-                  <h1>coordonator view</h1>;
+                  <div className="container">
+                     <h1>coordonator view</h1>
+                  </div>
                </main>
             </>
          );
       } else if (userType === "adimn") {
-         return <h1>admin view</h1>;
+         return (
+            <>
+               <Header userType={userType} />
+               <main className="main">
+                  <div className="container">
+                     <h1>coordonator view</h1>
+                  </div>
+               </main>
+            </>
+         );
       } else {
          return <h1>Please Login or register </h1>;
       }

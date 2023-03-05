@@ -4,7 +4,8 @@
 `Done` - Design Greeting page\
 `Done` - Design Header Component\
 `Done` - Design Login and Register pages\
-`Working` - Design Support and Profile pages
+`Done` - Design Profile page\
+`Working` - Design Support page
 
 <hr />
 
@@ -18,6 +19,7 @@
 
 #### coordonator
 
+`Done` - Design Add Topic and modify topic pages\
 `0` - Design Students page
 
 #### Admin

@@ -445,6 +445,40 @@ input[type=number] {
     width: 100%;
   }
 }
+/*=============== TABLE COMPONENT ===============*/
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #000;
+  text-align: center;
+}
+.table .main-row .main-cell {
+  font-weight: bold;
+  background-color: #b4ebd7;
+  border: 1px solid #000;
+}
+.table .row .cell {
+  border: 1px solid #000;
+}
+.table .row .title,
+.table .row .details {
+  text-align: left;
+}
+.table .main-cell,
+.table .cell {
+  padding: 1rem;
+}
+
+/*=============== BREAKPOINTS ===============*/
+/* SMALL */
+@media (max-width: 768px) {
+  .cover {
+    overflow-x: scroll;
+  }
+  .cover .table {
+    width: 720px;
+  }
+}
 /*=============== SPINNING COMPONENT ===============*/
 /* Absolute Center Spinner */
 .loading {
@@ -865,37 +899,106 @@ input[type=number] {
   }
 }
 /*===================== LIST OF TIPICS PAGE PAGE =====================*/
-.list-of-topics-page .container .table {
-  width: 100%;
-  border-collapse: collapse;
-  border: 1px solid #000;
-  text-align: center;
+/*=============== BREAKPOINTS ===============*/
+/*=============== TOPIC COMPONENT ===============*/
+.topic-page {
+  padding-bottom: 4rem;
 }
-.list-of-topics-page .container .table .main-row .main-cell {
-  font-weight: bold;
+.topic-page .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+}
+.topic-page .container .content {
+  width: 60%;
+}
+.topic-page .container .content .title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  font-size: var(--h2-font-size);
+  margin-bottom: 2rem;
+}
+.topic-page .container .content .title::before {
+  content: "";
+  display: block;
+  width: 17px;
+  height: 17px;
+  border: 1px solid #000;
+  border-radius: 50%;
   background-color: #b4ebd7;
+}
+.topic-page .container .content .box {
+  background-color: #fff;
+  padding: 1rem 1.7rem;
+  border-radius: 1rem;
+}
+.topic-page .container .content .box .item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.8rem;
+}
+.topic-page .container .content .box .item_title {
+  font-size: var(--h3-font-size);
+  font-weight: normal;
+}
+.topic-page .container .content .box .item:nth-of-type(2) .item_title {
+  align-self: flex-start;
+}
+.topic-page .container .content .box .item .input-field,
+.topic-page .container .content .box .item .textarea {
+  background-color: #b4ebd7;
+  padding-block: 0.8rem;
+  padding-left: 1rem;
   border: 1px solid #000;
+  border-radius: 1rem;
+  width: 60%;
 }
-.list-of-topics-page .container .table .row .cell {
-  border: 1px solid #000;
+.topic-page .container .content .box .item .textarea {
+  resize: none;
+  height: 150px;
 }
-.list-of-topics-page .container .table .row .title,
-.list-of-topics-page .container .table .row .details {
-  text-align: left;
+.topic-page .container .content .box .save-btn {
+  margin-top: 1.5rem;
+  margin-inline: auto;
+  display: block;
 }
-.list-of-topics-page .container .table .main-cell,
-.list-of-topics-page .container .table .cell {
-  padding: 1rem;
+.topic-page .container .university-logo {
+  width: 40%;
 }
 
 /*=============== BREAKPOINTS ===============*/
-/* MEDIUM */
-/* SMALL */
-@media (max-width: 768px) {
-  .cover {
-    overflow-x: scroll;
+/* CUSTOM SIZE */
+@media (max-width: 700px) {
+  .topic-page .container {
+    flex-direction: column-reverse;
   }
-  .list-of-topics-page .container .table {
-    width: 720px;
+  .topic-page .container .content {
+    width: 100%;
+  }
+  .topic-page .container .university-logo {
+    width: 100%;
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
+}
+/* EXTRA SMALL */
+@media (max-width: 576px) {
+  .topic-page .container .content .box .item {
+    flex-direction: column;
+  }
+  .topic-page .container .content .box .item .item_title {
+    align-self: flex-start;
+  }
+  .topic-page .container .content .box .item .input-field,
+  .topic-page .container .content .box .item .textarea {
+    width: 100%;
   }
 }/*# sourceMappingURL=style.css.map */
