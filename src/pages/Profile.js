@@ -54,8 +54,15 @@ const Profile = () => {
       const tableCol = ["Nr", "Tema", "Detalii", "Specializare", "Process"];
       // Extract data compatible with table columns
       const tableData = (data) => {
+         // copy value to prevent read only property error;
+         const sortedArray = [...data];
          if (data?.length > 0) {
-            return data.map((e, i) => {
+            sortedArray.sort((a, b) => {
+               const firEleDate = new Date(a["updated_at"]);
+               const secEleDate = new Date(b["updated_at"]);
+               return +secEleDate - +firEleDate;
+            });
+            return sortedArray.map((e, i) => {
                return [
                   i + 1,
                   e["title"],

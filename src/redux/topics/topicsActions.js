@@ -86,11 +86,40 @@ export const addNewTopic = createAsyncThunk(
          const config = {
             headers: {
                Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+               "Content-Type": "application/json",
             },
          };
 
          const { data } = await axios.post(
             `${baseURL}/api/teme`,
+            topic,
+            config
+         );
+         return data;
+      } catch (error) {
+         // return custom error message from API if any
+         if (error.response && error.response.data.message) {
+            return rejectWithValue(error.response.data.message);
+         } else {
+            return rejectWithValue(error.message);
+         }
+      }
+   }
+);
+// Edation topic
+export const editeTopic = createAsyncThunk(
+   "topics/editeTopic",
+   async ({ topicId, topic }, { rejectWithValue }) => {
+      try {
+         const config = {
+            headers: {
+               Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+               "Content-Type": "application/json",
+            },
+         };
+
+         const { data } = await axios.put(
+            `${baseURL}/api/teme/${topicId}`,
             topic,
             config
          );

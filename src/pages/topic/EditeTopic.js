@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
 import UniversityLogo from "../../components/UniversityLogo";
 import { useEffect, useRef, useState } from "react";
-import { getTopicById } from "../../redux/topics/topicsActions";
+import { editeTopic, getTopicById } from "../../redux/topics/topicsActions";
 
 export const EditeTopic = () => {
    // Select input elements
@@ -36,7 +36,6 @@ export const EditeTopic = () => {
       detailsInput.current.value = topic?.detalii ?? "";
       specInput.current.value = topic?.specializare ?? "";
    }, [topic]);
-   console.log(topic);
    if (user && userType === "coordonator") {
       return (
          <>
@@ -75,14 +74,17 @@ export const EditeTopic = () => {
                         <button
                            className="btn save-btn"
                            onClick={(_) => {
-                              // dispatch(
-                              //    addNewTopic({
-                              //       title: titleInput.current.value,
-                              //       detalii: detailsInput.current.value,
-                              //       specializare: specInput.current.value,
-                              //    })
-                              // );
-                              // navigate("/profile");
+                              dispatch(
+                                 editeTopic({
+                                    topicId: state?.id,
+                                    topic: {
+                                       title: titleInput.current.value,
+                                       detalii: detailsInput.current.value,
+                                       specializare: specInput.current.value,
+                                    },
+                                 })
+                              );
+                              navigate("/profile");
                            }}
                         >
                            Save

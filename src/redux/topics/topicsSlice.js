@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
    addNewTopic,
    deleteTopic,
+   editeTopic,
    getTopicById,
    getTopics,
    getTopicsByDoctorId,
@@ -77,6 +78,25 @@ const topicsSlice = createSlice({
          state.loading = false;
          state.error = payload;
       },
+      // Edation topic
+      [editeTopic.pending]: (state) => {
+         state.loading = true;
+         state.error = null;
+      },
+      [editeTopic.fulfilled]: (state, { payload }) => {
+         state.loading = false;
+         state.success = true;
+         // Get the element index then replace it with new value
+         const index = state.topicsList.findIndex(
+            (e, i) => e[i].id === payload.data.id
+         );
+         state.topicsList[index] = payload.data;
+         state.doctorTopics.unshift(payload.data);
+      },
+      [editeTopic.rejected]: (state, { payload }) => {
+         state.loading = false;
+         state.error = payload;
+      },
       // Deletion the topic
       [deleteTopic.pending]: (state) => {
          state.loading = true;
@@ -85,6 +105,7 @@ const topicsSlice = createSlice({
       [deleteTopic.fulfilled]: (state, { payload }) => {
          state.loading = false;
          state.success = true;
+         // Remove the elemet from topics
          state.doctorTopics = state.doctorTopics.filter(
             (e) => e.id !== payload
          );
