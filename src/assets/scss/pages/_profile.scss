@@ -1,0 +1,81 @@
+@use "../abstracts" as *;
+
+/*===================== PROFILE PAGE =====================*/
+.profile-page {
+   background-image: url("../imgs/body-bg.png");
+   background-position: center top;
+   background-size: 100% 100%;
+   background-repeat: no-repeat;
+   .user-info {
+      .container {
+         @include flex(center, space-between, 0.4rem);
+
+         .detils {
+            width: 50%;
+            background-color: #d9d9d9;
+            background-image: url(../imgs/box-bg.png);
+            background-size: cover;
+            background-repeat: no-repeat;
+            padding: 1rem 1.7rem;
+            border-radius: 2rem;
+            overflow: hidden;
+            .item {
+               @include flex(center, space-between, 1rem);
+               padding-block: 0.8rem;
+               .title {
+                  font-size: var(--h3-font-size);
+                  font-weight: bold;
+               }
+               .text {
+                  font-size: var(--normal-font-size);
+                  color: #000;
+                  background-color: #b4ebd7;
+                  width: 235px;
+                  padding: 0.5rem;
+                  border-radius: 0.5rem;
+               }
+            }
+         }
+         .university-logo {
+            width: 50%;
+            @include flex(center, center);
+         }
+      }
+   }
+   .topics {
+      .container {
+         .cover {
+            margin-top: 2rem;
+         }
+      }
+   }
+}
+/*=============== BREAKPOINTS ===============*/
+/* MEDIUM */
+@media (max-width: 992px) {
+   .profile-page .user-info .container {
+      flex-direction: column-reverse;
+   }
+   .profile-page .user-info .container .detils {
+      margin-top: 2rem;
+      width: 100%;
+   }
+   .profile-page .user-info .container .university-logo {
+      width: 100%;
+      @include flex(center, center);
+   }
+}
+/* EXTRA SMALL */
+@media (max-width: 510px) {
+   .profile-page .user-info .container .detils .item {
+      flex-direction: column;
+      align-items: flex-start;
+   }
+   .profile-page .user-info .container .detils .item .title {
+      text-align: left;
+      font-weight: bold;
+   }
+   .profile-page .user-info .container .detils .item .text {
+      width: 100%;
+   }
+}

@@ -4,7 +4,7 @@
 .topic-page {
    padding-bottom: 4rem;
    .container {
-      @include flex(center, space-between, 0.4rem);
+      @include flex(center, space-between, 1.5rem);
       .content {
          width: 60%;
          .title {
@@ -50,20 +50,20 @@
                   resize: none;
                   height: 150px;
                   // styling scrollbar later
-                  //   &::-webkit-scrollbar {
-                  //     width: 0;
-                  //  }
+                  &::-webkit-scrollbar {
+                     width: 10px;
+                  }
                }
             }
-            .save-btn {
-               margin-top: 1.5rem;
-               margin-inline: auto;
-               display: block;
+            .save-btn-space {
+               @include flex(center, center);
+               height: 80px;
             }
          }
       }
       .university-logo {
          width: 40%;
+         @include flex(center, center);
       }
    }
 }

@@ -1,7 +1,11 @@
 @use "../abstracts" as *;
 
 /*=============== LOGO COMPONENT ===============*/
-.logo {
+.site-logo {
+   padding-top: 1rem;
+   @media (max-width: 768px) {
+      padding-top: 0;
+   }
    .logo-text {
       background-image: linear-gradient(
          90.22deg,

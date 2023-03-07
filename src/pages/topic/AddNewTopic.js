@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
 import UniversityLogo from "../../components/UniversityLogo";
 import { addNewTopic } from "../../redux/topics/topicsActions";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import swal from "sweetalert";
 
 const AddNewTopic = () => {
    // Select input elements
@@ -14,11 +15,59 @@ const AddNewTopic = () => {
    // Get user inof form local storage
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
+
    // Redux Hook
    const dispatch = useDispatch();
-   const topics = useSelector((state) => state.topics.doctorTopics);
+   const topics = useSelector((state) => state.topics);
+
    // Router Hook
    const navigate = useNavigate();
+   const processChecking = async (msg, icon, theClassName) => {
+      await swal(msg, {
+         buttons: false,
+         timer: 3000,
+         icon: icon,
+         className: theClassName,
+         closeOnEsc: false,
+      });
+   };
+   // Vaidation
+   const fieldsValidation = (userInput) => {
+      if (!Object.values(userInput).every((e) => e !== "")) {
+         processChecking("Please Fill All Fields.", "warning", "red-bg");
+      } else {
+         return true;
+      }
+   };
+
+   // handle Request
+   const handleProcess = () => {
+      const userInput = {
+         title: titleInput.current.value,
+         detalii: detailsInput.current.value,
+         specializare: specInput.current.value,
+      };
+      if (fieldsValidation(userInput)) {
+         dispatch(addNewTopic(userInput));
+      }
+   };
+
+   // React Hook
+   // Variable below to manipulate useEffect and prevente run initial-render
+   const firstUpdate = useRef(true);
+   useEffect(() => {
+      titleInput.current.focus();
+      if (firstUpdate.current) {
+         firstUpdate.current = false;
+         return;
+      }
+      if (!topics.loading && topics.error) {
+         processChecking(topics.error, "error", "red-bg");
+      } else if (!topics.loading && topics.success) {
+         processChecking("Add Successfully", "success", "done");
+         navigate("/profile");
+      }
+   }, [topics.error, topics.success]);
    if (user && userType === "coordonator") {
       return (
          <>
@@ -54,21 +103,14 @@ const AddNewTopic = () => {
                               ref={specInput}
                            />
                         </li>
-                        <button
-                           className="btn save-btn"
-                           onClick={(_) => {
-                              dispatch(
-                                 addNewTopic({
-                                    title: titleInput.current.value,
-                                    detalii: detailsInput.current.value,
-                                    specializare: specInput.current.value,
-                                 })
-                              );
-                              navigate("/profile");
-                           }}
-                        >
-                           Save
-                        </button>
+                        <div className="save-btn-space">
+                           <button
+                              className="btn save-btn"
+                              onClick={handleProcess}
+                           >
+                              Save
+                           </button>
+                        </div>
                      </ul>
                   </div>
                   <UniversityLogo />

@@ -31,7 +31,7 @@ const Header = ({ userType, hideLinks }) => {
    window.onscroll = () => {
       if (headerElement.current) {
          const ele = headerElement.current;
-         window.scrollY > 80
+         window.scrollY > 25
             ? ele.classList.add("scroll-header")
             : ele.classList.remove("scroll-header");
       }
@@ -69,8 +69,8 @@ const Header = ({ userType, hideLinks }) => {
                               Logout
                               <img
                                  src={logoutIcon}
-                                 alt="logout-icon"
-                                 className="log-icon"
+                                 alt="btn-icon"
+                                 className="btn-icon"
                               />
                            </button>
                         )}

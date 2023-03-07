@@ -10,6 +10,7 @@ export const navLinks = {
       { title: "Acasă", path: "/homepage" },
       { title: "Teme propuse", path: "/list-of-topics" },
       { title: "Studenți", path: "/students" },
+      { title: "Workspace", path: "/workspace" },
       { title: "Support", path: "/support" },
       { title: "Profile", path: "/profile" },
    ],

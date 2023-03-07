@@ -22,7 +22,8 @@ const authSlice = createSlice({
       // login user
       [userLogin.pending]: (state) => {
          state.loading = true;
-         state.error = null;
+         state.success = false; // Reset a value every Request
+         state.error = null; // Reset a value every Request
       },
       [userLogin.fulfilled]: (state, { payload }) => {
          state.loading = false;
@@ -37,6 +38,7 @@ const authSlice = createSlice({
       // register user
       [registerUser.pending]: (state) => {
          state.loading = true;
+         state.success = false;
          state.error = null;
       },
       [registerUser.fulfilled]: (state, { payload }) => {
@@ -52,6 +54,8 @@ const authSlice = createSlice({
       // logout user
       [userLogout.pending]: (state) => {
          state.loading = true;
+         state.success = false;
+         state.error = null;
       },
       [userLogout.fulfilled]: (state) => {
          state.loading = false;

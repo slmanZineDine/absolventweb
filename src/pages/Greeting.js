@@ -1,5 +1,4 @@
 import Header from "../components/Header";
-import unvLogo from "../assets/imgs/university-logo.png";
 import loginIcon from "../assets/imgs/icons/loginIcon.png";
 import registerIcon from "../assets/imgs/icons/registerIcon.png";
 import { Link, Navigate } from "react-router-dom";
@@ -29,8 +28,8 @@ const Greeting = () => {
                            Login
                            <img
                               src={registerIcon}
-                              alt="logout-icon"
-                              className="log-icon"
+                              alt="btn-icon"
+                              className="btn-icon"
                            />
                         </Link>
                         <p>OR</p>
@@ -38,8 +37,8 @@ const Greeting = () => {
                            Register
                            <img
                               src={loginIcon}
-                              alt="logout-icon"
-                              className="log-icon"
+                              alt="btn-icon"
+                              className="btn-icon"
                            />
                         </Link>
                      </div>

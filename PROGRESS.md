@@ -5,7 +5,8 @@
 `Done` - Design Header Component\
 `Done` - Design Login and Register pages\
 `Done` - Design Profile page\
-`Working` - Design Support page
+`Working` - Design Support page\
+`Working` - Design Page not found 404
 
 <hr />
 

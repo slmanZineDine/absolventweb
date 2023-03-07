@@ -59,14 +59,14 @@
       z-index: 10;
    }
 }
-@mixin authBtn($bg, $hover-color, $width: 100px) {
+@mixin customBtn($bg, $hover-color, $width: 100px) {
    @include flex(center, space-between, 0.2rem);
    width: $width;
-   padding: 0.6rem 1.5rem;
+   padding: 0.6rem 1.3rem;
    background: $bg;
    color: #fff;
    transition: padding-inline 0.3s, color 0.3s;
-   .log-icon {
+   .btn-icon {
       position: absolute;
       top: 50%;
       right: -0.5rem;
@@ -80,7 +80,7 @@
       padding-inline: 0.7rem 1.5rem;
       color: #fff;
       background-color: $hover-color;
-      .log-icon {
+      .btn-icon {
          opacity: 1;
       }
    }

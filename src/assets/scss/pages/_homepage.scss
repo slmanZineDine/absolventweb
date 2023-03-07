@@ -4,7 +4,7 @@
 
 .homepage-student {
    .container {
-      height: calc(100vh - $header-height - 5rem);
+      height: calc(100vh - var(--header-height) - 5rem);
       @include flex(center, space-between, 0.5rem);
       .content {
          width: 80%;

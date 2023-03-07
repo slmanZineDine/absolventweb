@@ -1,4 +1,3 @@
-import unvLogo from "../assets/imgs/university-logo.png";
 import mailIcon from "../assets/imgs/icons/mailIcon.png";
 import lockIcon from "../assets/imgs/icons/lockIcon.png";
 import phoneIcon from "../assets/imgs/icons/phoneIcon.png";
@@ -6,7 +5,7 @@ import addressIcon from "../assets/imgs/icons/addressIcon.png";
 import { Logo } from "../components/Logo";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Spinning from "../components/Spinning";
 import { registerUser } from "../redux/auth/authActions";
 import swal from "sweetalert";
@@ -29,6 +28,9 @@ const Register = () => {
    const facultyInput = useRef(null);
    const specializareInput = useRef(null);
 
+   // Get ueser info
+   const user = localStorage.getItem("user");
+
    // Redux Hook
    const dispatch = useDispatch();
    const userInfo = useSelector((state) => state.auth);
@@ -50,17 +52,17 @@ const Register = () => {
    const fieldsValidation = (userInput) => {
       const emailValidation = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       if (!Object.values(userInput).every((e) => e !== "")) {
-         processChecking("Please fill all fields.", "warning", "red-bg");
+         processChecking("Please Fill All Fields.", "warning", "red-bg");
       } else if (!emailValidation.test(userInput.email)) {
          processChecking(
-            "You have entered an invalid email address.",
+            "You Have Entered An Invalid Email Address.",
             "warning",
             "red-bg"
          );
       } else if (userInput.password.length < 6) {
-         processChecking("Your password is too short.", "warning", "red-bg");
+         processChecking("Your Password Is Too Short.", "warning", "red-bg");
       } else if (userInput.password !== userInput["password_confirmation"]) {
-         processChecking("passwords are not identical.", "warning", "red-bg");
+         processChecking("Passwords Are Not Identical.", "warning", "red-bg");
       } else {
          return true;
       }
@@ -79,7 +81,7 @@ const Register = () => {
          specializare: specializareInput.current.value,
          // ================ Dev mode ==================
          // name: "name1",
-         // email: "num00812212@gmail.com",
+         // email: "num0081221dddd2@gmail.com",
          // password: "123456",
          // password_confirmation: "123456",
          // phone: "123456",
@@ -97,179 +99,186 @@ const Register = () => {
       }
    };
    useEffect(() => {
-      if (userInfo.error) {
+      if (!user) {
+         nameInput.current.focus();
+      }
+      if (!userInfo.loading && userInfo.error) {
          processChecking(userInfo.error, "error", "red-bg");
-      } else if (userInfo.success) {
+      } else if (!userInfo.loading && userInfo.success) {
          processChecking("Register Success", "success", "done");
          navigate("/homepage", { replace: true });
       }
    }, [userInfo.error, userInfo.success]);
-   return (
-      <div className="auth">
-         <div className="container">
-            <div className="content">
-               <div className="form">
-                  <Logo />
-                  <form className="form-element">
-                     <div className="form-group">
-                        <label>User type</label>
-                        <div
-                           className="custom-select"
-                           onClick={(_) =>
-                              userTypeSelect.current.classList.toggle(
-                                 "show-options"
-                              )
-                           }
-                        >
-                           {selectedType !== null
-                              ? userTypes[selectedType]
-                              : "Select type"}
-                           <span className="arrow"></span>
-                           <ul className="select" ref={userTypeSelect}>
-                              {userTypes.map((e, i) => {
-                                 return (
-                                    <li
-                                       key={i}
-                                       className="option"
-                                       onClick={(_) => setSelectedType(i)}
-                                    >
-                                       {e}
-                                    </li>
-                                 );
-                              })}
-                           </ul>
+   if (user) {
+      return <Navigate to="/homepage" />;
+   } else {
+      return (
+         <div className="auth">
+            <div className="container">
+               <div className="content">
+                  <div className="form">
+                     <Logo />
+                     <form className="form-element">
+                        <div className="form-group">
+                           <label>User type</label>
+                           <div
+                              className="custom-select"
+                              onClick={(_) =>
+                                 userTypeSelect.current.classList.toggle(
+                                    "show-options"
+                                 )
+                              }
+                           >
+                              {selectedType !== null
+                                 ? userTypes[selectedType]
+                                 : "Select type"}
+                              <span className="arrow"></span>
+                              <ul className="select" ref={userTypeSelect}>
+                                 {userTypes.map((e, i) => {
+                                    return (
+                                       <li
+                                          key={i}
+                                          className="option"
+                                          onClick={(_) => setSelectedType(i)}
+                                       >
+                                          {e}
+                                       </li>
+                                    );
+                                 })}
+                              </ul>
+                           </div>
                         </div>
-                     </div>
-                     <div className="form-group">
-                        <label htmlFor="username">User name</label>
-                        <input
-                           type="text"
-                           className="form-input"
-                           required
-                           id="username"
-                           placeholder="Write here"
-                           ref={nameInput}
-                        />
-                     </div>
-                     <div className="form-group">
-                        <label htmlFor="email">User email</label>
-                        <div className="img-input">
-                           <img src={mailIcon} alt="mail-icon" />
+                        <div className="form-group">
+                           <label htmlFor="username">User name</label>
+                           <input
+                              type="text"
+                              className="form-input"
+                              required
+                              id="username"
+                              placeholder="Write here"
+                              ref={nameInput}
+                           />
                         </div>
-                        <input
-                           type="email"
-                           className="form-input"
-                           required
-                           id="email"
-                           placeholder="Write here"
-                           ref={emailInput}
-                        />
-                     </div>
-                     <div className="form-group">
-                        <label htmlFor="password">Password</label>
-                        <div className="img-input">
-                           <img src={lockIcon} alt="lock-icon" />
+                        <div className="form-group">
+                           <label htmlFor="email">User email</label>
+                           <div className="img-input">
+                              <img src={mailIcon} alt="mail-icon" />
+                           </div>
+                           <input
+                              type="email"
+                              className="form-input"
+                              required
+                              id="email"
+                              placeholder="Write here"
+                              ref={emailInput}
+                           />
                         </div>
-                        <input
-                           type="password"
-                           className="form-input"
-                           required
-                           id="password"
-                           placeholder="Write here"
-                           ref={passwordInput}
-                        />
-                     </div>
-                     <div className="form-group">
-                        <label htmlFor="password-confirm">
-                           Password Confirm
-                        </label>
-                        <div className="img-input">
-                           <img src={lockIcon} alt="lock-icon" />
+                        <div className="form-group">
+                           <label htmlFor="password">Password</label>
+                           <div className="img-input">
+                              <img src={lockIcon} alt="lock-icon" />
+                           </div>
+                           <input
+                              type="password"
+                              className="form-input"
+                              required
+                              id="password"
+                              placeholder="Write here"
+                              ref={passwordInput}
+                           />
                         </div>
-                        <input
-                           type="password"
-                           className="form-input"
-                           required
-                           id="password-confirm"
-                           placeholder="Write here"
-                           ref={passwordConFirmInput}
-                        />
-                     </div>
-                     <div className="form-group">
-                        <label htmlFor="phone">Phone</label>
-                        <div className="img-input">
-                           <img src={phoneIcon} alt="phone-icon" />
+                        <div className="form-group">
+                           <label htmlFor="password-confirm">
+                              Password Confirm
+                           </label>
+                           <div className="img-input">
+                              <img src={lockIcon} alt="lock-icon" />
+                           </div>
+                           <input
+                              type="password"
+                              className="form-input"
+                              required
+                              id="password-confirm"
+                              placeholder="Write here"
+                              ref={passwordConFirmInput}
+                           />
                         </div>
-                        <input
-                           type="number"
-                           className="form-input"
-                           required
-                           id="phone"
-                           placeholder="Write here"
-                           ref={phoneInput}
-                        />
-                     </div>
-                     <div className="form-group">
-                        <label htmlFor="address">Address</label>
-                        <div className="img-input">
-                           <img src={addressIcon} alt="address-icon" />
+                        <div className="form-group">
+                           <label htmlFor="phone">Phone</label>
+                           <div className="img-input">
+                              <img src={phoneIcon} alt="phone-icon" />
+                           </div>
+                           <input
+                              type="number"
+                              className="form-input"
+                              required
+                              id="phone"
+                              placeholder="Write here"
+                              ref={phoneInput}
+                           />
                         </div>
-                        <input
-                           type="text"
-                           className="form-input"
-                           required
-                           id="address"
-                           placeholder="Write here"
-                           ref={addressInput}
-                        />
-                     </div>
-                     <div className="form-group">
-                        <label htmlFor="specializare">Specializare</label>
-                        <input
-                           type="text"
-                           className="form-input"
-                           required
-                           id="specializare"
-                           placeholder="Write here"
-                           ref={specializareInput}
-                        />
-                     </div>
-                     <div className="form-group">
-                        <label htmlFor="facultatea">Facultatea</label>
-                        <input
-                           type="text"
-                           className="form-input"
-                           required
-                           id="facultatea"
-                           placeholder="Write here"
-                           ref={facultyInput}
-                        />
-                     </div>
+                        <div className="form-group">
+                           <label htmlFor="address">Address</label>
+                           <div className="img-input">
+                              <img src={addressIcon} alt="address-icon" />
+                           </div>
+                           <input
+                              type="text"
+                              className="form-input"
+                              required
+                              id="address"
+                              placeholder="Write here"
+                              ref={addressInput}
+                           />
+                        </div>
+                        <div className="form-group">
+                           <label htmlFor="specializare">Specializare</label>
+                           <input
+                              type="text"
+                              className="form-input"
+                              required
+                              id="specializare"
+                              placeholder="Write here"
+                              ref={specializareInput}
+                           />
+                        </div>
+                        <div className="form-group">
+                           <label htmlFor="facultatea">Facultatea</label>
+                           <input
+                              type="text"
+                              className="form-input"
+                              required
+                              id="facultatea"
+                              placeholder="Write here"
+                              ref={facultyInput}
+                           />
+                        </div>
 
-                     {userInfo.loading ? (
-                        <Spinning />
-                     ) : (
-                        <button
-                           type="submit"
-                           className="btn login-page-btn"
-                           onClick={handleRegister}
-                        >
-                           Rigister
-                        </button>
-                     )}
-                     <p className="note">
-                        Already have an account?{" "}
-                        <Link to="/login" className="link">
-                           Login
-                        </Link>
-                     </p>
-                  </form>
+                        {userInfo.loading ? (
+                           <Spinning />
+                        ) : (
+                           <button
+                              type="submit"
+                              className="btn auth-page-btn"
+                              onClick={handleRegister}
+                           >
+                              Rigister
+                           </button>
+                        )}
+                        <p className="note">
+                           Already have an account?{" "}
+                           <Link to="/login" className="link">
+                              Login
+                           </Link>
+                        </p>
+                     </form>
+                  </div>
+                  <UniversityLogo />
                </div>
-               <UniversityLogo />
             </div>
          </div>
-      </div>
-   );
+      );
+   }
 };
 
 export default Register;

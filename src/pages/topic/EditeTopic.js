@@ -2,8 +2,9 @@ import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
 import UniversityLogo from "../../components/UniversityLogo";
-import { useEffect, useRef, useState } from "react";
-import { editeTopic, getTopicById } from "../../redux/topics/topicsActions";
+import { useEffect, useRef } from "react";
+import { editeTopic } from "../../redux/topics/topicsActions";
+import swal from "sweetalert";
 
 export const EditeTopic = () => {
    // Select input elements
@@ -17,25 +18,77 @@ export const EditeTopic = () => {
 
    // Redux Hook
    const dispatch = useDispatch();
-   const topic = useSelector((state) => state.topics.topic);
+   const topics = useSelector((state) => state.topics);
+
    // Router Hook
    const { state } = useLocation();
    const navigate = useNavigate();
 
+   // Sweet alert labrary
+   const processChecking = async (msg, icon, theClassName) => {
+      await swal(msg, {
+         buttons: false,
+         timer: 3000,
+         icon: icon,
+         className: theClassName,
+         closeOnEsc: false,
+      });
+   };
+
+   // Vaidation
+   const fieldsValidation = (userInput) => {
+      if (!Object.values(userInput).every((e) => e !== "")) {
+         processChecking("Please Fill All Fields.", "warning", "red-bg");
+      } else {
+         return true;
+      }
+   };
+
+   // handle Request
+   const handleProcess = () => {
+      const userInput = {
+         title: titleInput.current.value,
+         detalii: detailsInput.current.value,
+         specializare: specInput.current.value,
+      };
+      if (fieldsValidation(userInput)) {
+         dispatch(
+            editeTopic({
+               topicId: state?.id,
+               topic: userInput,
+            })
+         );
+      }
+   };
    // React Hook
-   // const [inputValues, setInputValues] = useState(topic);
    useEffect(() => {
-      if (state?.id) {
-         dispatch(getTopicById(state.id));
+      // Prevent user to enter this page directly
+      if (state?.id && topics.doctorTopics.length > 0) {
+         const topic = topics.doctorTopics.find((e) => e.id === state.id);
+         titleInput.current.value = topic?.title ?? "";
+         titleInput.current.focus();
+         detailsInput.current.value = topic?.detalii ?? "";
+         specInput.current.value = topic?.specializare ?? "";
       } else {
          navigate("/profile");
       }
    }, []);
+
+   // Variable below to manipulate useEffect and prevente run initial-render
+   const firstUpdate = useRef(true);
    useEffect(() => {
-      titleInput.current.value = topic?.title ?? "";
-      detailsInput.current.value = topic?.detalii ?? "";
-      specInput.current.value = topic?.specializare ?? "";
-   }, [topic]);
+      if (firstUpdate.current) {
+         firstUpdate.current = false;
+         return;
+      }
+      if (!topics.loading && topics.error) {
+         processChecking(topics.error, "error", "red-bg");
+      } else if (!topics.loading && topics.success) {
+         processChecking("Edite Successfully", "success", "done");
+         navigate("/profile");
+      }
+   }, [topics.error, topics.success]);
+
    if (user && userType === "coordonator") {
       return (
          <>
@@ -71,24 +124,15 @@ export const EditeTopic = () => {
                               ref={specInput}
                            />
                         </li>
-                        <button
-                           className="btn save-btn"
-                           onClick={(_) => {
-                              dispatch(
-                                 editeTopic({
-                                    topicId: state?.id,
-                                    topic: {
-                                       title: titleInput.current.value,
-                                       detalii: detailsInput.current.value,
-                                       specializare: specInput.current.value,
-                                    },
-                                 })
-                              );
-                              navigate("/profile");
-                           }}
-                        >
-                           Save
-                        </button>
+
+                        <div className="save-btn-space">
+                           <button
+                              className="btn save-btn"
+                              onClick={handleProcess}
+                           >
+                              Save
+                           </button>
+                        </div>
                      </ul>
                   </div>
                   <UniversityLogo />

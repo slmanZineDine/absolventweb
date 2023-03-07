@@ -25,7 +25,8 @@ const topicsSlice = createSlice({
       // Getting all topics
       [getTopics.pending]: (state) => {
          state.loading = true;
-         state.error = null;
+         state.success = false; // Reset a value every Request
+         state.error = null; // Reset a value every Request
       },
       [getTopics.fulfilled]: (state, { payload }) => {
          state.loading = false;
@@ -39,6 +40,7 @@ const topicsSlice = createSlice({
       // Getting the topic by Id
       [getTopicById.pending]: (state) => {
          state.loading = true;
+         state.success = false;
          state.error = null;
       },
       [getTopicById.fulfilled]: (state, { payload }) => {
@@ -53,6 +55,7 @@ const topicsSlice = createSlice({
       // Getting doctor's topics
       [getTopicsByDoctorId.pending]: (state) => {
          state.loading = true;
+         state.success = false;
          state.error = null;
       },
       [getTopicsByDoctorId.fulfilled]: (state, { payload }) => {
@@ -67,6 +70,7 @@ const topicsSlice = createSlice({
       // Adding a new topic
       [addNewTopic.pending]: (state) => {
          state.loading = true;
+         state.success = false;
          state.error = null;
       },
       [addNewTopic.fulfilled]: (state, { payload }) => {
@@ -81,11 +85,13 @@ const topicsSlice = createSlice({
       // Edation topic
       [editeTopic.pending]: (state) => {
          state.loading = true;
+         state.success = false;
          state.error = null;
       },
       [editeTopic.fulfilled]: (state, { payload }) => {
          state.loading = false;
          state.success = true;
+         state.error = null;
          // Get the element index then replace it with new value
          const index = state.topicsList.findIndex(
             (e, i) => e[i].id === payload.data.id
@@ -100,6 +106,7 @@ const topicsSlice = createSlice({
       // Deletion the topic
       [deleteTopic.pending]: (state) => {
          state.loading = true;
+         state.success = false;
          state.error = null;
       },
       [deleteTopic.fulfilled]: (state, { payload }) => {
