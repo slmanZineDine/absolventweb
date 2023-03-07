@@ -94,7 +94,7 @@ const Profile = () => {
                      <button
                         className="btn delete-btn"
                         onClick={() => {
-                           // dispatch(deleteTopic(e.id));
+                           dispatch(deleteTopic(e.id));
                            confirmDeletion(e.id);
                         }}
                      >

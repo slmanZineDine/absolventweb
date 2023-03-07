@@ -55,11 +55,11 @@ const Login = () => {
    const handleLogin = (e) => {
       e.preventDefault();
       const userLoginInfo = {
-         email: emailInput.current.value,
-         password: passwordInput.current.value,
+         // email: emailInput.current.value,
+         // password: passwordInput.current.value,
          // ================ Dev mode ==================
-         // email: "doctor11@gmail.com",
-         // password: "123456",
+         email: "doctor11@gmail.com",
+         password: "123456",
       };
 
       if (fieldsValidation(userLoginInfo)) {

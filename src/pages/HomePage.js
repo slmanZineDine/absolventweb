@@ -1,5 +1,6 @@
 import { Link, Navigate } from "react-router-dom";
 import Header from "../components/Header";
+import Table from "../components/Table";
 import stepsIcon from "../assets/imgs/icons/stepsIcon.png";
 import statusIcon from "../assets/imgs/icons/statusIcon.png";
 import UniversityLogo from "../components/UniversityLogo";
@@ -49,12 +50,94 @@ const HomePage = () => {
             </>
          );
       } else if (userType === "coordonator") {
+         // Select Main Column in a tables
+         const tableCol1 = [
+            "Nr",
+            "Student",
+            "Titlul lucrării",
+            "Specializare",
+            "Statutul de student",
+         ];
+         const tableCol2 = ["Nr", "Student", "Title", "Deadline"];
+         // Extract data compatible with table columns num 01
+         // const tableData = (data) => {
+         //    // copy value to prevent read only property error;
+         //    const sortedArray = [...data];
+         //    if (data?.length > 0) {
+         //       // sorting topic
+         //       sortedArray.sort((a, b) => {
+         //          const firEleDate = new Date(a["updated_at"]);
+         //          const secEleDate = new Date(b["updated_at"]);
+         //          return +secEleDate - +firEleDate;
+         //       });
+         //       return sortedArray.map((e, i) => {
+         //          return [
+         //             `${i + 1}.`,
+         //             e["title"],
+         //             e["detalii"],
+         //             e["specializare"],
+         //             <div className="topic-btns">
+         //                <button
+         //                   className="btn edite-btn"
+         //                   onClick={() => {
+         //                      navigate("edite-topic", {
+         //                         state: { id: e.id },
+         //                      });
+         //                   }}
+         //                >
+         //                   Edite
+         //                   <img
+         //                      src={editeIcon}
+         //                      alt="btn-icon"
+         //                      className="btn-icon"
+         //                   />
+         //                </button>
+         //                <button
+         //                   className="btn delete-btn"
+         //                   onClick={() => {
+         //                      // dispatch(deleteTopic(e.id));
+         //                      confirmDeletion(e.id);
+         //                   }}
+         //                >
+         //                   Delete
+         //                   <img
+         //                      src={deleteIcon}
+         //                      alt="btn-icon"
+         //                      className="btn-icon"
+         //                   />
+         //                </button>
+         //             </div>,
+         //          ];
+         //       });
+         //    }
+         // };
          return (
             <>
                <Header userType={userType} />
-               <main className="main">
+               <main className="main homepage-coordonator">
                   <div className="container">
-                     <h1>coordonator view</h1>
+                     <div className="content">
+                        <div className="title">
+                           <img
+                              src={statusIcon}
+                              alt="status-icon"
+                              className="icon"
+                           />
+                           <p className="text">Studenților în așteptare</p>
+                        </div>
+                        <Table cols={tableCol1} />
+                     </div>
+                     <div className="content">
+                        <div className="title">
+                           <img
+                              src={stepsIcon}
+                              alt="steps-icon"
+                              className="icon"
+                           />
+                           <p className="text">Sarcinile tale</p>
+                        </div>
+                        <Table cols={tableCol2} />
+                     </div>
                   </div>
                </main>
             </>

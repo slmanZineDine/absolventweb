@@ -34,6 +34,10 @@
 @media (max-width: 992px) {
    .cover {
       overflow-x: scroll;
+      /* Height */
+      &::-webkit-scrollbar {
+         height: 10px;
+      }
    }
    .cover .table {
       min-width: 940px;

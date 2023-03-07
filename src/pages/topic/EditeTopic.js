@@ -144,3 +144,4 @@ export const EditeTopic = () => {
       <Navigate to="/profile" />;
    }
 };
+export default EditeTopic;

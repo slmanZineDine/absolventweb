@@ -1,7 +1,15 @@
 @use "../abstracts" as *;
 
-/*===================== HOME PAGE PAGE =====================*/
-
+/*===================== HOMEPAGE PAGE =====================*/
+.homepage-student,
+.homepage-coordonator,
+.homepage-admine {
+   background-image: url("../imgs/body-bg.png");
+   background-position: center top;
+   background-size: 100% 100%;
+   background-repeat: no-repeat;
+   min-height: 100vh;
+}
 .homepage-student {
    .container {
       height: calc(100vh - var(--header-height) - 5rem);
@@ -25,6 +33,23 @@
                   font-weight: bold;
                }
             }
+         }
+      }
+   }
+}
+.homepage-coordonator {
+   .container {
+      .content {
+         width: 80%;
+         padding-top: 2rem;
+         .title {
+            @include flex(center, flex-start, 1rem);
+            font-size: var(--h2-font-size);
+            font-weight: bold;
+            margin-bottom: 2rem;
+         }
+         .table {
+            margin-bottom: 2rem;
          }
       }
    }

@@ -8,9 +8,10 @@ import ListOfTopics from "./pages/ListOfTopics";
 import Profile from "./pages/Profile";
 import Workspace from "./pages/Workspace";
 import AddNewTopic from "./pages/topic/AddNewTopic";
-import { EditeTopic } from "./pages/topic/EditeTopic";
+import EditeTopic from "./pages/topic/EditeTopic";
 import Support from "./pages/Support";
 import PageNotFound from "./pages/PageNotFound";
+import Student from "./pages/Students";
 
 function App() {
    return (
@@ -27,6 +28,7 @@ function App() {
                <Route path="add-new-topic" element={<AddNewTopic />} />
                <Route path="edite-topic" element={<EditeTopic />} />
             </Route>
+            <Route path="/students" element={<Student />} />
             <Route path="/support" element={<Support />} />
             <Route path="*" element={<PageNotFound />} />
          </Routes>
