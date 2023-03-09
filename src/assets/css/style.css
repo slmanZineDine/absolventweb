@@ -95,7 +95,7 @@ input[type=number] {
 /* Scrollbar Styling */
 /* width */
 ::-webkit-scrollbar {
-  width: 15px;
+  width: 12px;
 }
 
 /* Track */
@@ -109,6 +109,7 @@ input[type=number] {
 ::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 10px;
+  width: 12px;
 }
 
 /* Handle on hover */
@@ -123,7 +124,7 @@ input[type=number] {
 }
 
 .main {
-  padding-top: calc(var(--header-height) + 1rem);
+  padding-top: calc(var(--header-height) + 3rem);
   padding-bottom: 2rem;
 }
 
@@ -207,7 +208,7 @@ input[type=number] {
   flex-direction: column;
   transition: border-bottom 0.08s;
 }
-@media (min-width: 768px) and (max-width: 991px) {
+@media (min-width: 769px) and (max-width: 991px) {
   .header .nav {
     height: 134px;
   }
@@ -497,7 +498,9 @@ input[type=number] {
   opacity: 1;
 }
 
-.add-btn {
+.add-btn,
+.post-btn,
+.meeting-btn {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -508,7 +511,9 @@ input[type=number] {
   color: #fff;
   transition: padding-inline 0.3s, color 0.3s;
 }
-.add-btn .btn-icon {
+.add-btn .btn-icon,
+.post-btn .btn-icon,
+.meeting-btn .btn-icon {
   position: absolute;
   top: 50%;
   right: -0.5rem;
@@ -518,16 +523,21 @@ input[type=number] {
   transform: translate(-50%, -50%);
   transition: opacity 0.5s;
 }
-.add-btn:hover {
+.add-btn:hover,
+.post-btn:hover,
+.meeting-btn:hover {
   padding-inline: 0.7rem 1.5rem;
   color: #fff;
   background-color: #007bff;
 }
-.add-btn:hover .btn-icon {
+.add-btn:hover .btn-icon,
+.post-btn:hover .btn-icon,
+.meeting-btn:hover .btn-icon {
   opacity: 1;
 }
 
-.edite-btn {
+.edite-btn,
+.task-btn {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -538,7 +548,8 @@ input[type=number] {
   color: #fff;
   transition: padding-inline 0.3s, color 0.3s;
 }
-.edite-btn .btn-icon {
+.edite-btn .btn-icon,
+.task-btn .btn-icon {
   position: absolute;
   top: 50%;
   right: -0.5rem;
@@ -548,12 +559,14 @@ input[type=number] {
   transform: translate(-50%, -50%);
   transition: opacity 0.5s;
 }
-.edite-btn:hover {
+.edite-btn:hover,
+.task-btn:hover {
   padding-inline: 0.7rem 1.5rem;
   color: #fff;
   background-color: #28a745;
 }
-.edite-btn:hover .btn-icon {
+.edite-btn:hover .btn-icon,
+.task-btn:hover .btn-icon {
   opacity: 1;
 }
 
@@ -1125,6 +1138,15 @@ input[type=number] {
   }
 }
 /*===================== LIST OF TIPICS PAGE PAGE =====================*/
+.list-of-topics-page .container .content {
+  margin-bottom: 3rem;
+}
+.list-of-topics-page .container .content .title {
+  font-weight: normal;
+  font-size: var(--h2-font-size);
+  margin-bottom: 1rem;
+}
+
 /*=============== BREAKPOINTS ===============*/
 /*===================== PROFILE PAGE =====================*/
 .profile-page {
@@ -1284,7 +1306,103 @@ input[type=number] {
     padding-inline: 1rem;
   }
 }
-/*===================== STUDENT PAGE =====================*/ /*=============== TOPIC COMPONENT ===============*/
+/*===================== STUDENT PAGE =====================*/
+.students-page-coordonator,
+.students-page-admin {
+  background-image: url("../imgs/body-bg.png");
+  background-position: center top;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+.students-page-coordonator .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.students-page-coordonator .container .content {
+  width: 70%;
+}
+.students-page-coordonator .container .content .title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  font-size: var(--h2-font-size);
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+/*=============== BREAKPOINTS ===============*/
+/* MEDIUM */
+@media (max-width: 992px) {
+  .students-page-coordonator .container {
+    flex-direction: column-reverse;
+    justify-content: center;
+    gap: 0;
+  }
+  .students-page-coordonator .container .content {
+    width: 100%;
+    margin-top: 2rem;
+  }
+}
+/*===================== WORKSPACE PAGE =====================*/
+.workspace-page {
+  background-image: url("../imgs/body-bg.png");
+  background-position: center top;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+.workspace-page .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.workspace-page .container .content {
+  width: 70%;
+}
+.workspace-page .container .content .workspace-info .item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.workspace-page .container .content .workspace-info .item::before {
+  content: "";
+  display: block;
+  width: 10px;
+  height: 10px;
+  border: 1px solid #000;
+  border-radius: 50%;
+  background-color: #b4ebd7;
+}
+.workspace-page .container .content .workspace-btns {
+  margin-block: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+/*=============== BREAKPOINTS ===============*/
+/* MEDIUM */
+@media (max-width: 992px) {
+  .workspace-page .container {
+    flex-direction: column-reverse;
+    justify-content: center;
+    gap: 0;
+  }
+  .workspace-page .container .content {
+    width: 100%;
+    margin-top: 2rem;
+  }
+}
+/*=============== TOPIC COMPONENT ===============*/
 .topic-page {
   padding-bottom: 4rem;
 }
@@ -1297,7 +1415,7 @@ input[type=number] {
 .topic-page .container .content {
   width: 60%;
 }
-.topic-page .container .content .title {
+.topic-page .container .content > .title {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -1305,7 +1423,7 @@ input[type=number] {
   font-size: var(--h2-font-size);
   margin-bottom: 2rem;
 }
-.topic-page .container .content .title::before {
+.topic-page .container .content > .title::before {
   content: "";
   display: block;
   width: 17px;
@@ -1356,13 +1474,6 @@ input[type=number] {
   gap: 0;
   height: 80px;
 }
-.topic-page .container .university-logo {
-  width: 40%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
-}
 
 /*=============== BREAKPOINTS ===============*/
 /* CUSTOM SIZE */
@@ -1372,14 +1483,6 @@ input[type=number] {
   }
   .topic-page .container .content {
     width: 100%;
-  }
-  .topic-page .container .university-logo {
-    width: 100%;
-    margin-bottom: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
   }
 }
 /* EXTRA SMALL */
@@ -1394,4 +1497,237 @@ input[type=number] {
   .topic-page .container .content .box .item .textarea {
     width: 100%;
   }
+}
+/*===================== EVETN PAGE =====================*/
+.event-page {
+  background-image: url("../imgs/body-bg.png");
+  background-position: center top;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+.event-page .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+.event-page .container .content {
+  width: 60%;
+}
+.event-page .container .content > .title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  font-size: var(--h2-font-size);
+  margin-bottom: 2rem;
+}
+.event-page .container .content > .title::before {
+  content: "";
+  display: block;
+  width: 17px;
+  height: 17px;
+  border: 1px solid #000;
+  border-radius: 50%;
+  background-color: #b4ebd7;
+}
+.event-page .container .content .box {
+  background-color: #fff;
+  padding: 1rem 1.7rem;
+  border-radius: 1rem;
+}
+.event-page .container .content .box .item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.8rem;
+}
+.event-page .container .content .box .item_title {
+  font-size: var(--h3-font-size);
+  font-weight: normal;
+}
+.event-page .container .content .box .item:nth-of-type(2) .item_title {
+  align-self: flex-start;
+}
+.event-page .container .content .box .item .input-field,
+.event-page .container .content .box .item .textarea {
+  background-color: #b4ebd7;
+  padding-block: 0.8rem;
+  padding-left: 1rem;
+  border: 1px solid #000;
+  border-radius: 1rem;
+  width: 60%;
+}
+.event-page .container .content .box .item .textarea {
+  resize: none;
+  height: 150px;
+}
+.event-page .container .content .box .item .textarea::-webkit-scrollbar {
+  width: 10px;
+}
+.event-page .container .content .box .item .file-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  background-color: #fff;
+  padding-block: 0.8rem;
+  border: 1px solid #000;
+  border-radius: 1rem;
+  width: 60%;
+  cursor: pointer;
+}
+.event-page .container .content .box .item .file-input .btn-icon {
+  background-color: #000;
+  width: 20px;
+  height: 20px;
+}
+.event-page .container .content .box .item .file-input #file {
+  display: none;
+}
+.event-page .container .content .box .save-btn-space {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  height: 80px;
+}
+
+/*=============== BREAKPOINTS ===============*/
+/* CUSTOM SIZE */
+@media (max-width: 700px) {
+  .event-page .container {
+    flex-direction: column-reverse;
+  }
+  .event-page .container .content {
+    width: 100%;
+  }
+}
+/* EXTRA SMALL */
+@media (max-width: 576px) {
+  .event-page .container .content .box .item {
+    flex-direction: column;
+  }
+  .event-page .container .content .box .item .item_title {
+    align-self: flex-start;
+  }
+  .event-page .container .content .box .item .input-field,
+  .event-page .container .content .box .item .textarea {
+    width: 100%;
+  }
+}
+/*===================== POST PAGE =====================*/
+.post-page {
+  background-image: url("../imgs/body-bg.png");
+  background-position: center top;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+.post-page .container .content {
+  width: 100%;
+}
+.post-page .container .content > .title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  font-size: var(--h2-font-size);
+  margin-bottom: 2rem;
+}
+.post-page .container .content > .title::before {
+  content: "";
+  display: block;
+  width: 17px;
+  height: 17px;
+  border: 1px solid #000;
+  border-radius: 50%;
+  background-color: #b4ebd7;
+}
+.post-page .container .content .box {
+  background-color: #fff;
+  padding: 1rem 1.7rem;
+  border-radius: 1rem;
+}
+.post-page .container .content .box .info {
+  border-bottom: 1px solid #000;
+}
+.post-page .container .content .box .info .title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.post-page .container .content .box .info .title .topic-name {
+  font-weight: normal;
+}
+.post-page .container .content .box .info .title .btn-icon {
+  width: 30px;
+  height: 30px;
+}
+.post-page .container .content .box .info .post-info {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+.post-page .container .content .box .info .post-info > .username {
+  font-weight: normal;
+}
+.post-page .container .content .box .text {
+  padding-block: 1.2rem;
+}
+.post-page .container .content .box .text > p {
+  line-height: 1.5;
+}
+.post-page .container .content .comments {
+  margin-top: 0.5rem;
+}
+.post-page .container .content .comments .add-comment {
+  background-color: #fff;
+  padding: 1rem 1.7rem;
+  border-radius: 1rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.5rem;
+}
+.post-page .container .content .comments .add-comment .input-field {
+  padding: 0.5rem 2rem 0;
+  border: 1px solid #000;
+  border-radius: 2rem;
+  flex: 1;
+  min-height: 20px;
+  resize: none;
+}
+.post-page .container .content .comments .add-comment .btn-icon {
+  width: 25px;
+  height: 25px;
+}
+.post-page .container .content .comments .add-comment .send {
+  background-color: transparent;
+}
+.post-page .container .content .comments .comments-list {
+  background-color: #fff;
+  padding: 1rem 1.7rem;
+  border-radius: 1rem;
+  margin-top: 1rem;
+}
+.post-page .container .content .comments .comments-list > .title {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.post-page .container .content .comments .comments-list .comment {
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #000;
+}
+.post-page .container .content .comments .comments-list .comment .text {
+  margin-block: 0.5rem;
+  line-height: 1.5;
 }/*# sourceMappingURL=style.css.map */

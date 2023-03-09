@@ -57,7 +57,7 @@ input[type="number"] {
 /* Scrollbar Styling */
 /* width */
 ::-webkit-scrollbar {
-   width: 15px;
+   width: 12px;
 }
 
 /* Track */
@@ -71,6 +71,7 @@ input[type="number"] {
 ::-webkit-scrollbar-thumb {
    background: #888;
    border-radius: 10px;
+   width: 12px;
 }
 
 /* Handle on hover */

@@ -6,6 +6,7 @@ import {
    getTopicById,
    getTopics,
    getTopicsByDoctorId,
+   getAllTopicsByDoctor,
 } from "./topicsActions";
 
 const initialState = {
@@ -14,6 +15,7 @@ const initialState = {
    success: false, // Checking if auth is done
    topicsList: [], // Store response
    doctorTopics: [], // Contain only  Doctor's topics
+   topicsByDoctor: [], // All tema sort by Doctor
    topic: {}, // topic by Id
 };
 
@@ -34,6 +36,21 @@ const topicsSlice = createSlice({
          state.topicsList = payload.data;
       },
       [getTopics.rejected]: (state, { payload }) => {
+         state.loading = false;
+         state.error = payload;
+      },
+      // Getting All Teme By Doctor
+      [getAllTopicsByDoctor.pending]: (state) => {
+         state.loading = true;
+         state.success = false;
+         state.error = null;
+      },
+      [getAllTopicsByDoctor.fulfilled]: (state, { payload }) => {
+         state.loading = false;
+         state.success = true;
+         state.topicsByDoctor = payload.data;
+      },
+      [getAllTopicsByDoctor.rejected]: (state, { payload }) => {
          state.loading = false;
          state.error = payload;
       },
@@ -62,6 +79,12 @@ const topicsSlice = createSlice({
          state.loading = false;
          state.success = true;
          state.doctorTopics = payload.data;
+         // Sorting Teme By teme's updated time
+         state.doctorTopics.teme.sort((a, b) => {
+            const firEleDate = new Date(a["updated_at"]);
+            const secEleDate = new Date(b["updated_at"]);
+            return +secEleDate - +firEleDate;
+         });
       },
       [getTopicsByDoctorId.rejected]: (state, { payload }) => {
          state.loading = false;
@@ -73,10 +96,9 @@ const topicsSlice = createSlice({
          state.success = false;
          state.error = null;
       },
-      [addNewTopic.fulfilled]: (state, { payload }) => {
+      [addNewTopic.fulfilled]: (state) => {
          state.loading = false;
          state.success = true;
-         state.doctorTopics.unshift(payload.data);
       },
       [addNewTopic.rejected]: (state, { payload }) => {
          state.loading = false;
@@ -88,16 +110,9 @@ const topicsSlice = createSlice({
          state.success = false;
          state.error = null;
       },
-      [editeTopic.fulfilled]: (state, { payload }) => {
+      [editeTopic.fulfilled]: (state) => {
          state.loading = false;
          state.success = true;
-         state.error = null;
-         // Get the element index then replace it with new value
-         const index = state.topicsList.findIndex(
-            (e, i) => e[i].id === payload.data.id
-         );
-         state.topicsList[index] = payload.data;
-         state.doctorTopics.unshift(payload.data);
       },
       [editeTopic.rejected]: (state, { payload }) => {
          state.loading = false;
@@ -112,9 +127,9 @@ const topicsSlice = createSlice({
       [deleteTopic.fulfilled]: (state, { payload }) => {
          state.loading = false;
          state.success = true;
-         // Remove the elemet from topics
-         state.doctorTopics = state.doctorTopics.filter(
-            (e) => e.id !== payload
+         // Remove The Tema From Topics
+         state.doctorTopics.teme = state.doctorTopics.teme.filter(
+            (tema) => tema.id !== payload
          );
       },
       [deleteTopic.rejected]: (state, { payload }) => {

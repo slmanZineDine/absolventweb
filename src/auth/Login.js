@@ -58,7 +58,7 @@ const Login = () => {
          email: emailInput.current.value,
          password: passwordInput.current.value,
          // ================ Dev mode ==================
-         // email: "doctor11@gmail.com",
+         // email: "drslman@gmail.com",
          // password: "123456",
       };
 

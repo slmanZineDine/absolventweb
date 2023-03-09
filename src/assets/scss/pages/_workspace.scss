@@ -1,0 +1,48 @@
+@use "../abstracts" as *;
+
+/*===================== WORKSPACE PAGE =====================*/
+.workspace-page {
+   background-image: url("../imgs/body-bg.png");
+   background-position: center top;
+   background-size: 100% 100%;
+   background-repeat: no-repeat;
+   min-height: 100vh;
+   .container {
+      @include flex(center, space-between, 2rem);
+      .content {
+         width: 70%;
+         .workspace-info {
+            .item {
+               @include flex(center, flex-start, 1rem);
+               margin-bottom: 1rem;
+               &::before {
+                  content: "";
+                  display: block;
+                  width: 10px;
+                  height: 10px;
+                  border: 1px solid #000;
+                  border-radius: 50%;
+                  background-color: #b4ebd7;
+               }
+            }
+         }
+         .workspace-btns {
+            margin-block: 2rem;
+            @include flex(center, flex-start, 0.5rem);
+         }
+      }
+   }
+}
+/*=============== BREAKPOINTS ===============*/
+/* MEDIUM */
+@media (max-width: 992px) {
+   .workspace-page .container {
+      flex-direction: column-reverse;
+      justify-content: center;
+      gap: 0;
+   }
+   .workspace-page .container .content {
+      width: 100%;
+      margin-top: 2rem;
+   }
+}

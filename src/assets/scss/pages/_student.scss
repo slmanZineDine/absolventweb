@@ -1,3 +1,39 @@
 @use "../abstracts" as *;
 
 /*===================== STUDENT PAGE =====================*/
+.students-page-coordonator,
+.students-page-admin {
+   background-image: url("../imgs/body-bg.png");
+   background-position: center top;
+   background-size: 100% 100%;
+   background-repeat: no-repeat;
+   min-height: 100vh;
+}
+.students-page-coordonator {
+   .container {
+      @include flex(center, space-between, 2rem);
+      .content {
+         width: 70%;
+         //  padding-top: 2rem;
+         .title {
+            @include flex(center, flex-start, 1rem);
+            font-size: var(--h2-font-size);
+            font-weight: bold;
+            margin-bottom: 2rem;
+         }
+      }
+   }
+}
+/*=============== BREAKPOINTS ===============*/
+/* MEDIUM */
+@media (max-width: 992px) {
+   .students-page-coordonator .container {
+      flex-direction: column-reverse;
+      justify-content: center;
+      gap: 0;
+   }
+   .students-page-coordonator .container .content {
+      width: 100%;
+      margin-top: 2rem;
+   }
+}

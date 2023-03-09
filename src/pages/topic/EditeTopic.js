@@ -7,14 +7,14 @@ import { editeTopic } from "../../redux/topics/topicsActions";
 import swal from "sweetalert";
 
 export const EditeTopic = () => {
+   // Get User Information To Permission For Enter This Page Or Not
+   const user = localStorage.getItem("user");
+   const userType = JSON.parse(user)?.type;
+
    // Select input elements
    const titleInput = useRef(null);
    const detailsInput = useRef(null);
    const specInput = useRef(null);
-
-   // Get user inof form local storage
-   const user = localStorage.getItem("user");
-   const userType = JSON.parse(user)?.type;
 
    // Redux Hook
    const dispatch = useDispatch();
@@ -60,13 +60,16 @@ export const EditeTopic = () => {
          );
       }
    };
+
    // React Hook
    useEffect(() => {
       // Prevent user to enter this page directly
-      if (state?.id && topics.doctorTopics.length > 0) {
-         const topic = topics.doctorTopics.find((e) => e.id === state.id);
-         titleInput.current.value = topic?.title ?? "";
+      if (state?.id && topics.doctorTopics?.teme?.length > 0) {
+         const topic = topics.doctorTopics.teme.find(
+            (tema) => tema.id === state.id
+         );
          titleInput.current.focus();
+         titleInput.current.value = topic?.title ?? "";
          detailsInput.current.value = topic?.detalii ?? "";
          specInput.current.value = topic?.specializare ?? "";
       } else {

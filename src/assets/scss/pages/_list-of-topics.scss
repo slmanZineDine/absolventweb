@@ -1,10 +1,17 @@
 @use "../abstracts" as *;
 
 /*===================== LIST OF TIPICS PAGE PAGE =====================*/
-// .list-of-topics-page {
-//    .container {
-
-//    }
-// }
+.list-of-topics-page {
+   .container {
+      .content {
+         margin-bottom: 3rem;
+         .title {
+            font-weight: normal;
+            font-size: var(--h2-font-size);
+            margin-bottom: 1rem;
+         }
+      }
+   }
+}
 
 /*=============== BREAKPOINTS ===============*/

@@ -12,6 +12,10 @@ import EditeTopic from "./pages/topic/EditeTopic";
 import Support from "./pages/Support";
 import PageNotFound from "./pages/PageNotFound";
 import Student from "./pages/Students";
+import AddPost from "./pages/workspace/AddPost";
+import AddTask from "./pages/workspace/AddTask";
+import AddMeeting from "./pages/workspace/AddMeeting";
+import Post from "./pages/workspace/Post";
 
 function App() {
    return (
@@ -22,7 +26,13 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/homepage" element={<HomePage />} />
             <Route path="/list-of-topics" element={<ListOfTopics />} />
-            <Route path="/workspace" element={<Workspace />} />
+            <Route path="/workspace" element={<Outlet />}>
+               <Route index element={<Workspace />} />
+               <Route path="add-post" element={<AddPost />} />
+               <Route path="add-task" element={<AddTask />} />
+               <Route path="add-meeting" element={<AddMeeting />} />
+               <Route path="post" element={<Post />} />
+            </Route>
             <Route path="/profile" element={<Outlet />}>
                <Route index element={<Profile />} />
                <Route path="add-new-topic" element={<AddNewTopic />} />

@@ -24,7 +24,7 @@ $nav-border-bottom: 2px;
       transition: border-bottom 0.08s;
       // When width reach to 992px the font size of logo and navlink changing
       // So handle that change by decrement height of nav
-      @media (min-width: 768px) and (max-width: 991px) {
+      @media (min-width: 769px) and (max-width: 991px) {
          height: 134px;
       }
       .menu {

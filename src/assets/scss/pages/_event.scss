@@ -1,8 +1,12 @@
 @use "../abstracts" as *;
 
-/*=============== TOPIC COMPONENT ===============*/
-.topic-page {
-   padding-bottom: 4rem;
+/*===================== EVETN PAGE =====================*/
+.event-page {
+   background-image: url("../imgs/body-bg.png");
+   background-position: center top;
+   background-size: 100% 100%;
+   background-repeat: no-repeat;
+   min-height: 100vh;
    .container {
       @include flex(center, space-between, 1.5rem);
       .content {
@@ -54,6 +58,23 @@
                      width: 10px;
                   }
                }
+               .file-input {
+                  @include flex(center, center, 0.4rem);
+                  background-color: #fff;
+                  padding-block: 0.8rem;
+                  border: 1px solid #000;
+                  border-radius: 1rem;
+                  width: 60%;
+                  cursor: pointer;
+                  .btn-icon {
+                     background-color: #000;
+                     width: 20px;
+                     height: 20px;
+                  }
+                  #file {
+                     display: none;
+                  }
+               }
             }
             .save-btn-space {
                @include flex(center, center);
@@ -66,23 +87,23 @@
 /*=============== BREAKPOINTS ===============*/
 /* CUSTOM SIZE */
 @media (max-width: 700px) {
-   .topic-page .container {
+   .event-page .container {
       flex-direction: column-reverse;
    }
-   .topic-page .container .content {
+   .event-page .container .content {
       width: 100%;
    }
 }
 /* EXTRA SMALL */
 @media (max-width: 576px) {
-   .topic-page .container .content .box .item {
+   .event-page .container .content .box .item {
       flex-direction: column;
    }
-   .topic-page .container .content .box .item .item_title {
+   .event-page .container .content .box .item .item_title {
       align-self: flex-start;
    }
-   .topic-page .container .content .box .item .input-field,
-   .topic-page .container .content .box .item .textarea {
+   .event-page .container .content .box .item .input-field,
+   .event-page .container .content .box .item .textarea {
       width: 100%;
    }
 }

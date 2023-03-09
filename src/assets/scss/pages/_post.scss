@@ -1,0 +1,105 @@
+@use "../abstracts" as *;
+
+/*===================== POST PAGE =====================*/
+.post-page {
+   background-image: url("../imgs/body-bg.png");
+   background-position: center top;
+   background-size: 100% 100%;
+   background-repeat: no-repeat;
+   min-height: 100vh;
+   .container {
+      .content {
+         width: 100%;
+         > .title {
+            @include flex(center, flex-start, 1rem);
+            font-size: var(--h2-font-size);
+            margin-bottom: 2rem;
+            &::before {
+               content: "";
+               display: block;
+               width: 17px;
+               height: 17px;
+               border: 1px solid #000;
+               border-radius: 50%;
+               background-color: #b4ebd7;
+            }
+         }
+         .box {
+            background-color: #fff;
+            padding: 1rem 1.7rem;
+            border-radius: 1rem;
+            .info {
+               border-bottom: 1px solid #000;
+               .title {
+                  @include flex(center, flex-start, 0.5rem);
+                  margin-bottom: 1rem;
+                  .topic-name {
+                     font-weight: normal;
+                  }
+                  .btn-icon {
+                     width: 30px;
+                     height: 30px;
+                  }
+               }
+               .post-info {
+                  @include flex(center, flex-start, 1rem);
+                  margin-bottom: 0.5rem;
+                  > .username {
+                     font-weight: normal;
+                  }
+               }
+            }
+            .text {
+               padding-block: 1.2rem;
+               > p {
+                  line-height: 1.5;
+               }
+            }
+         }
+         .comments {
+            margin-top: 0.5rem;
+            .add-comment {
+               background-color: #fff;
+               padding: 1rem 1.7rem;
+               border-radius: 1rem;
+               position: relative;
+               @include flex(center, flex-start, 1.5rem);
+               .input-field {
+                  padding: 0.5rem 2rem 0;
+                  border: 1px solid #000;
+                  border-radius: 2rem;
+                  flex: 1;
+                  min-height: 20px;
+                  resize: none;
+               }
+               .btn-icon {
+                  width: 25px;
+                  height: 25px;
+               }
+               .send {
+                  background-color: transparent;
+               }
+            }
+            .comments-list {
+               background-color: #fff;
+               padding: 1rem 1.7rem;
+               border-radius: 1rem;
+               margin-top: 1rem;
+               > .title {
+                  text-align: center;
+                  margin-bottom: 2rem;
+               }
+               .comment {
+                  margin-bottom: 1rem;
+                  padding-bottom: 0.5rem;
+                  border-bottom: 1px solid #000;
+                  .text {
+                     margin-block: 0.5rem;
+                     line-height: 1.5;
+                  }
+               }
+            }
+         }
+      }
+   }
+}

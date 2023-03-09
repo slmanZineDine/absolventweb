@@ -14,10 +14,19 @@ import { useEffect } from "react";
 import swal from "sweetalert";
 
 const Profile = () => {
+   // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
 
-   // User Ddetails showing in profile page
+   // Redux Hook
+   const dispatch = useDispatch();
+   // const topics = useSelector((state) => state.topics.doctorTopics);
+   const topics = useSelector((state) => state.topics.doctorTopics);
+
+   // Router Hook
+   const navigate = useNavigate();
+
+   // User Details showing in profile page
    const userDetails = [
       "Tip de utilizator",
       "prenuma si Numa",
@@ -42,27 +51,32 @@ const Profile = () => {
       }
    };
 
-   // Redux Hook
-   const dispatch = useDispatch();
-   const topics = useSelector((state) => state.topics.doctorTopics);
-   // Router Hook
-   const navigate = useNavigate();
+   // Check Box to confirm deletion process
+   const confirmDeletion = async (topicId) => {
+      let checkBox = await swal("Are you sure?", {
+         dangerMode: true,
+         buttons: true,
+      });
+      if (checkBox) dispatch(deleteTopic(topicId));
+   };
    useEffect(() => {
       if (user && userType === "coordonator") {
-         const doctorId = JSON.parse(user)?.coordonator?.id;
+         const doctorId = JSON.parse(user)?.coordonator?.["user_id"];
          if (doctorId) {
             dispatch(getTopicsByDoctorId(doctorId));
          }
       }
    }, []);
+   // console.log(topics.teme);
    if (user) {
-      // Select Main Column in a table
+      // Names Of Table Columns
       const tableCol = ["Nr", "Tema", "Detalii", "Specializare", "Process"];
       // Extract data compatible with table columns
       const tableData = (data) => {
-         // copy value to prevent read only property error;
-         const sortedArray = [...data];
          if (data?.length > 0) {
+            console.log(data);
+            // copy value to prevent read only property error;
+            const sortedArray = [...data];
             // sorting topic
             sortedArray.sort((a, b) => {
                const firEleDate = new Date(a["updated_at"]);
@@ -110,14 +124,7 @@ const Profile = () => {
             });
          }
       };
-      // Check Box to confirm deletion process
-      const confirmDeletion = async (topicId) => {
-         let checkBox = await swal("Are you sure?", {
-            dangerMode: true,
-            buttons: true,
-         });
-         if (checkBox) dispatch(deleteTopic(topicId));
-      };
+
       return (
          <>
             <Header userType={userType} />
@@ -151,7 +158,82 @@ const Profile = () => {
                               className="btn-icon"
                            />
                         </Link>
-                        <Table data={tableData(topics)} cols={tableCol} />
+                        {/* <Table data={tableData(topics.teme)} cols={tableCol} /> */}
+                        <div className="cover">
+                           <table className="table">
+                              <thead className="thead">
+                                 <tr className="main-row">
+                                    {tableCol.map((colName, i) => (
+                                       <th key={i} className="main-cell">
+                                          {colName}
+                                       </th>
+                                    ))}
+                                 </tr>
+                              </thead>
+                              <tbody className="tbody">
+                                 {topics?.teme?.length > 0
+                                    ? topics.teme.map((cell, i) => {
+                                         return (
+                                            <tr key={i} className="row">
+                                               <td className="cell">
+                                                  {i + 1}.
+                                               </td>
+                                               <td className="cell">
+                                                  {cell.title}
+                                               </td>
+                                               <td className="cell">
+                                                  {cell.detalii}
+                                               </td>
+                                               <td className="cell">
+                                                  {cell.specializare}
+                                               </td>
+                                               <td className="cell">
+                                                  <div className="topic-btns">
+                                                     <button
+                                                        className="btn edite-btn"
+                                                        onClick={() => {
+                                                           console.log(cell.id);
+                                                           navigate(
+                                                              "edite-topic",
+                                                              {
+                                                                 state: {
+                                                                    id: cell.id,
+                                                                 },
+                                                              }
+                                                           );
+                                                        }}
+                                                     >
+                                                        Edite
+                                                        <img
+                                                           src={editeIcon}
+                                                           alt="btn-icon"
+                                                           className="btn-icon"
+                                                        />
+                                                     </button>
+                                                     <button
+                                                        className="btn delete-btn"
+                                                        onClick={() =>
+                                                           confirmDeletion(
+                                                              cell.id
+                                                           )
+                                                        }
+                                                     >
+                                                        Delete
+                                                        <img
+                                                           src={deleteIcon}
+                                                           alt="btn-icon"
+                                                           className="btn-icon"
+                                                        />
+                                                     </button>
+                                                  </div>
+                                               </td>
+                                            </tr>
+                                         );
+                                      })
+                                    : null}
+                              </tbody>
+                           </table>
+                        </div>
                      </div>
                   </section>
                ) : null}

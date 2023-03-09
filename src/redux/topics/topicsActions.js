@@ -52,6 +52,32 @@ export const getTopicById = createAsyncThunk(
       }
    }
 );
+// Getting All Teme By Doctor
+export const getAllTopicsByDoctor = createAsyncThunk(
+   "topics/getAllTopicsByDoctor",
+   async ({}, { rejectWithValue }) => {
+      try {
+         const config = {
+            headers: {
+               Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+            },
+         };
+
+         const { data } = await axios.get(
+            `${baseURL}/api/coordinators-with-subjects`,
+            config
+         );
+         return data;
+      } catch (error) {
+         // return custom error message from API if any
+         if (error.response && error.response.data.message) {
+            return rejectWithValue(error.response.data.message);
+         } else {
+            return rejectWithValue(error.message);
+         }
+      }
+   }
+);
 // Getting doctor's topics
 export const getTopicsByDoctorId = createAsyncThunk(
    "topics/getTopicsByDoctorId",

@@ -5,33 +5,23 @@
 `Done` - Design Header Component\
 `Done` - Design Login and Register pages\
 `Done` - Design Profile page\
-`Working` - Design Support page\
-`Working` - Design Page not found 404
-
-<hr />
+`Done` - Design Support page\
+`Working` - Design List of topics page\
+`0` - Design Page not found 404
 
 ### User View
 
-#### Student
-
-`Working` - Design Homepage\
-`Working` - Design List of topics page\
-`0` - Design Workspace page
-
-#### coordonator
-
-`Done` - Design Add Topic and modify topic pages\
-`0` - Design Students page
-
-#### Admin
-
-`0` - Design Doctors page
-
-<hr />
+`Done` - Design Homepage\
+`Done` - Design Workspace page\
+`Done` - Design Add post, task, meeting\
+`Done` - Design Add Topic and modify topic pages [only_Doctor]\
+`Done` - Design Students page [Admin_Doctor]\
+`0` - Design Doctors page [only_Admin]
 
 ### Event
 
 `Done` - Auth Login, Register, Logout\
-`Done` - Create and modify and the graduation project [only_Doctor]\
+`Done` - Create and modify and the Tema [only_Doctor]\
 `0` - Send Request to a Doctor and Checking request status [only_Student]\
-`0` - Workspace Create Post, Comments, Task, Meeting [Doctor_Student]
+`0` - Accept or reject a student request [only_Doctor]\
+`0` - Create Post, Task, Meeting, Comments [Doctor_Student]

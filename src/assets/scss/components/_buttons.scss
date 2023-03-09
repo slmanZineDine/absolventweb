@@ -19,15 +19,19 @@
    @include customBtn($danger-color, $danger-color);
 }
 
-.add-btn {
+.add-btn,
+.post-btn,
+.meeting-btn {
    @include customBtn(#007bff, #007bff);
 }
-.edite-btn {
+.edite-btn,
+.task-btn {
    @include customBtn(#28a745, #28a745);
 }
 .delete-btn {
    @include customBtn(#f00, #f00);
 }
+
 .save-btn {
    background-color: #007bff;
    color: #fff;

@@ -7,14 +7,14 @@ import { useEffect, useRef } from "react";
 import swal from "sweetalert";
 
 const AddNewTopic = () => {
+   // Get User Information To Permission For Enter This Page Or Not
+   const user = localStorage.getItem("user");
+   const userType = JSON.parse(user)?.type;
+
    // Select input elements
    const titleInput = useRef(null);
    const detailsInput = useRef(null);
    const specInput = useRef(null);
-
-   // Get user inof form local storage
-   const user = localStorage.getItem("user");
-   const userType = JSON.parse(user)?.type;
 
    // Redux Hook
    const dispatch = useDispatch();
@@ -31,6 +31,7 @@ const AddNewTopic = () => {
          closeOnEsc: false,
       });
    };
+
    // Vaidation
    const fieldsValidation = (userInput) => {
       if (!Object.values(userInput).every((e) => e !== "")) {
