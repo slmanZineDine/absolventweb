@@ -23,7 +23,8 @@ const Login = () => {
 
    // Router Hook
    const navigate = useNavigate();
-   // Sweet alert labrary
+
+   // Alert Box From Sweet Alert labrary
    const processChecking = async (msg, icon, theClassName) => {
       await swal(msg, {
          buttons: false,
@@ -55,10 +56,16 @@ const Login = () => {
    const handleLogin = (e) => {
       e.preventDefault();
       const userLoginInfo = {
-         email: emailInput.current.value,
-         password: passwordInput.current.value,
+         // email: emailInput.current.value,
+         // password: passwordInput.current.value,
          // ================ Dev mode ==================
          // email: "drslman@gmail.com",
+         // password: "123456",
+         email: "drsammar@gmail.com",
+         password: "123456",
+         // email: "ali@gmail.com",
+         // password: "123456",
+         // email: "ziad@gmail.com",
          // password: "123456",
       };
 

@@ -39,6 +39,7 @@ const topicsSlice = createSlice({
          state.loading = false;
          state.error = payload;
       },
+
       // Getting All Teme By Doctor
       [getAllTopicsByDoctor.pending]: (state) => {
          state.loading = true;
@@ -49,11 +50,26 @@ const topicsSlice = createSlice({
          state.loading = false;
          state.success = true;
          state.topicsByDoctor = payload.data;
+         // Sorting Doctor By any update
+         state.topicsByDoctor.sort((a, b) => {
+            const firEleDate = new Date(a["updated_at"]);
+            const secEleDate = new Date(b["updated_at"]);
+            return +secEleDate - +firEleDate;
+         });
+         // Sorting Teme By teme's updated time
+         state.topicsByDoctor.forEach((doctor) => {
+            doctor.teme.sort((a, b) => {
+               const firEleDate = new Date(a["updated_at"]);
+               const secEleDate = new Date(b["updated_at"]);
+               return +secEleDate - +firEleDate;
+            });
+         });
       },
       [getAllTopicsByDoctor.rejected]: (state, { payload }) => {
          state.loading = false;
          state.error = payload;
       },
+
       // Getting the topic by Id
       [getTopicById.pending]: (state) => {
          state.loading = true;
@@ -69,6 +85,7 @@ const topicsSlice = createSlice({
          state.loading = false;
          state.error = payload;
       },
+
       // Getting doctor's topics
       [getTopicsByDoctorId.pending]: (state) => {
          state.loading = true;
@@ -90,6 +107,7 @@ const topicsSlice = createSlice({
          state.loading = false;
          state.error = payload;
       },
+
       // Adding a new topic
       [addNewTopic.pending]: (state) => {
          state.loading = true;
@@ -104,6 +122,7 @@ const topicsSlice = createSlice({
          state.loading = false;
          state.error = payload;
       },
+
       // Edation topic
       [editeTopic.pending]: (state) => {
          state.loading = true;
@@ -118,6 +137,7 @@ const topicsSlice = createSlice({
          state.loading = false;
          state.error = payload;
       },
+
       // Deletion the topic
       [deleteTopic.pending]: (state) => {
          state.loading = true;

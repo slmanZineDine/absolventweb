@@ -6,7 +6,7 @@
 `Done` - Design Login and Register pages\
 `Done` - Design Profile page\
 `Done` - Design Support page\
-`Working` - Design List of topics page\
+`Done` - Design List of topics page\
 `0` - Design Page not found 404
 
 ### User View
@@ -22,6 +22,6 @@
 
 `Done` - Auth Login, Register, Logout\
 `Done` - Create and modify and the Tema [only_Doctor]\
-`0` - Send Request to a Doctor and Checking request status [only_Student]\
+`Done` - Send Request to a Doctor and Checking request status [only_Student]\
 `0` - Accept or reject a student request [only_Doctor]\
 `0` - Create Post, Task, Meeting, Comments [Doctor_Student]

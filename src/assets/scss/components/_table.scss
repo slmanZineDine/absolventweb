@@ -18,6 +18,27 @@
          border: 1px solid #000;
          background-color: #f5f5f5;
          text-align: left;
+         .wraper {
+            @include flex(center, center);
+            border-collapse: collapse;
+            .select-box {
+               border: 1px solid #000;
+               width: 25px;
+               height: 25px;
+               .btn-icon {
+                  transform: scale(0);
+                  transition: transform 0.4s;
+               }
+            }
+         }
+         &.selected {
+            .select-box {
+               background-color: green;
+               .btn-icon {
+                  transform: scale(1);
+               }
+            }
+         }
       }
    }
    .main-cell,

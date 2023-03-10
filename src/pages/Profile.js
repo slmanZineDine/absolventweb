@@ -5,7 +5,6 @@ import UniversityLogo from "../components/UniversityLogo";
 import addIcon from "../assets/imgs/icons/addIcon.png";
 import editeIcon from "../assets/imgs/icons/editeIcon.png";
 import deleteIcon from "../assets/imgs/icons/deleteIcon.png";
-import Table from "../components/Table";
 import {
    deleteTopic,
    getTopicsByDoctorId,
@@ -59,71 +58,20 @@ const Profile = () => {
       });
       if (checkBox) dispatch(deleteTopic(topicId));
    };
+
+   // React Hook
    useEffect(() => {
       if (user && userType === "coordonator") {
-         const doctorId = JSON.parse(user)?.coordonator?.["user_id"];
+         const doctorId = JSON.parse(user)?.coordonator?.id;
          if (doctorId) {
             dispatch(getTopicsByDoctorId(doctorId));
          }
       }
    }, []);
-   // console.log(topics.teme);
+
    if (user) {
       // Names Of Table Columns
       const tableCol = ["Nr", "Tema", "Detalii", "Specializare", "Process"];
-      // Extract data compatible with table columns
-      const tableData = (data) => {
-         if (data?.length > 0) {
-            console.log(data);
-            // copy value to prevent read only property error;
-            const sortedArray = [...data];
-            // sorting topic
-            sortedArray.sort((a, b) => {
-               const firEleDate = new Date(a["updated_at"]);
-               const secEleDate = new Date(b["updated_at"]);
-               return +secEleDate - +firEleDate;
-            });
-            return sortedArray.map((e, i) => {
-               return [
-                  `${i + 1}.`,
-                  e["title"],
-                  e["detalii"],
-                  e["specializare"],
-                  <div className="topic-btns">
-                     <button
-                        className="btn edite-btn"
-                        onClick={() => {
-                           navigate("edite-topic", {
-                              state: { id: e.id },
-                           });
-                        }}
-                     >
-                        Edite
-                        <img
-                           src={editeIcon}
-                           alt="btn-icon"
-                           className="btn-icon"
-                        />
-                     </button>
-                     <button
-                        className="btn delete-btn"
-                        onClick={() => {
-                           dispatch(deleteTopic(e.id));
-                           confirmDeletion(e.id);
-                        }}
-                     >
-                        Delete
-                        <img
-                           src={deleteIcon}
-                           alt="btn-icon"
-                           className="btn-icon"
-                        />
-                     </button>
-                  </div>,
-               ];
-            });
-         }
-      };
 
       return (
          <>
@@ -158,7 +106,6 @@ const Profile = () => {
                               className="btn-icon"
                            />
                         </Link>
-                        {/* <Table data={tableData(topics.teme)} cols={tableCol} /> */}
                         <div className="cover">
                            <table className="table">
                               <thead className="thead">
@@ -192,7 +139,6 @@ const Profile = () => {
                                                      <button
                                                         className="btn edite-btn"
                                                         onClick={() => {
-                                                           console.log(cell.id);
                                                            navigate(
                                                               "edite-topic",
                                                               {

@@ -3,20 +3,19 @@ import lockIcon from "../assets/imgs/icons/lockIcon.png";
 import phoneIcon from "../assets/imgs/icons/phoneIcon.png";
 import addressIcon from "../assets/imgs/icons/addressIcon.png";
 import { Logo } from "../components/Logo";
+import UniversityLogo from "../components/UniversityLogo";
+import Spinning from "../components/Spinning";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import Spinning from "../components/Spinning";
 import { registerUser } from "../redux/auth/authActions";
 import swal from "sweetalert";
-import UniversityLogo from "../components/UniversityLogo";
 
 const Register = () => {
    // To select user type
    const userTypeSelect = useRef(null);
    const userTypes = ["student", "coordonator", "admin"];
    const [selectedType, setSelectedType] = useState(null);
-   // const getSelectedType = (type) => setSelectedType(type);
 
    // Select input elements
    const nameInput = useRef(null);
@@ -70,7 +69,6 @@ const Register = () => {
    const handleRegister = (e) => {
       e.preventDefault();
       const userRegisterInfo = {
-         type: selectedType,
          name: nameInput.current.value,
          email: emailInput.current.value,
          password: passwordInput.current.value,
@@ -80,8 +78,8 @@ const Register = () => {
          facultatea: facultyInput.current.value,
          specializare: specializareInput.current.value,
          // ================ Dev mode ==================
-         // name: "name1",
-         // email: "num0081221dddd2@gmail.com",
+         // name: "drzain",
+         // email: "drzain@gmail.com",
          // password: "123456",
          // password_confirmation: "123456",
          // phone: "123456",
@@ -93,6 +91,11 @@ const Register = () => {
       };
       if (selectedType !== "student") {
          userRegisterInfo["is_admin"] = 1;
+      }
+      if (selectedType === "student") {
+         userRegisterInfo.type = 0;
+      } else if (selectedType === "coordonator") {
+         userRegisterInfo.selectedType = 1;
       }
       if (fieldsValidation(userRegisterInfo)) {
          dispatch(registerUser(userRegisterInfo));

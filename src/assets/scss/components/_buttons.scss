@@ -41,7 +41,17 @@
       border: 2px solid #000;
    }
 }
-
+.filter-btn {
+   background-color: #fff;
+   border: 1px solid #000;
+   border-radius: 2rem;
+   transition: all 0.4s;
+   &:hover,
+   &.clicked {
+      background-color: #2575be;
+      color: #fff;
+   }
+}
 .auth-page-btn {
    color: #fff;
    background-image: linear-gradient(

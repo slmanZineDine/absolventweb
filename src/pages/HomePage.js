@@ -1,13 +1,30 @@
 import { Link, Navigate } from "react-router-dom";
 import Header from "../components/Header";
-import Table from "../components/Table";
 import stepsIcon from "../assets/imgs/icons/stepsIcon.png";
 import statusIcon from "../assets/imgs/icons/statusIcon.png";
 import UniversityLogo from "../components/UniversityLogo";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getWaitingWorkspace } from "../redux/workspaces/workspacesActions";
 
 const HomePage = () => {
+   // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
+
+   // Redux Hook
+   const dispatch = useDispatch();
+   const waitingWorkspaces = useSelector(
+      (state) => state.workspaces.waitingWorkspaces
+   );
+
+   // React Hook
+   useEffect(() => {
+      if (userType === "coordonator") {
+         dispatch(getWaitingWorkspace({}));
+      }
+   }, []);
+
    if (user) {
       if (userType === "student") {
          return (
@@ -50,7 +67,7 @@ const HomePage = () => {
             </>
          );
       } else if (userType === "coordonator") {
-         // Select Main Column in a tables
+         // Names Of Table Columns
          const tableCol1 = [
             "Nr",
             "Student",
@@ -58,59 +75,10 @@ const HomePage = () => {
             "Specializare",
             "Statutul de student",
          ];
+
+         // Names Of Table Columns
          const tableCol2 = ["Nr", "Student", "Title", "Deadline"];
-         // Extract data compatible with table columns num 01
-         // const tableData = (data) => {
-         //    // copy value to prevent read only property error;
-         //    const sortedArray = [...data];
-         //    if (data?.length > 0) {
-         //       // sorting topic
-         //       sortedArray.sort((a, b) => {
-         //          const firEleDate = new Date(a["updated_at"]);
-         //          const secEleDate = new Date(b["updated_at"]);
-         //          return +secEleDate - +firEleDate;
-         //       });
-         //       return sortedArray.map((e, i) => {
-         //          return [
-         //             `${i + 1}.`,
-         //             e["title"],
-         //             e["detalii"],
-         //             e["specializare"],
-         //             <div className="topic-btns">
-         //                <button
-         //                   className="btn edite-btn"
-         //                   onClick={() => {
-         //                      navigate("edite-topic", {
-         //                         state: { id: e.id },
-         //                      });
-         //                   }}
-         //                >
-         //                   Edite
-         //                   <img
-         //                      src={editeIcon}
-         //                      alt="btn-icon"
-         //                      className="btn-icon"
-         //                   />
-         //                </button>
-         //                <button
-         //                   className="btn delete-btn"
-         //                   onClick={() => {
-         //                      // dispatch(deleteTopic(e.id));
-         //                      confirmDeletion(e.id);
-         //                   }}
-         //                >
-         //                   Delete
-         //                   <img
-         //                      src={deleteIcon}
-         //                      alt="btn-icon"
-         //                      className="btn-icon"
-         //                   />
-         //                </button>
-         //             </div>,
-         //          ];
-         //       });
-         //    }
-         // };
+
          return (
             <>
                <Header userType={userType} />
@@ -125,7 +93,48 @@ const HomePage = () => {
                            />
                            <p className="text">Studenților în așteptare</p>
                         </div>
-                        <Table cols={tableCol1} />
+                        <div className="cover">
+                           <table className="table">
+                              <thead className="thead">
+                                 <tr className="main-row">
+                                    {tableCol1.map((colName, i) => (
+                                       <th key={i} className="main-cell">
+                                          {colName}
+                                       </th>
+                                    ))}
+                                 </tr>
+                              </thead>
+                              <tbody className="tbody">
+                                 {waitingWorkspaces.length > 0
+                                    ? waitingWorkspaces.map((cell, i) => {
+                                         return (
+                                            <tr key={i} className="row">
+                                               <td className="cell">
+                                                  {i + 1}.
+                                               </td>
+                                               <td className="cell">
+                                                  {cell.student.email}
+                                               </td>
+                                               <td className="cell">
+                                                  {cell.tema.title}
+                                               </td>
+                                               <td className="cell">
+                                                  {cell.tema.specializare}
+                                               </td>
+                                               <td className="cell">
+                                                  <div className="wraper">
+                                                     <div className="select-box">
+                                                        test
+                                                     </div>
+                                                  </div>
+                                               </td>
+                                            </tr>
+                                         );
+                                      })
+                                    : null}
+                              </tbody>
+                           </table>
+                        </div>
                      </div>
                      <div className="content">
                         <div className="title">
@@ -136,7 +145,7 @@ const HomePage = () => {
                            />
                            <p className="text">Sarcinile tale</p>
                         </div>
-                        <Table cols={tableCol2} />
+                        {/* <Table cols={tableCol2} /> */}
                      </div>
                   </div>
                </main>

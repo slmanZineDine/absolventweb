@@ -26,6 +26,7 @@ export const getTopics = createAsyncThunk(
       }
    }
 );
+
 // Getting topic by Id
 export const getTopicById = createAsyncThunk(
    "topics/getTopicById",
@@ -52,6 +53,7 @@ export const getTopicById = createAsyncThunk(
       }
    }
 );
+
 // Getting All Teme By Doctor
 export const getAllTopicsByDoctor = createAsyncThunk(
    "topics/getAllTopicsByDoctor",
@@ -78,6 +80,7 @@ export const getAllTopicsByDoctor = createAsyncThunk(
       }
    }
 );
+
 // Getting doctor's topics
 export const getTopicsByDoctorId = createAsyncThunk(
    "topics/getTopicsByDoctorId",
@@ -104,6 +107,7 @@ export const getTopicsByDoctorId = createAsyncThunk(
       }
    }
 );
+
 // Adding a new topic
 export const addNewTopic = createAsyncThunk(
    "topics/addNewTopic",
@@ -132,7 +136,8 @@ export const addNewTopic = createAsyncThunk(
       }
    }
 );
-// Edation topic
+
+// Edation a topic
 export const editeTopic = createAsyncThunk(
    "topics/editeTopic",
    async ({ topicId, topic }, { rejectWithValue }) => {
@@ -160,6 +165,7 @@ export const editeTopic = createAsyncThunk(
       }
    }
 );
+
 // Deletion a topic
 export const deleteTopic = createAsyncThunk(
    "topics/deleteTopic",

@@ -52,6 +52,47 @@ const Workspace = () => {
                            <li className="item">Coordinator: john doe</li>
                            <li className="item">Student: slman</li>
                         </ul>
+                        <div className="workspace-btns">
+                           <button
+                              className="btn post-btn"
+                              onClick={() => {
+                                 navigate("add-post");
+                              }}
+                           >
+                              Post
+                              <img
+                                 src={addIcon}
+                                 alt="btn-icon"
+                                 className="btn-icon"
+                              />
+                           </button>
+                           <button
+                              className="btn task-btn"
+                              onClick={() => {
+                                 navigate("add-task");
+                              }}
+                           >
+                              Task
+                              <img
+                                 src={addIcon}
+                                 alt="btn-icon"
+                                 className="btn-icon"
+                              />
+                           </button>
+                           <button
+                              className="btn meeting-btn"
+                              onClick={() => {
+                                 navigate("add-meeting");
+                              }}
+                           >
+                              Meeting
+                              <img
+                                 src={addIcon}
+                                 alt="btn-icon"
+                                 className="btn-icon"
+                              />
+                           </button>
+                        </div>
                         <div className="cover">
                            <table className="table">
                               <thead className="thead">
@@ -69,9 +110,6 @@ const Workspace = () => {
                                          return (
                                             <tr key={i} className="row">
                                                <td className="cell">
-                                                  {i + 1}.
-                                               </td>
-                                               <td className="cell">
                                                   {cell.Titlu}
                                                </td>
                                                <td className="cell">
@@ -81,7 +119,16 @@ const Workspace = () => {
                                                   {cell.Deadline}
                                                </td>
                                                <td className="cell">
-                                                  {cell.Attachment}
+                                                  {cell.Attachment && (
+                                                     <>
+                                                        {cell.Attachment}{" "}
+                                                        <img
+                                                           src={attachIcon}
+                                                           alt="students-icon"
+                                                           className="icon"
+                                                        />
+                                                     </>
+                                                  )}
                                                </td>
                                             </tr>
                                          );

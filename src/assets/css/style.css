@@ -610,6 +610,17 @@ input[type=number] {
   border: 2px solid #000;
 }
 
+.filter-btn {
+  background-color: #fff;
+  border: 1px solid #000;
+  border-radius: 2rem;
+  transition: all 0.4s;
+}
+.filter-btn:hover, .filter-btn.clicked {
+  background-color: #2575be;
+  color: #fff;
+}
+
 .auth-page-btn {
   color: #fff;
   background-image: linear-gradient(91.18deg, #2575be 0%, rgba(78, 182, 227, 0.85) 99.99%, rgba(20, 124, 183, 0.89) 100%);
@@ -664,6 +675,28 @@ input[type=number] {
   border: 1px solid #000;
   background-color: #f5f5f5;
   text-align: left;
+}
+.table .row .cell .wraper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  border-collapse: collapse;
+}
+.table .row .cell .wraper .select-box {
+  border: 1px solid #000;
+  width: 25px;
+  height: 25px;
+}
+.table .row .cell .wraper .select-box .btn-icon {
+  transform: scale(0);
+  transition: transform 0.4s;
+}
+.table .row .cell.selected .select-box {
+  background-color: green;
+}
+.table .row .cell.selected .select-box .btn-icon {
+  transform: scale(1);
 }
 .table .main-cell,
 .table .cell {
@@ -1138,16 +1171,109 @@ input[type=number] {
   }
 }
 /*===================== LIST OF TIPICS PAGE PAGE =====================*/
+.list-of-topics-page {
+  background-color: #eaeaea;
+}
+.list-of-topics-page .container .search {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.list-of-topics-page .container .search_title {
+  font-weight: normal;
+  font-size: 1.25rem;
+}
+.list-of-topics-page .container .search_field {
+  position: relative;
+  width: 350px;
+  height: 40px;
+  overflow: hidden;
+  border: 1px solid #000;
+  border-radius: 2rem;
+}
+.list-of-topics-page .container .search_field_input {
+  padding-inline: 1rem 3.5rem;
+  padding-block: 0.3rem;
+  font-size: var(--h3-font-size);
+  width: 100%;
+  height: 100%;
+}
+.list-of-topics-page .container .search_field .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 3rem;
+  height: 102%;
+  border-left: 1px solid #000;
+  background-color: #ddd;
+  cursor: pointer;
+  transition: background-color 0.4s;
+}
+.list-of-topics-page .container .search_field .icon:hover {
+  background-color: rgba(221, 221, 221, 0.5333333333);
+}
+.list-of-topics-page .container .filter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.list-of-topics-page .container .filter_title {
+  font-weight: normal;
+  font-size: 1.25rem;
+}
+.list-of-topics-page .container .filter_options {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+.list-of-topics-page .container .save-btn-space {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  height: 80px;
+}
 .list-of-topics-page .container .content {
-  margin-bottom: 3rem;
+  margin-block: 3rem 2rem;
 }
 .list-of-topics-page .container .content .title {
   font-weight: normal;
-  font-size: var(--h2-font-size);
+  font-size: 1.25rem;
   margin-bottom: 1rem;
 }
 
 /*=============== BREAKPOINTS ===============*/
+/* CUSTOM */
+@media (max-width: 600px) {
+  .list-of-topics-page .container .search {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .list-of-topics-page .container .filter {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+/* EXTRA SMALL */
+@media (max-width: 510px) {
+  .list-of-topics-page .container .search .search_field {
+    width: 300px;
+  }
+  .list-of-topics-page .container .filter .filter_options {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
 /*===================== PROFILE PAGE =====================*/
 .profile-page {
   background-image: url("../imgs/body-bg.png");
