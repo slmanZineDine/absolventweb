@@ -56,13 +56,13 @@ const Login = () => {
    const handleLogin = (e) => {
       e.preventDefault();
       const userLoginInfo = {
-         // email: emailInput.current.value,
-         // password: passwordInput.current.value,
+         email: emailInput.current.value,
+         password: passwordInput.current.value,
          // ================ Dev mode ==================
          // email: "drslman@gmail.com",
          // password: "123456",
-         email: "drsammar@gmail.com",
-         password: "123456",
+         // email: "drsammar@gmail.com",
+         // password: "123456",
          // email: "ali@gmail.com",
          // password: "123456",
          // email: "ziad@gmail.com",
