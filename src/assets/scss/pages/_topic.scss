@@ -6,7 +6,7 @@
    .container {
       @include flex(center, space-between, 1.5rem);
       .content {
-         width: 60%;
+         width: 72%;
          > .title {
             @include flex(center, flex-start, 1rem);
             font-size: var(--h2-font-size);
@@ -44,7 +44,7 @@
                   padding-left: 1rem;
                   border: 1px solid #000;
                   border-radius: 1rem;
-                  width: 60%;
+                  width: 65%;
                }
                .textarea {
                   resize: none;

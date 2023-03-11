@@ -1,35 +1,33 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import studentsIcon from "../assets/imgs/icons/studentsIcon.png";
 import Header from "../components/Header";
 import UniversityLogo from "../components/UniversityLogo";
+import { getAcceptedWorkspace } from "../redux/workspaces/workspacesActions";
 
 const Students = () => {
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
 
+   // Redux Hook
+   const dispatch = useDispatch();
+   const acceptedWorkspaces = useSelector(
+      (state) => state.workspaces.acceptedWorkspaces
+   );
+
+   // React Hook
+   useEffect(() => {
+      if (userType === "coordonator") {
+         dispatch(getAcceptedWorkspace({}));
+      }
+   }, []);
+
    if (user) {
       if (userType === "coordonator") {
          // Names Of Table Columns
          const tableCol = ["Nr", "Student", "Titlul lucrării", "Specializare"];
-         // Content Of Table Rows
-         const tableContent = [
-            {
-               Student: "student",
-               "Titlul lucrării": "Titlul lucrăre studentului de licenta",
-               Specializare: "IR/IA/IE",
-            },
-            {
-               Student: "student",
-               "Titlul lucrării": "Titlul lucrăre studentului de licenta",
-               Specializare: "IR/IA/IE",
-            },
-            {
-               Student: "student",
-               "Titlul lucrării": "Titlul lucrăre studentului de licenta",
-               Specializare: "IR/IA/IE",
-            },
-         ];
          return (
             <>
                <Header userType={userType} />
@@ -56,21 +54,24 @@ const Students = () => {
                                  </tr>
                               </thead>
                               <tbody className="tbody">
-                                 {tableContent.length > 0
-                                    ? tableContent.map((cell, i) => {
+                                 {acceptedWorkspaces.length > 0
+                                    ? acceptedWorkspaces.map((workspace, i) => {
                                          return (
                                             <tr key={i} className="row">
                                                <td className="cell">
                                                   {i + 1}.
                                                </td>
                                                <td className="cell">
-                                                  {cell.Student}
+                                                  {workspace.student.email}
                                                </td>
                                                <td className="cell">
-                                                  {cell["Titlul lucrării"]}
+                                                  {workspace.tema.title}
                                                </td>
                                                <td className="cell">
-                                                  {cell.Specializare}
+                                                  {
+                                                     workspace.student
+                                                        .specializare
+                                                  }
                                                </td>
                                             </tr>
                                          );

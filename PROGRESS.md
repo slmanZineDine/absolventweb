@@ -23,5 +23,5 @@
 `Done` - Auth Login, Register, Logout\
 `Done` - Create and modify and the Tema [only_Doctor]\
 `Done` - Send Request to a Doctor and Checking request status [only_Student]\
-`0` - Accept or reject a student request [only_Doctor]\
-`0` - Create Post, Task, Meeting, Comments [Doctor_Student]
+`Done` - Accept or reject a student request [only_Doctor]\
+`Working` - Create Post, Task, Meeting, Comments [Doctor_Student]

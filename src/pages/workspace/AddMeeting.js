@@ -1,28 +1,61 @@
 import { useRef, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import UniversityLogo from "../../components/UniversityLogo";
 import addIcon from "../../assets/imgs/icons/addIcon.png";
+import { useDispatch, useSelector } from "react-redux";
+import swal from "sweetalert";
 
 const AddMeeting = () => {
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
 
+   // Redux Hook
+   const dispatch = useDispatch();
+   const events = useSelector((state) => state.events);
+
+   // Router Hook
+   const navigate = useNavigate();
+
    // Select input elements
    const titleInput = useRef(null);
    const deadlineInput = useRef(null);
    const attachmentInput = useRef(null);
 
+   // Sweet Alert labrary
+   const processChecking = async (msg, icon, theClassName) => {
+      await swal(msg, {
+         buttons: false,
+         timer: 3000,
+         icon: icon,
+         className: theClassName,
+         closeOnEsc: false,
+      });
+   };
+
+   // Vaidation
+   const fieldsValidation = (userInput) => {
+      if (userInput.title === "" || userInput.due_date === "") {
+         processChecking("Please Fill All Fields.", "warning", "red-bg");
+      } else {
+         return true;
+      }
+   };
+
    // handle Request
    const handleProcess = () => {
       const userInput = {
+         workspace_id:
+            "add workspace id here get from useLocation like profile and edite button",
          title: titleInput.current.value,
-         deadline: deadlineInput.current.value,
-         attachment: attachmentInput.current.files[0],
+         type: "meeting",
+         due_date: deadlineInput.current.value,
+         // attachment: attachmentInput.current.files[0],
       };
-      console.log(userInput);
-      // Here Add Validation
+      // if (fieldsValidation(userInput)) {
+      //    dispatch(addNewEvent(userInput));
+      // }
    };
 
    // React Hook

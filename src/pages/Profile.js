@@ -9,7 +9,7 @@ import {
    deleteTopic,
    getTopicsByDoctorId,
 } from "../redux/topics/topicsActions";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import swal from "sweetalert";
 
 const Profile = () => {
@@ -19,8 +19,10 @@ const Profile = () => {
 
    // Redux Hook
    const dispatch = useDispatch();
-   // const topics = useSelector((state) => state.topics.doctorTopics);
    const topics = useSelector((state) => state.topics.doctorTopics);
+   // To Prevent user Click add button before page loading, because get doctor topic
+   // still pending
+   const topicsGlobal = useSelector((state) => state.topics);
 
    // Router Hook
    const navigate = useNavigate();
@@ -56,10 +58,25 @@ const Profile = () => {
          dangerMode: true,
          buttons: true,
       });
-      if (checkBox) dispatch(deleteTopic(topicId));
+      if (checkBox) {
+         dispatch(deleteTopic(topicId));
+         setProcessDone(true);
+      }
+   };
+
+   // Alert Box From Sweet Alert labrary
+   const processChecking = async (msg, icon, theClassName) => {
+      await swal(msg, {
+         buttons: false,
+         timer: 3000,
+         icon: icon,
+         className: theClassName,
+         closeOnEsc: false,
+      });
    };
 
    // React Hook
+   const [processDone, setProcessDone] = useState(false);
    useEffect(() => {
       if (user && userType === "coordonator") {
          const doctorId = JSON.parse(user)?.coordonator?.id;
@@ -68,6 +85,25 @@ const Profile = () => {
          }
       }
    }, []);
+   // Variable below to manipulate useEffect and prevente run initial-render
+   const firstUpdate = useRef(true);
+   useEffect(() => {
+      if (firstUpdate.current) {
+         firstUpdate.current = false;
+         return;
+      }
+      if (userType === "coordonator") {
+         if (processDone) {
+            if (!topicsGlobal.loading && topicsGlobal.error) {
+               processChecking(topicsGlobal.error, "error", "red-bg");
+               setProcessDone(false); // Reset
+            } else if (!topicsGlobal.loading && topicsGlobal.success) {
+               processChecking("Process Successfully", "success", "done");
+               setProcessDone(false); // Reset
+            }
+         }
+      }
+   }, [topicsGlobal.error, topicsGlobal.success]);
 
    if (user) {
       // Names Of Table Columns
@@ -98,14 +134,21 @@ const Profile = () => {
                   <section className="section topics">
                      <h2 className="section_title">USER TEMA</h2>
                      <div className="container">
-                        <Link to="add-new-topic" className="btn add-btn">
+                        <button
+                           className="btn add-btn"
+                           onClick={() => {
+                              if (!topicsGlobal.loading) {
+                                 navigate("add-new-topic");
+                              }
+                           }}
+                        >
                            Add
                            <img
                               src={addIcon}
                               alt="btn-icon"
                               className="btn-icon"
                            />
-                        </Link>
+                        </button>
                         <div className="cover">
                            <table className="table">
                               <thead className="thead">
@@ -152,7 +195,7 @@ const Profile = () => {
                                                         Edite
                                                         <img
                                                            src={editeIcon}
-                                                           alt="btn-icon"
+                                                           alt="edite-icon"
                                                            className="btn-icon"
                                                         />
                                                      </button>
@@ -167,7 +210,7 @@ const Profile = () => {
                                                         Delete
                                                         <img
                                                            src={deleteIcon}
-                                                           alt="btn-icon"
+                                                           alt="delete-icon"
                                                            className="btn-icon"
                                                         />
                                                      </button>

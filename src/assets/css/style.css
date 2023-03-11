@@ -681,7 +681,6 @@ input[type=number] {
   align-items: center;
   justify-content: center;
   gap: 0;
-  border-collapse: collapse;
 }
 .table .row .cell .wraper .select-box {
   border: 1px solid #000;
@@ -697,6 +696,12 @@ input[type=number] {
 }
 .table .row .cell.selected .select-box .btn-icon {
   transform: scale(1);
+}
+.table .row .cell .status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
 .table .main-cell,
 .table .cell {
@@ -1539,7 +1544,7 @@ input[type=number] {
   gap: 1.5rem;
 }
 .topic-page .container .content {
-  width: 60%;
+  width: 72%;
 }
 .topic-page .container .content > .title {
   display: flex;
@@ -1584,7 +1589,7 @@ input[type=number] {
   padding-left: 1rem;
   border: 1px solid #000;
   border-radius: 1rem;
-  width: 60%;
+  width: 65%;
 }
 .topic-page .container .content .box .item .textarea {
   resize: none;
@@ -1684,7 +1689,7 @@ input[type=number] {
   padding-left: 1rem;
   border: 1px solid #000;
   border-radius: 1rem;
-  width: 60%;
+  width: 75%;
 }
 .event-page .container .content .box .item .textarea {
   resize: none;
@@ -1702,7 +1707,7 @@ input[type=number] {
   padding-block: 0.8rem;
   border: 1px solid #000;
   border-radius: 1rem;
-  width: 60%;
+  width: 75%;
   cursor: pointer;
 }
 .event-page .container .content .box .item .file-input .btn-icon {

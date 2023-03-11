@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import Filter from "../components/Filter";
@@ -14,33 +14,17 @@ const ListOfTopics = () => {
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
 
+   // Redux Hook
+   const dispatch = useDispatch();
+   const topicsByDoctor = useSelector((state) => state.topics.topicsByDoctor);
+   const workspace = useSelector((state) => state.workspaces);
+
    // React Hook
    const [selectedTema, setSeclectedTema] = useState(false);
    const [workspaceInfo, setWorkspaceInfo] = useState({
       tema_id: null,
       coordonator_id: null,
    });
-
-   // React Hook
-   useEffect(() => {
-      if (user) {
-         dispatch(getAllTopicsByDoctor({}));
-      }
-   }, []);
-
-   // Redux Hook
-   const dispatch = useDispatch();
-   const topicsByDoctor = useSelector((state) => state.topics.topicsByDoctor);
-
-   // Checking Box To Confirm Creation A New Workspace
-   const confirmCreation = async (workspace) => {
-      let checkBox = await swal("Are you sure?", {
-         dangerMode: true,
-         buttons: true,
-      });
-      console.log(workspace);
-      if (checkBox) dispatch(createWorkspace(workspace));
-   };
 
    // Alert Box From Sweet Alert labrary
    const processChecking = async (msg, icon, theClassName) => {
@@ -53,6 +37,47 @@ const ListOfTopics = () => {
       });
    };
 
+   // React Hook
+   const [processDone, setProcessDone] = useState(false);
+   useEffect(() => {
+      if (user) {
+         dispatch(getAllTopicsByDoctor({}));
+      }
+   }, []);
+   // Variable below to manipulate useEffect and prevente run initial-render
+   const firstUpdate = useRef(true);
+   useEffect(() => {
+      if (firstUpdate.current) {
+         firstUpdate.current = false;
+         return;
+      }
+      if (userType === "student") {
+         console.log(processDone);
+         if (processDone) {
+            if (!workspace.loading && workspace.error) {
+               processChecking(workspace.error, "error", "red-bg");
+               setProcessDone(false); // Reset
+               setSeclectedTema(false);
+            } else if (!workspace.loading && workspace.success) {
+               processChecking("Process Successfully", "success", "done");
+               setProcessDone(false); // Reset
+            }
+         }
+      }
+   }, [workspace.error, workspace.success]);
+
+   // Checking Box To Confirm Creation A New Workspace
+   const confirmCreation = async (workspace) => {
+      let checkBox = await swal("Are you sure?", {
+         dangerMode: true,
+         buttons: true,
+      });
+      if (checkBox) {
+         dispatch(createWorkspace(workspace));
+         setProcessDone(true);
+      }
+   };
+
    // Checking If User Select A Tema of Not
    const handleCreation = () => {
       if (workspaceInfo.tema_id && workspaceInfo.coordonator_id) {
@@ -61,7 +86,6 @@ const ListOfTopics = () => {
          processChecking("Please Select A Tema.", "warning", "red-bg");
       }
    };
-
    if (user) {
       if (userType === "student") {
          // Names Of Table Columns
@@ -136,7 +160,7 @@ const ListOfTopics = () => {
                                                                 tema_id:
                                                                    cell.id,
                                                                 coordonator_id:
-                                                                   doctor.user_id,
+                                                                   cell.coordonator_id,
                                                              });
                                                              if (
                                                                 selectedTema &&

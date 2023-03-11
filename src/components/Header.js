@@ -1,6 +1,6 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logoutIcon from "../assets/imgs/icons/logoutIcon.png";
 import { navLinks } from "../data/navlLinks";
 import { Logo } from "./Logo";
@@ -15,6 +15,9 @@ const Header = ({ userType, hideLinks }) => {
    // Redux Hook
    const dispatch = useDispatch();
    const userInfo = useSelector((state) => state.auth);
+
+   // Router Hook
+   const navigate = useNavigate();
 
    // Sweet alert labrary
    const processChecking = async (msg, icon, theClassName) => {
@@ -36,6 +39,12 @@ const Header = ({ userType, hideLinks }) => {
             : ele.classList.remove("scroll-header");
       }
    };
+   useEffect(() => {
+      if (userInfo.isLoggingOut) {
+         navigate("/", { replace: true });
+         window.location.reload();
+      }
+   }, [userInfo.isLoggingOut]);
 
    return (
       <header className="header" ref={headerElement}>

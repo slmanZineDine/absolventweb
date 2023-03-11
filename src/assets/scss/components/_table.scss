@@ -20,7 +20,6 @@
          text-align: left;
          .wraper {
             @include flex(center, center);
-            border-collapse: collapse;
             .select-box {
                border: 1px solid #000;
                width: 25px;
@@ -38,6 +37,9 @@
                   transform: scale(1);
                }
             }
+         }
+         .status {
+            @include flex(center, space-between, 1rem);
          }
       }
    }

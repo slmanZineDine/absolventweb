@@ -22,6 +22,7 @@ const AddNewTopic = () => {
 
    // Router Hook
    const navigate = useNavigate();
+
    const processChecking = async (msg, icon, theClassName) => {
       await swal(msg, {
          buttons: false,
@@ -69,6 +70,7 @@ const AddNewTopic = () => {
          navigate("/profile");
       }
    }, [topics.error, topics.success]);
+
    if (user && userType === "coordonator") {
       return (
          <>

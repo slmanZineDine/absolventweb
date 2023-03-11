@@ -12,6 +12,7 @@ const initialState = {
    userToken, // Store Token
    error: null, // Store Error msg get it from backend
    success: false, // Checking if auth is done
+   isLoggingOut: false,
 };
 
 const authSlice = createSlice({
@@ -35,6 +36,7 @@ const authSlice = createSlice({
          state.loading = false;
          state.error = payload;
       },
+
       // register user
       [registerUser.pending]: (state) => {
          state.loading = true;
@@ -51,7 +53,8 @@ const authSlice = createSlice({
          state.loading = false;
          state.error = payload;
       },
-      // logout user
+
+      // Logout user
       [userLogout.pending]: (state) => {
          state.loading = true;
          state.success = false;
@@ -60,7 +63,7 @@ const authSlice = createSlice({
       [userLogout.fulfilled]: (state) => {
          state.loading = false;
          state.userToken = null;
-         window.location.reload();
+         state.isLoggingOut = true;
       },
    },
 });
