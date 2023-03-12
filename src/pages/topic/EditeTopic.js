@@ -5,6 +5,7 @@ import UniversityLogo from "../../components/UniversityLogo";
 import { useEffect, useRef } from "react";
 import { editeTopic } from "../../redux/topics/topicsActions";
 import swal from "sweetalert";
+import Spinning from "../../components/Spinning";
 
 export const EditeTopic = () => {
    // Get User Information To Permission For Enter This Page Or Not
@@ -129,12 +130,16 @@ export const EditeTopic = () => {
                         </li>
 
                         <div className="save-btn-space">
-                           <button
-                              className="btn save-btn"
-                              onClick={handleProcess}
-                           >
-                              Save
-                           </button>
+                           {topics.loading ? (
+                              <Spinning size="small" />
+                           ) : (
+                              <button
+                                 className="btn save-btn"
+                                 onClick={handleProcess}
+                              >
+                                 Save
+                              </button>
+                           )}
                         </div>
                      </ul>
                   </div>

@@ -62,7 +62,7 @@ const Header = ({ userType, hideLinks }) => {
                      ))}
                      <li>
                         {userInfo.loading ? (
-                           <Spinning />
+                           <Spinning size="full" />
                         ) : (
                            <button
                               className="btn logout-btn"

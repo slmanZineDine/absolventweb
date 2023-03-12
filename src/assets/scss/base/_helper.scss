@@ -7,6 +7,10 @@
 .main {
    padding-top: calc(var(--header-height) + 3rem);
    padding-bottom: 2rem;
+   background-image: url("../imgs/body-bg.png");
+   background-position: center top;
+   background-size: 100% 100%;
+   background-repeat: no-repeat;
 }
 .section {
    padding-block: 2rem;

@@ -67,6 +67,8 @@ const Login = () => {
          // password: "123456",
          // email: "ziad@gmail.com",
          // password: "123456",
+         // email: "rami@gmail.com",
+         // password: "123456",
       };
 
       if (fieldsValidation(userLoginInfo)) {
@@ -128,7 +130,7 @@ const Login = () => {
                   <label htmlFor="remember-me">Remember my username</label>
                </div> */}
                         {userInfo.loading ? (
-                           <Spinning />
+                           <Spinning size="full" />
                         ) : (
                            <button
                               type="submit"

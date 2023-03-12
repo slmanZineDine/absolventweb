@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import Header from "../../components/Header";
 import UniversityLogo from "../../components/UniversityLogo";
 import addIcon from "../../assets/imgs/icons/addIcon.png";
@@ -8,6 +8,8 @@ const AddTask = () => {
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
+
+   const { state } = useLocation();
 
    // Select input elements
    const titleInput = useRef(null);

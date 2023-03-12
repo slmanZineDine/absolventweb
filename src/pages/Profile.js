@@ -11,6 +11,7 @@ import {
 } from "../redux/topics/topicsActions";
 import { useEffect, useRef, useState } from "react";
 import swal from "sweetalert";
+import Spinning from "../components/Spinning";
 
 const Profile = () => {
    // Get User Information To Permission For Enter This Page Or Not
@@ -77,6 +78,8 @@ const Profile = () => {
 
    // React Hook
    const [processDone, setProcessDone] = useState(false);
+   // Use this to show loading for exactly tema
+   const [selectedId, setSelectedId] = useState(null);
    useEffect(() => {
       if (user && userType === "coordonator") {
          const doctorId = JSON.parse(user)?.coordonator?.id;
@@ -199,21 +202,29 @@ const Profile = () => {
                                                            className="btn-icon"
                                                         />
                                                      </button>
-                                                     <button
-                                                        className="btn delete-btn"
-                                                        onClick={() =>
-                                                           confirmDeletion(
-                                                              cell.id
-                                                           )
-                                                        }
-                                                     >
-                                                        Delete
-                                                        <img
-                                                           src={deleteIcon}
-                                                           alt="delete-icon"
-                                                           className="btn-icon"
-                                                        />
-                                                     </button>
+                                                     {topicsGlobal.loading &&
+                                                     cell.id === selectedId ? (
+                                                        <Spinning size="small" />
+                                                     ) : (
+                                                        <button
+                                                           className="btn delete-btn"
+                                                           onClick={() => {
+                                                              confirmDeletion(
+                                                                 cell.id
+                                                              );
+                                                              setSelectedId(
+                                                                 cell.id
+                                                              );
+                                                           }}
+                                                        >
+                                                           Delete
+                                                           <img
+                                                              src={deleteIcon}
+                                                              alt="delete-icon"
+                                                              className="btn-icon"
+                                                           />
+                                                        </button>
+                                                     )}
                                                   </div>
                                                </td>
                                             </tr>

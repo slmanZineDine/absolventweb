@@ -8,6 +8,7 @@ import checkIcon from "../assets/imgs/icons/checkIcon.png";
 import { getAllTopicsByDoctor } from "../redux/topics/topicsActions";
 import { createWorkspace } from "../redux/workspaces/workspacesActions";
 import swal from "sweetalert";
+import Spinning from "../components/Spinning";
 
 const ListOfTopics = () => {
    // Get User Information To Permission For Enter This Page Or Not
@@ -20,7 +21,8 @@ const ListOfTopics = () => {
    const workspace = useSelector((state) => state.workspaces);
 
    // React Hook
-   const [selectedTema, setSeclectedTema] = useState(false);
+   // Use this to remove selected tema after save your request
+   const [selectedTema, setSelectedTema] = useState(false);
    const [workspaceInfo, setWorkspaceInfo] = useState({
       tema_id: null,
       coordonator_id: null,
@@ -57,7 +59,7 @@ const ListOfTopics = () => {
             if (!workspace.loading && workspace.error) {
                processChecking(workspace.error, "error", "red-bg");
                setProcessDone(false); // Reset
-               setSeclectedTema(false);
+               setSelectedTema(false);
             } else if (!workspace.loading && workspace.success) {
                processChecking("Process Successfully", "success", "done");
                setProcessDone(false); // Reset
@@ -103,12 +105,16 @@ const ListOfTopics = () => {
                         topicType={true}
                      />
                      <div className="save-btn-space">
-                        <button
-                           className="btn save-btn"
-                           onClick={handleCreation}
-                        >
-                           Save
-                        </button>
+                        {workspace.loading ? (
+                           <Spinning size="small" />
+                        ) : (
+                           <button
+                              className="btn save-btn"
+                              onClick={handleCreation}
+                           >
+                              Save
+                           </button>
+                        )}
                      </div>
                      {topicsByDoctor.length > 0
                         ? topicsByDoctor.map((doctor, i) => (
@@ -167,11 +173,11 @@ const ListOfTopics = () => {
                                                                 workspaceInfo.tema_id ===
                                                                    cell.id
                                                              ) {
-                                                                setSeclectedTema(
+                                                                setSelectedTema(
                                                                    false
                                                                 );
                                                              } else {
-                                                                setSeclectedTema(
+                                                                setSelectedTema(
                                                                    true
                                                                 );
                                                              }

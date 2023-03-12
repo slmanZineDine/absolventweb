@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import studentsIcon from "../assets/imgs/icons/studentsIcon.png";
 import Header from "../components/Header";
 import UniversityLogo from "../components/UniversityLogo";
@@ -17,6 +17,9 @@ const Students = () => {
       (state) => state.workspaces.acceptedWorkspaces
    );
 
+   // Router Hook
+   const navigate = useNavigate();
+
    // React Hook
    useEffect(() => {
       if (userType === "coordonator") {
@@ -27,7 +30,13 @@ const Students = () => {
    if (user) {
       if (userType === "coordonator") {
          // Names Of Table Columns
-         const tableCol = ["Nr", "Student", "Titlul lucrării", "Specializare"];
+         const tableCol = [
+            "Nr",
+            "Student",
+            "Titlul lucrării",
+            "Specializare",
+            "Workspace",
+         ];
          return (
             <>
                <Header userType={userType} />
@@ -72,6 +81,30 @@ const Students = () => {
                                                      workspace.student
                                                         .specializare
                                                   }
+                                               </td>
+                                               <td className="cell">
+                                                  <div className="wraper">
+                                                     <button
+                                                        className="btn show-btn"
+                                                        onClick={() => {
+                                                           navigate(
+                                                              "/workspace",
+                                                              {
+                                                                 state: {
+                                                                    student_id:
+                                                                       workspace
+                                                                          .student
+                                                                          .id,
+                                                                    workspace_id:
+                                                                       workspace.worspace_id,
+                                                                 },
+                                                              }
+                                                           );
+                                                        }}
+                                                     >
+                                                        Show
+                                                     </button>
+                                                  </div>
                                                </td>
                                             </tr>
                                          );

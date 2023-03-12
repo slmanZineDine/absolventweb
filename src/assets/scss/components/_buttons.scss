@@ -8,7 +8,7 @@
    font-size: var(--h3-font-size);
    padding: 0.6rem 1.5rem;
 }
-
+/* Greeting page buttons */
 .login-btn {
    @include customBtn(#28a745, #28a745, 120px);
 }
@@ -18,40 +18,7 @@
 .logout-btn {
    @include customBtn($danger-color, $danger-color);
 }
-
-.add-btn,
-.post-btn,
-.meeting-btn {
-   @include customBtn(#007bff, #007bff);
-}
-.edite-btn,
-.task-btn {
-   @include customBtn(#28a745, #28a745);
-}
-.delete-btn {
-   @include customBtn(#f00, #f00);
-}
-
-.save-btn {
-   background-color: #007bff;
-   color: #fff;
-   transition: transform 0.2s;
-   &:hover {
-      transform: scale(1.2);
-      border: 2px solid #000;
-   }
-}
-.filter-btn {
-   background-color: #fff;
-   border: 1px solid #000;
-   border-radius: 2rem;
-   transition: all 0.4s;
-   &:hover,
-   &.clicked {
-      background-color: #2575be;
-      color: #fff;
-   }
-}
+/* Auth pages buttons */
 .auth-page-btn {
    color: #fff;
    background-image: linear-gradient(
@@ -68,6 +35,60 @@
       background: linear-gradient(to right, #003959 0%, #003959 100%);
    }
 }
+
+/* Process Buttons */
+.add-btn,
+.post-btn,
+.meeting-btn {
+   @include customBtn(#007bff, #007bff);
+}
+.edite-btn,
+.task-btn {
+   @include customBtn(#28a745, #28a745);
+}
+.delete-btn {
+   @include customBtn(#f00, #f00);
+}
+.save-btn {
+   background-color: #007bff;
+   color: #fff;
+   transition: transform 0.2s;
+   &:hover {
+      transform: scale(1.2);
+      border: 2px solid #000;
+   }
+}
+.show-btn {
+   background-color: #28a745;
+   color: #fff;
+   transition: background-color 0.2s;
+   &:hover {
+      background-color: #28a745b0;
+   }
+}
+.filter-btn {
+   background-color: #fff;
+   border: 1px solid #000;
+   border-radius: 2rem;
+   transition: all 0.4s;
+   &:hover,
+   &.clicked {
+      background-color: #2575be;
+      color: #fff;
+   }
+}
+
+/* Page Not Found button */
+.retrun-btn {
+   background-color: #007bff;
+   color: #fff;
+   border-radius: 2rem;
+   transition: background-color 0.2s;
+   &:hover {
+      background-color: #007bffdd;
+   }
+}
+
 /*=============== BREAKPOINTS ===============*/
 /* MEDIUM */
 @media (max-width: 992px) {

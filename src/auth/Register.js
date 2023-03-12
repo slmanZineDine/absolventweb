@@ -258,7 +258,7 @@ const Register = () => {
                         </div>
 
                         {userInfo.loading ? (
-                           <Spinning />
+                           <Spinning size="full" />
                         ) : (
                            <button
                               type="submit"

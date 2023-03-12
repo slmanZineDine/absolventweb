@@ -1,6 +1,8 @@
 @use "../abstracts" as *;
 
 /*=============== SPINNING COMPONENT ===============*/
+
+/* === Full Screen === */
 /* Absolute Center Spinner */
 .loading {
    position: fixed;
@@ -27,43 +29,35 @@
    background-color: rgba(0, 0, 0, 0.3);
 }
 
-/* :not(:required) hides these rules from IE9 and below */
-.loading:not(:required) {
-   /* hide "loading..." text */
-   font: 0/0 a;
-   color: transparent;
-   text-shadow: none;
+/* === Small Loading === */
+.load-wrapp {
+   width: 100px;
+   height: 50px;
+   padding: 20px;
+   border-radius: 5px;
+   text-align: center;
    background-color: transparent;
-   border: 0;
 }
-
-.loading:not(:required):after {
-   content: "";
-   display: block;
-   font-size: 10px;
-   width: 1em;
-   height: 1em;
-   margin-top: -0.5em;
-   -webkit-animation: spinner 1500ms infinite linear;
-   -moz-animation: spinner 1500ms infinite linear;
-   -ms-animation: spinner 1500ms infinite linear;
-   -o-animation: spinner 1500ms infinite linear;
-   animation: spinner 1500ms infinite linear;
-   border-radius: 0.5em;
-   -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0,
-      rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0,
-      rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0,
-      rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0,
-      rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
-   box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0,
-      rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0,
-      rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0,
-      rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0,
-      rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+.load-3 .line:nth-last-child(1) {
+   animation: loadingC 0.6s 0.1s linear infinite;
+}
+.load-3 .line:nth-last-child(2) {
+   animation: loadingC 0.6s 0.2s linear infinite;
+}
+.load-3 .line:nth-last-child(3) {
+   animation: loadingC 0.6s 0.3s linear infinite;
+}
+.line {
+   display: inline-block;
+   width: 15px;
+   height: 15px;
+   margin-right: 2px;
+   border-radius: 15px;
+   background-color: #4b9cdb;
 }
 
 /* Animation */
-
+/* Full Screen */
 @-webkit-keyframes spinner {
    0% {
       -webkit-transform: rotate(0deg);
@@ -126,5 +120,18 @@
       -ms-transform: rotate(360deg);
       -o-transform: rotate(360deg);
       transform: rotate(360deg);
+   }
+}
+
+/* Small Loading */
+@keyframes loadingC {
+   0% {
+      transform: translate(0, 0);
+   }
+   50% {
+      transform: translate(0, 5px);
+   }
+   100% {
+      transform: translate(0, 0);
    }
 }

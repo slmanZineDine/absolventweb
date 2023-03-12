@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import UniversityLogo from "../../components/UniversityLogo";
 import addIcon from "../../assets/imgs/icons/addIcon.png";
@@ -17,6 +17,7 @@ const AddMeeting = () => {
 
    // Router Hook
    const navigate = useNavigate();
+   const { state } = useLocation();
 
    // Select input elements
    const titleInput = useRef(null);

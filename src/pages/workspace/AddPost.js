@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import UniversityLogo from "../../components/UniversityLogo";
 import addIcon from "../../assets/imgs/icons/addIcon.png";
@@ -18,6 +18,9 @@ const AddPost = () => {
 
    // Router Hook
    const navigate = useNavigate();
+   const { state } = useLocation();
+
+   console.log(state);
 
    // Select input elements
    const titleInput = useRef(null);
@@ -52,17 +55,17 @@ const AddPost = () => {
    // handle Request
    const handleProcess = () => {
       const userInput = {
-         workspace_id:
-            "add workspace id here get from useLocation like profile and edite button",
+         workspace_id: state.workspace_id,
          title: titleInput.current.value,
          descriere: contentInput.current.value,
          type: "post",
          due_date: deadlineInput.current.value,
          // attachment: attachmentInput.current.files[0],
       };
-      // if (fieldsValidation(userInput)) {
-      //    dispatch(addNewEvent(userInput));
-      // }
+      if (fieldsValidation(userInput)) {
+         console.log(userInput);
+         dispatch(addNewEvent(userInput));
+      }
    };
 
    // React Hook

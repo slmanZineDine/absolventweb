@@ -5,6 +5,7 @@ import UniversityLogo from "../../components/UniversityLogo";
 import { addNewTopic } from "../../redux/topics/topicsActions";
 import { useEffect, useRef } from "react";
 import swal from "sweetalert";
+import Spinning from "../../components/Spinning";
 
 const AddNewTopic = () => {
    // Get User Information To Permission For Enter This Page Or Not
@@ -107,12 +108,16 @@ const AddNewTopic = () => {
                            />
                         </li>
                         <div className="save-btn-space">
-                           <button
-                              className="btn save-btn"
-                              onClick={handleProcess}
-                           >
-                              Save
-                           </button>
+                           {topics.loading ? (
+                              <Spinning size="small" />
+                           ) : (
+                              <button
+                                 className="btn save-btn"
+                                 onClick={handleProcess}
+                              >
+                                 Save
+                              </button>
+                           )}
                         </div>
                      </ul>
                   </div>

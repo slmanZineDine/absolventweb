@@ -1,6 +1,9 @@
 @use "../abstracts" as *;
 
 /*===================== LIST OF TIPICS PAGE PAGE =====================*/
+.main.list-of-topics-page {
+   background-image: none;
+}
 .list-of-topics-page {
    background-color: $body-color;
    .container {
