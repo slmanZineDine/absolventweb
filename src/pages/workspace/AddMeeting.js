@@ -5,6 +5,7 @@ import UniversityLogo from "../../components/UniversityLogo";
 import addIcon from "../../assets/imgs/icons/addIcon.png";
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
+import Spinning from "../../components/Spinning";
 
 const AddMeeting = () => {
    // Get User Information To Permission For Enter This Page Or Not
@@ -117,12 +118,16 @@ const AddMeeting = () => {
                            </div>
                         </li>
                         <div className="save-btn-space">
-                           <button
-                              className="btn save-btn"
-                              onClick={handleProcess}
-                           >
-                              Save
-                           </button>
+                           {events.loading ? (
+                              <Spinning size="small" />
+                           ) : (
+                              <button
+                                 className="btn save-btn"
+                                 onClick={handleProcess}
+                              >
+                                 Save
+                              </button>
+                           )}
                         </div>
                      </ul>
                   </div>

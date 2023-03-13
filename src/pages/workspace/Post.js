@@ -1,16 +1,41 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import avatarIcon from "../../assets/imgs/icons/avatarIcon.png";
 import addCommentIcon from "../../assets/imgs/icons/addCommentIcon.png";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getEventById } from "../../redux/events/eventsAction";
+import { addComment, getComments } from "../../redux/comments/commentsAction";
 
 const Post = () => {
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
 
+   // Redux Hook
+   const dispatch = useDispatch();
+   const event = useSelector((state) => state.events.eventById);
+   const comments = useSelector((state) => state.comments.comments);
+   console.log(comments);
+
+   // Router Hook
+   const navigate = useNavigate();
+   const { state } = useLocation();
+
+   // console.log(state?.eventId);
+
    // Select input elements
    const commentInput = useRef(null);
+
+   // React Hook
+   useEffect(() => {
+      if (state?.eventId) {
+         dispatch(getEventById(state.eventId));
+         dispatch(getComments(state.eventId));
+      } else {
+         navigate("/workspace");
+      }
+   }, []);
 
    if (user) {
       return (
@@ -25,30 +50,25 @@ const Post = () => {
                            <div className="title">
                               <img
                                  src={avatarIcon}
-                                 alt="btn-icon"
+                                 alt="avatar-icon"
                                  className="btn-icon"
                               />
-                              <h3 className="topic-name">Plan de licenta</h3>
+                              <h3 className="username">{event.author_name}</h3>
                            </div>
                            <div className="post-info">
-                              <h4 className="username">Daniela zaharie</h4>
-                              <p className="the-date">Sep 6, 2022</p>
+                              <h4 className="topic-name">{event?.title}</h4>
+                              <p className="the-date">2023 - 12 - 8</p>
                            </div>
                         </div>
                         <div className="text">
-                           <p>
-                              Vă rog să utilizați fișierul șablon de Latex și sa
-                              adăugați plan de liceanta care o sa contine
-                              deadlin urile pentru fiecare etapa de lucru. Vă
-                              doresc spor la treabă
-                           </p>
+                           <p>{event?.descriere}</p>
                         </div>
                      </div>
                      <div className="comments">
                         <div className="add-comment">
                            <img
                               src={avatarIcon}
-                              alt="btn-icon"
+                              alt="avatar-icon"
                               className="btn-icon"
                            />
                            <textarea
@@ -56,7 +76,20 @@ const Post = () => {
                               className="input-field"
                               ref={commentInput}
                            ></textarea>
-                           <button className="send">
+                           <button
+                              className="send"
+                              onClick={() => {
+                                 if (commentInput.current.value !== "") {
+                                    dispatch(
+                                       addComment({
+                                          event_id: state.eventId,
+                                          content: commentInput.current.value,
+                                       })
+                                    );
+                                    commentInput.current.value = "";
+                                 }
+                              }}
+                           >
                               <img
                                  src={addCommentIcon}
                                  alt="btn-icon"
@@ -65,7 +98,8 @@ const Post = () => {
                            </button>
                         </div>
                         <div className="comments-list">
-                           <h2 className="title">Comments</h2>
+                           <h3 className="title">(4) Comments</h3>
+
                            <div className="comment">
                               <h3 className="username">User 01</h3>
                               <p className="text">

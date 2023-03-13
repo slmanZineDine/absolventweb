@@ -3,6 +3,7 @@ import loginIcon from "../assets/imgs/icons/loginIcon.png";
 import registerIcon from "../assets/imgs/icons/registerIcon.png";
 import { Link, Navigate } from "react-router-dom";
 import UniversityLogo from "../components/UniversityLogo";
+import { greetingPageContent } from "../data/globalDate";
 
 const Greeting = () => {
    const user = localStorage.getItem("user");
@@ -15,13 +16,11 @@ const Greeting = () => {
             <main className="main greeting-page">
                <div className="container">
                   <div className="content">
-                     <p className="greeting-msg">Welcome To Our Website</p>
+                     <p className="greeting-msg">
+                        {greetingPageContent.message}
+                     </p>
                      <p className="website-info">
-                        Lorem ipsum, dolor sit amet consectetur adipisicing
-                        elit. Fugiat, consequatur, voluptatum, ex reprehenderit
-                        minima doloremque numquam voluptate explicabo nostrum
-                        excepturi error optio nobis? Eligendi excepturi
-                        consequatur vero, vitae corrupti veniam!
+                        {greetingPageContent.about_website}
                      </p>
                      <div className="auth-btn">
                         <Link to="/login" className="btn login-btn">

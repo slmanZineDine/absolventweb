@@ -32,6 +32,33 @@ export const createWorkspace = createAsyncThunk(
    }
 );
 
+// Delete Exist Workspace
+export const deleteWorkspace = createAsyncThunk(
+   "workspaces/deleteWorkspace",
+   async (workspaceId, { rejectWithValue }) => {
+      try {
+         const config = {
+            headers: {
+               Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+            },
+         };
+
+         const { data } = await axios.delete(
+            `${baseURL}/api/workspace/${workspaceId}`,
+            config
+         );
+         return data;
+      } catch (error) {
+         // return custom error message from API if any
+         if (error.response && error.response.data.message) {
+            return rejectWithValue(error.response.data.message);
+         } else {
+            return rejectWithValue(error.message);
+         }
+      }
+   }
+);
+
 // Get Workspace that 0 Status
 export const getWaitingWorkspace = createAsyncThunk(
    "workspaces/getWaitingWorkspace",

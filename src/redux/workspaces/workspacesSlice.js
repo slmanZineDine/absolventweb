@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
    changeWorkspaceStatus,
    createWorkspace,
+   deleteWorkspace,
    getAcceptedWorkspace,
    getWaitingWorkspace,
 } from "./workspacesActions";
@@ -10,8 +11,8 @@ const initialState = {
    loading: false, // Checking if loading finish
    error: null, // Store Error msg get it from backend
    success: false, // Checking if auth is done
-   waitingWorkspaces: [],
-   acceptedWorkspaces: [],
+   waitingWorkspaces: [], // Students in Waiting List have 0 Status
+   acceptedWorkspaces: [], // Students have 1 Status
 };
 
 const workspacesSlice = createSlice({
@@ -28,8 +29,28 @@ const workspacesSlice = createSlice({
       [createWorkspace.fulfilled]: (state) => {
          state.loading = false;
          state.success = true;
+         // Store Student Status inside localStorage After Create Workspace
+         localStorage.setItem(
+            "studentStatus",
+            JSON.stringify({ workspace_status: 0 })
+         );
       },
       [createWorkspace.rejected]: (state, { payload }) => {
+         state.loading = false;
+         state.error = payload;
+      },
+
+      // Delete Exist Workspace
+      [deleteWorkspace.pending]: (state) => {
+         state.loading = true;
+         state.success = false; // Reset a value every Request
+         state.error = null; // Reset a value every Request
+      },
+      [deleteWorkspace.fulfilled]: (state) => {
+         state.loading = false;
+         state.success = true;
+      },
+      [deleteWorkspace.rejected]: (state, { payload }) => {
          state.loading = false;
          state.error = payload;
       },

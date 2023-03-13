@@ -164,73 +164,80 @@ const Profile = () => {
                                  </tr>
                               </thead>
                               <tbody className="tbody">
-                                 {topics?.teme?.length > 0
-                                    ? topics.teme.map((cell, i) => {
-                                         return (
-                                            <tr key={i} className="row">
-                                               <td className="cell">
-                                                  {i + 1}.
-                                               </td>
-                                               <td className="cell">
-                                                  {cell.title}
-                                               </td>
-                                               <td className="cell">
-                                                  {cell.detalii}
-                                               </td>
-                                               <td className="cell">
-                                                  {cell.specializare}
-                                               </td>
-                                               <td className="cell">
-                                                  <div className="topic-btns">
-                                                     <button
-                                                        className="btn edite-btn"
-                                                        onClick={() => {
-                                                           navigate(
-                                                              "edite-topic",
-                                                              {
-                                                                 state: {
-                                                                    id: cell.id,
-                                                                 },
-                                                              }
-                                                           );
-                                                        }}
-                                                     >
-                                                        Edite
-                                                        <img
-                                                           src={editeIcon}
-                                                           alt="edite-icon"
-                                                           className="btn-icon"
-                                                        />
-                                                     </button>
-                                                     {topicsGlobal.loading &&
-                                                     cell.id === selectedId ? (
-                                                        <Spinning size="small" />
-                                                     ) : (
-                                                        <button
-                                                           className="btn delete-btn"
-                                                           onClick={() => {
-                                                              confirmDeletion(
-                                                                 cell.id
-                                                              );
-                                                              setSelectedId(
-                                                                 cell.id
-                                                              );
-                                                           }}
-                                                        >
-                                                           Delete
-                                                           <img
-                                                              src={deleteIcon}
-                                                              alt="delete-icon"
-                                                              className="btn-icon"
-                                                           />
-                                                        </button>
-                                                     )}
-                                                  </div>
-                                               </td>
-                                            </tr>
-                                         );
-                                      })
-                                    : null}
+                                 {topics?.teme?.length > 0 ? (
+                                    topics.teme.map((cell, i) => {
+                                       return (
+                                          <tr key={i} className="row">
+                                             <td className="cell">{i + 1}.</td>
+                                             <td className="cell">
+                                                {cell.title}
+                                             </td>
+                                             <td className="cell">
+                                                {cell.detalii}
+                                             </td>
+                                             <td className="cell">
+                                                {cell.specializare}
+                                             </td>
+                                             <td className="cell">
+                                                <div className="topic-btns">
+                                                   <button
+                                                      className="btn edite-btn"
+                                                      onClick={() => {
+                                                         navigate(
+                                                            "edite-topic",
+                                                            {
+                                                               state: {
+                                                                  id: cell.id,
+                                                               },
+                                                            }
+                                                         );
+                                                      }}
+                                                   >
+                                                      Edite
+                                                      <img
+                                                         src={editeIcon}
+                                                         alt="edite-icon"
+                                                         className="btn-icon"
+                                                      />
+                                                   </button>
+                                                   {topicsGlobal.loading &&
+                                                   cell.id === selectedId ? (
+                                                      <Spinning size="small" />
+                                                   ) : (
+                                                      <button
+                                                         className="btn delete-btn"
+                                                         onClick={() => {
+                                                            confirmDeletion(
+                                                               cell.id
+                                                            );
+                                                            setSelectedId(
+                                                               cell.id
+                                                            );
+                                                         }}
+                                                      >
+                                                         Delete
+                                                         <img
+                                                            src={deleteIcon}
+                                                            alt="delete-icon"
+                                                            className="btn-icon"
+                                                         />
+                                                      </button>
+                                                   )}
+                                                </div>
+                                             </td>
+                                          </tr>
+                                       );
+                                    })
+                                 ) : (
+                                    <tr className="row">
+                                       <td
+                                          className="cell empty-table"
+                                          colSpan={tableCol.length}
+                                       >
+                                          You Don't Any Tema.
+                                       </td>
+                                    </tr>
+                                 )}
                               </tbody>
                            </table>
                         </div>

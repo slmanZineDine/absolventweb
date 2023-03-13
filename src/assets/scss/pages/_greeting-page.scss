@@ -2,6 +2,7 @@
 
 /*===================== GREETING PAGE =====================*/
 .greeting-page {
+   min-height: 100vh;
    .container {
       @include flex(center, space-between, 0.8rem);
       padding-block: 2rem 2rem;

@@ -38,9 +38,19 @@
                }
             }
          }
+         &.disable {
+            .select-box {
+               background-color: #ccc;
+            }
+         }
          .status {
             @include flex(center, space-between, 1rem);
          }
+      }
+      .empty-table {
+         text-align: center;
+         padding-block: 1rem;
+         letter-spacing: 2px;
       }
    }
    .main-cell,

@@ -3,12 +3,19 @@ import { Navigate, useLocation } from "react-router-dom";
 import Header from "../../components/Header";
 import UniversityLogo from "../../components/UniversityLogo";
 import addIcon from "../../assets/imgs/icons/addIcon.png";
+import Spinning from "../../components/Spinning";
+import { useDispatch, useSelector } from "react-redux";
 
 const AddTask = () => {
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
 
+   // Redux Hook
+   const dispatch = useDispatch();
+   const events = useSelector((state) => state.events);
+
+   // Router Hook
    const { state } = useLocation();
 
    // Select input elements
@@ -95,12 +102,16 @@ const AddTask = () => {
                            </div>
                         </li>
                         <div className="save-btn-space">
-                           <button
-                              className="btn save-btn"
-                              onClick={handleProcess}
-                           >
-                              Save
-                           </button>
+                           {events.loading ? (
+                              <Spinning size="small" />
+                           ) : (
+                              <button
+                                 className="btn save-btn"
+                                 onClick={handleProcess}
+                              >
+                                 Save
+                              </button>
+                           )}
                         </div>
                      </ul>
                   </div>

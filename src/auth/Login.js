@@ -69,6 +69,8 @@ const Login = () => {
          // password: "123456",
          // email: "rami@gmail.com",
          // password: "123456",
+         // email: "fadi@gmail.com",
+         // password: "123456",
       };
 
       if (fieldsValidation(userLoginInfo)) {
@@ -125,10 +127,6 @@ const Login = () => {
                               ref={passwordInput}
                            />
                         </div>
-                        {/* <div className="form-group">
-                  <input type="checkbox" className="form-input" id="remember-me" />
-                  <label htmlFor="remember-me">Remember my username</label>
-               </div> */}
                         {userInfo.loading ? (
                            <Spinning size="full" />
                         ) : (

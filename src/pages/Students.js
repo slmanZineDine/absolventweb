@@ -63,53 +63,75 @@ const Students = () => {
                                  </tr>
                               </thead>
                               <tbody className="tbody">
-                                 {acceptedWorkspaces.length > 0
-                                    ? acceptedWorkspaces.map((workspace, i) => {
-                                         return (
-                                            <tr key={i} className="row">
-                                               <td className="cell">
-                                                  {i + 1}.
-                                               </td>
-                                               <td className="cell">
-                                                  {workspace.student.email}
-                                               </td>
-                                               <td className="cell">
-                                                  {workspace.tema.title}
-                                               </td>
-                                               <td className="cell">
-                                                  {
-                                                     workspace.student
-                                                        .specializare
-                                                  }
-                                               </td>
-                                               <td className="cell">
-                                                  <div className="wraper">
-                                                     <button
-                                                        className="btn show-btn"
-                                                        onClick={() => {
-                                                           navigate(
-                                                              "/workspace",
-                                                              {
-                                                                 state: {
-                                                                    student_id:
-                                                                       workspace
-                                                                          .student
-                                                                          .id,
-                                                                    workspace_id:
-                                                                       workspace.worspace_id,
-                                                                 },
-                                                              }
-                                                           );
-                                                        }}
-                                                     >
-                                                        Show
-                                                     </button>
-                                                  </div>
-                                               </td>
-                                            </tr>
-                                         );
-                                      })
-                                    : null}
+                                 {acceptedWorkspaces.length > 0 ? (
+                                    acceptedWorkspaces.map((workspace, i) => {
+                                       return (
+                                          <tr key={i} className="row">
+                                             <td className="cell">{i + 1}.</td>
+                                             <td className="cell">
+                                                {workspace.student.email}
+                                             </td>
+                                             <td className="cell">
+                                                {workspace.tema.title}
+                                             </td>
+                                             <td className="cell">
+                                                {workspace.student.specializare}
+                                             </td>
+                                             <td className="cell">
+                                                <div className="wraper">
+                                                   <button
+                                                      className="btn show-btn"
+                                                      onClick={() => {
+                                                         localStorage.setItem(
+                                                            "workspaceInfo",
+                                                            JSON.stringify({
+                                                               student_id:
+                                                                  workspace
+                                                                     .student
+                                                                     .id,
+                                                               workspace_id:
+                                                                  workspace.worspace_id,
+                                                               tema_name:
+                                                                  workspace.tema
+                                                                     .title,
+                                                            })
+                                                         );
+                                                         navigate(
+                                                            "/workspace",
+                                                            {
+                                                               state: {
+                                                                  student_id:
+                                                                     workspace
+                                                                        .student
+                                                                        .id,
+                                                                  workspace_id:
+                                                                     workspace.worspace_id,
+                                                                  tema_name:
+                                                                     workspace
+                                                                        .tema
+                                                                        .title,
+                                                               },
+                                                            }
+                                                         );
+                                                      }}
+                                                   >
+                                                      Show
+                                                   </button>
+                                                </div>
+                                             </td>
+                                          </tr>
+                                       );
+                                    })
+                                 ) : (
+                                    <tr className="row">
+                                       <td
+                                          className="cell empty-table"
+                                          colSpan={tableCol.length}
+                                       >
+                                          There Are No Students To Show.
+                                       </td>
+                                    </tr>
+                                 )}
                               </tbody>
                            </table>
                         </div>

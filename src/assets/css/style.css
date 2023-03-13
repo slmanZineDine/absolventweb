@@ -724,11 +724,19 @@ input[type=number] {
 .table .row .cell.selected .select-box .btn-icon {
   transform: scale(1);
 }
+.table .row .cell.disable .select-box {
+  background-color: #ccc;
+}
 .table .row .cell .status {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+}
+.table .row .empty-table {
+  text-align: center;
+  padding-block: 1rem;
+  letter-spacing: 2px;
 }
 .table .main-cell,
 .table .cell {
@@ -782,6 +790,33 @@ input[type=number] {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* :not(:required) hides these rules from IE9 and below */
+.loading:not(:required) {
+  /* hide "loading..." text */
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+
+.loading:not(:required):after {
+  content: "";
+  display: block;
+  font-size: 10px;
+  width: 1em;
+  height: 1em;
+  margin-top: -0.5em;
+  -webkit-animation: spinner 1500ms infinite linear;
+  -moz-animation: spinner 1500ms infinite linear;
+  -ms-animation: spinner 1500ms infinite linear;
+  -o-animation: spinner 1500ms infinite linear;
+  animation: spinner 1500ms infinite linear;
+  border-radius: 0.5em;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+  box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
 }
 
 /* === Small Loading === */
@@ -894,6 +929,9 @@ input[type=number] {
   }
 }
 /*===================== GREETING PAGE =====================*/
+.greeting-page {
+  min-height: 100vh;
+}
 .greeting-page .container {
   display: flex;
   align-items: center;
@@ -1189,9 +1227,32 @@ input[type=number] {
   text-decoration: underline;
   font-weight: bold;
 }
+.homepage-student .container .content .steps .student-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+.homepage-student .container .content .steps .student-status .status {
+  border: 1px solid #000;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  color: #fff;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+.homepage-student .container .content .steps .student-status .status.pending {
+  background-color: blue;
+}
+.homepage-student .container .content .steps .student-status .status.accepted {
+  background-color: green;
+}
+.homepage-student .container .content .steps .student-status .status.rejected {
+  background-color: red;
+}
 
 .homepage-coordonator .container .content {
-  width: 80%;
+  width: 90%;
   padding-top: 2rem;
 }
 .homepage-coordonator .container .content .title {
@@ -1524,6 +1585,14 @@ input[type=number] {
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
+  flex-wrap: wrap;
+}
+.workspace-page .container .workspace-end {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
 }
 .workspace-page .container .content {
   width: 70%;
@@ -1551,15 +1620,23 @@ input[type=number] {
   justify-content: flex-start;
   gap: 0.5rem;
 }
-.workspace-page .container .content > .text {
-  text-align: center;
-  font-size: 1.2rem;
+.workspace-page .container .university-logo {
+  width: 25%;
 }
-.workspace-page .container .content > .text .text_href {
+.workspace-page .container.empty-workspace {
+  flex-direction: column-reverse;
+}
+.workspace-page .container.empty-workspace .text {
+  text-align: center;
+  line-height: 1.5;
+  font-size: 1.2rem;
+  margin-top: 2rem;
+}
+.workspace-page .container.empty-workspace .text_href {
   font-weight: bold;
   text-decoration: underline;
 }
-.workspace-page .container .content > .text .text_href:hover {
+.workspace-page .container.empty-workspace .text_href:hover {
   color: green;
 }
 
@@ -1571,9 +1648,20 @@ input[type=number] {
     justify-content: center;
     gap: 0;
   }
+  .workspace-page .container .workspace-end {
+    order: 3;
+    margin-bottom: 2rem;
+  }
   .workspace-page .container .content {
     width: 100%;
     margin-top: 2rem;
+  }
+  .workspace-page .container .university-logo {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
   }
 }
 /*=============== TOPIC COMPONENT ===============*/
@@ -1729,7 +1817,7 @@ input[type=number] {
 .event-page .container .content .box .item .textarea {
   background-color: #b4ebd7;
   padding-block: 0.8rem;
-  padding-left: 1rem;
+  padding-inline: 1rem;
   border: 1px solid #000;
   border-radius: 1rem;
   width: 75%;
@@ -1831,21 +1919,21 @@ input[type=number] {
   gap: 0.5rem;
   margin-bottom: 1rem;
 }
-.post-page .container .content .box .info .title .topic-name {
-  font-weight: normal;
+.post-page .container .content .box .info .title .username {
+  font-weight: bold;
 }
 .post-page .container .content .box .info .title .btn-icon {
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
 }
 .post-page .container .content .box .info .post-info {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 1rem;
   margin-bottom: 0.5rem;
 }
-.post-page .container .content .box .info .post-info > .username {
+.post-page .container .content .box .info .post-info > .topic-name {
   font-weight: normal;
 }
 .post-page .container .content .box .text {
@@ -1883,14 +1971,14 @@ input[type=number] {
   background-color: transparent;
 }
 .post-page .container .content .comments .comments-list {
-  background-color: #fff;
+  background-color: #ddd;
   padding: 1rem 1.7rem;
   border-radius: 1rem;
   margin-top: 1rem;
 }
 .post-page .container .content .comments .comments-list > .title {
-  text-align: center;
   margin-bottom: 2rem;
+  font-weight: normal;
 }
 .post-page .container .content .comments .comments-list .comment {
   margin-bottom: 1rem;

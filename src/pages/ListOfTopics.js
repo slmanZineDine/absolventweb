@@ -7,6 +7,7 @@ import Search from "../components/Search";
 import checkIcon from "../assets/imgs/icons/checkIcon.png";
 import { getAllTopicsByDoctor } from "../redux/topics/topicsActions";
 import { createWorkspace } from "../redux/workspaces/workspacesActions";
+import { getStudentStatus } from "../redux/users/uersAction";
 import swal from "sweetalert";
 import Spinning from "../components/Spinning";
 
@@ -19,10 +20,12 @@ const ListOfTopics = () => {
    const dispatch = useDispatch();
    const topicsByDoctor = useSelector((state) => state.topics.topicsByDoctor);
    const workspace = useSelector((state) => state.workspaces);
+   const userStatus = useSelector((state) => state.users.studentStatus);
 
    // React Hook
    // Use this to remove selected tema after save your request
    const [selectedTema, setSelectedTema] = useState(false);
+   // Use this to save selected tema information
    const [workspaceInfo, setWorkspaceInfo] = useState({
       tema_id: null,
       coordonator_id: null,
@@ -38,35 +41,6 @@ const ListOfTopics = () => {
          closeOnEsc: false,
       });
    };
-
-   // React Hook
-   const [processDone, setProcessDone] = useState(false);
-   useEffect(() => {
-      if (user) {
-         dispatch(getAllTopicsByDoctor({}));
-      }
-   }, []);
-   // Variable below to manipulate useEffect and prevente run initial-render
-   const firstUpdate = useRef(true);
-   useEffect(() => {
-      if (firstUpdate.current) {
-         firstUpdate.current = false;
-         return;
-      }
-      if (userType === "student") {
-         console.log(processDone);
-         if (processDone) {
-            if (!workspace.loading && workspace.error) {
-               processChecking(workspace.error, "error", "red-bg");
-               setProcessDone(false); // Reset
-               setSelectedTema(false);
-            } else if (!workspace.loading && workspace.success) {
-               processChecking("Process Successfully", "success", "done");
-               setProcessDone(false); // Reset
-            }
-         }
-      }
-   }, [workspace.error, workspace.success]);
 
    // Checking Box To Confirm Creation A New Workspace
    const confirmCreation = async (workspace) => {
@@ -88,6 +62,38 @@ const ListOfTopics = () => {
          processChecking("Please Select A Tema.", "warning", "red-bg");
       }
    };
+
+   // React Hook
+   const [processDone, setProcessDone] = useState(false);
+   useEffect(() => {
+      if (user) {
+         dispatch(getAllTopicsByDoctor({}));
+      }
+      if (userType === "student") {
+         dispatch(getStudentStatus({}));
+      }
+   }, []);
+   // Variable below to manipulate useEffect and prevente run initial-render
+   const firstUpdate = useRef(true);
+   useEffect(() => {
+      if (firstUpdate.current) {
+         firstUpdate.current = false;
+         return;
+      }
+      if (userType === "student") {
+         if (processDone) {
+            if (!workspace.loading && workspace.error) {
+               processChecking(workspace.error, "error", "red-bg");
+               setProcessDone(false); // Reset
+               setSelectedTema(false);
+            } else if (!workspace.loading && workspace.success) {
+               processChecking("Process Successfully", "success", "done");
+               setProcessDone(false); // Reset
+            }
+         }
+      }
+   }, [workspace.error, workspace.success]);
+
    if (user) {
       if (userType === "student") {
          // Names Of Table Columns
@@ -104,18 +110,21 @@ const ListOfTopics = () => {
                         programmingLang={true}
                         topicType={true}
                      />
-                     <div className="save-btn-space">
-                        {workspace.loading ? (
-                           <Spinning size="small" />
-                        ) : (
-                           <button
-                              className="btn save-btn"
-                              onClick={handleCreation}
-                           >
-                              Save
-                           </button>
-                        )}
-                     </div>
+                     {userStatus?.workspace_status === 1 ||
+                     userStatus?.workspace_status === 0 ? null : (
+                        <div className="save-btn-space">
+                           {workspace.loading ? (
+                              <Spinning size="small" />
+                           ) : (
+                              <button
+                                 className="btn save-btn"
+                                 onClick={handleCreation}
+                              >
+                                 Save
+                              </button>
+                           )}
+                        </div>
+                     )}
                      {topicsByDoctor.length > 0
                         ? topicsByDoctor.map((doctor, i) => (
                              <div key={i} className="content">
@@ -160,6 +169,13 @@ const ListOfTopics = () => {
                                                                 cell.id
                                                                 ? "selected"
                                                                 : ""
+                                                          } ${
+                                                             userStatus?.workspace_status ===
+                                                                1 ||
+                                                             userStatus?.workspace_status ===
+                                                                0
+                                                                ? "disable"
+                                                                : ""
                                                           }`}
                                                           onClick={() => {
                                                              setWorkspaceInfo({
@@ -179,6 +195,16 @@ const ListOfTopics = () => {
                                                              } else {
                                                                 setSelectedTema(
                                                                    true
+                                                                );
+                                                             }
+                                                             if (
+                                                                userStatus?.workspace_status ===
+                                                                   1 ||
+                                                                userStatus?.workspace_status ===
+                                                                   0
+                                                             ) {
+                                                                setSelectedTema(
+                                                                   false
                                                                 );
                                                              }
                                                           }}

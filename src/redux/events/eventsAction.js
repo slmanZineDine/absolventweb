@@ -30,6 +30,57 @@ export const getWorkspaceEvents = createAsyncThunk(
    }
 );
 
+// Get Student's Events
+export const getStudentEvents = createAsyncThunk(
+   "events/getStudentEvents",
+   async ({}, { rejectWithValue }) => {
+      try {
+         const config = {
+            headers: {
+               Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+            },
+         };
+
+         const { data } = await axios.get(`${baseURL}/api/event`, config);
+         return data;
+      } catch (error) {
+         // return custom error message from API if any
+         if (error.response && error.response.data.message) {
+            return rejectWithValue(error.response.data.message);
+         } else {
+            return rejectWithValue(error.message);
+         }
+      }
+   }
+);
+
+// Get Event By Id
+export const getEventById = createAsyncThunk(
+   "events/getEventById",
+   async (eventId, { rejectWithValue }) => {
+      try {
+         const config = {
+            headers: {
+               Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+            },
+         };
+
+         const { data } = await axios.get(
+            `${baseURL}/api/event/${eventId}`,
+            config
+         );
+         return data;
+      } catch (error) {
+         // return custom error message from API if any
+         if (error.response && error.response.data.message) {
+            return rejectWithValue(error.response.data.message);
+         } else {
+            return rejectWithValue(error.message);
+         }
+      }
+   }
+);
+
 // Add A New Event
 export const addNewEvent = createAsyncThunk(
    "events/addNewEvent",

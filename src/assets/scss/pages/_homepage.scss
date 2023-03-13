@@ -29,6 +29,26 @@
                   font-weight: bold;
                }
             }
+            .student-status {
+               @include flex(center, center);
+               .status {
+                  border: 1px solid #000;
+                  padding: 0.5rem 1rem;
+                  border-radius: 0.5rem;
+                  color: #fff;
+                  font-weight: bold;
+                  letter-spacing: 1px;
+                  &.pending {
+                     background-color: blue;
+                  }
+                  &.accepted {
+                     background-color: green;
+                  }
+                  &.rejected {
+                     background-color: red;
+                  }
+               }
+            }
          }
       }
    }
@@ -36,7 +56,7 @@
 .homepage-coordonator {
    .container {
       .content {
-         width: 80%;
+         width: 90%;
          padding-top: 2rem;
          .title {
             @include flex(center, flex-start, 1rem);

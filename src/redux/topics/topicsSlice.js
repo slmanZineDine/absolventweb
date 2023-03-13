@@ -50,7 +50,7 @@ const topicsSlice = createSlice({
          state.loading = false;
          state.success = true;
          state.topicsByDoctor = payload.data;
-         // Sorting Doctor By any update
+         // Sorting Doctor By any update | For list of tpics page
          state.topicsByDoctor.sort((a, b) => {
             const firEleDate = new Date(a["updated_at"]);
             const secEleDate = new Date(b["updated_at"]);

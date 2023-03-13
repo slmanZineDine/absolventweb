@@ -3,6 +3,7 @@ import mailIcon from "../assets/imgs/icons/mailIcon.png";
 import phoneIcon from "../assets/imgs/icons/phoneIcon.png";
 import locationIcon from "../assets/imgs/icons/locationIcon.png";
 import UniversityLogo from "../components/UniversityLogo";
+import { supportPageContent } from "../data/globalDate";
 
 const Support = () => {
    // Getting user type
@@ -16,17 +17,15 @@ const Support = () => {
                <ul className="box">
                   <li className="item">
                      <img src={mailIcon} alt="mail-icon" className="icon" />
-                     <p className="text">
-                        Contact us at support@uvt.ro or info@e-uvt.ro
-                     </p>
+                     <p className="text">{supportPageContent.support_email}</p>
                   </li>
                   <li className="item">
                      <img src={phoneIcon} alt="phone-icon" className="icon" />
-                     <p className="text">+40 256 592 111</p>
+                     <p className="text">{supportPageContent.phone}</p>
                   </li>
                   <li className="item">
                      <img src={mailIcon} alt="mail-icon" className="icon" />
-                     <p className="text">secretariat.uvt@e-uvt.ro</p>
+                     <p className="text">{supportPageContent.email}</p>
                   </li>
                   <li className="item">
                      <img

@@ -12,6 +12,7 @@ import {
 import checkIcon from "../assets/imgs/icons/checkIcon.png";
 import deleteIcon from "../assets/imgs/icons/deleteIcon.png";
 import swal from "sweetalert";
+import { getStudentStatus } from "../redux/users/uersAction";
 
 const HomePage = () => {
    // Get User Information To Permission For Enter This Page Or Not
@@ -24,6 +25,7 @@ const HomePage = () => {
       (state) => state.workspaces.waitingWorkspaces
    );
    const workspace = useSelector((state) => state.workspaces);
+   const userStatus = useSelector((state) => state.users.studentStatus);
 
    // Alert Box From Sweet Alert labrary
    const processChecking = async (msg, icon, theClassName) => {
@@ -39,6 +41,9 @@ const HomePage = () => {
    // React Hook
    const [processDone, setProcessDone] = useState(false);
    useEffect(() => {
+      if (userType === "student") {
+         dispatch(getStudentStatus({}));
+      }
       if (userType === "coordonator") {
          dispatch(getWaitingWorkspace({}));
       }
@@ -114,15 +119,36 @@ const HomePage = () => {
                                  de lucrări de licență.
                               </p>
                            </li>
-                           <li className="step">
-                              <img
-                                 src={statusIcon}
-                                 alt="status-icon"
-                                 className="icon"
-                              />
-                              Starea de acceptare coordonatorului pentru tema de
-                              licenta.
-                           </li>
+                           {typeof userStatus?.workspace_status === "number" ? (
+                              <>
+                                 <li className="step">
+                                    <img
+                                       src={statusIcon}
+                                       alt="status-icon"
+                                       className="icon"
+                                    />
+                                    Starea de acceptare coordonatorului pentru
+                                    tema de licenta.
+                                 </li>
+                                 <li className="student-status">
+                                    {userStatus?.workspace_status === 0 ? (
+                                       <span className="pending status">
+                                          Pending
+                                       </span>
+                                    ) : null}
+                                    {userStatus?.workspace_status === 1 ? (
+                                       <span className="accepted status">
+                                          Accepted
+                                       </span>
+                                    ) : null}
+                                    {userStatus?.workspace_status === 3 ? (
+                                       <span className="rejected status">
+                                          Rejected
+                                       </span>
+                                    ) : null}
+                                 </li>
+                              </>
+                           ) : null}
                         </ul>
                      </div>
                      <UniversityLogo />
@@ -169,68 +195,75 @@ const HomePage = () => {
                                  </tr>
                               </thead>
                               <tbody className="tbody">
-                                 {waitingWorkspaces.length > 0
-                                    ? waitingWorkspaces.map((cell, i) => {
-                                         return (
-                                            <tr key={i} className="row">
-                                               <td className="cell">
-                                                  {i + 1}.
-                                               </td>
-                                               <td className="cell">
-                                                  {cell.student.email}
-                                               </td>
-                                               <td className="cell">
-                                                  {cell.tema.title}
-                                               </td>
-                                               <td className="cell">
-                                                  {cell.tema.specializare}
-                                               </td>
-                                               <td className="cell">
-                                                  <div className="status">
-                                                     <div className="topic-btns ">
-                                                        <button
-                                                           className="btn edite-btn"
-                                                           onClick={() =>
-                                                              confirmAccept([
-                                                                 {
-                                                                    status: 1,
-                                                                 },
-                                                                 cell.worspace_id,
-                                                              ])
-                                                           }
-                                                        >
-                                                           Accept
-                                                           <img
-                                                              src={checkIcon}
-                                                              alt="check-icon"
-                                                              className="btn-icon"
-                                                           />
-                                                        </button>
-                                                        <button
-                                                           className="btn delete-btn"
-                                                           onClick={() =>
-                                                              confirmReject([
-                                                                 {
-                                                                    status: 3,
-                                                                 },
-                                                                 cell.worspace_id,
-                                                              ])
-                                                           }
-                                                        >
-                                                           Reject
-                                                           <img
-                                                              src={deleteIcon}
-                                                              alt="delete-icon"
-                                                              className="btn-icon"
-                                                           />
-                                                        </button>
-                                                     </div>
-                                                  </div>
-                                               </td>
-                                            </tr>
-                                         );
-                                      })
-                                    : null}
+                                 {waitingWorkspaces.length > 0 ? (
+                                    waitingWorkspaces.map((cell, i) => {
+                                       return (
+                                          <tr key={i} className="row">
+                                             <td className="cell">{i + 1}.</td>
+                                             <td className="cell">
+                                                {cell.student.email}
+                                             </td>
+                                             <td className="cell">
+                                                {cell.tema.title}
+                                             </td>
+                                             <td className="cell">
+                                                {cell.tema.specializare}
+                                             </td>
+                                             <td className="cell">
+                                                <div className="status">
+                                                   <div className="topic-btns ">
+                                                      <button
+                                                         className="btn edite-btn"
+                                                         onClick={() =>
+                                                            confirmAccept([
+                                                               {
+                                                                  status: 1,
+                                                               },
+                                                               cell.worspace_id,
+                                                            ])
+                                                         }
+                                                      >
+                                                         Accept
+                                                         <img
+                                                            src={checkIcon}
+                                                            alt="check-icon"
+                                                            className="btn-icon"
+                                                         />
+                                                      </button>
+                                                      <button
+                                                         className="btn delete-btn"
+                                                         onClick={() =>
+                                                            confirmReject([
+                                                               {
+                                                                  status: 3,
+                                                               },
+                                                               cell.worspace_id,
+                                                            ])
+                                                         }
+                                                      >
+                                                         Reject
+                                                         <img
+                                                            src={deleteIcon}
+                                                            alt="delete-icon"
+                                                            className="btn-icon"
+                                                         />
+                                                      </button>
+                                                   </div>
+                                                </div>
+                                             </td>
+                                          </tr>
+                                       );
+                                    })
+                                 ) : (
+                                    <tr className="row">
+                                       <td
+                                          className="cell empty-table"
+                                          colSpan={tableCol1.length}
+                                       >
+                                          You Don't Have Any Request.
+                                       </td>
+                                    </tr>
+                                 )}
                               </tbody>
                            </table>
                         </div>
@@ -244,7 +277,7 @@ const HomePage = () => {
                            />
                            <p className="text">Sarcinile tale</p>
                         </div>
-                        {/* <Table cols={tableCol2} /> */}
+                        {/* Add table Here */}
                      </div>
                   </div>
                </main>

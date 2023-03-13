@@ -6,11 +6,13 @@ import addIcon from "../../assets/imgs/icons/addIcon.png";
 import { addNewEvent } from "../../redux/events/eventsAction";
 import swal from "sweetalert";
 import { useDispatch, useSelector } from "react-redux";
+import Spinning from "../../components/Spinning";
 
 const AddPost = () => {
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
+   const workspaceInfo = JSON.parse(localStorage.getItem("workspaceInfo"));
 
    // Redux Hook
    const dispatch = useDispatch();
@@ -18,9 +20,6 @@ const AddPost = () => {
 
    // Router Hook
    const navigate = useNavigate();
-   const { state } = useLocation();
-
-   console.log(state);
 
    // Select input elements
    const titleInput = useRef(null);
@@ -55,7 +54,7 @@ const AddPost = () => {
    // handle Request
    const handleProcess = () => {
       const userInput = {
-         workspace_id: state.workspace_id,
+         workspace_id: workspaceInfo.workspace_id,
          title: titleInput.current.value,
          descriere: contentInput.current.value,
          type: "post",
@@ -63,7 +62,6 @@ const AddPost = () => {
          // attachment: attachmentInput.current.files[0],
       };
       if (fieldsValidation(userInput)) {
-         console.log(userInput);
          dispatch(addNewEvent(userInput));
       }
    };
@@ -115,7 +113,7 @@ const AddPost = () => {
                         <li className="item">
                            <h3 className="item_title">Deadline:</h3>
                            <input
-                              type="text"
+                              type="date"
                               placeholder="Scrie aici"
                               className="input-field"
                               ref={deadlineInput}
@@ -149,12 +147,16 @@ const AddPost = () => {
                            </div>
                         </li>
                         <div className="save-btn-space">
-                           <button
-                              className="btn save-btn"
-                              onClick={handleProcess}
-                           >
-                              Save
-                           </button>
+                           {events.loading ? (
+                              <Spinning size="small" />
+                           ) : (
+                              <button
+                                 className="btn save-btn"
+                                 onClick={handleProcess}
+                              >
+                                 Save
+                              </button>
+                           )}
                         </div>
                      </ul>
                   </div>
