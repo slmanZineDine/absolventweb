@@ -4,6 +4,7 @@
 .students-page-coordonator,
 .students-page-admin {
    min-height: 100vh;
+   @include flex(center, center);
 }
 .students-page-coordonator {
    .container {

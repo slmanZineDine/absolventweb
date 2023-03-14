@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import UniversityLogo from "../../components/UniversityLogo";
 import addIcon from "../../assets/imgs/icons/addIcon.png";
@@ -9,25 +9,26 @@ import { useDispatch, useSelector } from "react-redux";
 import Spinning from "../../components/Spinning";
 
 const AddPost = () => {
+   // ======================= Global Data =======================
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
    const workspaceInfo = JSON.parse(localStorage.getItem("workspaceInfo"));
 
-   // Redux Hook
+   // ======================= Redux Hook =======================
    const dispatch = useDispatch();
    const events = useSelector((state) => state.events);
 
-   // Router Hook
+   // ======================= Router Hook =======================
    const navigate = useNavigate();
 
-   // Select input elements
+   // ======================= Select Input Elements =======================
    const titleInput = useRef(null);
    const contentInput = useRef(null);
    const deadlineInput = useRef(null);
    const attachmentInput = useRef(null);
 
-   // Sweet Alert labrary
+   // ======================= Sweet Alert Labrary =======================
    const processChecking = async (msg, icon, theClassName) => {
       await swal(msg, {
          buttons: false,
@@ -38,7 +39,7 @@ const AddPost = () => {
       });
    };
 
-   // Vaidation
+   // ======================= Vaidation =======================
    const fieldsValidation = (userInput) => {
       if (
          userInput.title === "" ||
@@ -51,7 +52,7 @@ const AddPost = () => {
       }
    };
 
-   // handle Request
+   // ======================= Handle Request =======================
    const handleProcess = () => {
       const userInput = {
          workspace_id: workspaceInfo.workspace_id,
@@ -66,7 +67,7 @@ const AddPost = () => {
       }
    };
 
-   // React Hook
+   // ======================= React Hook =======================
    const [fileName, setFileName] = useState(null);
    // Variable below to manipulate useEffect and prevente run initial-render
    const firstUpdate = useRef(true);

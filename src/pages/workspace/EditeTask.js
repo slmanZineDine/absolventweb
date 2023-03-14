@@ -1,23 +1,27 @@
 import { useEffect, useRef, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import UniversityLogo from "../../components/UniversityLogo";
 import addIcon from "../../assets/imgs/icons/addIcon.png";
-import Spinning from "../../components/Spinning";
-import { useDispatch, useSelector } from "react-redux";
+import { deleteEvent, editeEvent } from "../../redux/events/eventsAction";
 import swal from "sweetalert";
-import { addNewEvent } from "../../redux/events/eventsAction";
+import { useDispatch, useSelector } from "react-redux";
+import Spinning from "../../components/Spinning";
 
-const AddTask = () => {
+const EditeTask = () => {
    // ======================= Global Data =======================
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
    const workspaceInfo = JSON.parse(localStorage.getItem("workspaceInfo"));
+   // Compare User ID With Author ID To Prevent Not Author' Meeting Edite Or Delete
+   const userId = JSON.parse(user)?.id;
 
    // ======================= Redux Hook =======================
    const dispatch = useDispatch();
    const events = useSelector((state) => state.events);
+   const workspaceEvents = useSelector((state) => state.events.workspaceEvents);
+   const { state } = useLocation();
 
    // ======================= Router Hook =======================
    const navigate = useNavigate();
@@ -63,16 +67,43 @@ const AddTask = () => {
          // attachment: attachmentInput.current.files[0],
       };
       if (fieldsValidation(userInput)) {
-         dispatch(addNewEvent(userInput));
+         setProcessType({ delete: false, edite: true });
+         dispatch(
+            editeEvent({ eventID: state.eventId, eventContent: userInput })
+         );
       }
    };
 
    // ======================= React Hook =======================
    const [fileName, setFileName] = useState(null);
+   // Store Event Id To Use It Inside Delete Event Action
+   const [eventId, setEventId] = useState(null);
+   // Select Process Type For Specific Button That Change To Spining
+   const [processType, setProcessType] = useState({
+      delete: false,
+      edite: false,
+   });
    // Variable below to manipulate useEffect and prevente run initial-render
    const firstUpdate = useRef(true);
    useEffect(() => {
-      titleInput.current.focus();
+      // Prevent user to enter this page directly
+      if (state?.eventId && workspaceEvents.length > 0) {
+         const postEvent = workspaceEvents.find(
+            (post) => post.id === state.eventId
+         );
+         // Compare User ID With Author ID To Prevent Not Author' Meeting Edite Or Delete
+         if (userId !== postEvent.author_id) navigate("/workspace");
+         setEventId(postEvent.id);
+         titleInput.current.focus();
+         titleInput.current.value = postEvent?.title ?? "";
+         contentInput.current.value = postEvent?.descriere ?? "";
+         deadlineInput.current.value = postEvent?.due_date ?? "";
+      } else {
+         navigate("/workspace");
+      }
+   }, []);
+   // Checking Process
+   useEffect(() => {
       if (firstUpdate.current) {
          firstUpdate.current = false;
          return;
@@ -80,7 +111,7 @@ const AddTask = () => {
       if (!events.loading && events.error) {
          processChecking(events.error, "error", "red-bg");
       } else if (!events.loading && events.success) {
-         processChecking("Add Successfully", "success", "done");
+         processChecking("Process Successfully", "success", "done");
          navigate("/workspace");
       }
    }, [events.error, events.success]);
@@ -92,7 +123,22 @@ const AddTask = () => {
             <main className="main event-page">
                <div className="container">
                   <div className="content">
-                     <h2 className="title">Task</h2>
+                     <div className="meta">
+                        <h2 className="title">Edite Meeting</h2>
+                        {events.loading && processType.delete ? (
+                           <Spinning size="small" />
+                        ) : (
+                           <button
+                              className="btn delete-btn"
+                              onClick={() => {
+                                 setProcessType({ delete: true, edite: false });
+                                 dispatch(deleteEvent(eventId));
+                              }}
+                           >
+                              Delete
+                           </button>
+                        )}
+                     </div>
                      <ul className="box">
                         <li className="item">
                            <h3 className="item_title">Titlu:</h3>
@@ -148,7 +194,7 @@ const AddTask = () => {
                            </div>
                         </li>
                         <div className="save-btn-space">
-                           {events.loading ? (
+                           {events.loading && processType.edite ? (
                               <Spinning size="small" />
                            ) : (
                               <button
@@ -171,4 +217,4 @@ const AddTask = () => {
    }
 };
 
-export default AddTask;
+export default EditeTask;

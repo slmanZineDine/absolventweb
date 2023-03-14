@@ -23,18 +23,63 @@
          .box {
             background-color: #fff;
             padding: 1rem 1.7rem;
-            border-radius: 1rem;
+            border-radius: 1rem 1rem 0 0;
             .info {
                border-bottom: 1px solid #000;
-               .title {
-                  @include flex(center, flex-start, 0.5rem);
+               .post-header {
+                  @include flex(center, space-between);
                   margin-bottom: 1rem;
-                  .username {
-                     font-weight: bold;
+                  .title {
+                     @include flex(center, flex-start, 0.5rem);
+                     .username {
+                        font-weight: bold;
+                     }
+                     .btn-icon {
+                        width: 35px;
+                        height: 35px;
+                     }
                   }
-                  .btn-icon {
-                     width: 35px;
-                     height: 35px;
+                  .points {
+                     cursor: pointer;
+                     .point {
+                        width: 5px;
+                        height: 5px;
+                        border-radius: 50%;
+                        background-color: #000;
+                        margin: 0.2rem;
+                     }
+                     .nested-list {
+                        position: relative;
+                        .options {
+                           transform: scale(0);
+                           transform-origin: top right;
+                           border-radius: 0.9rem 0 0.9rem 0.9rem;
+                           overflow: hidden;
+                           position: absolute;
+                           top: 100%;
+                           right: 2px;
+                           transition: transform 0.4s;
+                           cursor: pointer;
+                           z-index: $z-tooltip;
+                           .option {
+                              background-color: #ddd;
+                              padding: 0.8rem 1.5rem;
+                              transition: background-color 0.4s;
+                              &:hover {
+                                 background-color: #eee;
+                              }
+                              &:first-of-type {
+                                 border-bottom: 1px solid #000;
+                              }
+                           }
+                           &.show {
+                              transform: scale(1);
+                           }
+                        }
+                     }
+                     &.hide-points {
+                        display: none;
+                     }
                   }
                }
                .post-info {
@@ -47,6 +92,7 @@
             }
             .text {
                padding-block: 1.2rem;
+               border-bottom: 1px solid #000;
                > p {
                   line-height: 1.5;
                }
@@ -56,16 +102,16 @@
             margin-top: 0.5rem;
             .add-comment {
                background-color: #fff;
-               padding: 1rem 1.7rem;
-               border-radius: 1rem;
+               padding-top: 1rem;
+               border-radius: 0.2rem;
                position: relative;
-               @include flex(center, flex-start, 1.5rem);
+               @include flex(center, flex-start, 1rem);
                .input-field {
                   padding: 0.5rem 2rem 0;
                   border: 1px solid #000;
                   border-radius: 2rem;
                   flex: 1;
-                  min-height: 20px;
+                  min-height: 45px;
                   resize: none;
                }
                .btn-icon {
@@ -76,24 +122,94 @@
                   background-color: transparent;
                }
             }
-            .comments-list {
-               background-color: #ddd;
-               padding: 1rem 1.7rem;
-               border-radius: 1rem;
-               margin-top: 1rem;
-               > .title {
-                  margin-bottom: 2rem;
-                  font-weight: normal;
+         }
+      }
+      .comments-list {
+         background-color: #ddd;
+         padding: 1rem 1.7rem;
+         border-radius: 0 0 1rem 1rem;
+         > .title {
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #000;
+            font-weight: normal;
+         }
+         .comment {
+            margin-block: 1rem;
+            .author-name {
+               display: grid;
+               grid-template-columns: 30px auto auto 1fr;
+               align-items: center;
+               gap: 0.5rem;
+               font-size: 1rem;
+               width: 100%;
+               .btn-icon {
+                  width: 30px;
+                  height: 30px;
                }
-               .comment {
-                  margin-bottom: 1rem;
-                  padding-bottom: 0.5rem;
-                  border-bottom: 1px solid #000;
-                  .text {
-                     margin-block: 0.5rem;
-                     line-height: 1.5;
+               .comment-btns {
+                  justify-self: flex-end;
+                  position: relative;
+                  .points {
+                     cursor: pointer;
+                     .point {
+                        width: 5px;
+                        height: 5px;
+                        border-radius: 50%;
+                        background-color: #000;
+                        margin: 0.2rem;
+                     }
+                     &.hide-points {
+                        display: none;
+                     }
+                  }
+                  .options {
+                     transform: scale(0);
+                     transform-origin: top right;
+                     border-radius: 0.9rem 0 0.9rem 0.9rem;
+                     overflow: hidden;
+                     position: absolute;
+                     top: 100%;
+                     right: 2px;
+                     transition: transform 0.4s;
+                     cursor: pointer;
+                     z-index: $z-tooltip;
+                     .option {
+                        background-color: #fff;
+                        padding: 0.8rem 1.5rem;
+                        transition: background-color 0.4s;
+                        &:hover {
+                           background-color: #eee;
+                        }
+                        &:first-of-type {
+                           border-bottom: 1px solid #000;
+                        }
+                     }
+                     &.show {
+                        transform: scale(1);
+                     }
                   }
                }
+            }
+            .comment-edition {
+               padding: 0.5rem;
+               color: #2c2cff;
+               font-weight: bold;
+               cursor: pointer;
+            }
+            .text {
+               margin-block: 0.5rem;
+               padding-left: 2rem;
+               line-height: 1.5;
+               font-size: 1rem;
+            }
+            .input-field {
+               margin-block: 0.5rem;
+               padding: 0.5rem 1rem;
+               border-radius: 1rem;
+               width: 100%;
+            }
+            .the-date {
+               display: block;
             }
          }
       }

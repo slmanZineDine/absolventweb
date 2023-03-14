@@ -5,6 +5,7 @@
 /*=============== VARIABLES ===============*/
 :root {
   --biggest-font-size: 1.6rem;
+  --links-font-size: 1.2rem;
   --h2-font-size: 1.25rem;
   --h3-font-size: 1.125rem;
   --normal-font-size: 0.938rem;
@@ -124,7 +125,7 @@ input[type=number] {
 }
 
 .main {
-  padding-top: calc(var(--header-height) + 3rem);
+  padding-top: calc(var(--header-height) + 2rem);
   padding-bottom: 2rem;
   background-image: url("../imgs/body-bg.png");
   background-position: center top;
@@ -134,24 +135,6 @@ input[type=number] {
 
 .section {
   padding-block: 2rem;
-}
-.section_title {
-  position: relative;
-  margin-inline: auto;
-  width: fit-content;
-  margin-bottom: 3rem;
-  text-align: center;
-  color: #000;
-  font-size: var(--biggest-font-size);
-  letter-spacing: 3px;
-  border: 2px solid rgba(0, 0, 0, 0.8862745098);
-  border-radius: 0.2rem;
-  padding: 0.8rem 1rem;
-  background-color: #fff;
-  transition: background-color 0.3s;
-}
-.section_title:hover {
-  background-color: transparent;
 }
 
 /* Sweet alert library */
@@ -625,7 +608,7 @@ input[type=number] {
   transition: transform 0.2s;
 }
 .save-btn:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
   border: 2px solid #000;
 }
 
@@ -1242,13 +1225,13 @@ input[type=number] {
   letter-spacing: 1px;
 }
 .homepage-student .container .content .steps .student-status .status.pending {
-  background-color: blue;
+  background-color: #007bff;
 }
 .homepage-student .container .content .steps .student-status .status.accepted {
-  background-color: green;
+  background-color: #28a745;
 }
 .homepage-student .container .content .steps .student-status .status.rejected {
-  background-color: red;
+  background-color: #fc4855;
 }
 
 .homepage-coordonator .container .content {
@@ -1411,7 +1394,7 @@ input[type=number] {
 }
 .profile-page .user-info .container .detils .item .title {
   font-size: var(--h3-font-size);
-  font-weight: bold;
+  font-weight: normal;
 }
 .profile-page .user-info .container .detils .item .text {
   font-size: var(--normal-font-size);
@@ -1542,6 +1525,10 @@ input[type=number] {
 .students-page-coordonator,
 .students-page-admin {
   min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
 }
 
 .students-page-coordonator .container {
@@ -1683,7 +1670,7 @@ input[type=number] {
   justify-content: flex-start;
   gap: 1rem;
   font-size: var(--h2-font-size);
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 .topic-page .container .content > .title::before {
   content: "";
@@ -1704,7 +1691,7 @@ input[type=number] {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding-block: 0.8rem;
+  padding-block: 0.4rem;
 }
 .topic-page .container .content .box .item_title {
   font-size: var(--h3-font-size);
@@ -1724,7 +1711,7 @@ input[type=number] {
 }
 .topic-page .container .content .box .item .textarea {
   resize: none;
-  height: 150px;
+  height: 120px;
 }
 .topic-page .container .content .box .item .textarea::-webkit-scrollbar {
   width: 10px;
@@ -1734,7 +1721,7 @@ input[type=number] {
   align-items: center;
   justify-content: center;
   gap: 0;
-  height: 80px;
+  height: 60px;
 }
 
 /*=============== BREAKPOINTS ===============*/
@@ -1777,15 +1764,21 @@ input[type=number] {
 .event-page .container .content {
   width: 60%;
 }
-.event-page .container .content > .title {
+.event-page .container .content .meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0;
+}
+.event-page .container .content .title {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 1rem;
   font-size: var(--h2-font-size);
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
-.event-page .container .content > .title::before {
+.event-page .container .content .title::before {
   content: "";
   display: block;
   width: 17px;
@@ -1796,7 +1789,7 @@ input[type=number] {
 }
 .event-page .container .content .box {
   background-color: #fff;
-  padding: 1rem 1.7rem;
+  padding: 1rem 1.2rem;
   border-radius: 1rem;
 }
 .event-page .container .content .box .item {
@@ -1804,7 +1797,7 @@ input[type=number] {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding-block: 0.8rem;
+  padding-block: 0.4rem;
 }
 .event-page .container .content .box .item_title {
   font-size: var(--h3-font-size);
@@ -1824,7 +1817,7 @@ input[type=number] {
 }
 .event-page .container .content .box .item .textarea {
   resize: none;
-  height: 150px;
+  height: 100px;
 }
 .event-page .container .content .box .item .textarea::-webkit-scrollbar {
   width: 10px;
@@ -1835,7 +1828,7 @@ input[type=number] {
   justify-content: center;
   gap: 0.4rem;
   background-color: #fff;
-  padding-block: 0.8rem;
+  padding-block: 0.5rem;
   border: 1px solid #000;
   border-radius: 1rem;
   width: 75%;
@@ -1854,7 +1847,7 @@ input[type=number] {
   align-items: center;
   justify-content: center;
   gap: 0;
-  height: 80px;
+  height: 50px;
 }
 
 /*=============== BREAKPOINTS ===============*/
@@ -1907,24 +1900,72 @@ input[type=number] {
 .post-page .container .content .box {
   background-color: #fff;
   padding: 1rem 1.7rem;
-  border-radius: 1rem;
+  border-radius: 1rem 1rem 0 0;
 }
 .post-page .container .content .box .info {
   border-bottom: 1px solid #000;
 }
-.post-page .container .content .box .info .title {
+.post-page .container .content .box .info .post-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0;
+  margin-bottom: 1rem;
+}
+.post-page .container .content .box .info .post-header .title {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 0.5rem;
-  margin-bottom: 1rem;
 }
-.post-page .container .content .box .info .title .username {
+.post-page .container .content .box .info .post-header .title .username {
   font-weight: bold;
 }
-.post-page .container .content .box .info .title .btn-icon {
+.post-page .container .content .box .info .post-header .title .btn-icon {
   width: 35px;
   height: 35px;
+}
+.post-page .container .content .box .info .post-header .points {
+  cursor: pointer;
+}
+.post-page .container .content .box .info .post-header .points .point {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #000;
+  margin: 0.2rem;
+}
+.post-page .container .content .box .info .post-header .points .nested-list {
+  position: relative;
+}
+.post-page .container .content .box .info .post-header .points .nested-list .options {
+  transform: scale(0);
+  transform-origin: top right;
+  border-radius: 0.9rem 0 0.9rem 0.9rem;
+  overflow: hidden;
+  position: absolute;
+  top: 100%;
+  right: 2px;
+  transition: transform 0.4s;
+  cursor: pointer;
+  z-index: 10;
+}
+.post-page .container .content .box .info .post-header .points .nested-list .options .option {
+  background-color: #ddd;
+  padding: 0.8rem 1.5rem;
+  transition: background-color 0.4s;
+}
+.post-page .container .content .box .info .post-header .points .nested-list .options .option:hover {
+  background-color: #eee;
+}
+.post-page .container .content .box .info .post-header .points .nested-list .options .option:first-of-type {
+  border-bottom: 1px solid #000;
+}
+.post-page .container .content .box .info .post-header .points .nested-list .options.show {
+  transform: scale(1);
+}
+.post-page .container .content .box .info .post-header .points.hide-points {
+  display: none;
 }
 .post-page .container .content .box .info .post-info {
   display: flex;
@@ -1938,6 +1979,7 @@ input[type=number] {
 }
 .post-page .container .content .box .text {
   padding-block: 1.2rem;
+  border-bottom: 1px solid #000;
 }
 .post-page .container .content .box .text > p {
   line-height: 1.5;
@@ -1947,20 +1989,20 @@ input[type=number] {
 }
 .post-page .container .content .comments .add-comment {
   background-color: #fff;
-  padding: 1rem 1.7rem;
-  border-radius: 1rem;
+  padding-top: 1rem;
+  border-radius: 0.2rem;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 .post-page .container .content .comments .add-comment .input-field {
   padding: 0.5rem 2rem 0;
   border: 1px solid #000;
   border-radius: 2rem;
   flex: 1;
-  min-height: 20px;
+  min-height: 45px;
   resize: none;
 }
 .post-page .container .content .comments .add-comment .btn-icon {
@@ -1970,24 +2012,94 @@ input[type=number] {
 .post-page .container .content .comments .add-comment .send {
   background-color: transparent;
 }
-.post-page .container .content .comments .comments-list {
+.post-page .container .comments-list {
   background-color: #ddd;
   padding: 1rem 1.7rem;
-  border-radius: 1rem;
-  margin-top: 1rem;
+  border-radius: 0 0 1rem 1rem;
 }
-.post-page .container .content .comments .comments-list > .title {
-  margin-bottom: 2rem;
+.post-page .container .comments-list > .title {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #000;
   font-weight: normal;
 }
-.post-page .container .content .comments .comments-list .comment {
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
+.post-page .container .comments-list .comment {
+  margin-block: 1rem;
+}
+.post-page .container .comments-list .comment .author-name {
+  display: grid;
+  grid-template-columns: 30px auto auto 1fr;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  width: 100%;
+}
+.post-page .container .comments-list .comment .author-name .btn-icon {
+  width: 30px;
+  height: 30px;
+}
+.post-page .container .comments-list .comment .author-name .comment-btns {
+  justify-self: flex-end;
+  position: relative;
+}
+.post-page .container .comments-list .comment .author-name .comment-btns .points {
+  cursor: pointer;
+}
+.post-page .container .comments-list .comment .author-name .comment-btns .points .point {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #000;
+  margin: 0.2rem;
+}
+.post-page .container .comments-list .comment .author-name .comment-btns .points.hide-points {
+  display: none;
+}
+.post-page .container .comments-list .comment .author-name .comment-btns .options {
+  transform: scale(0);
+  transform-origin: top right;
+  border-radius: 0.9rem 0 0.9rem 0.9rem;
+  overflow: hidden;
+  position: absolute;
+  top: 100%;
+  right: 2px;
+  transition: transform 0.4s;
+  cursor: pointer;
+  z-index: 10;
+}
+.post-page .container .comments-list .comment .author-name .comment-btns .options .option {
+  background-color: #fff;
+  padding: 0.8rem 1.5rem;
+  transition: background-color 0.4s;
+}
+.post-page .container .comments-list .comment .author-name .comment-btns .options .option:hover {
+  background-color: #eee;
+}
+.post-page .container .comments-list .comment .author-name .comment-btns .options .option:first-of-type {
   border-bottom: 1px solid #000;
 }
-.post-page .container .content .comments .comments-list .comment .text {
+.post-page .container .comments-list .comment .author-name .comment-btns .options.show {
+  transform: scale(1);
+}
+.post-page .container .comments-list .comment .comment-edition {
+  padding: 0.5rem;
+  color: #2c2cff;
+  font-weight: bold;
+  cursor: pointer;
+}
+.post-page .container .comments-list .comment .text {
   margin-block: 0.5rem;
+  padding-left: 2rem;
   line-height: 1.5;
+  font-size: 1rem;
+}
+.post-page .container .comments-list .comment .input-field {
+  margin-block: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  width: 100%;
+}
+.post-page .container .comments-list .comment .the-date {
+  display: block;
 }
 
 /*===================== PAGE NOT FOUND PAGE =====================*/

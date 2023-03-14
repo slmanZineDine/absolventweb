@@ -71,31 +71,24 @@ const Register = () => {
       const userRegisterInfo = {
          name: nameInput.current.value,
          email: emailInput.current.value,
+         type: selectedType,
          password: passwordInput.current.value,
          password_confirmation: passwordConFirmInput.current.value,
          phone: phoneInput.current.value,
          address: addressInput.current.value,
          facultatea: facultyInput.current.value,
          specializare: specializareInput.current.value,
-         // ================ Dev mode ==================
-         // name: "drzain",
-         // email: "drzain@gmail.com",
-         // password: "123456",
-         // password_confirmation: "123456",
-         // phone: "123456",
-         // type: "coordonator",
-         // address: "address1",
-         // facultatea: "facultatea1",
-         // specializare: "specializare1",
-         // is_admin: 1,
       };
       if (selectedType !== "student") {
+         userRegisterInfo["is_admin"] = 0;
+      }
+      if (selectedType === "admin") {
          userRegisterInfo["is_admin"] = 1;
       }
       if (selectedType === "student") {
          userRegisterInfo.type = 0;
       } else if (selectedType === "coordonator") {
-         userRegisterInfo.selectedType = 1;
+         userRegisterInfo.type = 1;
       }
       if (fieldsValidation(userRegisterInfo)) {
          dispatch(registerUser(userRegisterInfo));

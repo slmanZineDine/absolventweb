@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
    addNewEvent,
+   deleteEvent,
+   editeEvent,
    getEventById,
    getStudentEvents,
    getWorkspaceEvents,
@@ -79,7 +81,7 @@ const eventsSlice = createSlice({
          state.error = payload;
       },
 
-      // Add New Event
+      // Add A New Event
       [addNewEvent.pending]: (state) => {
          state.loading = true;
          state.success = false; // Reset a value every Request
@@ -90,6 +92,36 @@ const eventsSlice = createSlice({
          state.success = true;
       },
       [addNewEvent.rejected]: (state, { payload }) => {
+         state.loading = false;
+         state.error = payload;
+      },
+
+      // Edite An Event
+      [editeEvent.pending]: (state) => {
+         state.loading = true;
+         state.success = false; // Reset a value every Request
+         state.error = null; // Reset a value every Request
+      },
+      [editeEvent.fulfilled]: (state) => {
+         state.loading = false;
+         state.success = true;
+      },
+      [editeEvent.rejected]: (state, { payload }) => {
+         state.loading = false;
+         state.error = payload;
+      },
+
+      // Delete An Event
+      [deleteEvent.pending]: (state) => {
+         state.loading = true;
+         state.success = false; // Reset a value every Request
+         state.error = null; // Reset a value every Request
+      },
+      [deleteEvent.fulfilled]: (state) => {
+         state.loading = false;
+         state.success = true;
+      },
+      [deleteEvent.rejected]: (state, { payload }) => {
          state.loading = false;
          state.error = payload;
       },

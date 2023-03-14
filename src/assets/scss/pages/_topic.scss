@@ -10,7 +10,7 @@
          > .title {
             @include flex(center, flex-start, 1rem);
             font-size: var(--h2-font-size);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             &::before {
                content: "";
                display: block;
@@ -27,7 +27,7 @@
             border-radius: 1rem;
             .item {
                @include flex(center, space-between, 1rem);
-               padding-block: 0.8rem;
+               padding-block: 0.4rem;
                &_title {
                   font-size: var(--h3-font-size);
                   font-weight: normal;
@@ -48,7 +48,7 @@
                }
                .textarea {
                   resize: none;
-                  height: 150px;
+                  height: 120px;
                   // styling scrollbar later
                   &::-webkit-scrollbar {
                      width: 10px;
@@ -57,7 +57,7 @@
             }
             .save-btn-space {
                @include flex(center, center);
-               height: 80px;
+               height: 60px;
             }
          }
       }

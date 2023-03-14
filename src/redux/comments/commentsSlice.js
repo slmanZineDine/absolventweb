@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addComment, getComments } from "./commentsAction";
+import {
+   addComment,
+   getComments,
+   deleteComment,
+   editeComment,
+} from "./commentsAction";
 
 const initialState = {
    loading: false, // Checking if loading finish
@@ -41,6 +46,46 @@ const commentsSlice = createSlice({
          state.comments.push(payload.data);
       },
       [addComment.rejected]: (state, { payload }) => {
+         state.loading = false;
+         state.error = payload;
+      },
+
+      // Edite Comment
+      [editeComment.pending]: (state) => {
+         state.loading = true;
+         state.success = false; // Reset a value every Request
+         state.error = null; // Reset a value every Request
+      },
+      [editeComment.fulfilled]: (state, { payload }) => {
+         state.loading = false;
+         state.success = true;
+         // Get Updated Comment Id
+         const index = state.comments.findIndex(
+            (comment, i) => comment.id === payload.data.id
+         );
+         // Replace Updated Comment With New Value
+         state.comments[index] = payload.data;
+      },
+      [editeComment.rejected]: (state, { payload }) => {
+         state.loading = false;
+         state.error = payload;
+      },
+
+      // Delete Comment
+      [deleteComment.pending]: (state) => {
+         state.loading = true;
+         state.success = false; // Reset a value every Request
+         state.error = null; // Reset a value every Request
+      },
+      [deleteComment.fulfilled]: (state, { payload }) => {
+         state.loading = false;
+         state.success = true;
+         // Remove Deleted Comment From Comments
+         state.comments = state.comments.filter(
+            (comment) => comment.id !== payload
+         );
+      },
+      [deleteComment.rejected]: (state, { payload }) => {
          state.loading = false;
          state.error = payload;
       },

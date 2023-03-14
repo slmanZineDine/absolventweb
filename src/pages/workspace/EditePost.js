@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import UniversityLogo from "../../components/UniversityLogo";
 import addIcon from "../../assets/imgs/icons/addIcon.png";
-import Spinning from "../../components/Spinning";
-import { useDispatch, useSelector } from "react-redux";
+import { editeEvent } from "../../redux/events/eventsAction";
 import swal from "sweetalert";
-import { addNewEvent } from "../../redux/events/eventsAction";
+import { useDispatch, useSelector } from "react-redux";
+import Spinning from "../../components/Spinning";
 
-const AddTask = () => {
+const EditePost = () => {
    // ======================= Global Data =======================
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
@@ -18,6 +18,8 @@ const AddTask = () => {
    // ======================= Redux Hook =======================
    const dispatch = useDispatch();
    const events = useSelector((state) => state.events);
+   const workspaceEvents = useSelector((state) => state.events.workspaceEvents);
+   const { state } = useLocation();
 
    // ======================= Router Hook =======================
    const navigate = useNavigate();
@@ -58,12 +60,14 @@ const AddTask = () => {
          workspace_id: workspaceInfo.workspace_id,
          title: titleInput.current.value,
          descriere: contentInput.current.value,
-         type: "task",
+         type: "post",
          due_date: deadlineInput.current.value,
          // attachment: attachmentInput.current.files[0],
       };
       if (fieldsValidation(userInput)) {
-         dispatch(addNewEvent(userInput));
+         dispatch(
+            editeEvent({ eventID: state.eventId, eventContent: userInput })
+         );
       }
    };
 
@@ -72,7 +76,21 @@ const AddTask = () => {
    // Variable below to manipulate useEffect and prevente run initial-render
    const firstUpdate = useRef(true);
    useEffect(() => {
-      titleInput.current.focus();
+      // Prevent user to enter this page directly
+      if (state?.eventId && workspaceEvents.length > 0) {
+         console.log(workspaceEvents);
+         const postEvent = workspaceEvents.find(
+            (post) => post.id === state.eventId
+         );
+         titleInput.current.focus();
+         titleInput.current.value = postEvent?.title ?? "";
+         contentInput.current.value = postEvent?.descriere ?? "";
+         deadlineInput.current.value = postEvent?.due_date ?? "";
+      } else {
+         navigate("/workspace");
+      }
+   }, []);
+   useEffect(() => {
       if (firstUpdate.current) {
          firstUpdate.current = false;
          return;
@@ -80,7 +98,7 @@ const AddTask = () => {
       if (!events.loading && events.error) {
          processChecking(events.error, "error", "red-bg");
       } else if (!events.loading && events.success) {
-         processChecking("Add Successfully", "success", "done");
+         processChecking("Edite Successfully", "success", "done");
          navigate("/workspace");
       }
    }, [events.error, events.success]);
@@ -92,7 +110,7 @@ const AddTask = () => {
             <main className="main event-page">
                <div className="container">
                   <div className="content">
-                     <h2 className="title">Task</h2>
+                     <h2 className="title">Edite Post</h2>
                      <ul className="box">
                         <li className="item">
                            <h3 className="item_title">Titlu:</h3>
@@ -171,4 +189,4 @@ const AddTask = () => {
    }
 };
 
-export default AddTask;
+export default EditePost;

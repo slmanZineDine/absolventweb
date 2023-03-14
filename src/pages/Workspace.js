@@ -339,9 +339,27 @@ const Workspace = () => {
                                                       >
                                                          {cell.title}
                                                       </Link>
-                                                   ) : (
-                                                      cell.title
-                                                   )}
+                                                   ) : null}
+                                                   {cell.type === "meeting" ? (
+                                                      <Link
+                                                         to="edite-meeting"
+                                                         state={{
+                                                            eventId: cell.id,
+                                                         }}
+                                                      >
+                                                         {cell.title}
+                                                      </Link>
+                                                   ) : null}
+                                                   {cell.type === "task" ? (
+                                                      <Link
+                                                         to="edite-task"
+                                                         state={{
+                                                            eventId: cell.id,
+                                                         }}
+                                                      >
+                                                         {cell.title}
+                                                      </Link>
+                                                   ) : null}
                                                 </td>
                                                 <td className="cell">
                                                    {cell.type}

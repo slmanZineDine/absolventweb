@@ -16,6 +16,9 @@ import AddPost from "./pages/workspace/AddPost";
 import AddTask from "./pages/workspace/AddTask";
 import AddMeeting from "./pages/workspace/AddMeeting";
 import Post from "./pages/workspace/Post";
+import EditePost from "./pages/workspace/EditePost";
+import EditeMeeting from "./pages/workspace/EditeMeeting";
+import EditeTask from "./pages/workspace/EditeTask";
 
 function App() {
    return (
@@ -29,8 +32,11 @@ function App() {
             <Route path="/workspace" element={<Outlet />}>
                <Route index element={<Workspace />} />
                <Route path="add-post" element={<AddPost />} />
+               <Route path="edite-post" element={<EditePost />} />
                <Route path="add-task" element={<AddTask />} />
+               <Route path="edite-task" element={<EditeTask />} />
                <Route path="add-meeting" element={<AddMeeting />} />
+               <Route path="edite-meeting" element={<EditeMeeting />} />
                <Route path="post" element={<Post />} />
             </Route>
             <Route path="/profile" element={<Outlet />}>

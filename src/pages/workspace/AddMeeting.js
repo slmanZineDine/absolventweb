@@ -1,16 +1,18 @@
-import { useRef, useState } from "react";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import UniversityLogo from "../../components/UniversityLogo";
 import addIcon from "../../assets/imgs/icons/addIcon.png";
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
 import Spinning from "../../components/Spinning";
+import { addNewEvent } from "../../redux/events/eventsAction";
 
 const AddMeeting = () => {
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
+   const workspaceInfo = JSON.parse(localStorage.getItem("workspaceInfo"));
 
    // Redux Hook
    const dispatch = useDispatch();
@@ -18,7 +20,6 @@ const AddMeeting = () => {
 
    // Router Hook
    const navigate = useNavigate();
-   const { state } = useLocation();
 
    // Select input elements
    const titleInput = useRef(null);
@@ -48,20 +49,35 @@ const AddMeeting = () => {
    // handle Request
    const handleProcess = () => {
       const userInput = {
-         workspace_id:
-            "add workspace id here get from useLocation like profile and edite button",
+         workspace_id: workspaceInfo.workspace_id,
          title: titleInput.current.value,
+         descriere: "d", // Temparary We Will Remove it later
          type: "meeting",
          due_date: deadlineInput.current.value,
          // attachment: attachmentInput.current.files[0],
       };
-      // if (fieldsValidation(userInput)) {
-      //    dispatch(addNewEvent(userInput));
-      // }
+      if (fieldsValidation(userInput)) {
+         dispatch(addNewEvent(userInput));
+      }
    };
 
    // React Hook
    const [fileName, setFileName] = useState(null);
+   // Variable below to manipulate useEffect and prevente run initial-render
+   const firstUpdate = useRef(true);
+   useEffect(() => {
+      titleInput.current.focus();
+      if (firstUpdate.current) {
+         firstUpdate.current = false;
+         return;
+      }
+      if (!events.loading && events.error) {
+         processChecking(events.error, "error", "red-bg");
+      } else if (!events.loading && events.success) {
+         processChecking("Add Successfully", "success", "done");
+         navigate("/workspace");
+      }
+   }, [events.error, events.success]);
 
    if (user) {
       return (
@@ -84,7 +100,7 @@ const AddMeeting = () => {
                         <li className="item">
                            <h3 className="item_title">Deadline:</h3>
                            <input
-                              type="text"
+                              type="date"
                               placeholder="Scrie aici"
                               className="input-field"
                               ref={deadlineInput}

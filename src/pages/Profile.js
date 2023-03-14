@@ -30,8 +30,8 @@ const Profile = () => {
 
    // User Details showing in profile page
    const userDetails = [
-      "Tip de utilizator",
-      "prenuma si Numa",
+      "Tip De Utilizator",
+      "Prenuma Si Numa",
       "Email",
       "Telefon",
       "Facultatea",
@@ -117,16 +117,12 @@ const Profile = () => {
             <Header userType={userType} />
             <main className="main profile-page">
                <section className="section user-info">
-                  <h2 className="section_title">USER INFORMATION</h2>
                   <div className="container">
                      <ul className="detils">
                         {profileData([JSON.parse(user)])?.[0].map((e, i) => (
                            <li key={i} className="item">
                               <h3 className="title">{userDetails[i]}:</h3>
-                              {/* Reading mode */}
                               <p className="text">{e}</p>
-                              {/* Modify mode */}
-                              {/* <input type="text" value={e}/> */}
                            </li>
                         ))}
                      </ul>
@@ -135,7 +131,6 @@ const Profile = () => {
                </section>
                {userType === "coordonator" ? (
                   <section className="section topics">
-                     <h2 className="section_title">USER TEMA</h2>
                      <div className="container">
                         <button
                            className="btn add-btn"

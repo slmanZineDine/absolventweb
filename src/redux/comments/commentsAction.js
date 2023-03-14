@@ -29,10 +29,6 @@ export const getComments = createAsyncThunk(
       }
    }
 );
-//  {
-//     "event_id":"3",
-//     "content":"this is comment"
-// }
 
 // Add New Comment
 export const addComment = createAsyncThunk(
@@ -52,6 +48,59 @@ export const addComment = createAsyncThunk(
             config
          );
          return data;
+      } catch (error) {
+         // return custom error message from API if any
+         if (error.response && error.response.data.message) {
+            return rejectWithValue(error.response.data.message);
+         } else {
+            return rejectWithValue(error.message);
+         }
+      }
+   }
+);
+
+// Edite Comment
+export const editeComment = createAsyncThunk(
+   "comments/editeComment",
+   async ({ commentId, commentContent }, { rejectWithValue }) => {
+      try {
+         const config = {
+            headers: {
+               Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+               "Content-Type": "application/json",
+            },
+         };
+
+         const { data } = await axios.put(
+            `${baseURL}/api/comment/${commentId}`,
+            commentContent,
+            config
+         );
+         return data;
+      } catch (error) {
+         // return custom error message from API if any
+         if (error.response && error.response.data.message) {
+            return rejectWithValue(error.response.data.message);
+         } else {
+            return rejectWithValue(error.message);
+         }
+      }
+   }
+);
+
+// Delete Comment
+export const deleteComment = createAsyncThunk(
+   "comments/deleteComment",
+   async (commentId, { rejectWithValue }) => {
+      try {
+         const config = {
+            headers: {
+               Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+            },
+         };
+
+         await axios.delete(`${baseURL}/api/comment/${commentId}`, config);
+         return commentId;
       } catch (error) {
          // return custom error message from API if any
          if (error.response && error.response.data.message) {
