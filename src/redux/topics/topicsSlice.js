@@ -26,10 +26,11 @@ const topicsSlice = createSlice({
    reducers: {
       searchTitle(state, { payload }) {
          // When Input Is Empty Reset Data
-         if (!payload) {
+         if (!payload || payload === "All") {
             state.topicsByDoctor = state.tempData;
             return;
          }
+         console.log(payload);
          // When User Enter Any Thing Reset Data To Re-search
          state.topicsByDoctor = state.tempData;
          const regexp = new RegExp(`${payload}`, "i");
@@ -42,6 +43,12 @@ const topicsSlice = createSlice({
                ),
             };
          });
+         // state.topicsByDoctor = state.topicsByDoctor.filter((doctor) => {
+         //    doctor.teme = doctor.teme.filter(
+         //       (tema) => regexp.test(tema?.title) || regexp.test(tema?.detalii)
+         //    );
+         //    return doctor.teme.length > 0 ? true : false;
+         // });
       },
    },
    extraReducers: {

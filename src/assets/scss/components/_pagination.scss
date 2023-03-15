@@ -6,7 +6,13 @@
    margin-top: 0.5rem;
    .pagin {
       padding: 0.2rem;
-      background-color: #fff;
+      border-radius: 0.2rem;
+      background-color: #ddd;
       color: #000;
+      font-weight: bold;
+      &.selected-pagin {
+         background-color: #007bff;
+         color: #fff;
+      }
    }
 }

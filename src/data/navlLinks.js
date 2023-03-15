@@ -1,4 +1,4 @@
-// Navbar Links
+// ======================= Navbar Links =======================
 export const navLinks = {
    student: [
       { title: "Acasă", path: "/homepage" },
