@@ -61,8 +61,8 @@ const Login = () => {
          // ================ Dev mode ==================
          // email: "drslman@gmail.com",
          // password: "123456",
-         email: "drsammar@gmail.com",
-         password: "123456",
+         // email: "drsammar@gmail.com",
+         // password: "123456",
          // email: "ali@gmail.com",
          // password: "123456",
          // email: "ziad@gmail.com",

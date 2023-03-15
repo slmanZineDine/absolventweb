@@ -13,21 +13,23 @@ import {
 } from "../../redux/comments/commentsAction";
 
 const Post = () => {
+   // ======================= Global Data =======================
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
    // Compare User ID With Author ID To Prevent Not Author' Post, Comment Edite Or Delete
    const userId = JSON.parse(user)?.id;
 
-   // Redux Hook
+   // ======================= Redux Hook =======================
    const dispatch = useDispatch();
    const event = useSelector((state) => state.events.eventById);
    const comments = useSelector((state) => state.comments.comments);
 
-   // Router Hook
+   // ======================= Router Hook =======================
    const navigate = useNavigate();
    const { state } = useLocation();
 
+   // ======================= Own Function =======================
    /**
     * Use This Function To Format Date Like Facebook
     * @param {Date} theDate
@@ -54,11 +56,11 @@ const Post = () => {
       }
    };
 
-   // Select input elements
+   // ======================= Select Input Elements =======================
    const commentInput = useRef(null);
    const commentField = useRef(null);
 
-   // React Hook
+   // ======================= React Hook =======================
    const [showOption, setShowOption] = useState(false);
    const [commentId, setCommentId] = useState(null);
    const [editeMode, setEidteMode] = useState(false);

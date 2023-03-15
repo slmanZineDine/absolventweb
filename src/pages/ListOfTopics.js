@@ -22,7 +22,23 @@ const ListOfTopics = () => {
    const topicsByDoctor = useSelector((state) => state.topics.topicsByDoctor);
    const workspace = useSelector((state) => state.workspaces);
    const userStatus = useSelector((state) => state.users.studentStatus);
-   console.log(topicsByDoctor);
+
+   // ======================= Own Function =======================
+   /**
+    * Use This Function To Create Paination Beasd in Tema Count (3 Tema in 1 Pagination)
+    * @param Number Count of Teme
+    * @returns Array Of Created Pagination
+    */
+   const getPagination = (temeCount) => {
+      const pagination = [];
+      for (let i = 0; i < Math.ceil(temeCount / 3); i++)
+         pagination.push(
+            <span key={i} className="pagin">
+               {i + 1}
+            </span>
+         );
+      return pagination;
+   };
 
    // ======================= React Hook =======================
    // Use this to remove selected tema after save your request
@@ -295,6 +311,11 @@ const ListOfTopics = () => {
                                             : null}
                                       </tbody>
                                    </table>
+                                </div>
+                                <div className="pagination">
+                                   {getPagination(doctor.teme.length).map(
+                                      (pagin, i) => pagin
+                                   )}
                                 </div>
                              </div>
                           ))

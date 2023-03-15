@@ -1,0 +1,12 @@
+@use "../abstracts" as *;
+
+/*=============== PAGINATION COMPONENT ===============*/
+.pagination {
+   @include flex(center, center, 0.2rem);
+   margin-top: 0.5rem;
+   .pagin {
+      padding: 0.2rem;
+      background-color: #fff;
+      color: #000;
+   }
+}
