@@ -6,7 +6,10 @@ import UniversityLogo from "../components/UniversityLogo";
 import { greetingPageContent } from "../data/globalDate";
 
 const Greeting = () => {
+   // ======================= Global Data =======================
+   // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
+
    if (user) {
       return <Navigate to="/homepage" />;
    } else {

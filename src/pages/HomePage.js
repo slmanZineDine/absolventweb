@@ -15,11 +15,12 @@ import swal from "sweetalert";
 import { getStudentStatus } from "../redux/users/uersAction";
 
 const HomePage = () => {
+   // ======================= Global Data =======================
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
 
-   // Redux Hook
+   // ======================= Redux Hook =======================
    const dispatch = useDispatch();
    const waitingWorkspaces = useSelector(
       (state) => state.workspaces.waitingWorkspaces
@@ -27,18 +28,7 @@ const HomePage = () => {
    const workspace = useSelector((state) => state.workspaces);
    const userStatus = useSelector((state) => state.users.studentStatus);
 
-   // Alert Box From Sweet Alert labrary
-   const processChecking = async (msg, icon, theClassName) => {
-      await swal(msg, {
-         buttons: false,
-         timer: 3000,
-         icon: icon,
-         className: theClassName,
-         closeOnEsc: false,
-      });
-   };
-
-   // React Hook
+   // ======================= React Hook =======================
    const [processDone, setProcessDone] = useState(false);
    useEffect(() => {
       if (userType === "student") {
@@ -68,6 +58,16 @@ const HomePage = () => {
       }
    }, [workspace.error, workspace.success]);
 
+   // ======================= Sweet Alert Labrary =======================
+   const processChecking = async (msg, icon, theClassName) => {
+      await swal(msg, {
+         buttons: false,
+         timer: 3000,
+         icon: icon,
+         className: theClassName,
+         closeOnEsc: false,
+      });
+   };
    // Checking Box To Confirm Accept A Workspace
    const confirmAccept = async (status) => {
       let checkBox = await swal(

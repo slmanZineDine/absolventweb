@@ -10,21 +10,22 @@ import swal from "sweetalert";
 import UniversityLogo from "../components/UniversityLogo";
 
 const Login = () => {
-   // Select input elements
+   // ======================= Global Data =======================
+   // Get User Information To Permission For Enter This Page Or Not
+   const user = localStorage.getItem("user");
+
+   // ======================= Select Input Elements =======================
    const emailInput = useRef(null);
    const passwordInput = useRef(null);
 
-   // Get ueser info
-   const user = localStorage.getItem("user");
-
-   // Redux Hook
+   // ======================= Redux Hook =======================
    const dispatch = useDispatch();
    const userInfo = useSelector((state) => state.auth);
 
-   // Router Hook
+   // ======================= Router Hook =======================
    const navigate = useNavigate();
 
-   // Alert Box From Sweet Alert labrary
+   // ======================= Sweet Alert Labrary =======================
    const processChecking = async (msg, icon, theClassName) => {
       await swal(msg, {
          buttons: false,
@@ -35,7 +36,7 @@ const Login = () => {
       });
    };
 
-   // Vaidation
+   // ======================= Vaidation =======================
    const fieldsValidation = (userInput) => {
       const emailValidation = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       if (!Object.values(userInput).every((e) => e !== "")) {
@@ -53,6 +54,7 @@ const Login = () => {
       }
    };
 
+   // ======================= Handle Request =======================
    const handleLogin = (e) => {
       e.preventDefault();
       const userLoginInfo = {
@@ -78,6 +80,7 @@ const Login = () => {
       }
    };
 
+   // ======================= React Hook =======================
    useEffect(() => {
       if (!user) {
          emailInput.current.focus();

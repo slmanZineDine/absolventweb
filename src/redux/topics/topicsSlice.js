@@ -30,7 +30,6 @@ const topicsSlice = createSlice({
             state.topicsByDoctor = state.tempData;
             return;
          }
-         console.log(payload);
          // When User Enter Any Thing Reset Data To Re-search
          state.topicsByDoctor = state.tempData;
          const regexp = new RegExp(`${payload}`, "i");

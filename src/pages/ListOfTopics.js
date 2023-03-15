@@ -157,7 +157,7 @@ const ListOfTopics = () => {
                         ? topicsByDoctor.map((doctor, i) => (
                              <div key={i} className="content">
                                 <h2 className="title">
-                                   {i + 1}. {doctor.email}
+                                   {i + 1}. ({doctor.email})
                                 </h2>
                                 <div className="cover">
                                    <table className="table">
@@ -404,7 +404,7 @@ const ListOfTopics = () => {
                         ? topicsByDoctor.map((doctor, i) => (
                              <div key={i} className="content">
                                 <h2 className="title">
-                                   {i + 1}. {doctor.email}
+                                   {i + 1}. ({doctor.email})
                                 </h2>
                                 <div className="cover">
                                    <table className="table">
@@ -510,7 +510,7 @@ const ListOfTopics = () => {
                </main>
             </>
          );
-      } else if (userType === "adimn") {
+      } else if (userType === "admin") {
          return <h1>admin view</h1>;
       } else {
          return <h1>Please Login or register </h1>;

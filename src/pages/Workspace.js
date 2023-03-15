@@ -30,7 +30,6 @@ const Workspace = () => {
    const dispatch = useDispatch();
    const workspaceEvents = useSelector((state) => state.events.workspaceEvents);
    const workspaceGlobal = useSelector((state) => state.events);
-   console.log(workspaceEvents);
 
    // ======================= Router Hook =======================
    const navigate = useNavigate();
@@ -143,7 +142,39 @@ const Workspace = () => {
                                           return (
                                              <tr key={i} className="row">
                                                 <td className="cell">
-                                                   {cell.title}
+                                                   {cell.author_type}
+                                                </td>
+                                                <td className="cell">
+                                                   {cell.type === "post" ? (
+                                                      <Link
+                                                         to="post"
+                                                         state={{
+                                                            eventId: cell.id,
+                                                         }}
+                                                      >
+                                                         {cell.title}
+                                                      </Link>
+                                                   ) : null}
+                                                   {cell.type === "meeting" ? (
+                                                      <Link
+                                                         to="edite-meeting"
+                                                         state={{
+                                                            eventId: cell.id,
+                                                         }}
+                                                      >
+                                                         {cell.title}
+                                                      </Link>
+                                                   ) : null}
+                                                   {cell.type === "task" ? (
+                                                      <Link
+                                                         to="edite-task"
+                                                         state={{
+                                                            eventId: cell.id,
+                                                         }}
+                                                      >
+                                                         {cell.title}
+                                                      </Link>
+                                                   ) : null}
                                                 </td>
                                                 <td className="cell">
                                                    {cell.type}
@@ -266,7 +297,9 @@ const Workspace = () => {
                               <li className="item">
                                  Coordinator: {JSON.parse(user)?.name}
                               </li>
-                              <li className="item">Student: slman</li>
+                              <li className="item">
+                                 Student: {workspaceInfo.student_email}
+                              </li>
                            </ul>
                            <div className="workspace-btns">
                               <button

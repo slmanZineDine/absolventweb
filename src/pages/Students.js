@@ -7,20 +7,21 @@ import UniversityLogo from "../components/UniversityLogo";
 import { getAcceptedWorkspace } from "../redux/workspaces/workspacesActions";
 
 const Students = () => {
+   // ======================= Global Data =======================
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
 
-   // Redux Hook
+   // ======================= Redux Hook =======================
    const dispatch = useDispatch();
    const acceptedWorkspaces = useSelector(
       (state) => state.workspaces.acceptedWorkspaces
    );
 
-   // Router Hook
+   // ======================= Router Hook =======================
    const navigate = useNavigate();
 
-   // React Hook
+   // ======================= React Hook =======================
    useEffect(() => {
       if (userType === "coordonator") {
          dispatch(getAcceptedWorkspace({}));
@@ -89,6 +90,10 @@ const Students = () => {
                                                                   workspace
                                                                      .student
                                                                      .id,
+                                                               student_email:
+                                                                  workspace
+                                                                     .student
+                                                                     .email,
                                                                workspace_id:
                                                                   workspace.worspace_id,
                                                                tema_name:
@@ -96,23 +101,7 @@ const Students = () => {
                                                                      .title,
                                                             })
                                                          );
-                                                         navigate(
-                                                            "/workspace",
-                                                            {
-                                                               state: {
-                                                                  student_id:
-                                                                     workspace
-                                                                        .student
-                                                                        .id,
-                                                                  workspace_id:
-                                                                     workspace.worspace_id,
-                                                                  tema_name:
-                                                                     workspace
-                                                                        .tema
-                                                                        .title,
-                                                               },
-                                                            }
-                                                         );
+                                                         navigate("/workspace");
                                                       }}
                                                    >
                                                       Show

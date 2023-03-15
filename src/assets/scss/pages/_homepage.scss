@@ -56,16 +56,12 @@
 .homepage-coordonator {
    .container {
       .content {
-         width: 90%;
-         padding-top: 2rem;
+         padding-top: 3rem;
          .title {
             @include flex(center, flex-start, 1rem);
             font-size: var(--h2-font-size);
             font-weight: bold;
-            margin-bottom: 2rem;
-         }
-         .table {
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
          }
       }
    }

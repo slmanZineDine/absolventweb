@@ -6,9 +6,11 @@ import UniversityLogo from "../components/UniversityLogo";
 import { supportPageContent } from "../data/globalDate";
 
 const Support = () => {
-   // Getting user type
+   // ======================= Global Data =======================
+   // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
+
    return (
       <>
          <Header userType={userType} />

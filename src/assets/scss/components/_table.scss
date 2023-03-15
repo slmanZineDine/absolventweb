@@ -49,13 +49,13 @@
       }
       .empty-table {
          text-align: center;
-         padding-block: 1rem;
+         padding-block: 0.8rem;
          letter-spacing: 2px;
       }
    }
    .main-cell,
    .cell {
-      padding: 1rem;
+      padding: 0.5rem;
    }
    .topic-btns {
       @include flex(center, initial, 1rem);
@@ -69,10 +69,10 @@
       overflow-x: scroll;
       /* Height */
       &::-webkit-scrollbar {
-         height: 10px;
+         height: 8px;
       }
    }
    .cover .table {
-      min-width: 940px;
+      min-width: 800px;
    }
 }

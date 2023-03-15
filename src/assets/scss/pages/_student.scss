@@ -15,7 +15,18 @@
             @include flex(center, flex-start, 1rem);
             font-size: var(--h2-font-size);
             font-weight: bold;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
+         }
+         .table {
+            th:first-of-type,
+            td:first-of-type {
+               width: 10px;
+               text-align: center;
+            }
+            .btn {
+               font-size: 1rem;
+               padding: 0.5rem 1rem;
+            }
          }
       }
    }
@@ -27,9 +38,10 @@
       flex-direction: column-reverse;
       justify-content: center;
       gap: 0;
+      width: 100%;
    }
    .students-page-coordonator .container .content {
-      width: 100%;
       margin-top: 2rem;
+      width: 100%;
    }
 }
