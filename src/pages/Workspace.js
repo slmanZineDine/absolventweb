@@ -17,23 +17,25 @@ import {
 } from "../redux/workspaces/workspacesActions";
 
 const Workspace = () => {
+   // ======================= Global Data =======================
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
    const workspaceInfo = JSON.parse(localStorage.getItem("workspaceInfo"));
    const studentStatus = JSON.parse(localStorage.getItem("studentStatus"));
-
    // Names Of Table Columns
-   const tableCol = ["Titlu", "Type", "Deadline", "Attachment"];
+   const tableCol = ["Author", "Titlu", "Type", "Deadline", "Attachment"];
 
-   // Redux Hook
+   // ======================= Redux Hook =======================
    const dispatch = useDispatch();
    const workspaceEvents = useSelector((state) => state.events.workspaceEvents);
    const workspaceGlobal = useSelector((state) => state.events);
+   console.log(workspaceEvents);
 
-   // Router Hook
+   // ======================= Router Hook =======================
    const navigate = useNavigate();
 
+   // ======================= Sweet Alert Labrary =======================
    // Check Box To Confirm Process
    const confirmProcess = async (type, info, msg) => {
       let checkBox = await swal(msg, {
@@ -51,7 +53,7 @@ const Workspace = () => {
       }
    };
 
-   // React Hook
+   // ======================= React Hook =======================
    useEffect(() => {
       if (userType === "coordonator" && workspaceInfo?.student_id) {
          dispatch(getWorkspaceEvents(workspaceInfo.student_id));
@@ -329,6 +331,9 @@ const Workspace = () => {
                                        workspaceEvents.map((cell, i) => {
                                           return (
                                              <tr key={i} className="row">
+                                                <td className="cell">
+                                                   {cell.author_type}
+                                                </td>
                                                 <td className="cell">
                                                    {cell.type === "post" ? (
                                                       <Link

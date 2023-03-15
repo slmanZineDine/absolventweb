@@ -12,17 +12,19 @@ import swal from "sweetalert";
 import Spinning from "../components/Spinning";
 
 const ListOfTopics = () => {
+   // ======================= Global Data =======================
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
 
-   // Redux Hook
+   // ======================= Redux Hook =======================
    const dispatch = useDispatch();
    const topicsByDoctor = useSelector((state) => state.topics.topicsByDoctor);
    const workspace = useSelector((state) => state.workspaces);
    const userStatus = useSelector((state) => state.users.studentStatus);
+   console.log(topicsByDoctor);
 
-   // React Hook
+   // ======================= React Hook =======================
    // Use this to remove selected tema after save your request
    const [selectedTema, setSelectedTema] = useState(false);
    // Use this to save selected tema information
@@ -31,7 +33,7 @@ const ListOfTopics = () => {
       coordonator_id: null,
    });
 
-   // Alert Box From Sweet Alert labrary
+   // ======================= Sweet Alert Labrary =======================
    const processChecking = async (msg, icon, theClassName) => {
       await swal(msg, {
          buttons: false,
@@ -41,7 +43,6 @@ const ListOfTopics = () => {
          closeOnEsc: false,
       });
    };
-
    // Checking Box To Confirm Creation A New Workspace
    const confirmCreation = async (workspace) => {
       let checkBox = await swal("Are you sure?", {
@@ -54,6 +55,7 @@ const ListOfTopics = () => {
       }
    };
 
+   // ======================= Handle User Select =======================
    // Checking If User Select A Tema of Not
    const handleCreation = () => {
       if (workspaceInfo.tema_id && workspaceInfo.coordonator_id) {
@@ -63,7 +65,7 @@ const ListOfTopics = () => {
       }
    };
 
-   // React Hook
+   // ======================= React Hook =======================
    const [processDone, setProcessDone] = useState(false);
    useEffect(() => {
       if (user) {

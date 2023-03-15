@@ -16,13 +16,34 @@ const initialState = {
    topicsList: [], // Store response
    doctorTopics: [], // Contain only  Doctor's topics
    topicsByDoctor: [], // All tema sort by Doctor
-   topic: {}, // topic by Id
+   topic: {}, // Topic by Id
+   tempData: [], // Temporary To Save Data And Get It After Any Search
 };
 
 const topicsSlice = createSlice({
    name: "topics",
    initialState,
-   reducers: {},
+   reducers: {
+      searchTitle(state, { payload }) {
+         // When Input Is Empty Reset Data
+         if (!payload) {
+            state.topicsByDoctor = state.tempData;
+            return;
+         }
+         // When User Enter Any Thing Reset Data To Re-search
+         state.topicsByDoctor = state.tempData;
+         const regexp = new RegExp(`${payload}`, "i");
+         state.topicsByDoctor = state.topicsByDoctor.map((doctor) => {
+            return {
+               ...doctor,
+               teme: doctor.teme.filter(
+                  (tema) =>
+                     regexp.test(tema?.title) || regexp.test(tema?.detalii)
+               ),
+            };
+         });
+      },
+   },
    extraReducers: {
       // Getting all topics
       [getTopics.pending]: (state) => {
@@ -64,6 +85,8 @@ const topicsSlice = createSlice({
                return +secEleDate - +firEleDate;
             });
          });
+         // Save Data In Temporary Variable To  Get It After Any Search
+         state.tempData = state.topicsByDoctor;
       },
       [getAllTopicsByDoctor.rejected]: (state, { payload }) => {
          state.loading = false;
@@ -159,6 +182,6 @@ const topicsSlice = createSlice({
    },
 });
 
-export const {} = topicsSlice.actions;
+export const { searchTitle } = topicsSlice.actions;
 
 export default topicsSlice.reducer;
