@@ -1,12 +1,9 @@
 @use "../abstracts" as *;
 
 /*===================== STUDENT PAGE =====================*/
-.students-page-coordonator,
-.students-page-admin {
+.students-page-coordonator {
    min-height: 100vh;
    @include flex(center, center);
-}
-.students-page-coordonator {
    .container {
       @include flex(center, space-between, 2rem);
       .content {
@@ -31,6 +28,23 @@
       }
    }
 }
+.students-page-admin {
+   min-height: 100vh;
+   .container {
+      .content {
+         @include flex(center, space-between, 2rem);
+         .box {
+            width: 100%;
+            .title {
+               @include flex(center, flex-start, 1rem);
+               font-size: var(--h2-font-size);
+               font-weight: bold;
+               margin-bottom: 1rem;
+            }
+         }
+      }
+   }
+}
 /*=============== BREAKPOINTS ===============*/
 /* MEDIUM */
 @media (max-width: 992px) {
@@ -38,10 +52,21 @@
       flex-direction: column-reverse;
       justify-content: center;
       gap: 0;
-      width: 100%;
    }
    .students-page-coordonator .container .content {
       margin-top: 2rem;
+      width: 100%;
+   }
+   .students-page-admin .container .content {
+      flex-direction: column;
+   }
+   .students-page-admin .container .content .cover .table {
+      min-width: 500px;
+   }
+}
+// Added This Because container take auto width and that occure problem with flex
+@media (max-width: 768px) {
+   .container {
       width: 100%;
    }
 }

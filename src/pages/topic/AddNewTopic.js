@@ -8,22 +8,24 @@ import swal from "sweetalert";
 import Spinning from "../../components/Spinning";
 
 const AddNewTopic = () => {
+   // ======================= Global Data =======================
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
 
-   // Select input elements
+   // ======================= Redux Hook =======================
+   const dispatch = useDispatch();
+   const topics = useSelector((state) => state.topics);
+
+   // ======================= Router Hook =======================
+   const navigate = useNavigate();
+
+   // ======================= Select Input Elements =======================
    const titleInput = useRef(null);
    const detailsInput = useRef(null);
    const specInput = useRef(null);
 
-   // Redux Hook
-   const dispatch = useDispatch();
-   const topics = useSelector((state) => state.topics);
-
-   // Router Hook
-   const navigate = useNavigate();
-
+   // ======================= Sweet Alert Labrary =======================
    const processChecking = async (msg, icon, theClassName) => {
       await swal(msg, {
          buttons: false,
@@ -34,7 +36,7 @@ const AddNewTopic = () => {
       });
    };
 
-   // Vaidation
+   // ======================= Vaidation =======================
    const fieldsValidation = (userInput) => {
       if (!Object.values(userInput).every((e) => e !== "")) {
          processChecking("Please Fill All Fields.", "warning", "red-bg");
@@ -43,7 +45,7 @@ const AddNewTopic = () => {
       }
    };
 
-   // handle Request
+   // ======================= Handle Request =======================
    const handleProcess = () => {
       const userInput = {
          title: titleInput.current.value,
@@ -55,7 +57,7 @@ const AddNewTopic = () => {
       }
    };
 
-   // React Hook
+   // ======================= React Hook =======================
    // Variable below to manipulate useEffect and prevente run initial-render
    const firstUpdate = useRef(true);
    useEffect(() => {

@@ -9,24 +9,25 @@ import Spinning from "../../components/Spinning";
 import { addNewEvent } from "../../redux/events/eventsAction";
 
 const AddMeeting = () => {
+   // ======================= Global Data =======================
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
    const workspaceInfo = JSON.parse(localStorage.getItem("workspaceInfo"));
 
-   // Redux Hook
+   // ======================= Redux Hook =======================
    const dispatch = useDispatch();
    const events = useSelector((state) => state.events);
 
-   // Router Hook
+   // ======================= Router Hook =======================
    const navigate = useNavigate();
 
-   // Select input elements
+   // ======================= Select Input Elements =======================
    const titleInput = useRef(null);
    const deadlineInput = useRef(null);
    const attachmentInput = useRef(null);
 
-   // Sweet Alert labrary
+   // ======================= Sweet Alert Labrary =======================
    const processChecking = async (msg, icon, theClassName) => {
       await swal(msg, {
          buttons: false,
@@ -37,7 +38,7 @@ const AddMeeting = () => {
       });
    };
 
-   // Vaidation
+   // ======================= Vaidation =======================
    const fieldsValidation = (userInput) => {
       if (userInput.title === "" || userInput.due_date === "") {
          processChecking("Please Fill All Fields.", "warning", "red-bg");
@@ -46,12 +47,11 @@ const AddMeeting = () => {
       }
    };
 
-   // handle Request
+   // ======================= Handle Request =======================
    const handleProcess = () => {
       const userInput = {
          workspace_id: workspaceInfo.workspace_id,
          title: titleInput.current.value,
-         descriere: "d", // Temparary We Will Remove it later
          type: "meeting",
          due_date: deadlineInput.current.value,
          // attachment: attachmentInput.current.files[0],
@@ -61,7 +61,7 @@ const AddMeeting = () => {
       }
    };
 
-   // React Hook
+   // ======================= React Hook =======================
    const [fileName, setFileName] = useState(null);
    // Variable below to manipulate useEffect and prevente run initial-render
    const firstUpdate = useRef(true);

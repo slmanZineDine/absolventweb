@@ -167,7 +167,7 @@ const Workspace = () => {
                                                    ) : null}
                                                    {cell.type === "task" ? (
                                                       <Link
-                                                         to="edite-task"
+                                                         to="task"
                                                          state={{
                                                             eventId: cell.id,
                                                          }}
@@ -390,7 +390,7 @@ const Workspace = () => {
                                                    ) : null}
                                                    {cell.type === "task" ? (
                                                       <Link
-                                                         to="edite-task"
+                                                         to="task"
                                                          state={{
                                                             eventId: cell.id,
                                                          }}

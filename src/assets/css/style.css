@@ -5,11 +5,11 @@
 /*=============== VARIABLES ===============*/
 :root {
   --biggest-font-size: 1.6rem;
-  --links-font-size: 1.2rem;
+  --links-font-size: 1.18rem;
   --h2-font-size: 1.25rem;
   --h3-font-size: 1.125rem;
   --normal-font-size: 0.938rem;
-  --header-height: 142px;
+  --header-height: 143px;
 }
 @media (max-width: 992px) {
   :root {
@@ -197,7 +197,7 @@ input[type=number] {
 }
 @media (min-width: 769px) and (max-width: 991px) {
   .header .nav {
-    height: 134px;
+    height: 138px;
   }
 }
 .header .nav .menu {
@@ -212,7 +212,7 @@ input[type=number] {
   justify-content: space-between;
   gap: 0;
   font-family: "Playfair Display", serif;
-  font-size: var(--h3-font-size);
+  font-size: var(--links-font-size);
 }
 .header .nav .menu .links .item a {
   display: flex;
@@ -736,6 +736,68 @@ input[type=number] {
     min-width: 800px;
   }
 }
+/*=============== SEARCH COMPONENT ===============*/
+.search {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.search_title {
+  font-weight: normal;
+  font-size: 1.25rem;
+}
+.search_field {
+  position: relative;
+  width: 350px;
+  height: 40px;
+  overflow: hidden;
+  border: 1px solid #000;
+  border-radius: 2rem;
+}
+.search_field_input {
+  padding-inline: 1rem 3.5rem;
+  padding-block: 0.3rem;
+  font-size: var(--h3-font-size);
+  width: 100%;
+  height: 100%;
+}
+.search_field .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 3rem;
+  height: 102%;
+  border-left: 1px solid #000;
+  background-color: #ddd;
+  cursor: pointer;
+  transition: background-color 0.4s;
+}
+.search_field .icon:hover {
+  background-color: rgba(221, 221, 221, 0.5333333333);
+}
+
+/*=============== BREAKPOINTS ===============*/
+/* CUSTOM */
+@media (max-width: 600px) {
+  .search {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.7rem;
+  }
+}
+/* EXTRA SMALL */
+@media (max-width: 510px) {
+  .search .search_field {
+    width: 300px;
+  }
+}
 /*=============== PAGINATION COMPONENT ===============*/
 .pagination {
   display: flex;
@@ -1187,7 +1249,7 @@ input[type=number] {
 /*===================== HOMEPAGE PAGE =====================*/
 .homepage-student,
 .homepage-coordonator,
-.homepage-admine {
+.homepage-admin {
   min-height: 100vh;
 }
 
@@ -1256,6 +1318,29 @@ input[type=number] {
   font-weight: bold;
   margin-bottom: 1rem;
 }
+.homepage-coordonator .container .content .table th:first-of-type,
+.homepage-coordonator .container .content .table td:first-of-type {
+  width: 10px;
+  text-align: center;
+}
+.homepage-coordonator .container .content .table .btn {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+.homepage-admin .container .content .title {
+  font-size: var(--h2-font-size);
+  margin-bottom: 1rem;
+}
+.homepage-admin .container .content .table th:first-of-type,
+.homepage-admin .container .content .table td:first-of-type {
+  width: 10px;
+  text-align: center;
+}
+.homepage-admin .container .content .table .btn {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+}
 
 /*=============== BREAKPOINTS ===============*/
 /* MEDIUM */
@@ -1273,51 +1358,6 @@ input[type=number] {
 
 .list-of-topics-page {
   background-color: #eaeaea;
-}
-.list-of-topics-page .container .search {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-}
-.list-of-topics-page .container .search_title {
-  font-weight: normal;
-  font-size: 1.25rem;
-}
-.list-of-topics-page .container .search_field {
-  position: relative;
-  width: 350px;
-  height: 40px;
-  overflow: hidden;
-  border: 1px solid #000;
-  border-radius: 2rem;
-}
-.list-of-topics-page .container .search_field_input {
-  padding-inline: 1rem 3.5rem;
-  padding-block: 0.3rem;
-  font-size: var(--h3-font-size);
-  width: 100%;
-  height: 100%;
-}
-.list-of-topics-page .container .search_field .icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  width: 3rem;
-  height: 102%;
-  border-left: 1px solid #000;
-  background-color: #ddd;
-  cursor: pointer;
-  transition: background-color 0.4s;
-}
-.list-of-topics-page .container .search_field .icon:hover {
-  background-color: rgba(221, 221, 221, 0.5333333333);
 }
 .list-of-topics-page .container .filter {
   display: flex;
@@ -1418,7 +1458,6 @@ input[type=number] {
 /*=============== BREAKPOINTS ===============*/
 /* CUSTOM */
 @media (max-width: 600px) {
-  .list-of-topics-page .container .search,
   .list-of-topics-page .container .filter {
     flex-direction: column;
     align-items: flex-start;
@@ -1427,9 +1466,6 @@ input[type=number] {
 }
 /* EXTRA SMALL */
 @media (max-width: 510px) {
-  .list-of-topics-page .container .search .search_field {
-    width: 300px;
-  }
   .list-of-topics-page .container .filter .filter_options {
     flex-direction: column;
     align-items: flex-start;
@@ -1479,7 +1515,12 @@ input[type=number] {
   gap: 0;
 }
 .profile-page .topics .container .cover {
-  margin-top: 2rem;
+  margin-top: 1rem;
+}
+.profile-page .topics .container .cover .table th:first-of-type,
+.profile-page .topics .container .cover .table td:first-of-type {
+  width: 10px;
+  text-align: center;
 }
 
 /*=============== BREAKPOINTS ===============*/
@@ -1589,15 +1630,13 @@ input[type=number] {
   }
 }
 /*===================== STUDENT PAGE =====================*/
-.students-page-coordonator,
-.students-page-admin {
+.students-page-coordonator {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0;
 }
-
 .students-page-coordonator .container {
   display: flex;
   align-items: center;
@@ -1626,6 +1665,28 @@ input[type=number] {
   padding: 0.5rem 1rem;
 }
 
+.students-page-admin {
+  min-height: 100vh;
+}
+.students-page-admin .container .content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.students-page-admin .container .content .box {
+  width: 100%;
+}
+.students-page-admin .container .content .box .title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  font-size: var(--h2-font-size);
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
 /*=============== BREAKPOINTS ===============*/
 /* MEDIUM */
 @media (max-width: 992px) {
@@ -1633,10 +1694,20 @@ input[type=number] {
     flex-direction: column-reverse;
     justify-content: center;
     gap: 0;
-    width: 100%;
   }
   .students-page-coordonator .container .content {
     margin-top: 2rem;
+    width: 100%;
+  }
+  .students-page-admin .container .content {
+    flex-direction: column;
+  }
+  .students-page-admin .container .content .cover .table {
+    min-width: 500px;
+  }
+}
+@media (max-width: 768px) {
+  .container {
     width: 100%;
   }
 }
@@ -1826,10 +1897,6 @@ input[type=number] {
 }
 /*===================== EVETN PAGE =====================*/
 .event-page {
-  background-image: url("../imgs/body-bg.png");
-  background-position: center top;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
   min-height: 100vh;
 }
 .event-page .container {
@@ -2179,6 +2246,80 @@ input[type=number] {
   display: block;
 }
 
+/*===================== TASK PAGE =====================*/
+.task-page {
+  min-height: 100vh;
+}
+.task-page .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+.task-page .container .content {
+  width: 60%;
+}
+.task-page .container .content .title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  font-size: var(--h2-font-size);
+  margin-bottom: 1.5rem;
+}
+.task-page .container .content .title::before {
+  content: "";
+  display: block;
+  width: 17px;
+  height: 17px;
+  border: 1px solid #000;
+  border-radius: 50%;
+  background-color: #b4ebd7;
+}
+.task-page .container .content .box {
+  background-color: #fff;
+  padding: 1rem 1.2rem;
+  border-radius: 1rem;
+}
+.task-page .container .content .box .task-title {
+  text-align: center;
+  letter-spacing: 1px;
+  font-weight: normal;
+}
+.task-page .container .content .box .task-content {
+  margin-block: 1rem 0.5rem;
+  text-indent: 25px;
+}
+.task-page .container .content .box .task-deadlin {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+.task-page .container .content .box .edite-btn-space {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  height: 50px;
+  margin-top: 1rem;
+}
+.task-page .container .content .box .edite-btn-space .save-btn {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+}
+
+/*=============== BREAKPOINTS ===============*/
+/* CUSTOM SIZE */
+@media (max-width: 700px) {
+  .task-page .container {
+    flex-direction: column-reverse;
+  }
+  .task-page .container .content {
+    width: 100%;
+  }
+}
+/* EXTRA SMALL */
 /*===================== PAGE NOT FOUND PAGE =====================*/
 .not-found .container {
   min-height: 100vh;

@@ -8,24 +8,25 @@ import swal from "sweetalert";
 import Spinning from "../../components/Spinning";
 
 export const EditeTopic = () => {
+   // ======================= Global Data =======================
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
 
-   // Select input elements
+   // ======================= Redux Hook =======================
+   const dispatch = useDispatch();
+   const topics = useSelector((state) => state.topics);
+
+   // ======================= Router Hook =======================
+   const { state } = useLocation();
+   const navigate = useNavigate();
+
+   // ======================= Select Input Elements =======================
    const titleInput = useRef(null);
    const detailsInput = useRef(null);
    const specInput = useRef(null);
 
-   // Redux Hook
-   const dispatch = useDispatch();
-   const topics = useSelector((state) => state.topics);
-
-   // Router Hook
-   const { state } = useLocation();
-   const navigate = useNavigate();
-
-   // Sweet alert labrary
+   // ======================= Sweet Alert Labrary =======================
    const processChecking = async (msg, icon, theClassName) => {
       await swal(msg, {
          buttons: false,
@@ -36,7 +37,7 @@ export const EditeTopic = () => {
       });
    };
 
-   // Vaidation
+   // ======================= Vaidation =======================
    const fieldsValidation = (userInput) => {
       if (!Object.values(userInput).every((e) => e !== "")) {
          processChecking("Please Fill All Fields.", "warning", "red-bg");
@@ -45,7 +46,7 @@ export const EditeTopic = () => {
       }
    };
 
-   // handle Request
+   // ======================= Handle Request =======================
    const handleProcess = () => {
       const userInput = {
          title: titleInput.current.value,
@@ -62,7 +63,7 @@ export const EditeTopic = () => {
       }
    };
 
-   // React Hook
+   // ======================= React Hook =======================
    useEffect(() => {
       // Prevent user to enter this page directly
       if (state?.id && topics.doctorTopics?.teme?.length > 0) {

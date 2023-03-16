@@ -15,7 +15,7 @@ export const navLinks = {
       { title: "Support", path: "/support" },
       { title: "Profile", path: "/profile" },
    ],
-   adimn: [
+   admin: [
       { title: "Acasă", path: "/homepage" },
       { title: "Studenți", path: "/students" },
       { title: "Coordonator", path: "/doctors" },

@@ -40,7 +40,14 @@
    .topics {
       .container {
          .cover {
-            margin-top: 2rem;
+            margin-top: 1rem;
+            .table {
+               th:first-of-type,
+               td:first-of-type {
+                  width: 10px;
+                  text-align: center;
+               }
+            }
          }
       }
    }

@@ -124,7 +124,7 @@ const EditeTask = () => {
                <div className="container">
                   <div className="content">
                      <div className="meta">
-                        <h2 className="title">Edite Meeting</h2>
+                        <h2 className="title">Edite Task</h2>
                         {events.loading && processType.delete ? (
                            <Spinning size="small" />
                         ) : (

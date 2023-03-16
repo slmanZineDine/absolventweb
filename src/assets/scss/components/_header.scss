@@ -25,7 +25,7 @@ $nav-border-bottom: 2px;
       // When width reach to 992px the font size of logo and navlink changing
       // So handle that change by decrement height of nav
       @media (min-width: 769px) and (max-width: 991px) {
-         height: 134px;
+         height: 138px;
       }
       .menu {
          @include flex(center, space-between, 0.5rem);
@@ -33,7 +33,7 @@ $nav-border-bottom: 2px;
             @include flex(center, space-between);
             font : {
                family: $links-font;
-               size: var(--h3-font-size);
+               size: var(--links-font-size);
             }
             .item {
                a {

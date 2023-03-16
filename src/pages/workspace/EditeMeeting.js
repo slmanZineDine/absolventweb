@@ -57,7 +57,6 @@ const EditeMeeting = () => {
          workspace_id: workspaceInfo.workspace_id,
          title: titleInput.current.value,
          type: "meeting",
-         descriere: "d", // Temparary We Will Remove it later
          due_date: deadlineInput.current.value,
          // attachment: attachmentInput.current.files[0],
       };

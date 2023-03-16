@@ -1,4 +1,4 @@
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../components/Header";
 import UniversityLogo from "../components/UniversityLogo";
@@ -14,21 +14,21 @@ import swal from "sweetalert";
 import Spinning from "../components/Spinning";
 
 const Profile = () => {
+   // ======================= Global Data =======================
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
 
-   // Redux Hook
+   // ======================= Redux Hook =======================
    const dispatch = useDispatch();
    const topics = useSelector((state) => state.topics.doctorTopics);
-   // To Prevent user Click add button before page loading, because get doctor topic
-   // still pending
+   // To Prevent user Click add button before page loading, because get doctor topic still pending
    const topicsGlobal = useSelector((state) => state.topics);
 
-   // Router Hook
+   // ======================= Router Hook =======================
    const navigate = useNavigate();
 
-   // User Details showing in profile page
+   // ======================= User Details Showing In Profile Page =======================
    const userDetails = [
       "Tip De Utilizator",
       "Prenuma Si Numa",
@@ -37,7 +37,8 @@ const Profile = () => {
       "Facultatea",
       "Specializare",
    ];
-   // Extract data compatible with user Details
+
+   // ======================= Extract Data Compatible With User Details ======================
    const profileData = (data) => {
       if (data?.length > 0) {
          return data.map((e) => {
@@ -53,6 +54,16 @@ const Profile = () => {
       }
    };
 
+   // ======================= Sweet Alert Labrary =======================
+   const processChecking = async (msg, icon, theClassName) => {
+      await swal(msg, {
+         buttons: false,
+         timer: 3000,
+         icon: icon,
+         className: theClassName,
+         closeOnEsc: false,
+      });
+   };
    // Check Box to confirm deletion process
    const confirmDeletion = async (topicId) => {
       let checkBox = await swal("Are you sure?", {
@@ -65,18 +76,7 @@ const Profile = () => {
       }
    };
 
-   // Alert Box From Sweet Alert labrary
-   const processChecking = async (msg, icon, theClassName) => {
-      await swal(msg, {
-         buttons: false,
-         timer: 3000,
-         icon: icon,
-         className: theClassName,
-         closeOnEsc: false,
-      });
-   };
-
-   // React Hook
+   // ======================= React Hook =======================
    const [processDone, setProcessDone] = useState(false);
    // Use this to show loading for exactly tema
    const [selectedId, setSelectedId] = useState(null);

@@ -19,6 +19,7 @@ import Post from "./pages/workspace/Post";
 import EditePost from "./pages/workspace/EditePost";
 import EditeMeeting from "./pages/workspace/EditeMeeting";
 import EditeTask from "./pages/workspace/EditeTask";
+import Task from "./pages/workspace/Task";
 
 function App() {
    return (
@@ -38,6 +39,7 @@ function App() {
                <Route path="add-meeting" element={<AddMeeting />} />
                <Route path="edite-meeting" element={<EditeMeeting />} />
                <Route path="post" element={<Post />} />
+               <Route path="task" element={<Task />} />
             </Route>
             <Route path="/profile" element={<Outlet />}>
                <Route index element={<Profile />} />

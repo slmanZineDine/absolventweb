@@ -2,10 +2,6 @@
 
 /*===================== EVETN PAGE =====================*/
 .event-page {
-   background-image: url("../imgs/body-bg.png");
-   background-position: center top;
-   background-size: 100% 100%;
-   background-repeat: no-repeat;
    min-height: 100vh;
    .container {
       @include flex(center, space-between, 1.5rem);

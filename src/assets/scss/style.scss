@@ -9,6 +9,7 @@
 @use "./components/logo";
 @use "./components/buttons";
 @use "./components/table";
+@use "./components/search";
 @use "./components/pagination";
 @use "./components/spinning";
 
@@ -24,4 +25,5 @@
 @use "./pages/topic";
 @use "./pages/event";
 @use "./pages/post";
+@use "./pages/task";
 @use "./pages/page-not-found";

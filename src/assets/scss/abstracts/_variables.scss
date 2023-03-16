@@ -24,12 +24,11 @@ $links-font: "Playfair Display", serif;
 /*=============== VARIABLES ===============*/
 :root {
    --biggest-font-size: 1.6rem;
-   --links-font-size: 1.2rem;
+   --links-font-size: 1.18rem;
    --h2-font-size: 1.25rem;
-   // --h3-font-size: 1.2rem;
    --h3-font-size: 1.125rem;
    --normal-font-size: 0.938rem;
-   --header-height: 142px;
+   --header-height: 143px;
    @media (max-width: 992px) {
       --biggest-font-size: 1.4rem;
       --h3-font-size: 1rem;
