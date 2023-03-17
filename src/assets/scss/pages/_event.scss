@@ -59,6 +59,7 @@
                }
                .file-input {
                   @include flex(center, center, 0.4rem);
+                  font-size: 0.97rem;
                   background-color: #fff;
                   padding-block: 0.5rem;
                   border: 1px solid #000;
@@ -67,12 +68,30 @@
                   cursor: pointer;
                   .btn-icon {
                      background-color: #000;
-                     width: 20px;
-                     height: 20px;
+                     width: 18px;
+                     height: 18px;
                   }
                   #file {
                      display: none;
                   }
+               }
+            }
+            .attachName {
+               border-radius: 2rem;
+               padding: 0.4rem 0.7rem;
+               border: 1px solid #000;
+               position: relative;
+               font-size: 0.9rem;
+               .btn-icon {
+                  position: absolute;
+                  top: 0;
+                  right: 0;
+                  width: 18px;
+                  height: 18px;
+                  transform: translateY(-50%);
+                  border-radius: 50%;
+                  background-color: red;
+                  cursor: pointer;
                }
             }
             .save-btn-space {

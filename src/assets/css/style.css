@@ -2024,6 +2024,7 @@ input[type=number] {
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
+  font-size: 0.97rem;
   background-color: #fff;
   padding-block: 0.5rem;
   border: 1px solid #000;
@@ -2033,11 +2034,29 @@ input[type=number] {
 }
 .event-page .container .content .box .item .file-input .btn-icon {
   background-color: #000;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
 }
 .event-page .container .content .box .item .file-input #file {
   display: none;
+}
+.event-page .container .content .box .attachName {
+  border-radius: 2rem;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid #000;
+  position: relative;
+  font-size: 0.9rem;
+}
+.event-page .container .content .box .attachName .btn-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 18px;
+  height: 18px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background-color: red;
+  cursor: pointer;
 }
 .event-page .container .content .box .save-btn-space {
   display: flex;
@@ -2174,12 +2193,19 @@ input[type=number] {
 .post-page .container .content .box .info .post-info > .topic-name {
   font-weight: normal;
 }
-.post-page .container .content .box .text {
+.post-page .container .content .box > .text {
   padding-block: 1.2rem;
   border-bottom: 1px solid #000;
 }
-.post-page .container .content .box .text > p {
+.post-page .container .content .box > .text > p {
   line-height: 1.5;
+}
+.post-page .container .content .box > .text .post-deadlin {
+  display: flex;
+  align-items: center;
+  justify-content: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
 }
 .post-page .container .content .comments {
   margin-top: 0.5rem;

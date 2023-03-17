@@ -90,11 +90,15 @@
                   }
                }
             }
-            .text {
+            > .text {
                padding-block: 1.2rem;
                border-bottom: 1px solid #000;
                > p {
                   line-height: 1.5;
+               }
+               .post-deadlin {
+                  @include flex(center, flex, 1rem);
+                  margin-top: 0.5rem;
                }
             }
          }

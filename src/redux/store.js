@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import attachmentsSlice from "./attachments/attachmentsSlice";
 import authSlice from "./auth/authSlice";
 import commentsSlice from "./comments/commentsSlice";
 import eventsSlice from "./events/eventsSlice";
@@ -14,6 +15,7 @@ const store = configureStore({
       events: eventsSlice,
       comments: commentsSlice,
       users: usersSlice,
+      attachments: attachmentsSlice,
    },
 });
 

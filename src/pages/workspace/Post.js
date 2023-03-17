@@ -45,14 +45,14 @@ const Post = () => {
       let week = day / 7;
 
       if (min < 59) {
-         if (Math.trunc(min) === 0) return `1 min ago.`;
-         return `${Math.trunc(min)} min ago.`;
+         if (Math.trunc(min) === 0) return `1 min ago`;
+         return `${Math.trunc(min)} min ago`;
       } else if (min > 59 && hour < 24) {
-         return `${Math.trunc(hour)} hours ago.`;
+         return `${Math.trunc(hour)} hours ago`;
       } else if (hour > 23 && day < 7) {
-         return `${Math.trunc(day)} days ago.`;
+         return `${Math.trunc(day)} days ago`;
       } else if (day > 6) {
-         return `${Math.trunc(week)} weeks ago.`;
+         return `${Math.trunc(week)} weeks ago`;
       }
    };
 
@@ -155,6 +155,10 @@ const Post = () => {
                         </div>
                         <div className="text">
                            <p>{event?.descriere}</p>
+                           <div className="post-deadlin">
+                              <h4>Deadline:</h4>
+                              <p className="text">{event?.due_date}</p>
+                           </div>
                         </div>
                         <div className="comments">
                            <div className="add-comment">
