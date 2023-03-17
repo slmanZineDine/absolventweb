@@ -16,7 +16,6 @@ const Task = () => {
    // ======================= Redux Hook =======================
    const dispatch = useDispatch();
    const event = useSelector((state) => state.events.eventById);
-   console.log(event);
 
    // ======================= Router Hook =======================
    const navigate = useNavigate();

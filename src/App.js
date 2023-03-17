@@ -20,6 +20,7 @@ import EditePost from "./pages/workspace/EditePost";
 import EditeMeeting from "./pages/workspace/EditeMeeting";
 import EditeTask from "./pages/workspace/EditeTask";
 import Task from "./pages/workspace/Task";
+import Doctors from "./pages/Doctors";
 
 function App() {
    return (
@@ -47,6 +48,7 @@ function App() {
                <Route path="edite-topic" element={<EditeTopic />} />
             </Route>
             <Route path="/students" element={<Student />} />
+            <Route path="/doctors" element={<Doctors />} />
             <Route path="/support" element={<Support />} />
             <Route path="*" element={<PageNotFound />} />
          </Routes>

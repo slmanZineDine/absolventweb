@@ -78,7 +78,6 @@ const EditePost = () => {
    useEffect(() => {
       // Prevent user to enter this page directly
       if (state?.eventId && workspaceEvents.length > 0) {
-         console.log(workspaceEvents);
          const postEvent = workspaceEvents.find(
             (post) => post.id === state.eventId
          );

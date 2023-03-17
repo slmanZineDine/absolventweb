@@ -24,8 +24,8 @@
 }
 @media (max-width: 576px) {
   :root {
-    --h2-font-size: 1rem;
-    --h3-font-size: 0.9rem;
+    --h2-font-size: 1.1rem;
+    --h3-font-size: 0.95rem;
   }
 }
 
@@ -666,7 +666,6 @@ input[type=number] {
   text-align: center;
 }
 .table .main-row .main-cell {
-  font-weight: bold;
   background-color: #b4ebd7;
   border: 1px solid #000;
 }
@@ -713,6 +712,7 @@ input[type=number] {
 .table .main-cell,
 .table .cell {
   padding: 0.5rem;
+  font-size: var(--h3-font-size);
 }
 .table .topic-btns {
   display: flex;
@@ -1364,7 +1364,7 @@ input[type=number] {
   align-items: center;
   justify-content: flex-start;
   gap: 1.5rem;
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
 }
 .list-of-topics-page .container .filter_title {
   font-weight: normal;
@@ -1446,7 +1446,7 @@ input[type=number] {
 }
 .list-of-topics-page .container .content .title {
   font-weight: normal;
-  font-size: 1.25rem;
+  font-size: var(--h2-font-size);
   margin-bottom: 1rem;
 }
 .list-of-topics-page .container .content .table th:first-of-type,
@@ -1629,7 +1629,7 @@ input[type=number] {
     padding-inline: 1rem;
   }
 }
-/*===================== STUDENT PAGE =====================*/
+/*===================== STUDENTS PAGE =====================*/
 .students-page-coordonator {
   min-height: 100vh;
   display: flex;
@@ -1707,8 +1707,54 @@ input[type=number] {
   }
 }
 @media (max-width: 768px) {
-  .container {
+  .students-page-coordonator .container {
     width: 100%;
+  }
+}
+/*===================== DOCTORS PAGE =====================*/
+.doctors-page {
+  min-height: 100vh;
+}
+.doctors-page .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.doctors-page .container .content {
+  width: 60%;
+}
+.doctors-page .container .content .title {
+  font-size: var(--h2-font-size);
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+.doctors-page .container .content .table th:first-of-type,
+.doctors-page .container .content .table td:first-of-type {
+  width: 10px;
+  text-align: center;
+}
+.doctors-page .container .content .table .btn {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+/*=============== BREAKPOINTS ===============*/
+/* MEDIUM */
+@media (max-width: 992px) {
+  .doctors-page .container .content .cover .table {
+    min-width: 500px;
+  }
+}
+@media (max-width: 768px) {
+  .doctors-page .container {
+    flex-direction: column-reverse;
+    justify-content: center;
+    gap: 0;
+  }
+  .doctors-page .container .content {
+    width: 100%;
+    margin-top: 1.5rem;
   }
 }
 /*===================== WORKSPACE PAGE =====================*/
@@ -1773,6 +1819,13 @@ input[type=number] {
 }
 .workspace-page .container.empty-workspace .text_href:hover {
   color: green;
+}
+.workspace-page .container.empty-workspace .university-logo {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
 }
 
 /*=============== BREAKPOINTS ===============*/

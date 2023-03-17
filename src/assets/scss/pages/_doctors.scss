@@ -1,0 +1,46 @@
+@use "../abstracts" as *;
+
+/*===================== DOCTORS PAGE =====================*/
+.doctors-page {
+   min-height: 100vh;
+   .container {
+      @include flex(center, space-between, 1rem);
+      .content {
+         width: 60%;
+         .title {
+            font-size: var(--h2-font-size);
+            font-weight: bold;
+            margin-bottom: 1rem;
+         }
+         .table {
+            th:first-of-type,
+            td:first-of-type {
+               width: 10px;
+               text-align: center;
+            }
+            .btn {
+               font-size: 1rem;
+               padding: 0.5rem 1rem;
+            }
+         }
+      }
+   }
+}
+/*=============== BREAKPOINTS ===============*/
+/* MEDIUM */
+@media (max-width: 992px) {
+   .doctors-page .container .content .cover .table {
+      min-width: 500px;
+   }
+}
+@media (max-width: 768px) {
+   .doctors-page .container {
+      flex-direction: column-reverse;
+      justify-content: center;
+      gap: 0;
+   }
+   .doctors-page .container .content {
+      width: 100%;
+      margin-top: 1.5rem;
+   }
+}

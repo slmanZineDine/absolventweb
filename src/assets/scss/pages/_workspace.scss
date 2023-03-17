@@ -50,6 +50,10 @@
                }
             }
          }
+         .university-logo {
+            width: 100%;
+            @include flex(center, center);
+         }
       }
    }
 }

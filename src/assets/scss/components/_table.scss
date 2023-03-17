@@ -8,7 +8,6 @@
    text-align: center;
    .main-row {
       .main-cell {
-         font-weight: bold;
          background-color: #b4ebd7;
          border: 1px solid #000;
       }
@@ -56,6 +55,7 @@
    .main-cell,
    .cell {
       padding: 0.5rem;
+      font-size: var(--h3-font-size);
    }
    .topic-btns {
       @include flex(center, initial, 1rem);

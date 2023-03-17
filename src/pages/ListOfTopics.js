@@ -511,7 +511,142 @@ const ListOfTopics = () => {
             </>
          );
       } else if (userType === "admin") {
-         return <h1>admin view</h1>;
+         // Names Of Table Columns
+         const tableCol = ["Nr", "Tema", "Detalii", "Specializare"];
+
+         return (
+            <>
+               <Header userType={userType} />
+               <main className="main list-of-topics-page">
+                  <div className="container">
+                     <Search resetPagination={setPaginationNewValue} />
+                     <Filter
+                        resetPagination={setPaginationNewValue}
+                        programmingLang={true}
+                        topicType={true}
+                     />
+                     <div className="save-btn-space">
+                        {workspace.loading ? (
+                           <Spinning size="small" />
+                        ) : (
+                           <button
+                              className="btn save-btn"
+                              onClick={() => console.log("Export Done")}
+                           >
+                              Export
+                           </button>
+                        )}
+                     </div>
+                     {topicsByDoctor.length > 0
+                        ? topicsByDoctor.map((doctor, i) => (
+                             <div key={i} className="content">
+                                <h2 className="title">
+                                   {i + 1}. ({doctor.email})
+                                </h2>
+                                <div className="cover">
+                                   <table className="table">
+                                      <thead className="thead">
+                                         <tr className="main-row">
+                                            {tableCol.map((colName, i) => (
+                                               <th
+                                                  key={i}
+                                                  className="main-cell"
+                                               >
+                                                  {colName}
+                                               </th>
+                                            ))}
+                                         </tr>
+                                      </thead>
+                                      <tbody className="tbody">
+                                         {doctor?.teme?.length > 0 &&
+                                         doctor.id !== tableId
+                                            ? doctor.teme
+                                                 .map((cell, i) => {
+                                                    return (
+                                                       <tr
+                                                          key={i}
+                                                          className="row"
+                                                       >
+                                                          <td className="cell">
+                                                             {i + 1}.
+                                                          </td>
+                                                          <td className="cell">
+                                                             {cell.title}
+                                                          </td>
+                                                          <td className="cell">
+                                                             {cell.detalii}
+                                                          </td>
+                                                          <td className="cell">
+                                                             {cell.specializare}
+                                                          </td>
+                                                       </tr>
+                                                    );
+                                                 })
+                                                 .slice(
+                                                    paginationDefault.start,
+                                                    paginationDefault.end
+                                                 )
+                                            : doctor.teme
+                                                 .map((cell, i) => {
+                                                    return (
+                                                       <tr
+                                                          key={i}
+                                                          className="row"
+                                                       >
+                                                          <td className="cell">
+                                                             {i + 1}.
+                                                          </td>
+                                                          <td className="cell">
+                                                             {cell.title}
+                                                          </td>
+                                                          <td className="cell">
+                                                             {cell.detalii}
+                                                          </td>
+                                                          <td className="cell">
+                                                             {cell.specializare}
+                                                          </td>
+                                                       </tr>
+                                                    );
+                                                 })
+                                                 .slice(
+                                                    paginationNewValue.start,
+                                                    paginationNewValue.end
+                                                 )}
+                                      </tbody>
+                                   </table>
+                                </div>
+                                <div className="pagination">
+                                   {getPagination(doctor.teme.length).map(
+                                      (pagin, i) => (
+                                         <span
+                                            key={pagin}
+                                            className={`pagin ${
+                                               selectedPagin === pagin &&
+                                               doctor.id === tableId
+                                                  ? "selected-pagin"
+                                                  : ""
+                                            }`}
+                                            onClick={() => {
+                                               setTableId(doctor?.id);
+                                               setPaginationNewValue({
+                                                  start: i * 3,
+                                                  end: (i + 1) * 3,
+                                               });
+                                               setSelectedPagin(pagin);
+                                            }}
+                                         >
+                                            {i + 1}
+                                         </span>
+                                      )
+                                   )}
+                                </div>
+                             </div>
+                          ))
+                        : null}
+                  </div>
+               </main>
+            </>
+         );
       } else {
          return <h1>Please Login or register </h1>;
       }

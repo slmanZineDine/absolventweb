@@ -37,7 +37,7 @@ const Students = () => {
          const tableCol = [
             "Nr",
             "Student",
-            "Titlul lucrării",
+            "Titlul Lucrării",
             "Specializare",
             "Workspace",
          ];

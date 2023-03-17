@@ -1,6 +1,6 @@
 @use "../abstracts" as *;
 
-/*===================== STUDENT PAGE =====================*/
+/*===================== STUDENTS PAGE =====================*/
 .students-page-coordonator {
    min-height: 100vh;
    @include flex(center, center);
@@ -66,7 +66,7 @@
 }
 // Added This Because container take auto width and that occure problem with flex
 @media (max-width: 768px) {
-   .container {
+   .students-page-coordonator .container {
       width: 100%;
    }
 }
