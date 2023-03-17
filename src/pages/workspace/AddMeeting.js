@@ -3,6 +3,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import UniversityLogo from "../../components/UniversityLogo";
 import addIcon from "../../assets/imgs/icons/addIcon.png";
+import deleteIcon from "../../assets/imgs/icons/deleteIcon.png";
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
 import Spinning from "../../components/Spinning";
@@ -129,9 +130,20 @@ const AddMeeting = () => {
                            </label>
                         </li>
                         <li className="item">
-                           <div className="attachName">
-                              {fileName ? fileName : null}
-                           </div>
+                           {fileName ? (
+                              <div className="attachName">
+                                 {fileName}
+                                 <img
+                                    src={deleteIcon}
+                                    alt="btn-icon"
+                                    className="btn-icon"
+                                    onClick={() => {
+                                       attachmentInput.current.value = "";
+                                       setFileName(null);
+                                    }}
+                                 />
+                              </div>
+                           ) : null}
                         </li>
                         <div className="save-btn-space">
                            {events.loading ? (
