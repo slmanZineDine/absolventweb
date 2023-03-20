@@ -1,9 +1,11 @@
+// External
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
+// Internal
 import searchIcon from "../assets/imgs/icons/searchIcon.png";
 import { searchTitle } from "../redux/topics/topicsSlice";
 
-const Search = ({ resetPagination }) => {
+const Search = ({ resetPagination, searchMethod }) => {
    // ======================= Select Input Elements =======================
    const serachInput = useRef(null);
 
@@ -21,7 +23,7 @@ const Search = ({ resetPagination }) => {
                onInput={(e) => {
                   if (e.target.value === "") {
                      // When Input Is Empty Reset Data In Table
-                     dispatch(searchTitle(e.target.value));
+                     dispatch(searchMethod(e.target.value));
                      // Reset Pagination After Serach Opreation Ending
                      resetPagination({
                         start: 0,
@@ -33,7 +35,7 @@ const Search = ({ resetPagination }) => {
             <div
                className="icon"
                onClick={() => {
-                  dispatch(searchTitle(serachInput.current.value));
+                  dispatch(searchMethod(serachInput.current.value));
                   // Reset Pagination On Serach Opreation
                   resetPagination({
                      start: 0,

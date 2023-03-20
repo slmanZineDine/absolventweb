@@ -1,20 +1,23 @@
+// External
 import { Link, Navigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import swal from "sweetalert";
+// Internal
 import Header from "../components/Header";
 import stepsIcon from "../assets/imgs/icons/stepsIcon.png";
 import statusIcon from "../assets/imgs/icons/statusIcon.png";
 import UniversityLogo from "../components/UniversityLogo";
-import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
    changeWorkspaceStatus,
    getWaitingWorkspace,
 } from "../redux/workspaces/workspacesActions";
 import checkIcon from "../assets/imgs/icons/checkIcon.png";
 import deleteIcon from "../assets/imgs/icons/deleteIcon.png";
-import swal from "sweetalert";
 import { getStudents, getStudentStatus } from "../redux/users/uersAction";
 import Search from "../components/Search";
 import Pagination from "../components/Pagination";
+import { searchByName } from "../redux/users/usersSlice";
 
 const HomePage = () => {
    // ======================= Global Data =======================
@@ -33,7 +36,6 @@ const HomePage = () => {
    const students = useSelector((state) => state.users.students).filter(
       (student) => student?.workspace?.status === 1
    );
-   console.log(students);
 
    // ======================= React Hook =======================
    // Use This To Prevent Show All Alert on First Page Load
@@ -404,7 +406,10 @@ const HomePage = () => {
                <main className="main homepage-admin">
                   <div className="container">
                      <div className="content">
-                        <Search resetPagination={setPaginationValue} />
+                        <Search
+                           resetPagination={setPaginationValue}
+                           searchMethod={searchByName}
+                        />
                         <h2 className="title">
                            Detalii La Fiecare Student Pentru Lucrare De Licenta
                         </h2>

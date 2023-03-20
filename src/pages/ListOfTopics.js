@@ -12,6 +12,7 @@ import { getAllTopicsByDoctor } from "../redux/topics/topicsActions";
 import { createWorkspace } from "../redux/workspaces/workspacesActions";
 import { getStudentStatus } from "../redux/users/uersAction";
 import Spinning from "../components/Spinning";
+import { searchTitle } from "../redux/topics/topicsSlice";
 
 const ListOfTopics = () => {
    // ======================= Global Data =======================
@@ -139,7 +140,10 @@ const ListOfTopics = () => {
                <Header userType={userType} />
                <main className="main list-of-topics-page">
                   <div className="container">
-                     <Search resetPagination={setPaginationNewValue} />
+                     <Search
+                        resetPagination={setPaginationNewValue}
+                        searchMethod={searchTitle}
+                     />
                      <Filter
                         resetPagination={setPaginationNewValue}
                         programmingLang={true}
@@ -407,7 +411,10 @@ const ListOfTopics = () => {
                <Header userType={userType} />
                <main className="main list-of-topics-page">
                   <div className="container">
-                     <Search resetPagination={setPaginationNewValue} />
+                     <Search
+                        resetPagination={setPaginationNewValue}
+                        searchMethod={searchTitle}
+                     />
                      <Filter
                         resetPagination={setPaginationNewValue}
                         programmingLang={true}
