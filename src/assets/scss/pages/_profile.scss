@@ -1,6 +1,9 @@
 @use "../abstracts" as *;
 
 /*===================== PROFILE PAGE =====================*/
+.profile-student {
+   min-height: 100vh;
+}
 .profile-page {
    .user-info {
       .container {
@@ -16,7 +19,7 @@
             overflow: hidden;
             .item {
                @include flex(center, space-between, 1rem);
-               padding-block: 0.8rem;
+               padding-bottom: 0.6rem;
                .title {
                   font-size: var(--h3-font-size);
                   font-weight: normal;

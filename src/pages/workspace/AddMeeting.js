@@ -1,11 +1,13 @@
+// External
 import { useEffect, useRef, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import swal from "sweetalert";
+// Internal
 import Header from "../../components/Header";
 import UniversityLogo from "../../components/UniversityLogo";
 import addIcon from "../../assets/imgs/icons/addIcon.png";
 import deleteIcon from "../../assets/imgs/icons/deleteIcon.png";
-import { useDispatch, useSelector } from "react-redux";
-import swal from "sweetalert";
 import Spinning from "../../components/Spinning";
 import { addNewEvent } from "../../redux/events/eventsAction";
 
@@ -15,6 +17,7 @@ const AddMeeting = () => {
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
    const workspaceInfo = JSON.parse(localStorage.getItem("workspaceInfo"));
+   document.title = "Absolventweb | Add Meeting";
 
    // ======================= Redux Hook =======================
    const dispatch = useDispatch();
@@ -64,6 +67,8 @@ const AddMeeting = () => {
 
    // ======================= React Hook =======================
    const [fileName, setFileName] = useState(null);
+   // To Prevent Show Alert When The Previous Process Is Pending
+   const [btnClicked, setBtnClicked] = useState(false);
    // Variable below to manipulate useEffect and prevente run initial-render
    const firstUpdate = useRef(true);
    useEffect(() => {
@@ -72,9 +77,9 @@ const AddMeeting = () => {
          firstUpdate.current = false;
          return;
       }
-      if (!events.loading && events.error) {
+      if (!events.loading && events.error && btnClicked) {
          processChecking(events.error, "error", "red-bg");
-      } else if (!events.loading && events.success) {
+      } else if (!events.loading && events.success && btnClicked) {
          processChecking("Add Successfully", "success", "done");
          navigate("/workspace");
       }
@@ -151,7 +156,10 @@ const AddMeeting = () => {
                            ) : (
                               <button
                                  className="btn save-btn"
-                                 onClick={handleProcess}
+                                 onClick={() => {
+                                    handleProcess();
+                                    setBtnClicked(true);
+                                 }}
                               >
                                  Save
                               </button>

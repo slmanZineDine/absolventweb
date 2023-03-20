@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import UniversityLogo from "../components/UniversityLogo";
 import attachIcon from "../assets/imgs/icons/attachIcon.png";
 import addIcon from "../assets/imgs/icons/addIcon.png";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
    getStudentEvents,
@@ -15,6 +15,7 @@ import {
    changeWorkspaceStatus,
    deleteWorkspace,
 } from "../redux/workspaces/workspacesActions";
+import Pagination from "../components/Pagination";
 
 const Workspace = () => {
    // ======================= Global Data =======================
@@ -25,11 +26,11 @@ const Workspace = () => {
    const studentStatus = JSON.parse(localStorage.getItem("studentStatus"));
    // Names Of Table Columns
    const tableCol = ["Author", "Titlu", "Type", "Deadline", "Attachment"];
+   document.title = "Absolventweb | Workspace";
 
    // ======================= Redux Hook =======================
    const dispatch = useDispatch();
    const workspaceEvents = useSelector((state) => state.events.workspaceEvents);
-   const workspaceGlobal = useSelector((state) => state.events);
 
    // ======================= Router Hook =======================
    const navigate = useNavigate();
@@ -53,6 +54,11 @@ const Workspace = () => {
    };
 
    // ======================= React Hook =======================
+   // Store Pagination Values
+   const [paginationValue, setPaginationValue] = useState({
+      start: 0,
+      end: 3,
+   });
    useEffect(() => {
       if (userType === "coordonator" && workspaceInfo?.student_id) {
          dispatch(getWorkspaceEvents(workspaceInfo.student_id));
@@ -270,7 +276,7 @@ const Workspace = () => {
                                  confirmProcess(
                                     "delete-workspace",
                                     workspaceInfo.workspace_id,
-                                    "Are You Surem You Want To Delete This Workspace?"
+                                    "Are You Sure, You Want To Delete This Workspace?"
                                  );
                               }}
                            >
@@ -305,9 +311,7 @@ const Workspace = () => {
                               <button
                                  className="btn post-btn"
                                  onClick={() => {
-                                    if (!workspaceGlobal.loading) {
-                                       navigate("add-post");
-                                    }
+                                    navigate("add-post");
                                  }}
                               >
                                  Post
@@ -320,9 +324,7 @@ const Workspace = () => {
                               <button
                                  className="btn task-btn"
                                  onClick={() => {
-                                    if (!workspaceGlobal.loading) {
-                                       navigate("add-task");
-                                    }
+                                    navigate("add-task");
                                  }}
                               >
                                  Task
@@ -335,9 +337,7 @@ const Workspace = () => {
                               <button
                                  className="btn meeting-btn"
                                  onClick={() => {
-                                    if (!workspaceGlobal.loading) {
-                                       navigate("add-meeting");
-                                    }
+                                    navigate("add-meeting");
                                  }}
                               >
                                  Meeting
@@ -361,65 +361,87 @@ const Workspace = () => {
                                  </thead>
                                  <tbody className="tbody">
                                     {workspaceEvents.length > 0 ? (
-                                       workspaceEvents.map((cell, i) => {
-                                          return (
-                                             <tr key={i} className="row">
-                                                <td className="cell">
-                                                   {cell.author_type}
-                                                </td>
-                                                <td className="cell">
-                                                   {cell.type === "post" ? (
-                                                      <Link
-                                                         to="post"
-                                                         state={{
-                                                            eventId: cell.id,
-                                                         }}
-                                                      >
-                                                         {cell.title}
-                                                      </Link>
-                                                   ) : null}
-                                                   {cell.type === "meeting" ? (
-                                                      <Link
-                                                         to="edite-meeting"
-                                                         state={{
-                                                            eventId: cell.id,
-                                                         }}
-                                                      >
-                                                         {cell.title}
-                                                      </Link>
-                                                   ) : null}
-                                                   {cell.type === "task" ? (
-                                                      <Link
-                                                         to="task"
-                                                         state={{
-                                                            eventId: cell.id,
-                                                         }}
-                                                      >
-                                                         {cell.title}
-                                                      </Link>
-                                                   ) : null}
-                                                </td>
-                                                <td className="cell">
-                                                   {cell.type}
-                                                </td>
-                                                <td className="cell">
-                                                   {cell.due_date}
-                                                </td>
-                                                <td className="cell">
-                                                   {(
-                                                      <>
-                                                         {cell.Attachment}{" "}
-                                                         <img
-                                                            src={attachIcon}
-                                                            alt="attachment-icon"
-                                                            className="icon"
-                                                         />
-                                                      </>
-                                                   ) && ""}
-                                                </td>
-                                             </tr>
-                                          );
-                                       })
+                                       workspaceEvents
+                                          .map((cell, i) => {
+                                             return (
+                                                <tr key={i} className="row">
+                                                   <td className="cell">
+                                                      {cell.author_type}
+                                                   </td>
+                                                   <td className="cell">
+                                                      {cell.type === "post" ? (
+                                                         <Link
+                                                            to="post"
+                                                            state={{
+                                                               eventId: cell.id,
+                                                            }}
+                                                         >
+                                                            {cell.title}
+                                                         </Link>
+                                                      ) : null}
+                                                      {cell.type ===
+                                                      "meeting" ? (
+                                                         <Link
+                                                            to="edite-meeting"
+                                                            state={{
+                                                               eventId: cell.id,
+                                                            }}
+                                                         >
+                                                            {cell.title}
+                                                         </Link>
+                                                      ) : null}
+                                                      {cell.type === "task" ? (
+                                                         <Link
+                                                            to="task"
+                                                            state={{
+                                                               eventId: cell.id,
+                                                            }}
+                                                         >
+                                                            {cell.title}
+                                                         </Link>
+                                                      ) : null}
+                                                   </td>
+                                                   <td className="cell">
+                                                      {cell.type}
+                                                   </td>
+                                                   <td className="cell">
+                                                      {cell.due_date}
+                                                   </td>
+                                                   <td className="cell">
+                                                      {cell.attachment ? (
+                                                         <>
+                                                            <a
+                                                               href={
+                                                                  cell
+                                                                     .attachment
+                                                                     .file_path
+                                                               }
+                                                               download={
+                                                                  cell
+                                                                     .attachment
+                                                                     .file_name
+                                                               }
+                                                            >
+                                                               <img
+                                                                  src={
+                                                                     attachIcon
+                                                                  }
+                                                                  alt="attachment-icon"
+                                                                  className="icon"
+                                                               />
+                                                            </a>
+                                                         </>
+                                                      ) : (
+                                                         ""
+                                                      )}
+                                                   </td>
+                                                </tr>
+                                             );
+                                          })
+                                          .slice(
+                                             paginationValue.start,
+                                             paginationValue.end
+                                          )
                                     ) : (
                                        <tr className="row">
                                           <td
@@ -433,6 +455,10 @@ const Workspace = () => {
                                  </tbody>
                               </table>
                            </div>
+                           <Pagination
+                              paginationCount={workspaceEvents.length}
+                              setPaginationValue={setPaginationValue}
+                           />
                         </div>
                         <UniversityLogo />
                      </div>

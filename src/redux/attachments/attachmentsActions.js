@@ -11,6 +11,7 @@ export const uploadeFile = createAsyncThunk(
          const config = {
             headers: {
                Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+               "Content-Type": "multipart/form-data",
             },
          };
 

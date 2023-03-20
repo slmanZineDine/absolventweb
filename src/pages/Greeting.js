@@ -9,6 +9,7 @@ const Greeting = () => {
    // ======================= Global Data =======================
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
+   document.title = "Absolventweb | Greeting";
 
    if (user) {
       return <Navigate to="/homepage" />;

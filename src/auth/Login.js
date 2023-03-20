@@ -1,18 +1,21 @@
+// External
+import { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import swal from "sweetalert";
+// Internal
 import mailIcon from "../assets/imgs/icons/mailIcon.png";
 import lockIcon from "../assets/imgs/icons/lockIcon.png";
 import { Logo } from "../components/Logo";
-import { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../redux/auth/authActions";
-import { Link, Navigate, useNavigate } from "react-router-dom";
 import Spinning from "../components/Spinning";
-import swal from "sweetalert";
 import UniversityLogo from "../components/UniversityLogo";
 
 const Login = () => {
    // ======================= Global Data =======================
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
+   document.title = "Absolventweb | Login";
 
    // ======================= Select Input Elements =======================
    const emailInput = useRef(null);

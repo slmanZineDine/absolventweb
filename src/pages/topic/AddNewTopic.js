@@ -1,10 +1,12 @@
+// External
 import { Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useRef, useState } from "react";
+import swal from "sweetalert";
+// Internal
 import Header from "../../components/Header";
 import UniversityLogo from "../../components/UniversityLogo";
 import { addNewTopic } from "../../redux/topics/topicsActions";
-import { useEffect, useRef } from "react";
-import swal from "sweetalert";
 import Spinning from "../../components/Spinning";
 
 const AddNewTopic = () => {
@@ -12,6 +14,7 @@ const AddNewTopic = () => {
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
+   document.title = "Absolventweb | Add Tema";
 
    // ======================= Redux Hook =======================
    const dispatch = useDispatch();
@@ -22,6 +25,7 @@ const AddNewTopic = () => {
 
    // ======================= Select Input Elements =======================
    const titleInput = useRef(null);
+   const temaTypeInput = useRef(null);
    const detailsInput = useRef(null);
    const specInput = useRef(null);
 
@@ -49,6 +53,7 @@ const AddNewTopic = () => {
    const handleProcess = () => {
       const userInput = {
          title: titleInput.current.value,
+         tema_type: temaTypeInput.current.value,
          detalii: detailsInput.current.value,
          specializare: specInput.current.value,
       };
@@ -58,6 +63,8 @@ const AddNewTopic = () => {
    };
 
    // ======================= React Hook =======================
+   // To Prevent Show Alert When The Previous Process Is Pending
+   const [btnClicked, setBtnClicked] = useState(false);
    // Variable below to manipulate useEffect and prevente run initial-render
    const firstUpdate = useRef(true);
    useEffect(() => {
@@ -66,9 +73,9 @@ const AddNewTopic = () => {
          firstUpdate.current = false;
          return;
       }
-      if (!topics.loading && topics.error) {
+      if (!topics.loading && topics.error && btnClicked) {
          processChecking(topics.error, "error", "red-bg");
-      } else if (!topics.loading && topics.success) {
+      } else if (!topics.loading && topics.success && btnClicked) {
          processChecking("Add Successfully", "success", "done");
          navigate("/profile");
       }
@@ -90,6 +97,15 @@ const AddNewTopic = () => {
                               placeholder="Scrie aici"
                               className="input-field"
                               ref={titleInput}
+                           />
+                        </li>
+                        <li className="item">
+                           <h3 className="item_title">Tema Type:</h3>
+                           <input
+                              type="text"
+                              placeholder="Scrie aici"
+                              className="input-field"
+                              ref={temaTypeInput}
                            />
                         </li>
                         <li className="item">
@@ -115,7 +131,10 @@ const AddNewTopic = () => {
                            ) : (
                               <button
                                  className="btn save-btn"
-                                 onClick={handleProcess}
+                                 onClick={() => {
+                                    handleProcess();
+                                    setBtnClicked(true);
+                                 }}
                               >
                                  Save
                               </button>

@@ -1,12 +1,14 @@
+// External
 import { useEffect, useRef, useState } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import swal from "sweetalert";
+// Internal
 import Header from "../../components/Header";
 import UniversityLogo from "../../components/UniversityLogo";
 import addIcon from "../../assets/imgs/icons/addIcon.png";
 import deleteIcon from "../../assets/imgs/icons/deleteIcon.png";
 import { deleteEvent, editeEvent } from "../../redux/events/eventsAction";
-import swal from "sweetalert";
-import { useDispatch, useSelector } from "react-redux";
 import Spinning from "../../components/Spinning";
 
 const EditeTask = () => {
@@ -17,6 +19,7 @@ const EditeTask = () => {
    const workspaceInfo = JSON.parse(localStorage.getItem("workspaceInfo"));
    // Compare User ID With Author ID To Prevent Not Author' Meeting Edite Or Delete
    const userId = JSON.parse(user)?.id;
+   document.title = "Absolventweb | Edite Task";
 
    // ======================= Redux Hook =======================
    const dispatch = useDispatch();

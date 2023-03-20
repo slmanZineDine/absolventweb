@@ -1,14 +1,16 @@
+// External
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import Filter from "../components/Filter";
+import swal from "sweetalert";
+// Internal
 import Header from "../components/Header";
 import Search from "../components/Search";
+import Filter from "../components/Filter";
 import checkIcon from "../assets/imgs/icons/checkIcon.png";
 import { getAllTopicsByDoctor } from "../redux/topics/topicsActions";
 import { createWorkspace } from "../redux/workspaces/workspacesActions";
 import { getStudentStatus } from "../redux/users/uersAction";
-import swal from "sweetalert";
 import Spinning from "../components/Spinning";
 
 const ListOfTopics = () => {
@@ -16,6 +18,7 @@ const ListOfTopics = () => {
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
+   document.title = "Absolventweb | Teme Propuse";
 
    // ======================= Redux Hook =======================
    const dispatch = useDispatch();
@@ -125,7 +128,7 @@ const ListOfTopics = () => {
    if (user) {
       if (userType === "student") {
          // Names Of Table Columns
-         const tableCol = ["Nr", "Tema", "Detalii", "Specializare", " "];
+         const tableCol = ["Nr", "Tema", "Type", "Detalii", "Specializare", ""];
 
          return (
             <>
@@ -190,6 +193,9 @@ const ListOfTopics = () => {
                                                              {cell.title}
                                                           </td>
                                                           <td className="cell">
+                                                             {cell.tema_type}
+                                                          </td>
+                                                          <td className="cell">
                                                              {cell.detalii}
                                                           </td>
                                                           <td className="cell">
@@ -275,6 +281,9 @@ const ListOfTopics = () => {
                                                           </td>
                                                           <td className="cell">
                                                              {cell.title}
+                                                          </td>
+                                                          <td className="cell">
+                                                             {cell.tema_type}
                                                           </td>
                                                           <td className="cell">
                                                              {cell.detalii}
@@ -385,9 +394,9 @@ const ListOfTopics = () => {
                </main>
             </>
          );
-      } else if (userType === "coordonator") {
+      } else if (userType === "coordonator" || userType === "admin") {
          // Names Of Table Columns
-         const tableCol = ["Nr", "Tema", "Detalii", "Specializare"];
+         const tableCol = ["Nr", "Tema", "Type", "Detalii", "Specializare"];
 
          return (
             <>
@@ -400,6 +409,20 @@ const ListOfTopics = () => {
                         programmingLang={true}
                         topicType={true}
                      />
+                     {userType === "admin" ? (
+                        <div className="save-btn-space">
+                           {workspace.loading ? (
+                              <Spinning size="small" />
+                           ) : (
+                              <button
+                                 className="btn save-btn"
+                                 onClick={() => console.log("Export Done")}
+                              >
+                                 Export
+                              </button>
+                           )}
+                        </div>
+                     ) : null}
                      {topicsByDoctor.length > 0
                         ? topicsByDoctor.map((doctor, i) => (
                              <div key={i} className="content">
@@ -437,141 +460,7 @@ const ListOfTopics = () => {
                                                              {cell.title}
                                                           </td>
                                                           <td className="cell">
-                                                             {cell.detalii}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.specializare}
-                                                          </td>
-                                                       </tr>
-                                                    );
-                                                 })
-                                                 .slice(
-                                                    paginationDefault.start,
-                                                    paginationDefault.end
-                                                 )
-                                            : doctor.teme
-                                                 .map((cell, i) => {
-                                                    return (
-                                                       <tr
-                                                          key={i}
-                                                          className="row"
-                                                       >
-                                                          <td className="cell">
-                                                             {i + 1}.
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.title}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.detalii}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.specializare}
-                                                          </td>
-                                                       </tr>
-                                                    );
-                                                 })
-                                                 .slice(
-                                                    paginationNewValue.start,
-                                                    paginationNewValue.end
-                                                 )}
-                                      </tbody>
-                                   </table>
-                                </div>
-                                <div className="pagination">
-                                   {getPagination(doctor.teme.length).map(
-                                      (pagin, i) => (
-                                         <span
-                                            key={pagin}
-                                            className={`pagin ${
-                                               selectedPagin === pagin &&
-                                               doctor.id === tableId
-                                                  ? "selected-pagin"
-                                                  : ""
-                                            }`}
-                                            onClick={() => {
-                                               setTableId(doctor?.id);
-                                               setPaginationNewValue({
-                                                  start: i * 3,
-                                                  end: (i + 1) * 3,
-                                               });
-                                               setSelectedPagin(pagin);
-                                            }}
-                                         >
-                                            {i + 1}
-                                         </span>
-                                      )
-                                   )}
-                                </div>
-                             </div>
-                          ))
-                        : null}
-                  </div>
-               </main>
-            </>
-         );
-      } else if (userType === "admin") {
-         // Names Of Table Columns
-         const tableCol = ["Nr", "Tema", "Detalii", "Specializare"];
-
-         return (
-            <>
-               <Header userType={userType} />
-               <main className="main list-of-topics-page">
-                  <div className="container">
-                     <Search resetPagination={setPaginationNewValue} />
-                     <Filter
-                        resetPagination={setPaginationNewValue}
-                        programmingLang={true}
-                        topicType={true}
-                     />
-                     <div className="save-btn-space">
-                        {workspace.loading ? (
-                           <Spinning size="small" />
-                        ) : (
-                           <button
-                              className="btn save-btn"
-                              onClick={() => console.log("Export Done")}
-                           >
-                              Export
-                           </button>
-                        )}
-                     </div>
-                     {topicsByDoctor.length > 0
-                        ? topicsByDoctor.map((doctor, i) => (
-                             <div key={i} className="content">
-                                <h2 className="title">
-                                   {i + 1}. ({doctor.email})
-                                </h2>
-                                <div className="cover">
-                                   <table className="table">
-                                      <thead className="thead">
-                                         <tr className="main-row">
-                                            {tableCol.map((colName, i) => (
-                                               <th
-                                                  key={i}
-                                                  className="main-cell"
-                                               >
-                                                  {colName}
-                                               </th>
-                                            ))}
-                                         </tr>
-                                      </thead>
-                                      <tbody className="tbody">
-                                         {doctor?.teme?.length > 0 &&
-                                         doctor.id !== tableId
-                                            ? doctor.teme
-                                                 .map((cell, i) => {
-                                                    return (
-                                                       <tr
-                                                          key={i}
-                                                          className="row"
-                                                       >
-                                                          <td className="cell">
-                                                             {i + 1}.
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.title}
+                                                             {cell.tema_type}
                                                           </td>
                                                           <td className="cell">
                                                              {cell.detalii}
@@ -598,6 +487,9 @@ const ListOfTopics = () => {
                                                           </td>
                                                           <td className="cell">
                                                              {cell.title}
+                                                          </td>
+                                                          <td className="cell">
+                                                             {cell.tema_type}
                                                           </td>
                                                           <td className="cell">
                                                              {cell.detalii}

@@ -1,23 +1,25 @@
-import mailIcon from "../assets/imgs/icons/mailIcon.png";
-import lockIcon from "../assets/imgs/icons/lockIcon.png";
+// External
+import { useEffect, useRef, useState } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import swal from "sweetalert";
+// Internal
 import phoneIcon from "../assets/imgs/icons/phoneIcon.png";
 import addressIcon from "../assets/imgs/icons/addressIcon.png";
+import mailIcon from "../assets/imgs/icons/mailIcon.png";
+import lockIcon from "../assets/imgs/icons/lockIcon.png";
 import { Logo } from "../components/Logo";
 import UniversityLogo from "../components/UniversityLogo";
 import Spinning from "../components/Spinning";
-import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, Navigate, useNavigate } from "react-router-dom";
 import { registerUser } from "../redux/auth/authActions";
-import swal from "sweetalert";
 
 const Register = () => {
-   // To select user type
-   const userTypeSelect = useRef(null);
-   const userTypes = ["student", "coordonator", "admin"];
-   const [selectedType, setSelectedType] = useState(null);
+   // ======================= Global Data =======================
+   // Get User Information To Permission For Enter This Page Or Not
+   const user = localStorage.getItem("user");
+   document.title = "Absolventweb | Register";
 
-   // Select input elements
+   // ======================= Select Input Elements =======================
    const nameInput = useRef(null);
    const emailInput = useRef(null);
    const passwordInput = useRef(null);
@@ -27,16 +29,14 @@ const Register = () => {
    const facultyInput = useRef(null);
    const specializareInput = useRef(null);
 
-   // Get ueser info
-   const user = localStorage.getItem("user");
-
-   // Redux Hook
+   // ======================= Redux Hook =======================
    const dispatch = useDispatch();
    const userInfo = useSelector((state) => state.auth);
 
-   // Router Hook
+   // ======================= Router Hook =======================
    const navigate = useNavigate();
-   // Sweet alert labrary
+
+   // ======================= Sweet Alert Labrary =======================
    const processChecking = async (msg, icon, theClassName) => {
       await swal(msg, {
          buttons: false,
@@ -47,7 +47,7 @@ const Register = () => {
       });
    };
 
-   // Vaidation
+   // ======================= Vaidation =======================
    const fieldsValidation = (userInput) => {
       const emailValidation = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       if (!Object.values(userInput).every((e) => e !== "")) {
@@ -66,6 +66,8 @@ const Register = () => {
          return true;
       }
    };
+
+   // ======================= Handle Request =======================
    const handleRegister = (e) => {
       e.preventDefault();
       const userRegisterInfo = {
@@ -94,6 +96,12 @@ const Register = () => {
          dispatch(registerUser(userRegisterInfo));
       }
    };
+
+   // ======================= React Hook =======================
+   // To Select User Type
+   const userTypeSelect = useRef(null);
+   const userTypes = ["student", "coordonator", "admin"];
+   const [selectedType, setSelectedType] = useState(null);
    useEffect(() => {
       if (!user) {
          nameInput.current.focus();

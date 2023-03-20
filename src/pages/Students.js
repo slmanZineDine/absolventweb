@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import studentsIcon from "../assets/imgs/icons/studentsIcon.png";
 import userOutIcon from "../assets/imgs/icons/userOutIcon.png";
 import userRejectedIcon from "../assets/imgs/icons/userRejectedIcon.png";
 import Header from "../components/Header";
+import Pagination from "../components/Pagination";
 import Search from "../components/Search";
 import UniversityLogo from "../components/UniversityLogo";
 import { getAcceptedWorkspace } from "../redux/workspaces/workspacesActions";
@@ -14,6 +15,7 @@ const Students = () => {
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
+   document.title = "Absolventweb | Studenți";
 
    // ======================= Redux Hook =======================
    const dispatch = useDispatch();
@@ -25,6 +27,11 @@ const Students = () => {
    const navigate = useNavigate();
 
    // ======================= React Hook =======================
+   // Store Pagination Values
+   const [paginationValue, setPaginationValue] = useState({
+      start: 0,
+      end: 3,
+   });
    useEffect(() => {
       if (userType === "coordonator") {
          dispatch(getAcceptedWorkspace({}));
@@ -127,6 +134,10 @@ const Students = () => {
                               </tbody>
                            </table>
                         </div>
+                        <Pagination
+                           paginationCount={acceptedWorkspaces.length}
+                           setPaginationValue={setPaginationValue}
+                        />
                      </div>
                      <UniversityLogo />
                   </div>

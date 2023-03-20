@@ -14,6 +14,7 @@ const initialState = {
    success: false, // Checking if auth is done
    workspaceEvents: [], // All workspace Events
    eventById: [], // Exactly Event By Its Id
+   newEvent: {}, // Store New Event To Use Event_id with Attachment
 };
 
 const eventsSlice = createSlice({
@@ -87,9 +88,10 @@ const eventsSlice = createSlice({
          state.success = false; // Reset a value every Request
          state.error = null; // Reset a value every Request
       },
-      [addNewEvent.fulfilled]: (state) => {
+      [addNewEvent.fulfilled]: (state, { payload }) => {
          state.loading = false;
          state.success = true;
+         state.newEvent = payload.data;
       },
       [addNewEvent.rejected]: (state, { payload }) => {
          state.loading = false;

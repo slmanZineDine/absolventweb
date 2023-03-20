@@ -1,9 +1,12 @@
+// External
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+// Internal
 import Header from "../../components/Header";
 import avatarIcon from "../../assets/imgs/icons/avatarIcon.png";
 import addCommentIcon from "../../assets/imgs/icons/addCommentIcon.png";
-import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { deleteEvent, getEventById } from "../../redux/events/eventsAction";
 import {
    addComment,
@@ -19,6 +22,7 @@ const Post = () => {
    const userType = JSON.parse(user)?.type;
    // Compare User ID With Author ID To Prevent Not Author' Post, Comment Edite Or Delete
    const userId = JSON.parse(user)?.id;
+   document.title = "Absolventweb | Post";
 
    // ======================= Redux Hook =======================
    const dispatch = useDispatch();

@@ -1,12 +1,14 @@
+// External
 import { useEffect, useRef, useState } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import swal from "sweetalert";
+// Internal
 import Header from "../../components/Header";
 import UniversityLogo from "../../components/UniversityLogo";
 import addIcon from "../../assets/imgs/icons/addIcon.png";
 import deleteIcon from "../../assets/imgs/icons/deleteIcon.png";
 import { editeEvent } from "../../redux/events/eventsAction";
-import swal from "sweetalert";
-import { useDispatch, useSelector } from "react-redux";
 import Spinning from "../../components/Spinning";
 
 const EditePost = () => {
@@ -15,6 +17,7 @@ const EditePost = () => {
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
    const workspaceInfo = JSON.parse(localStorage.getItem("workspaceInfo"));
+   document.title = "Absolventweb | Edite Post";
 
    // ======================= Redux Hook =======================
    const dispatch = useDispatch();

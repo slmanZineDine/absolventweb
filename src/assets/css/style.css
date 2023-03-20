@@ -1472,6 +1472,10 @@ input[type=number] {
   }
 }
 /*===================== PROFILE PAGE =====================*/
+.profile-student {
+  min-height: 100vh;
+}
+
 .profile-page .user-info .container {
   display: flex;
   align-items: center;
@@ -1493,7 +1497,7 @@ input[type=number] {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding-block: 0.8rem;
+  padding-bottom: 0.6rem;
 }
 .profile-page .user-info .container .detils .item .title {
   font-size: var(--h3-font-size);
@@ -1898,7 +1902,7 @@ input[type=number] {
   font-size: var(--h3-font-size);
   font-weight: normal;
 }
-.topic-page .container .content .box .item:nth-of-type(2) .item_title {
+.topic-page .container .content .box .item:nth-of-type(3) .item_title {
   align-self: flex-start;
 }
 .topic-page .container .content .box .item .input-field,

@@ -27,27 +27,22 @@ const topicsSlice = createSlice({
       searchTitle(state, { payload }) {
          // When Input Is Empty Reset Data
          if (!payload || payload === "All") {
-            state.topicsByDoctor = state.tempData;
+            state.topicsByDoctor = JSON.parse(state.tempData);
             return;
          }
          // When User Enter Any Thing Reset Data To Re-search
-         state.topicsByDoctor = state.tempData;
+         state.topicsByDoctor = JSON.parse(state.tempData);
          const regexp = new RegExp(`${payload}`, "i");
-         state.topicsByDoctor = state.topicsByDoctor.map((doctor) => {
-            return {
-               ...doctor,
-               teme: doctor.teme.filter(
-                  (tema) =>
-                     regexp.test(tema?.title) || regexp.test(tema?.detalii)
-               ),
-            };
+
+         state.topicsByDoctor = state.topicsByDoctor.filter((doctor) => {
+            doctor.teme = doctor.teme.filter(
+               (tema) =>
+                  regexp.test(tema?.title) ||
+                  regexp.test(tema?.detalii) ||
+                  regexp.test(tema?.tema_type)
+            );
+            return doctor.teme.length > 0;
          });
-         // state.topicsByDoctor = state.topicsByDoctor.filter((doctor) => {
-         //    doctor.teme = doctor.teme.filter(
-         //       (tema) => regexp.test(tema?.title) || regexp.test(tema?.detalii)
-         //    );
-         //    return doctor.teme.length > 0 ? true : false;
-         // });
       },
    },
    extraReducers: {
@@ -92,7 +87,7 @@ const topicsSlice = createSlice({
             });
          });
          // Save Data In Temporary Variable To  Get It After Any Search
-         state.tempData = state.topicsByDoctor;
+         state.tempData = JSON.stringify(state.topicsByDoctor);
       },
       [getAllTopicsByDoctor.rejected]: (state, { payload }) => {
          state.loading = false;

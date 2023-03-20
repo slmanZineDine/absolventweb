@@ -9,6 +9,7 @@ const Doctors = () => {
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
+   document.title = "Absolventweb | Coordonator";
 
    // ======================= Redux Hook =======================
    const dispatch = useDispatch();

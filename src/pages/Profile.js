@@ -1,5 +1,9 @@
-import { Navigate, useNavigate } from "react-router-dom";
+// External
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useRef, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+import swal from "sweetalert";
+// Internal
 import Header from "../components/Header";
 import UniversityLogo from "../components/UniversityLogo";
 import addIcon from "../assets/imgs/icons/addIcon.png";
@@ -9,15 +13,15 @@ import {
    deleteTopic,
    getTopicsByDoctorId,
 } from "../redux/topics/topicsActions";
-import { useEffect, useRef, useState } from "react";
-import swal from "sweetalert";
 import Spinning from "../components/Spinning";
+import Pagination from "../components/Pagination";
 
 const Profile = () => {
    // ======================= Global Data =======================
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
+   document.title = "Absolventweb | Profile";
 
    // ======================= Redux Hook =======================
    const dispatch = useDispatch();
@@ -80,6 +84,12 @@ const Profile = () => {
    const [processDone, setProcessDone] = useState(false);
    // Use this to show loading for exactly tema
    const [selectedId, setSelectedId] = useState(null);
+   // Store Pagination Values
+   const [paginationValue, setPaginationValue] = useState({
+      start: 0,
+      end: 3,
+   });
+
    useEffect(() => {
       if (user && userType === "coordonator") {
          const doctorId = JSON.parse(user)?.coordonator?.id;
@@ -110,21 +120,38 @@ const Profile = () => {
 
    if (user) {
       // Names Of Table Columns
-      const tableCol = ["Nr", "Tema", "Detalii", "Specializare", "Process"];
+      const tableCol = [
+         "Nr",
+         "Tema",
+         "Type",
+         "Detalii",
+         "Specializare",
+         "Process",
+      ];
 
       return (
          <>
             <Header userType={userType} />
-            <main className="main profile-page">
+            <main
+               className={`main profile-page ${
+                  userType === "student" || userType === "admin"
+                     ? "profile-student"
+                     : ""
+               }`}
+            >
                <section className="section user-info">
                   <div className="container">
                      <ul className="detils">
-                        {profileData([JSON.parse(user)])?.[0].map((e, i) => (
-                           <li key={i} className="item">
-                              <h3 className="title">{userDetails[i]}:</h3>
-                              <p className="text">{e}</p>
-                           </li>
-                        ))}
+                        {profileData([JSON.parse(user)])?.[0].map(
+                           (userInfo, i) => (
+                              <li key={i} className="item">
+                                 <h3 className="title">{userDetails[i]}:</h3>
+                                 <p className="text">
+                                    {userInfo ?? "No Data Yet"}
+                                 </p>
+                              </li>
+                           )
+                        )}
                      </ul>
                      <UniversityLogo />
                   </div>
@@ -135,9 +162,7 @@ const Profile = () => {
                         <button
                            className="btn add-btn"
                            onClick={() => {
-                              if (!topicsGlobal.loading) {
-                                 navigate("add-new-topic");
-                              }
+                              navigate("add-new-topic");
                            }}
                         >
                            Add
@@ -160,69 +185,79 @@ const Profile = () => {
                               </thead>
                               <tbody className="tbody">
                                  {topics?.teme?.length > 0 ? (
-                                    topics.teme.map((cell, i) => {
-                                       return (
-                                          <tr key={i} className="row">
-                                             <td className="cell">{i + 1}.</td>
-                                             <td className="cell">
-                                                {cell.title}
-                                             </td>
-                                             <td className="cell">
-                                                {cell.detalii}
-                                             </td>
-                                             <td className="cell">
-                                                {cell.specializare}
-                                             </td>
-                                             <td className="cell">
-                                                <div className="topic-btns">
-                                                   <button
-                                                      className="btn edite-btn"
-                                                      onClick={() => {
-                                                         navigate(
-                                                            "edite-topic",
-                                                            {
-                                                               state: {
-                                                                  id: cell.id,
-                                                               },
-                                                            }
-                                                         );
-                                                      }}
-                                                   >
-                                                      Edite
-                                                      <img
-                                                         src={editeIcon}
-                                                         alt="edite-icon"
-                                                         className="btn-icon"
-                                                      />
-                                                   </button>
-                                                   {topicsGlobal.loading &&
-                                                   cell.id === selectedId ? (
-                                                      <Spinning size="small" />
-                                                   ) : (
+                                    topics.teme
+                                       .map((cell, i) => {
+                                          return (
+                                             <tr key={i} className="row">
+                                                <td className="cell">
+                                                   {i + 1}.
+                                                </td>
+                                                <td className="cell">
+                                                   {cell.title}
+                                                </td>
+                                                <td className="cell">
+                                                   {cell.tema_type}
+                                                </td>
+                                                <td className="cell">
+                                                   {cell.detalii}
+                                                </td>
+                                                <td className="cell">
+                                                   {cell.specializare}
+                                                </td>
+                                                <td className="cell">
+                                                   <div className="topic-btns">
                                                       <button
-                                                         className="btn delete-btn"
+                                                         className="btn edite-btn"
                                                          onClick={() => {
-                                                            confirmDeletion(
-                                                               cell.id
-                                                            );
-                                                            setSelectedId(
-                                                               cell.id
+                                                            navigate(
+                                                               "edite-topic",
+                                                               {
+                                                                  state: {
+                                                                     id: cell.id,
+                                                                  },
+                                                               }
                                                             );
                                                          }}
                                                       >
-                                                         Delete
+                                                         Edite
                                                          <img
-                                                            src={deleteIcon}
-                                                            alt="delete-icon"
+                                                            src={editeIcon}
+                                                            alt="edite-icon"
                                                             className="btn-icon"
                                                          />
                                                       </button>
-                                                   )}
-                                                </div>
-                                             </td>
-                                          </tr>
-                                       );
-                                    })
+                                                      {topicsGlobal.loading &&
+                                                      cell.id === selectedId ? (
+                                                         <Spinning size="small" />
+                                                      ) : (
+                                                         <button
+                                                            className="btn delete-btn"
+                                                            onClick={() => {
+                                                               confirmDeletion(
+                                                                  cell.id
+                                                               );
+                                                               setSelectedId(
+                                                                  cell.id
+                                                               );
+                                                            }}
+                                                         >
+                                                            Delete
+                                                            <img
+                                                               src={deleteIcon}
+                                                               alt="delete-icon"
+                                                               className="btn-icon"
+                                                            />
+                                                         </button>
+                                                      )}
+                                                   </div>
+                                                </td>
+                                             </tr>
+                                          );
+                                       })
+                                       .slice(
+                                          paginationValue.start,
+                                          paginationValue.end
+                                       )
                                  ) : (
                                     <tr className="row">
                                        <td
@@ -236,6 +271,10 @@ const Profile = () => {
                               </tbody>
                            </table>
                         </div>
+                        <Pagination
+                           paginationCount={topics?.teme?.length}
+                           setPaginationValue={setPaginationValue}
+                        />
                      </div>
                   </section>
                ) : null}

@@ -1,10 +1,12 @@
+// External
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useRef } from "react";
+import swal from "sweetalert";
+// Internal
 import Header from "../../components/Header";
 import UniversityLogo from "../../components/UniversityLogo";
-import { useEffect, useRef } from "react";
 import { editeTopic } from "../../redux/topics/topicsActions";
-import swal from "sweetalert";
 import Spinning from "../../components/Spinning";
 
 export const EditeTopic = () => {
@@ -12,6 +14,7 @@ export const EditeTopic = () => {
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
    const userType = JSON.parse(user)?.type;
+   document.title = "Absolventweb | Edite Tema";
 
    // ======================= Redux Hook =======================
    const dispatch = useDispatch();
@@ -23,6 +26,7 @@ export const EditeTopic = () => {
 
    // ======================= Select Input Elements =======================
    const titleInput = useRef(null);
+   const temaTypeInput = useRef(null);
    const detailsInput = useRef(null);
    const specInput = useRef(null);
 
@@ -50,6 +54,7 @@ export const EditeTopic = () => {
    const handleProcess = () => {
       const userInput = {
          title: titleInput.current.value,
+         tema_type: temaTypeInput.current.value,
          detalii: detailsInput.current.value,
          specializare: specInput.current.value,
       };
@@ -65,13 +70,14 @@ export const EditeTopic = () => {
 
    // ======================= React Hook =======================
    useEffect(() => {
-      // Prevent user to enter this page directly
+      // Prevent User Enter This Page Directly
       if (state?.id && topics.doctorTopics?.teme?.length > 0) {
          const topic = topics.doctorTopics.teme.find(
             (tema) => tema.id === state.id
          );
          titleInput.current.focus();
          titleInput.current.value = topic?.title ?? "";
+         temaTypeInput.current.value = topic?.tema_type ?? "";
          detailsInput.current.value = topic?.detalii ?? "";
          specInput.current.value = topic?.specializare ?? "";
       } else {
@@ -110,6 +116,15 @@ export const EditeTopic = () => {
                               placeholder="Scrie aici"
                               className="input-field"
                               ref={titleInput}
+                           />
+                        </li>
+                        <li className="item">
+                           <h3 className="item_title">Tema Type:</h3>
+                           <input
+                              type="text"
+                              placeholder="Scrie aici"
+                              className="input-field"
+                              ref={temaTypeInput}
                            />
                         </li>
                         <li className="item">
