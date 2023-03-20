@@ -12,8 +12,9 @@ import {
 import checkIcon from "../assets/imgs/icons/checkIcon.png";
 import deleteIcon from "../assets/imgs/icons/deleteIcon.png";
 import swal from "sweetalert";
-import { getStudentStatus } from "../redux/users/uersAction";
+import { getStudents, getStudentStatus } from "../redux/users/uersAction";
 import Search from "../components/Search";
+import Pagination from "../components/Pagination";
 
 const HomePage = () => {
    // ======================= Global Data =======================
@@ -29,6 +30,10 @@ const HomePage = () => {
    );
    const workspace = useSelector((state) => state.workspaces);
    const userStatus = useSelector((state) => state.users.studentStatus);
+   const students = useSelector((state) => state.users.students).filter(
+      (student) => student?.workspace?.status === 1
+   );
+   console.log(students);
 
    // ======================= React Hook =======================
    // Use This To Prevent Show All Alert on First Page Load
@@ -38,8 +43,7 @@ const HomePage = () => {
       start: 0,
       end: 3,
    });
-   // Use This To Specify Selected Pagin
-   const [selectedPagin, setSelectedPagin] = useState(0);
+
    useEffect(() => {
       if (userType === "student") {
          dispatch(getStudentStatus({}));
@@ -53,6 +57,9 @@ const HomePage = () => {
    useEffect(() => {
       if (firstUpdate.current) {
          firstUpdate.current = false;
+         if (userType === "admin") {
+            dispatch(getStudents());
+         }
          return;
       }
       if (userType === "coordonator") {
@@ -81,7 +88,7 @@ const HomePage = () => {
    // Checking Box To Confirm Accept A Workspace
    const confirmAccept = async (status) => {
       let checkBox = await swal(
-         "Are you sure you want to accept this student?",
+         "Are You Sure You Want To Accept This Student?",
          {
             dangerMode: true,
             buttons: true,
@@ -94,26 +101,17 @@ const HomePage = () => {
    };
    // Checking Box To Confirm Reject A  Workspace
    const confirmReject = async (status) => {
-      let checkBox = await swal("Are you sure you to reject this student?", {
-         dangerMode: true,
-         buttons: true,
-      });
+      let checkBox = await swal(
+         "Are You Sure You Want To Reject This Student?",
+         {
+            dangerMode: true,
+            buttons: true,
+         }
+      );
       if (checkBox) {
          dispatch(changeWorkspaceStatus(status));
          setProcessDone(true);
       }
-   };
-
-   // ======================= Own Function =======================
-   /**
-    * Use This Function To Create Paination Beasd in Tema Count (3 Tema in 1 Pagination)
-    * @param Number Count of Teme
-    * @returns Array Of Count Pagination
-    */
-   const getPagination = (temeCount) => {
-      const pagination = [];
-      for (let i = 0; i < Math.ceil(temeCount / 3); i++) pagination.push(i);
-      return pagination;
    };
 
    if (user) {
@@ -423,108 +421,48 @@ const HomePage = () => {
                                  </tr>
                               </thead>
                               <tbody className="tbody">
-                                 {/* {waitingWorkspaces.length > 0 ? (
-                                    waitingWorkspaces.map((cell, i) => {
-                                       return (
-                                          <tr key={i} className="row">
-                                             <td className="cell">{i + 1}.</td>
-                                             <td className="cell">
-                                                {cell.student.email}
-                                             </td>
-                                             <td className="cell">
-                                                {cell.tema.title}
-                                             </td>
-                                             <td className="cell">
-                                                {cell.tema.specializare}
-                                             </td>
-                                             <td className="cell">
-                                                <div className="status">
-                                                   <div className="topic-btns ">
-                                                      <button
-                                                         className="btn edite-btn"
-                                                         onClick={() =>
-                                                            confirmAccept([
-                                                               {
-                                                                  status: 1,
-                                                               },
-                                                               cell.worspace_id,
-                                                            ])
-                                                         }
-                                                      >
-                                                         Accept
-                                                         <img
-                                                            src={checkIcon}
-                                                            alt="check-icon"
-                                                            className="btn-icon"
-                                                         />
-                                                      </button>
-                                                      <button
-                                                         className="btn delete-btn"
-                                                         onClick={() =>
-                                                            confirmReject([
-                                                               {
-                                                                  status: 3,
-                                                               },
-                                                               cell.worspace_id,
-                                                            ])
-                                                         }
-                                                      >
-                                                         Reject
-                                                         <img
-                                                            src={deleteIcon}
-                                                            alt="delete-icon"
-                                                            className="btn-icon"
-                                                         />
-                                                      </button>
-                                                   </div>
-                                                </div>
-                                             </td>
-                                          </tr>
-                                       );
-                                    })
+                                 {students.length > 0 ? (
+                                    students
+                                       .map((cell, i) => {
+                                          return (
+                                             <tr key={i} className="row">
+                                                <td className="cell">
+                                                   {i + 1}.
+                                                </td>
+                                                <td className="cell">
+                                                   {cell.email}
+                                                </td>
+                                                <td className="cell">
+                                                   {cell.coordonator.email}
+                                                </td>
+                                                <td className="cell">
+                                                   {cell.tema.title}
+                                                </td>
+                                             </tr>
+                                          );
+                                       })
+                                       .slice(
+                                          paginationValue.start,
+                                          paginationValue.end
+                                       )
                                  ) : (
                                     <tr className="row">
                                        <td
                                           className="cell empty-table"
-                                          colSpan={tableCol1.length}
+                                          colSpan={tableCol.length}
                                        >
                                           There Are No Data To Show.
                                        </td>
                                     </tr>
-                                 )} */}
-                                 <tr className="row">
-                                    <td
-                                       className="cell empty-table"
-                                       colSpan={tableCol.length}
-                                    >
-                                       There Are No Data To Show.
-                                    </td>
-                                 </tr>
+                                 )}
                               </tbody>
                            </table>
                         </div>
 
-                        <div className="pagination">
-                           {getPagination(5).map((pagin, i) => (
-                              <span
-                                 key={pagin}
-                                 className={`pagin ${
-                                    selectedPagin === pagin
-                                       ? "selected-pagin"
-                                       : ""
-                                 }`}
-                                 onClick={() => {
-                                    setPaginationValue({
-                                       start: i * 3,
-                                       end: (i + 1) * 3,
-                                    });
-                                    setSelectedPagin(pagin);
-                                 }}
-                              >
-                                 {i + 1}
-                              </span>
-                           ))}
-                        </div>
+                        <Pagination
+                           paginationCount={students.length}
+                           setPaginationValue={setPaginationValue}
+                        />
                      </div>
                   </div>
                </main>

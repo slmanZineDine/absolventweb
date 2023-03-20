@@ -1,7 +1,7 @@
 // External
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 // Internal
 import Header from "../components/Header";
@@ -25,6 +25,9 @@ const ListOfTopics = () => {
    const topicsByDoctor = useSelector((state) => state.topics.topicsByDoctor);
    const workspace = useSelector((state) => state.workspaces);
    const userStatus = useSelector((state) => state.users.studentStatus);
+
+   // ======================= Router Hook =======================
+   const navigate = useNavigate();
 
    // ======================= Own Function =======================
    /**
@@ -81,6 +84,7 @@ const ListOfTopics = () => {
       if (checkBox) {
          dispatch(createWorkspace(workspace));
          setProcessDone(true);
+         navigate("/homepage");
       }
    };
 
@@ -416,7 +420,7 @@ const ListOfTopics = () => {
                            ) : (
                               <button
                                  className="btn save-btn"
-                                 onClick={() => console.log("Export Done")}
+                                 onClick={() => alert("Export Done")}
                               >
                                  Export
                               </button>

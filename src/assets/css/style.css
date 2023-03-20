@@ -1332,9 +1332,10 @@ input[type=number] {
   font-size: var(--h2-font-size);
   margin-bottom: 1rem;
 }
-.homepage-admin .container .content .table th:first-of-type,
-.homepage-admin .container .content .table td:first-of-type {
+.homepage-admin .container .content .table th:first-of-type {
   width: 10px;
+}
+.homepage-admin .container .content .table td {
   text-align: center;
 }
 .homepage-admin .container .content .table .btn {
@@ -1689,6 +1690,9 @@ input[type=number] {
   font-size: var(--h2-font-size);
   font-weight: bold;
   margin-bottom: 1rem;
+}
+.students-page-admin .container .content .box .table td {
+  text-align: center;
 }
 
 /*=============== BREAKPOINTS ===============*/

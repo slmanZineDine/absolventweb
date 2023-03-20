@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getStudentStatus } from "./uersAction";
+import { getStudents, getStudentStatus } from "./uersAction";
 
 const initialState = {
    loading: false, // Checking if loading finish
    error: null, // Store Error msg get it from backend
    success: false, // Checking if auth is done
    studentStatus: {}, // Status null => , 0 => Pending, 1 => Accepted, 2 => Finish, 3 => Rejected
+   students: [], // Contain All Students With Thier Status, Tema, Coordonator
 };
 
 const usersSlice = createSlice({
@@ -30,6 +31,22 @@ const usersSlice = createSlice({
          );
       },
       [getStudentStatus.rejected]: (state, { payload }) => {
+         state.loading = false;
+         state.error = payload;
+      },
+
+      // Get Student Status
+      [getStudents.pending]: (state) => {
+         state.loading = true;
+         state.success = false; // Reset a value every Request
+         state.error = null; // Reset a value every Request
+      },
+      [getStudents.fulfilled]: (state, { payload }) => {
+         state.loading = false;
+         state.success = true;
+         state.students = payload.data;
+      },
+      [getStudents.rejected]: (state, { payload }) => {
          state.loading = false;
          state.error = payload;
       },

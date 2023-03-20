@@ -8,6 +8,7 @@ import Header from "../components/Header";
 import Pagination from "../components/Pagination";
 import Search from "../components/Search";
 import UniversityLogo from "../components/UniversityLogo";
+import { getStudents } from "../redux/users/uersAction";
 import { getAcceptedWorkspace } from "../redux/workspaces/workspacesActions";
 
 const Students = () => {
@@ -22,6 +23,11 @@ const Students = () => {
    const acceptedWorkspaces = useSelector(
       (state) => state.workspaces.acceptedWorkspaces
    );
+   const students = useSelector((state) => state.users.students);
+   const rejectedStudent = students.filter(
+      (student) => student?.workspace?.status === 3
+   );
+   const haveNotSelectedTema = students.filter((student) => !student.workspace);
 
    // ======================= Router Hook =======================
    const navigate = useNavigate();
@@ -35,6 +41,8 @@ const Students = () => {
    useEffect(() => {
       if (userType === "coordonator") {
          dispatch(getAcceptedWorkspace({}));
+      } else if (userType === "admin") {
+         dispatch(getStudents());
       }
    }, []);
 
@@ -174,71 +182,16 @@ const Students = () => {
                                     </tr>
                                  </thead>
                                  <tbody className="tbody">
-                                    <tr className="row">
-                                       <td
-                                          className="cell empty-table"
-                                          colSpan={tableCol.length}
-                                       >
-                                          There Are No Data To Show.
-                                       </td>
-                                    </tr>
-                                    {/* {waitingWorkspaces.length > 0 ? (
-                                       waitingWorkspaces.map((cell, i) => {
+                                    {rejectedStudent.length > 0 ? (
+                                       rejectedStudent.map((cell, i) => {
                                           return (
                                              <tr key={i} className="row">
                                                 <td className="cell">
-                                                   {i + 1}.
+                                                   {cell.email}
                                                 </td>
+
                                                 <td className="cell">
-                                                   {cell.student.email}
-                                                </td>
-                                                <td className="cell">
-                                                   {cell.tema.title}
-                                                </td>
-                                                <td className="cell">
-                                                   {cell.tema.specializare}
-                                                </td>
-                                                <td className="cell">
-                                                   <div className="status">
-                                                      <div className="topic-btns ">
-                                                         <button
-                                                            className="btn edite-btn"
-                                                            onClick={() =>
-                                                               confirmAccept([
-                                                                  {
-                                                                     status: 1,
-                                                                  },
-                                                                  cell.worspace_id,
-                                                               ])
-                                                            }
-                                                         >
-                                                            Accept
-                                                            <img
-                                                               src={checkIcon}
-                                                               alt="check-icon"
-                                                               className="btn-icon"
-                                                            />
-                                                         </button>
-                                                         <button
-                                                            className="btn delete-btn"
-                                                            onClick={() =>
-                                                               confirmReject([
-                                                                  {
-                                                                     status: 3,
-                                                                  },
-                                                                  cell.worspace_id,
-                                                               ])
-                                                            }
-                                                         >
-                                                            Reject
-                                                            <img
-                                                               src={deleteIcon}
-                                                               alt="delete-icon"
-                                                               className="btn-icon"
-                                                            />
-                                                         </button>
-                                                      </div>
-                                                   </div>
+                                                   {cell.specializare}
                                                 </td>
                                              </tr>
                                           );
@@ -247,12 +200,12 @@ const Students = () => {
                                        <tr className="row">
                                           <td
                                              className="cell empty-table"
-                                             colSpan={tableCol1.length}
+                                             colSpan={tableCol.length}
                                           >
-                                             There Are No Data To Show.s
+                                             There Are No Data To Shows
                                           </td>
                                        </tr>
-                                    )} */}
+                                    )}
                                  </tbody>
                               </table>
                            </div>
@@ -280,71 +233,16 @@ const Students = () => {
                                     </tr>
                                  </thead>
                                  <tbody className="tbody">
-                                    <tr className="row">
-                                       <td
-                                          className="cell empty-table"
-                                          colSpan={tableCol.length}
-                                       >
-                                          There Are No Data To Show.
-                                       </td>
-                                    </tr>
-                                    {/* {waitingWorkspaces.length > 0 ? (
-                                       waitingWorkspaces.map((cell, i) => {
+                                    {haveNotSelectedTema.length > 0 ? (
+                                       haveNotSelectedTema.map((cell, i) => {
                                           return (
                                              <tr key={i} className="row">
                                                 <td className="cell">
-                                                   {i + 1}.
+                                                   {cell.email}
                                                 </td>
+
                                                 <td className="cell">
-                                                   {cell.student.email}
-                                                </td>
-                                                <td className="cell">
-                                                   {cell.tema.title}
-                                                </td>
-                                                <td className="cell">
-                                                   {cell.tema.specializare}
-                                                </td>
-                                                <td className="cell">
-                                                   <div className="status">
-                                                      <div className="topic-btns ">
-                                                         <button
-                                                            className="btn edite-btn"
-                                                            onClick={() =>
-                                                               confirmAccept([
-                                                                  {
-                                                                     status: 1,
-                                                                  },
-                                                                  cell.worspace_id,
-                                                               ])
-                                                            }
-                                                         >
-                                                            Accept
-                                                            <img
-                                                               src={checkIcon}
-                                                               alt="check-icon"
-                                                               className="btn-icon"
-                                                            />
-                                                         </button>
-                                                         <button
-                                                            className="btn delete-btn"
-                                                            onClick={() =>
-                                                               confirmReject([
-                                                                  {
-                                                                     status: 3,
-                                                                  },
-                                                                  cell.worspace_id,
-                                                               ])
-                                                            }
-                                                         >
-                                                            Reject
-                                                            <img
-                                                               src={deleteIcon}
-                                                               alt="delete-icon"
-                                                               className="btn-icon"
-                                                            />
-                                                         </button>
-                                                      </div>
-                                                   </div>
+                                                   {cell.specializare}
                                                 </td>
                                              </tr>
                                           );
@@ -353,12 +251,12 @@ const Students = () => {
                                        <tr className="row">
                                           <td
                                              className="cell empty-table"
-                                             colSpan={tableCol1.length}
+                                             colSpan={tableCol.length}
                                           >
-                                             There Are No Data To Show.s
+                                             There Are No Data To Show.
                                           </td>
                                        </tr>
-                                    )} */}
+                                    )}
                                  </tbody>
                               </table>
                            </div>
