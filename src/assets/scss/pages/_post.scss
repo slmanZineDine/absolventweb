@@ -9,7 +9,7 @@
          > .title {
             @include flex(center, flex-start, 1rem);
             font-size: var(--h2-font-size);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             &::before {
                content: "";
                display: block;
@@ -117,7 +117,11 @@
                   flex: 1;
                   height: 32px;
                   resize: none;
-                  overflow: hidden;
+                  max-height: 150px;
+                  overflow-y: scroll;
+                  &::-webkit-scrollbar {
+                     width: 7px;
+                  }
                }
                .btn-icon {
                   width: 25px;
@@ -212,8 +216,12 @@
                padding: 0.5rem 1rem;
                border-radius: 1rem;
                width: 100%;
-               overflow: hidden;
                resize: none;
+               max-height: 150px;
+               overflow-y: scroll;
+               &::-webkit-scrollbar {
+                  width: 7px;
+               }
             }
             .the-date {
                display: block;

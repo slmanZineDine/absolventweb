@@ -1,4 +1,6 @@
+// External
 import { configureStore } from "@reduxjs/toolkit";
+// Internal
 import attachmentsSlice from "./attachments/attachmentsSlice";
 import authSlice from "./auth/authSlice";
 import commentsSlice from "./comments/commentsSlice";
@@ -17,6 +19,8 @@ const store = configureStore({
       users: usersSlice,
       attachments: attachmentsSlice,
    },
+   // Disable Redux DevTools
+   // devTools: false,
 });
 
 export default store;

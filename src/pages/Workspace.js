@@ -90,7 +90,9 @@ const Workspace = () => {
                                  lucrarilor de licență
                               </li>
                               <li className="item">Coordinator: john doe</li>
-                              <li className="item">Student: slman</li>
+                              <li className="item">
+                                 Student: {JSON.parse(user)?.name}
+                              </li>
                            </ul>
                            <div className="workspace-btns">
                               <button
@@ -146,65 +148,87 @@ const Workspace = () => {
                                  </thead>
                                  <tbody className="tbody">
                                     {workspaceEvents.length > 0 ? (
-                                       workspaceEvents.map((cell, i) => {
-                                          return (
-                                             <tr key={i} className="row">
-                                                <td className="cell">
-                                                   {cell.author_type}
-                                                </td>
-                                                <td className="cell">
-                                                   {cell.type === "post" ? (
-                                                      <Link
-                                                         to="post"
-                                                         state={{
-                                                            eventId: cell.id,
-                                                         }}
-                                                      >
-                                                         {cell.title}
-                                                      </Link>
-                                                   ) : null}
-                                                   {cell.type === "meeting" ? (
-                                                      <Link
-                                                         to="edite-meeting"
-                                                         state={{
-                                                            eventId: cell.id,
-                                                         }}
-                                                      >
-                                                         {cell.title}
-                                                      </Link>
-                                                   ) : null}
-                                                   {cell.type === "task" ? (
-                                                      <Link
-                                                         to="task"
-                                                         state={{
-                                                            eventId: cell.id,
-                                                         }}
-                                                      >
-                                                         {cell.title}
-                                                      </Link>
-                                                   ) : null}
-                                                </td>
-                                                <td className="cell">
-                                                   {cell.type}
-                                                </td>
-                                                <td className="cell">
-                                                   {cell.due_date}
-                                                </td>
-                                                <td className="cell">
-                                                   {(
-                                                      <>
-                                                         {cell.Attachment}{" "}
-                                                         <img
-                                                            src={attachIcon}
-                                                            alt="attachment-icon"
-                                                            className="icon"
-                                                         />
-                                                      </>
-                                                   ) && ""}
-                                                </td>
-                                             </tr>
-                                          );
-                                       })
+                                       workspaceEvents
+                                          .map((cell, i) => {
+                                             return (
+                                                <tr key={i} className="row">
+                                                   <td className="cell">
+                                                      {cell.author_type}
+                                                   </td>
+                                                   <td className="cell">
+                                                      {cell.type === "post" ? (
+                                                         <Link
+                                                            to="post"
+                                                            state={{
+                                                               eventId: cell.id,
+                                                            }}
+                                                         >
+                                                            {cell.title}
+                                                         </Link>
+                                                      ) : null}
+                                                      {cell.type ===
+                                                      "meeting" ? (
+                                                         <Link
+                                                            to="edite-meeting"
+                                                            state={{
+                                                               eventId: cell.id,
+                                                            }}
+                                                         >
+                                                            {cell.title}
+                                                         </Link>
+                                                      ) : null}
+                                                      {cell.type === "task" ? (
+                                                         <Link
+                                                            to="task"
+                                                            state={{
+                                                               eventId: cell.id,
+                                                            }}
+                                                         >
+                                                            {cell.title}
+                                                         </Link>
+                                                      ) : null}
+                                                   </td>
+                                                   <td className="cell">
+                                                      {cell.type}
+                                                   </td>
+                                                   <td className="cell">
+                                                      {cell.due_date}
+                                                   </td>
+                                                   <td className="cell">
+                                                      {cell.attachment ? (
+                                                         <>
+                                                            <a
+                                                               href={
+                                                                  cell
+                                                                     .attachment
+                                                                     .file_path
+                                                               }
+                                                               download={
+                                                                  cell
+                                                                     .attachment
+                                                                     .file_name
+                                                               }
+                                                            >
+                                                               <img
+                                                                  src={
+                                                                     attachIcon
+                                                                  }
+                                                                  alt="attachment-icon"
+                                                                  className="icon"
+                                                               />
+                                                            </a>
+                                                         </>
+                                                      ) : (
+                                                         ""
+                                                      )}
+                                                   </td>
+                                                </tr>
+                                             );
+                                          })
+                                          .slice(
+                                             paginationValue.start,
+                                             paginationValue.end
+                                          )
                                     ) : (
                                        <tr className="row">
                                           <td
@@ -218,6 +242,10 @@ const Workspace = () => {
                                  </tbody>
                               </table>
                            </div>
+                           <Pagination
+                              paginationCount={workspaceEvents.length}
+                              setPaginationValue={setPaginationValue}
+                           />
                         </div>
                         <UniversityLogo />
                      </div>

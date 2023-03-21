@@ -493,7 +493,9 @@ input[type=number] {
   border: 1px solid #000000;
   box-shadow: 0px 10px 4px rgba(104, 193, 231, 0.3);
   width: 90%;
-  margin-block: 2.5rem 1.5rem;
+  margin-block: 2rem 1.5rem;
+  display: block;
+  margin-inline: auto;
 }
 .auth-page-btn:hover {
   background: linear-gradient(to right, #003959 0%, #003959 100%);
@@ -1197,7 +1199,8 @@ input[type=number] {
 }
 .auth .container .content .form .form-element .note {
   text-align: center;
-  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #aaa;
 }
 .auth .container .content .form .form-element .note .link {
   color: #2575be;
@@ -2110,7 +2113,7 @@ input[type=number] {
   justify-content: flex-start;
   gap: 1rem;
   font-size: var(--h2-font-size);
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 .post-page .container .content > .title::before {
   content: "";
@@ -2235,7 +2238,11 @@ input[type=number] {
   flex: 1;
   height: 32px;
   resize: none;
-  overflow: hidden;
+  max-height: 150px;
+  overflow-y: scroll;
+}
+.post-page .container .content .comments .add-comment .input-field::-webkit-scrollbar {
+  width: 7px;
 }
 .post-page .container .content .comments .add-comment .btn-icon {
   width: 25px;
@@ -2329,8 +2336,12 @@ input[type=number] {
   padding: 0.5rem 1rem;
   border-radius: 1rem;
   width: 100%;
-  overflow: hidden;
   resize: none;
+  max-height: 150px;
+  overflow-y: scroll;
+}
+.post-page .container .comments-list .comment .input-field::-webkit-scrollbar {
+  width: 7px;
 }
 .post-page .container .comments-list .comment .the-date {
   display: block;

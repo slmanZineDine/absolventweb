@@ -83,8 +83,6 @@ const Post = () => {
    const [showPostOption, setPostOption] = useState(false);
 
    useEffect(() => {
-      console.log(commentInput.current.scrollHeight);
-      console.log(commentInput.current.getBoundingClientRect());
       if (state?.eventId) {
          dispatch(getEventById(state.eventId));
          dispatch(getComments(state.eventId));
