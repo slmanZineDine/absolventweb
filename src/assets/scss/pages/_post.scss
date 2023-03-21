@@ -109,14 +109,15 @@
                padding-top: 1rem;
                border-radius: 0.2rem;
                position: relative;
-               @include flex(center, flex-start, 1rem);
+               @include flex(flex-start, flex-start, 1rem);
                .input-field {
-                  padding: 0.5rem 2rem 0;
+                  padding: 0.5rem 1rem;
                   border: 1px solid #000;
-                  border-radius: 2rem;
+                  border-radius: 0.9rem;
                   flex: 1;
-                  min-height: 45px;
+                  height: 32px;
                   resize: none;
+                  overflow: hidden;
                }
                .btn-icon {
                   width: 25px;
@@ -211,6 +212,8 @@
                padding: 0.5rem 1rem;
                border-radius: 1rem;
                width: 100%;
+               overflow: hidden;
+               resize: none;
             }
             .the-date {
                display: block;

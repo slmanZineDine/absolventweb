@@ -40,8 +40,17 @@ const HomePage = () => {
    // ======================= React Hook =======================
    // Use This To Prevent Show All Alert on First Page Load
    const [processDone, setProcessDone] = useState(false);
-   // Store Pagination Values
+   // [Homepage Admin] Store Pagination Values
    const [paginationValue, setPaginationValue] = useState({
+      start: 0,
+      end: 3,
+   });
+   // [Homepage Coordinator] Pagination Values For Each Table
+   const [paginationValueTable1, setPaginationValueTable1] = useState({
+      start: 0,
+      end: 3,
+   });
+   const [paginationValueTable2, setPaginationValueTable2] = useState({
       start: 0,
       end: 3,
    });
@@ -218,64 +227,71 @@ const HomePage = () => {
                               </thead>
                               <tbody className="tbody">
                                  {waitingWorkspaces.length > 0 ? (
-                                    waitingWorkspaces.map((cell, i) => {
-                                       return (
-                                          <tr key={i} className="row">
-                                             <td className="cell">{i + 1}.</td>
-                                             <td className="cell">
-                                                {cell.student.email}
-                                             </td>
-                                             <td className="cell">
-                                                {cell.tema.title}
-                                             </td>
-                                             <td className="cell">
-                                                {cell.tema.specializare}
-                                             </td>
-                                             <td className="cell">
-                                                <div className="status">
-                                                   <div className="topic-btns ">
-                                                      <button
-                                                         className="btn edite-btn"
-                                                         onClick={() =>
-                                                            confirmAccept([
-                                                               {
-                                                                  status: 1,
-                                                               },
-                                                               cell.worspace_id,
-                                                            ])
-                                                         }
-                                                      >
-                                                         Accept
-                                                         <img
-                                                            src={checkIcon}
-                                                            alt="check-icon"
-                                                            className="btn-icon"
-                                                         />
-                                                      </button>
-                                                      <button
-                                                         className="btn delete-btn"
-                                                         onClick={() =>
-                                                            confirmReject([
-                                                               {
-                                                                  status: 3,
-                                                               },
-                                                               cell.worspace_id,
-                                                            ])
-                                                         }
-                                                      >
-                                                         Reject
-                                                         <img
-                                                            src={deleteIcon}
-                                                            alt="delete-icon"
-                                                            className="btn-icon"
-                                                         />
-                                                      </button>
+                                    waitingWorkspaces
+                                       .map((cell, i) => {
+                                          return (
+                                             <tr key={i} className="row">
+                                                <td className="cell">
+                                                   {i + 1}.
+                                                </td>
+                                                <td className="cell">
+                                                   {cell.student.email}
+                                                </td>
+                                                <td className="cell">
+                                                   {cell.tema.title}
+                                                </td>
+                                                <td className="cell">
+                                                   {cell.tema.specializare}
+                                                </td>
+                                                <td className="cell">
+                                                   <div className="status">
+                                                      <div className="topic-btns ">
+                                                         <button
+                                                            className="btn edite-btn"
+                                                            onClick={() =>
+                                                               confirmAccept([
+                                                                  {
+                                                                     status: 1,
+                                                                  },
+                                                                  cell.worspace_id,
+                                                               ])
+                                                            }
+                                                         >
+                                                            Accept
+                                                            <img
+                                                               src={checkIcon}
+                                                               alt="check-icon"
+                                                               className="btn-icon"
+                                                            />
+                                                         </button>
+                                                         <button
+                                                            className="btn delete-btn"
+                                                            onClick={() =>
+                                                               confirmReject([
+                                                                  {
+                                                                     status: 3,
+                                                                  },
+                                                                  cell.worspace_id,
+                                                               ])
+                                                            }
+                                                         >
+                                                            Reject
+                                                            <img
+                                                               src={deleteIcon}
+                                                               alt="delete-icon"
+                                                               className="btn-icon"
+                                                            />
+                                                         </button>
+                                                      </div>
                                                    </div>
-                                                </div>
-                                             </td>
-                                          </tr>
-                                       );
-                                    })
+                                                </td>
+                                             </tr>
+                                          );
+                                       })
+                                       .slice(
+                                          paginationValueTable1.start,
+                                          paginationValueTable1.end
+                                       )
                                  ) : (
                                     <tr className="row">
                                        <td
@@ -289,6 +305,10 @@ const HomePage = () => {
                               </tbody>
                            </table>
                         </div>
+                        <Pagination
+                           paginationCount={waitingWorkspaces.length}
+                           setPaginationValue={setPaginationValueTable1}
+                        />
                      </div>
                      <div className="content">
                         <div className="title">

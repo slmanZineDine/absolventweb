@@ -1,16 +1,18 @@
+// External
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import swal from "sweetalert";
+// Internal
 import Header from "../components/Header";
 import UniversityLogo from "../components/UniversityLogo";
 import attachIcon from "../assets/imgs/icons/attachIcon.png";
 import addIcon from "../assets/imgs/icons/addIcon.png";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
    getStudentEvents,
    getWorkspaceEvents,
 } from "../redux/events/eventsAction";
 import { getStudentStatus } from "../redux/users/uersAction";
-import swal from "sweetalert";
 import {
    changeWorkspaceStatus,
    deleteWorkspace,

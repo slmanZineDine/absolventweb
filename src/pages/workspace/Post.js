@@ -36,8 +36,8 @@ const Post = () => {
    // ======================= Own Function =======================
    /**
     * Use This Function To Format Date Like Facebook
-    * @param {Date} theDate
-    * @returns Formated date
+    * @param Date Represent The Date.
+    * @returns Formated date.
     */
    const customDate = (theDate) => {
       if (!theDate) return "";
@@ -60,6 +60,17 @@ const Post = () => {
       }
    };
 
+   /**
+    * Use This Function To Increment Textarea Height Based On Its Content.
+    * @param DOMElement Represent HTML Element To Increment Height.
+    * @returns undefined
+    */
+   const textAreaAdjust = (element) => {
+      // Reset Height Every keyup
+      element.style.height = "1px";
+      element.style.height = `${10 + element.scrollHeight}px`;
+   };
+
    // ======================= Select Input Elements =======================
    const commentInput = useRef(null);
    const commentField = useRef(null);
@@ -72,6 +83,8 @@ const Post = () => {
    const [showPostOption, setPostOption] = useState(false);
 
    useEffect(() => {
+      console.log(commentInput.current.scrollHeight);
+      console.log(commentInput.current.getBoundingClientRect());
       if (state?.eventId) {
          dispatch(getEventById(state.eventId));
          dispatch(getComments(state.eventId));
@@ -174,6 +187,9 @@ const Post = () => {
                               <textarea
                                  placeholder="Scrie aici"
                                  className="input-field"
+                                 onKeyUp={() =>
+                                    textAreaAdjust(commentInput.current)
+                                 }
                                  ref={commentInput}
                               ></textarea>
                               <button
@@ -268,12 +284,17 @@ const Post = () => {
                                    </div>
                                    {editeMode && commentId === comment.id ? (
                                       <>
-                                         <input
+                                         <textarea
+                                            placeholder="Scrie aici"
                                             className="input-field"
-                                            type="text"
+                                            onKeyUp={() =>
+                                               textAreaAdjust(
+                                                  commentField.current
+                                               )
+                                            }
                                             ref={commentField}
                                             defaultValue={comment.content}
-                                         />
+                                         ></textarea>
                                          <span
                                             className="comment-edition"
                                             onClick={() => {

@@ -33,8 +33,17 @@ const Students = () => {
    const navigate = useNavigate();
 
    // ======================= React Hook =======================
-   // Store Pagination Values
+   // [Students-Page Coordinator] Store Pagination Values
    const [paginationValue, setPaginationValue] = useState({
+      start: 0,
+      end: 3,
+   });
+   // [Students-Page Admin] Pagination Values For Each Table
+   const [paginationValueTable1, setPaginationValueTable1] = useState({
+      start: 0,
+      end: 3,
+   });
+   const [paginationValueTable2, setPaginationValueTable2] = useState({
       start: 0,
       end: 3,
    });
@@ -183,19 +192,24 @@ const Students = () => {
                                  </thead>
                                  <tbody className="tbody">
                                     {rejectedStudent.length > 0 ? (
-                                       rejectedStudent.map((cell, i) => {
-                                          return (
-                                             <tr key={i} className="row">
-                                                <td className="cell">
-                                                   {cell.email}
-                                                </td>
+                                       rejectedStudent
+                                          .map((cell, i) => {
+                                             return (
+                                                <tr key={i} className="row">
+                                                   <td className="cell">
+                                                      {cell.email}
+                                                   </td>
 
-                                                <td className="cell">
-                                                   {cell.specializare}
-                                                </td>
-                                             </tr>
-                                          );
-                                       })
+                                                   <td className="cell">
+                                                      {cell.specializare}
+                                                   </td>
+                                                </tr>
+                                             );
+                                          })
+                                          .slice(
+                                             paginationValueTable1.start,
+                                             paginationValueTable1.end
+                                          )
                                     ) : (
                                        <tr className="row">
                                           <td
@@ -209,6 +223,10 @@ const Students = () => {
                                  </tbody>
                               </table>
                            </div>
+                           <Pagination
+                              paginationCount={rejectedStudent.length}
+                              setPaginationValue={setPaginationValueTable1}
+                           />
                         </div>
                         <div className="box">
                            <div className="title">
@@ -234,19 +252,24 @@ const Students = () => {
                                  </thead>
                                  <tbody className="tbody">
                                     {haveNotSelectedTema.length > 0 ? (
-                                       haveNotSelectedTema.map((cell, i) => {
-                                          return (
-                                             <tr key={i} className="row">
-                                                <td className="cell">
-                                                   {cell.email}
-                                                </td>
+                                       haveNotSelectedTema
+                                          .map((cell, i) => {
+                                             return (
+                                                <tr key={i} className="row">
+                                                   <td className="cell">
+                                                      {cell.email}
+                                                   </td>
 
-                                                <td className="cell">
-                                                   {cell.specializare}
-                                                </td>
-                                             </tr>
-                                          );
-                                       })
+                                                   <td className="cell">
+                                                      {cell.specializare}
+                                                   </td>
+                                                </tr>
+                                             );
+                                          })
+                                          .slice(
+                                             paginationValueTable2.start,
+                                             paginationValueTable2.end
+                                          )
                                     ) : (
                                        <tr className="row">
                                           <td
@@ -260,6 +283,10 @@ const Students = () => {
                                  </tbody>
                               </table>
                            </div>
+                           <Pagination
+                              paginationCount={haveNotSelectedTema.length}
+                              setPaginationValue={setPaginationValueTable2}
+                           />
                         </div>
                      </div>
                   </div>

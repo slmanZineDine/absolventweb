@@ -2224,17 +2224,18 @@ input[type=number] {
   border-radius: 0.2rem;
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
   gap: 1rem;
 }
 .post-page .container .content .comments .add-comment .input-field {
-  padding: 0.5rem 2rem 0;
+  padding: 0.5rem 1rem;
   border: 1px solid #000;
-  border-radius: 2rem;
+  border-radius: 0.9rem;
   flex: 1;
-  min-height: 45px;
+  height: 32px;
   resize: none;
+  overflow: hidden;
 }
 .post-page .container .content .comments .add-comment .btn-icon {
   width: 25px;
@@ -2328,6 +2329,8 @@ input[type=number] {
   padding: 0.5rem 1rem;
   border-radius: 1rem;
   width: 100%;
+  overflow: hidden;
+  resize: none;
 }
 .post-page .container .comments-list .comment .the-date {
   display: block;

@@ -33,7 +33,7 @@ export const getWorkspaceEvents = createAsyncThunk(
 // Get Student's Events
 export const getStudentEvents = createAsyncThunk(
    "events/getStudentEvents",
-   async ({}, { rejectWithValue }) => {
+   async (_, { rejectWithValue }) => {
       try {
          const config = {
             headers: {
