@@ -32,13 +32,12 @@
    min-height: 100vh;
    .container {
       .content {
-         @include flex(center, space-between, 2rem);
+         @include flex(flex-start, space-between, 2rem);
          .box {
             width: 100%;
             .title {
                @include flex(center, flex-start, 1rem);
                font-size: var(--h2-font-size);
-               font-weight: bold;
                margin-bottom: 1rem;
             }
             .table {

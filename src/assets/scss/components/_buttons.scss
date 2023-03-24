@@ -29,10 +29,9 @@
    );
    border: 1px solid #000000;
    box-shadow: 0px 10px 4px rgba(104, 193, 231, 0.3);
-   width: $input-width;
+   width: 100%;
    margin-block: 2rem 1.5rem;
    display: block;
-   margin-inline: auto;
    &:hover {
       background: linear-gradient(to right, #003959 0%, #003959 100%);
    }

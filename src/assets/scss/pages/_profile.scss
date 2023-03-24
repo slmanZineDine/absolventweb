@@ -7,9 +7,9 @@
 .profile-page {
    .user-info {
       .container {
-         @include flex(center, space-between, 0.4rem);
+         @include flex(center, flex-start, 0.4rem);
          .detils {
-            width: 50%;
+            margin-right: 1rem;
             background-color: #d9d9d9;
             background-image: url(../imgs/box-bg.png);
             background-size: cover;
@@ -18,11 +18,12 @@
             border-radius: 2rem;
             overflow: hidden;
             .item {
-               @include flex(center, space-between, 1rem);
-               padding-bottom: 0.6rem;
+               @include flex(center, flex-start, 1rem);
+               padding-bottom: 0.8rem;
                .title {
                   font-size: var(--h3-font-size);
                   font-weight: normal;
+                  width: 160px;
                }
                .text {
                   font-size: var(--normal-font-size);
@@ -34,13 +35,10 @@
                }
             }
          }
-         .university-logo {
-            width: 50%;
-            @include flex(center, center);
-         }
       }
    }
    .topics {
+      margin-top: 3rem;
       .container {
          .cover {
             margin-top: 1rem;
@@ -49,6 +47,9 @@
                td:first-of-type {
                   width: 10px;
                   text-align: center;
+               }
+               th:last-of-type {
+                  width: 200px;
                }
             }
          }
@@ -63,22 +64,21 @@
    }
    .profile-page .user-info .container .detils {
       margin-top: 2rem;
-      width: 100%;
-   }
-   .profile-page .user-info .container .university-logo {
-      width: 100%;
-      @include flex(center, center);
+      margin-right: 0;
    }
 }
 /* EXTRA SMALL */
 @media (max-width: 510px) {
+   .profile-page .user-info .container .detils {
+      width: 100%;
+   }
    .profile-page .user-info .container .detils .item {
       flex-direction: column;
       align-items: flex-start;
+      gap: 0.5rem;
    }
    .profile-page .user-info .container .detils .item .title {
       text-align: left;
-      font-weight: bold;
    }
    .profile-page .user-info .container .detils .item .text {
       width: 100%;

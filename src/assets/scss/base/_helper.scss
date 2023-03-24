@@ -6,14 +6,11 @@
 }
 .main {
    padding-top: calc(var(--header-height) + 2rem);
-   padding-bottom: 2rem;
+   padding-bottom: 2.5rem;
    background-image: url("../imgs/body-bg.png");
    background-position: center top;
    background-size: 100% 100%;
    background-repeat: no-repeat;
-}
-.section {
-   padding-block: 2rem;
 }
 /* Sweet alert library */
 .red-bg {
@@ -26,6 +23,11 @@
    .swal-text {
       color: #000;
    }
+}
+.swal-footer {
+   display: flex;
+   align-items: center;
+   justify-content: center;
 }
 
 /*=============== BREAKPOINTS ===============*/

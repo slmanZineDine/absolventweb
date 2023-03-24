@@ -189,89 +189,93 @@ const ListOfTopics = () => {
                                          doctor.id !== tableId
                                             ? doctor.teme
                                                  .map((cell, i) => {
-                                                    return (
-                                                       <tr
-                                                          key={i}
-                                                          className="row"
-                                                       >
-                                                          <td className="cell">
-                                                             {i + 1}.
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.title}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.tema_type}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.detalii}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.specializare}
-                                                          </td>
-                                                          <td
-                                                             className={`cell ${
-                                                                selectedTema &&
-                                                                workspaceInfo.tema_id ===
-                                                                   cell.id
-                                                                   ? "selected"
-                                                                   : ""
-                                                             } ${
-                                                                userStatus?.workspace_status ===
-                                                                   1 ||
-                                                                userStatus?.workspace_status ===
-                                                                   0
-                                                                   ? "disable"
-                                                                   : ""
-                                                             }`}
-                                                             onClick={() => {
-                                                                setWorkspaceInfo(
-                                                                   {
-                                                                      tema_id:
-                                                                         cell.id,
-                                                                      coordonator_id:
-                                                                         cell.coordonator_id,
-                                                                   }
-                                                                );
-                                                                if (
+                                                    if (cell.is_taken === 0) {
+                                                       return (
+                                                          <tr
+                                                             key={i}
+                                                             className="row"
+                                                          >
+                                                             <td className="cell">
+                                                                {i + 1}.
+                                                             </td>
+                                                             <td className="cell">
+                                                                {cell.title}
+                                                             </td>
+                                                             <td className="cell">
+                                                                {cell.tema_type}
+                                                             </td>
+                                                             <td className="cell">
+                                                                {cell.detalii}
+                                                             </td>
+                                                             <td className="cell">
+                                                                {
+                                                                   cell.specializare
+                                                                }
+                                                             </td>
+                                                             <td
+                                                                className={`cell ${
                                                                    selectedTema &&
                                                                    workspaceInfo.tema_id ===
                                                                       cell.id
-                                                                ) {
-                                                                   setSelectedTema(
-                                                                      false
-                                                                   );
-                                                                } else {
-                                                                   setSelectedTema(
-                                                                      true
-                                                                   );
-                                                                }
-                                                                if (
+                                                                      ? "selected"
+                                                                      : ""
+                                                                } ${
                                                                    userStatus?.workspace_status ===
                                                                       1 ||
                                                                    userStatus?.workspace_status ===
                                                                       0
-                                                                ) {
-                                                                   setSelectedTema(
-                                                                      false
-                                                                   );
-                                                                }
-                                                             }}
-                                                          >
-                                                             <div className="wraper">
-                                                                <div className="select-box">
-                                                                   <img
-                                                                      src={
-                                                                         checkIcon
+                                                                      ? "disable"
+                                                                      : ""
+                                                                }`}
+                                                                onClick={() => {
+                                                                   setWorkspaceInfo(
+                                                                      {
+                                                                         tema_id:
+                                                                            cell.id,
+                                                                         coordonator_id:
+                                                                            cell.coordonator_id,
                                                                       }
-                                                                      alt="check-icon"
-                                                                      className="btn-icon"
-                                                                   />
+                                                                   );
+                                                                   if (
+                                                                      selectedTema &&
+                                                                      workspaceInfo.tema_id ===
+                                                                         cell.id
+                                                                   ) {
+                                                                      setSelectedTema(
+                                                                         false
+                                                                      );
+                                                                   } else {
+                                                                      setSelectedTema(
+                                                                         true
+                                                                      );
+                                                                   }
+                                                                   if (
+                                                                      userStatus?.workspace_status ===
+                                                                         1 ||
+                                                                      userStatus?.workspace_status ===
+                                                                         0
+                                                                   ) {
+                                                                      setSelectedTema(
+                                                                         false
+                                                                      );
+                                                                   }
+                                                                }}
+                                                             >
+                                                                <div className="wraper">
+                                                                   <div className="select-box">
+                                                                      <img
+                                                                         src={
+                                                                            checkIcon
+                                                                         }
+                                                                         alt="check-icon"
+                                                                         className="btn-icon"
+                                                                      />
+                                                                   </div>
                                                                 </div>
-                                                             </div>
-                                                          </td>
-                                                       </tr>
-                                                    );
+                                                             </td>
+                                                          </tr>
+                                                       );
+                                                    }
                                                  })
                                                  .slice(
                                                     paginationDefault.start,
@@ -279,89 +283,93 @@ const ListOfTopics = () => {
                                                  )
                                             : doctor.teme
                                                  .map((cell, i) => {
-                                                    return (
-                                                       <tr
-                                                          key={i}
-                                                          className="row"
-                                                       >
-                                                          <td className="cell">
-                                                             {i + 1}.
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.title}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.tema_type}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.detalii}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.specializare}
-                                                          </td>
-                                                          <td
-                                                             className={`cell ${
-                                                                selectedTema &&
-                                                                workspaceInfo.tema_id ===
-                                                                   cell.id
-                                                                   ? "selected"
-                                                                   : ""
-                                                             } ${
-                                                                userStatus?.workspace_status ===
-                                                                   1 ||
-                                                                userStatus?.workspace_status ===
-                                                                   0
-                                                                   ? "disable"
-                                                                   : ""
-                                                             }`}
-                                                             onClick={() => {
-                                                                setWorkspaceInfo(
-                                                                   {
-                                                                      tema_id:
-                                                                         cell.id,
-                                                                      coordonator_id:
-                                                                         cell.coordonator_id,
-                                                                   }
-                                                                );
-                                                                if (
+                                                    if (cell.is_taken === 0) {
+                                                       return (
+                                                          <tr
+                                                             key={i}
+                                                             className="row"
+                                                          >
+                                                             <td className="cell">
+                                                                {i + 1}.
+                                                             </td>
+                                                             <td className="cell">
+                                                                {cell.title}
+                                                             </td>
+                                                             <td className="cell">
+                                                                {cell.tema_type}
+                                                             </td>
+                                                             <td className="cell">
+                                                                {cell.detalii}
+                                                             </td>
+                                                             <td className="cell">
+                                                                {
+                                                                   cell.specializare
+                                                                }
+                                                             </td>
+                                                             <td
+                                                                className={`cell ${
                                                                    selectedTema &&
                                                                    workspaceInfo.tema_id ===
                                                                       cell.id
-                                                                ) {
-                                                                   setSelectedTema(
-                                                                      false
-                                                                   );
-                                                                } else {
-                                                                   setSelectedTema(
-                                                                      true
-                                                                   );
-                                                                }
-                                                                if (
+                                                                      ? "selected"
+                                                                      : ""
+                                                                } ${
                                                                    userStatus?.workspace_status ===
                                                                       1 ||
                                                                    userStatus?.workspace_status ===
                                                                       0
-                                                                ) {
-                                                                   setSelectedTema(
-                                                                      false
-                                                                   );
-                                                                }
-                                                             }}
-                                                          >
-                                                             <div className="wraper">
-                                                                <div className="select-box">
-                                                                   <img
-                                                                      src={
-                                                                         checkIcon
+                                                                      ? "disable"
+                                                                      : ""
+                                                                }`}
+                                                                onClick={() => {
+                                                                   setWorkspaceInfo(
+                                                                      {
+                                                                         tema_id:
+                                                                            cell.id,
+                                                                         coordonator_id:
+                                                                            cell.coordonator_id,
                                                                       }
-                                                                      alt="check-icon"
-                                                                      className="btn-icon"
-                                                                   />
+                                                                   );
+                                                                   if (
+                                                                      selectedTema &&
+                                                                      workspaceInfo.tema_id ===
+                                                                         cell.id
+                                                                   ) {
+                                                                      setSelectedTema(
+                                                                         false
+                                                                      );
+                                                                   } else {
+                                                                      setSelectedTema(
+                                                                         true
+                                                                      );
+                                                                   }
+                                                                   if (
+                                                                      userStatus?.workspace_status ===
+                                                                         1 ||
+                                                                      userStatus?.workspace_status ===
+                                                                         0
+                                                                   ) {
+                                                                      setSelectedTema(
+                                                                         false
+                                                                      );
+                                                                   }
+                                                                }}
+                                                             >
+                                                                <div className="wraper">
+                                                                   <div className="select-box">
+                                                                      <img
+                                                                         src={
+                                                                            checkIcon
+                                                                         }
+                                                                         alt="check-icon"
+                                                                         className="btn-icon"
+                                                                      />
+                                                                   </div>
                                                                 </div>
-                                                             </div>
-                                                          </td>
-                                                       </tr>
-                                                    );
+                                                             </td>
+                                                          </tr>
+                                                       );
+                                                    }
                                                  })
                                                  .slice(
                                                     paginationNewValue.start,
@@ -459,28 +467,32 @@ const ListOfTopics = () => {
                                          doctor.id !== tableId
                                             ? doctor.teme
                                                  .map((cell, i) => {
-                                                    return (
-                                                       <tr
-                                                          key={i}
-                                                          className="row"
-                                                       >
-                                                          <td className="cell">
-                                                             {i + 1}.
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.title}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.tema_type}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.detalii}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.specializare}
-                                                          </td>
-                                                       </tr>
-                                                    );
+                                                    if (cell.is_taken === 0) {
+                                                       return (
+                                                          <tr
+                                                             key={i}
+                                                             className="row"
+                                                          >
+                                                             <td className="cell">
+                                                                {i + 1}.
+                                                             </td>
+                                                             <td className="cell">
+                                                                {cell.title}
+                                                             </td>
+                                                             <td className="cell">
+                                                                {cell.tema_type}
+                                                             </td>
+                                                             <td className="cell">
+                                                                {cell.detalii}
+                                                             </td>
+                                                             <td className="cell">
+                                                                {
+                                                                   cell.specializare
+                                                                }
+                                                             </td>
+                                                          </tr>
+                                                       );
+                                                    }
                                                  })
                                                  .slice(
                                                     paginationDefault.start,
@@ -488,28 +500,32 @@ const ListOfTopics = () => {
                                                  )
                                             : doctor.teme
                                                  .map((cell, i) => {
-                                                    return (
-                                                       <tr
-                                                          key={i}
-                                                          className="row"
-                                                       >
-                                                          <td className="cell">
-                                                             {i + 1}.
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.title}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.tema_type}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.detalii}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.specializare}
-                                                          </td>
-                                                       </tr>
-                                                    );
+                                                    if (cell.is_taken === 0) {
+                                                       return (
+                                                          <tr
+                                                             key={i}
+                                                             className="row"
+                                                          >
+                                                             <td className="cell">
+                                                                {i + 1}.
+                                                             </td>
+                                                             <td className="cell">
+                                                                {cell.title}
+                                                             </td>
+                                                             <td className="cell">
+                                                                {cell.tema_type}
+                                                             </td>
+                                                             <td className="cell">
+                                                                {cell.detalii}
+                                                             </td>
+                                                             <td className="cell">
+                                                                {
+                                                                   cell.specializare
+                                                                }
+                                                             </td>
+                                                          </tr>
+                                                       );
+                                                    }
                                                  })
                                                  .slice(
                                                     paginationNewValue.start,

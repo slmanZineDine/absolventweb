@@ -345,49 +345,7 @@ const HomePage = () => {
                                              <td className="cell">
                                                 {cell.tema.specializare}
                                              </td>
-                                             <td className="cell">
-                                                <div className="status">
-                                                   <div className="topic-btns ">
-                                                      <button
-                                                         className="btn edite-btn"
-                                                         onClick={() =>
-                                                            confirmAccept([
-                                                               {
-                                                                  status: 1,
-                                                               },
-                                                               cell.worspace_id,
-                                                            ])
-                                                         }
-                                                      >
-                                                         Accept
-                                                         <img
-                                                            src={checkIcon}
-                                                            alt="check-icon"
-                                                            className="btn-icon"
-                                                         />
-                                                      </button>
-                                                      <button
-                                                         className="btn delete-btn"
-                                                         onClick={() =>
-                                                            confirmReject([
-                                                               {
-                                                                  status: 3,
-                                                               },
-                                                               cell.worspace_id,
-                                                            ])
-                                                         }
-                                                      >
-                                                         Reject
-                                                         <img
-                                                            src={deleteIcon}
-                                                            alt="delete-icon"
-                                                            className="btn-icon"
-                                                         />
-                                                      </button>
-                                                   </div>
-                                                </div>
-                                             </td>
-                                          </tr>
+                                             </tr>
                                        );
                                     })
                                  ) : (
@@ -494,7 +452,7 @@ const HomePage = () => {
             </>
          );
       } else {
-         return <h1>Please Login or register </h1>;
+         return <Navigate to="/" />;
       }
    } else {
       return <Navigate to="/" />;
