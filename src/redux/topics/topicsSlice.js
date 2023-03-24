@@ -86,6 +86,10 @@ const topicsSlice = createSlice({
                return +secEleDate - +firEleDate;
             });
          });
+         // Remove Taken Tema Form List Of Topic
+         state.topicsByDoctor.forEach((doctor) => {
+            doctor.teme = doctor.teme.filter((tema) => tema.is_taken === 0);
+         });
          // Save Data In Temporary Variable To  Get It After Any Search
          state.tempData = JSON.stringify(state.topicsByDoctor);
       },
