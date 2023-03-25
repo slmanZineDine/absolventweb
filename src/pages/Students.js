@@ -1,14 +1,17 @@
-import { useEffect, useState } from "react";
+// External
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+// Internal
 import studentsIcon from "../assets/imgs/icons/studentsIcon.png";
 import userOutIcon from "../assets/imgs/icons/userOutIcon.png";
 import userRejectedIcon from "../assets/imgs/icons/userRejectedIcon.png";
 import Header from "../components/Header";
-import Pagination from "../components/Pagination";
 import Search from "../components/Search";
+import Table from "../components/Table";
 import UniversityLogo from "../components/UniversityLogo";
 import { getStudents } from "../redux/users/uersAction";
+import { searchByName } from "../redux/users/usersSlice";
 import { getAcceptedWorkspace } from "../redux/workspaces/workspacesActions";
 
 const Students = () => {
@@ -29,24 +32,7 @@ const Students = () => {
    );
    const haveNotSelectedTema = students.filter((student) => !student.workspace);
 
-   // ======================= Router Hook =======================
-   const navigate = useNavigate();
-
    // ======================= React Hook =======================
-   // [Students-Page Coordinator] Store Pagination Values
-   const [paginationValue, setPaginationValue] = useState({
-      start: 0,
-      end: 3,
-   });
-   // [Students-Page Admin] Pagination Values For Each Table
-   const [paginationValueTable1, setPaginationValueTable1] = useState({
-      start: 0,
-      end: 3,
-   });
-   const [paginationValueTable2, setPaginationValueTable2] = useState({
-      start: 0,
-      end: 3,
-   });
    useEffect(() => {
       if (userType === "coordonator") {
          dispatch(getAcceptedWorkspace({}));
@@ -55,16 +41,33 @@ const Students = () => {
       }
    }, []);
 
+   // ======================= Own Function =======================
+   /**
+    * Use This Function To Get Pagination Value From Each Table And Reset It Based On Search Mode
+    * @param Function UseState Fuction That Contain Pagination Values
+    * @returns Undefined
+    */
+   const resetPagination = (resetFuc) => {
+      resetFuc({
+         start: 0,
+         end: 3,
+      });
+   };
+
    if (user) {
       if (userType === "coordonator") {
          // Names Of Table Columns
-         const tableCol = [
-            "Nr",
-            "Student",
-            "Titlul Lucrării",
-            "Specializare",
-            "Workspace",
+         const tableCols = [
+            { heading: "Nr", val: "" },
+            { heading: "Student", val: "student.email" },
+            { heading: "Titlul Lucrării", val: "tema.title" },
+            { heading: "Specializare", val: "student.specializare" },
+            {
+               heading: "Process",
+               val: { show: true },
+            },
          ];
+
          return (
             <>
                <Header userType={userType} />
@@ -79,82 +82,14 @@ const Students = () => {
                            />
                            <p className="text">Studenți</p>
                         </div>
-                        <div className="cover">
-                           <table className="table">
-                              <thead className="thead">
-                                 <tr className="main-row">
-                                    {tableCol.map((colName, i) => (
-                                       <th key={i} className="main-cell">
-                                          {colName}
-                                       </th>
-                                    ))}
-                                 </tr>
-                              </thead>
-                              <tbody className="tbody">
-                                 {acceptedWorkspaces.length > 0 ? (
-                                    acceptedWorkspaces.map((workspace, i) => {
-                                       return (
-                                          <tr key={i} className="row">
-                                             <td className="cell">{i + 1}.</td>
-                                             <td className="cell">
-                                                {workspace.student.email}
-                                             </td>
-                                             <td className="cell">
-                                                {workspace.tema.title}
-                                             </td>
-                                             <td className="cell">
-                                                {workspace.student.specializare}
-                                             </td>
-                                             <td className="cell">
-                                                <div className="wraper">
-                                                   <button
-                                                      className="btn show-btn"
-                                                      onClick={() => {
-                                                         localStorage.setItem(
-                                                            "workspaceInfo",
-                                                            JSON.stringify({
-                                                               student_id:
-                                                                  workspace
-                                                                     .student
-                                                                     .id,
-                                                               student_email:
-                                                                  workspace
-                                                                     .student
-                                                                     .email,
-                                                               workspace_id:
-                                                                  workspace.worspace_id,
-                                                               tema_name:
-                                                                  workspace.tema
-                                                                     .title,
-                                                            })
-                                                         );
-                                                         navigate("/workspace");
-                                                      }}
-                                                   >
-                                                      Show
-                                                   </button>
-                                                </div>
-                                             </td>
-                                          </tr>
-                                       );
-                                    })
-                                 ) : (
-                                    <tr className="row">
-                                       <td
-                                          className="cell empty-table"
-                                          colSpan={tableCol.length}
-                                       >
-                                          There Are No Students To Show.
-                                       </td>
-                                    </tr>
-                                 )}
-                              </tbody>
-                           </table>
-                        </div>
-                        <Pagination
-                           paginationCount={acceptedWorkspaces.length}
-                           setPaginationValue={setPaginationValue}
-                        />
+                        {acceptedWorkspaces ? (
+                           <Table
+                              tableCols={tableCols}
+                              tableData={acceptedWorkspaces}
+                              resetPagination={resetPagination}
+                              msg="There Are No Students To Show."
+                           />
+                        ) : null}
                      </div>
                      <UniversityLogo />
                   </div>
@@ -162,13 +97,17 @@ const Students = () => {
             </>
          );
       } else if (userType === "admin") {
-         const tableCol = ["Studenți", "Specializare"];
+         // Names Of Table Columns
+         const tableCols = [
+            { heading: "Studenți", val: "email" },
+            { heading: "Specializare", val: "specializare" },
+         ];
          return (
             <>
                <Header userType={userType} />
                <main className="main students-page-admin">
                   <div className="container">
-                     <Search />
+                     <Search searchMethod={searchByName} />
                      <div className="content">
                         <div className="box">
                            <div className="title">
@@ -179,54 +118,14 @@ const Students = () => {
                               />
                               <p className="text">Studenților Respinși</p>
                            </div>
-                           <div className="cover">
-                              <table className="table">
-                                 <thead className="thead">
-                                    <tr className="main-row">
-                                       {tableCol.map((colName, i) => (
-                                          <th key={i} className="main-cell">
-                                             {colName}
-                                          </th>
-                                       ))}
-                                    </tr>
-                                 </thead>
-                                 <tbody className="tbody">
-                                    {rejectedStudent.length > 0 ? (
-                                       rejectedStudent
-                                          .map((cell, i) => {
-                                             return (
-                                                <tr key={i} className="row">
-                                                   <td className="cell">
-                                                      {cell.email}
-                                                   </td>
-
-                                                   <td className="cell">
-                                                      {cell.specializare}
-                                                   </td>
-                                                </tr>
-                                             );
-                                          })
-                                          .slice(
-                                             paginationValueTable1.start,
-                                             paginationValueTable1.end
-                                          )
-                                    ) : (
-                                       <tr className="row">
-                                          <td
-                                             className="cell empty-table"
-                                             colSpan={tableCol.length}
-                                          >
-                                             There Are No Data To Shows
-                                          </td>
-                                       </tr>
-                                    )}
-                                 </tbody>
-                              </table>
-                           </div>
-                           <Pagination
-                              paginationCount={rejectedStudent.length}
-                              setPaginationValue={setPaginationValueTable1}
-                           />
+                           {rejectedStudent ? (
+                              <Table
+                                 tableCols={tableCols}
+                                 tableData={rejectedStudent}
+                                 resetPagination={resetPagination}
+                                 msg="There Are No Data To Show."
+                              />
+                           ) : null}
                         </div>
                         <div className="box">
                            <div className="title">
@@ -239,54 +138,14 @@ const Students = () => {
                                  Studenți Care Nu Au Selectat Teme
                               </p>
                            </div>
-                           <div className="cover">
-                              <table className="table">
-                                 <thead className="thead">
-                                    <tr className="main-row">
-                                       {tableCol.map((colName, i) => (
-                                          <th key={i} className="main-cell">
-                                             {colName}
-                                          </th>
-                                       ))}
-                                    </tr>
-                                 </thead>
-                                 <tbody className="tbody">
-                                    {haveNotSelectedTema.length > 0 ? (
-                                       haveNotSelectedTema
-                                          .map((cell, i) => {
-                                             return (
-                                                <tr key={i} className="row">
-                                                   <td className="cell">
-                                                      {cell.email}
-                                                   </td>
-
-                                                   <td className="cell">
-                                                      {cell.specializare}
-                                                   </td>
-                                                </tr>
-                                             );
-                                          })
-                                          .slice(
-                                             paginationValueTable2.start,
-                                             paginationValueTable2.end
-                                          )
-                                    ) : (
-                                       <tr className="row">
-                                          <td
-                                             className="cell empty-table"
-                                             colSpan={tableCol.length}
-                                          >
-                                             There Are No Data To Show.
-                                          </td>
-                                       </tr>
-                                    )}
-                                 </tbody>
-                              </table>
-                           </div>
-                           <Pagination
-                              paginationCount={haveNotSelectedTema.length}
-                              setPaginationValue={setPaginationValueTable2}
-                           />
+                           {haveNotSelectedTema ? (
+                              <Table
+                                 tableCols={tableCols}
+                                 tableData={haveNotSelectedTema}
+                                 resetPagination={resetPagination}
+                                 msg="There Are No Data To Show."
+                              />
+                           ) : null}
                         </div>
                      </div>
                   </div>

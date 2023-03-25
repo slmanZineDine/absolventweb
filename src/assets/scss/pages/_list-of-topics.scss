@@ -8,19 +8,33 @@
    background-color: $body-color;
    .container {
       .filter {
-         @include flex(center, flex-start, 1.5rem);
+         @include flex(center, flex-start, 1rem);
          margin-bottom: 2rem;
          &_title {
             font-weight: normal;
-            font-size: 1.2rem;
+            font-size: 1.25rem;
          }
          &_options {
-            @include flex(center, flex-start, 1rem);
+            @include flex(center, flex-start, 0.7rem);
+            .filter_option {
+               padding-inline: 0.8rem;
+               padding-block: 0.6rem;
+               border: 1px solid #000;
+               border-radius: 2rem;
+               background-color: #fff;
+               font-size: 1rem;
+               cursor: pointer;
+               &:hover,
+               &.selected {
+                  background-color: #0081aa;
+                  color: #fff;
+               }
+            }
             .custom-select {
                @include flex(center, space-between, 1rem);
                position: relative;
-               padding-inline: 1rem 3rem;
-               padding-block: 0.7rem;
+               padding-inline: 0.8rem 3rem;
+               padding-block: 0.6rem;
                border: 1px solid #000;
                border-radius: 2rem;
                width: fit-content;
@@ -97,7 +111,7 @@
 
 /*=============== BREAKPOINTS ===============*/
 /* CUSTOM */
-@media (max-width: 600px) {
+@media (max-width: 615px) {
    .list-of-topics-page .container .filter {
       flex-direction: column;
       align-items: flex-start;
@@ -105,7 +119,7 @@
    }
 }
 /* EXTRA SMALL */
-@media (max-width: 510px) {
+@media (max-width: 560px) {
    .list-of-topics-page .container .filter .filter_options {
       flex-direction: column;
       align-items: flex-start;

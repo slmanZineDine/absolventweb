@@ -1,13 +1,10 @@
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { ProgrammingLangList, TipTemaList } from "../data/globalDate";
-import { searchTitle } from "../redux/topics/topicsSlice";
+import { setSearchMethod, setSearchMode } from "../redux/global/globalSlice";
+import { searchGlobaly } from "../redux/topics/topicsSlice";
 
-const Filter = ({ resetPagination, programmingLang, topicType }) => {
-   // ======================= Select Elements =======================
-   const programmingLangFilter = useRef(null);
-   const TipTema = useRef(null);
-
+const Filter = ({ coordinator, programmingLang, topicType, searchMethod }) => {
    // ======================= Redux Hook =======================
    const dispatch = useDispatch();
 
@@ -16,11 +13,33 @@ const Filter = ({ resetPagination, programmingLang, topicType }) => {
    const [selectedLang, setSelectedLang] = useState(null);
    // Store Selected Option Index
    const [selectedTip, setSelectedTip] = useState(null);
+   // Checking If Coordinator Filter Is Selected;
+   const [selected, setSelected] = useState(false);
+
+   // ======================= Select Elements =======================
+   const programmingLangFilter = useRef(null);
+   const TipTema = useRef(null);
 
    return (
       <div className="filter">
          <h3 className="filter_title">Filtru</h3>
          <div className="filter_options">
+            {coordinator ? (
+               <p
+                  className={`filter_option ${selected ? "selected" : ""}`}
+                  onClick={(_) => {
+                     if (selected) {
+                        setSelected(false);
+                        dispatch(setSearchMethod("searchGlobaly"));
+                     } else {
+                        setSelected(true);
+                        dispatch(setSearchMethod("serachByCoordinator"));
+                     }
+                  }}
+               >
+                  Coordinator
+               </p>
+            ) : null}
             {programmingLang ? (
                <div
                   className="custom-select"
@@ -45,12 +64,9 @@ const Filter = ({ resetPagination, programmingLang, topicType }) => {
                               className="option"
                               onClick={(_) => {
                                  setSelectedLang(i);
-                                 dispatch(searchTitle(lang));
-                                 // Reset Pagination On Serach Opreation
-                                 resetPagination({
-                                    start: 0,
-                                    end: 3,
-                                 });
+                                 dispatch(searchMethod(lang));
+                                 // Making Search Mode Ture To Reset All Pagination To Start Point
+                                 dispatch(setSearchMode(true));
                               }}
                            >
                               {lang}
@@ -82,12 +98,10 @@ const Filter = ({ resetPagination, programmingLang, topicType }) => {
                               className="option"
                               onClick={(_) => {
                                  setSelectedTip(i);
-                                 dispatch(searchTitle(tip));
+                                 dispatch(searchMethod(tip));
                                  // Reset Pagination On Serach Opreation
-                                 resetPagination({
-                                    start: 0,
-                                    end: 3,
-                                 });
+                                 // Making Search Mode Ture To Reset All Pagination To Start Point
+                                 dispatch(setSearchMode(true));
                               }}
                            >
                               {tip}

@@ -3,14 +3,15 @@ import { useRef } from "react";
 import { useDispatch } from "react-redux";
 // Internal
 import searchIcon from "../assets/imgs/icons/searchIcon.png";
-import { searchTitle } from "../redux/topics/topicsSlice";
+import { setSearchMode } from "../redux/global/globalSlice";
 
-const Search = ({ resetPagination, searchMethod }) => {
+const Search = ({ searchMethod }) => {
    // ======================= Select Input Elements =======================
    const serachInput = useRef(null);
 
    // ======================= Redux Hook =======================
    const dispatch = useDispatch();
+
    return (
       <div className="search">
          <h3 className="search_title">Cautare</h3>
@@ -21,14 +22,13 @@ const Search = ({ resetPagination, searchMethod }) => {
                className="search_field_input"
                ref={serachInput}
                onInput={(e) => {
+                  // Making Search Mode Ture To Reset All Pagination To Start Point
+                  dispatch(setSearchMode(true));
                   if (e.target.value === "") {
+                     // Making Search Mode False To Reset All Pagination To Start Point
+                     dispatch(setSearchMode(false));
                      // When Input Is Empty Reset Data In Table
                      dispatch(searchMethod(e.target.value));
-                     // Reset Pagination After Serach Opreation Ending
-                     resetPagination({
-                        start: 0,
-                        end: 3,
-                     });
                   }
                }}
             />
@@ -36,11 +36,6 @@ const Search = ({ resetPagination, searchMethod }) => {
                className="icon"
                onClick={() => {
                   dispatch(searchMethod(serachInput.current.value));
-                  // Reset Pagination On Serach Opreation
-                  resetPagination({
-                     start: 0,
-                     end: 3,
-                  });
                }}
             >
                <img src={searchIcon} alt="search-icon" className="btn-icon" />

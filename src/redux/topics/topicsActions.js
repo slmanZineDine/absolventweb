@@ -57,7 +57,7 @@ export const getTopicById = createAsyncThunk(
 // Getting All Teme By Doctor
 export const getAllTopicsByDoctor = createAsyncThunk(
    "topics/getAllTopicsByDoctor",
-   async ({}, { rejectWithValue }) => {
+   async (_, { rejectWithValue }) => {
       try {
          const config = {
             headers: {

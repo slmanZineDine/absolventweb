@@ -14,7 +14,7 @@ const initialState = {
    error: null, // Store Error msg get it from backend
    success: false, // Checking if auth is done
    topicsList: [], // Store response
-   doctorTopics: [], // Contain only  Doctor's topics
+   doctorTopics: {}, // Contain only  Doctor's topics
    topicsByDoctor: [], // All tema sort by Doctor
    topic: {}, // Topic by Id
    tempData: [], // Temporary To Save Data And Get It After Any Search
@@ -24,7 +24,7 @@ const topicsSlice = createSlice({
    name: "topics",
    initialState,
    reducers: {
-      searchTitle(state, { payload }) {
+      searchGlobaly(state, { payload }) {
          // When Input Is Empty Reset Data
          if (!payload || payload === "All") {
             state.topicsByDoctor = JSON.parse(state.tempData);
@@ -43,6 +43,43 @@ const topicsSlice = createSlice({
             );
             return doctor.teme.length > 0;
          });
+      },
+      searchByCoordinator(state, { payload }) {
+         // When Input Is Empty Reset Data
+         if (!payload) {
+            state.topicsByDoctor = JSON.parse(state.tempData);
+            return;
+         }
+         // When User Enter Any Thing Reset Data To Re-search
+         state.topicsByDoctor = JSON.parse(state.tempData);
+         const regexp = new RegExp(`${payload}`, "i");
+
+         state.topicsByDoctor = state.topicsByDoctor.filter((doctor) =>
+            regexp.test(doctor?.email)
+         );
+      },
+      searchTeme(state, { payload }) {
+         // When Input Is Empty Reset Data
+         if (!payload) {
+            state.doctorTopics = JSON.parse(state.tempData);
+            return;
+         }
+         // When User Enter Any Thing Reset Data To Re-search
+         state.doctorTopics = JSON.parse(state.tempData);
+         const regexp = new RegExp(`${payload}`, "i");
+         state.doctorTopics = {
+            coordonator: {
+               ...state.doctorTopics.coordonator,
+            },
+            teme: state.doctorTopics.teme.filter(
+               (tema) =>
+                  regexp.test(tema?.title) ||
+                  regexp.test(tema?.detalii) ||
+                  regexp.test(tema?.tema_type)
+            ),
+         };
+
+         console.log(state.doctorTopics);
       },
    },
    extraReducers: {
@@ -130,6 +167,8 @@ const topicsSlice = createSlice({
             const secEleDate = new Date(b["updated_at"]);
             return +secEleDate - +firEleDate;
          });
+         // Save Data In Temporary Variable To  Get It After Any Search
+         state.tempData = JSON.stringify(state.doctorTopics);
       },
       [getTopicsByDoctorId.rejected]: (state, { payload }) => {
          state.loading = false;
@@ -187,6 +226,7 @@ const topicsSlice = createSlice({
    },
 });
 
-export const { searchTitle } = topicsSlice.actions;
+export const { searchGlobaly, searchByCoordinator, searchTeme } =
+   topicsSlice.actions;
 
 export default topicsSlice.reducer;

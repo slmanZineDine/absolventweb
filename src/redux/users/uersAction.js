@@ -6,7 +6,7 @@ const baseURL = "http://127.0.0.1:8000";
 // Get Student Status
 export const getStudentStatus = createAsyncThunk(
    "users/getStudentStatus",
-   async ({}, { rejectWithValue }) => {
+   async (_, { rejectWithValue }) => {
       try {
          const config = {
             headers: {

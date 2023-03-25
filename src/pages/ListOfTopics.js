@@ -7,12 +7,19 @@ import swal from "sweetalert";
 import Header from "../components/Header";
 import Search from "../components/Search";
 import Filter from "../components/Filter";
-import checkIcon from "../assets/imgs/icons/checkIcon.png";
-import { getAllTopicsByDoctor } from "../redux/topics/topicsActions";
+import {
+   getAllTopicsByDoctor,
+   getTopicsByDoctorId,
+} from "../redux/topics/topicsActions";
 import { createWorkspace } from "../redux/workspaces/workspacesActions";
 import { getStudentStatus } from "../redux/users/uersAction";
 import Spinning from "../components/Spinning";
-import { searchTitle } from "../redux/topics/topicsSlice";
+import {
+   searchByCoordinator,
+   searchGlobaly,
+   searchTeme,
+} from "../redux/topics/topicsSlice";
+import Table from "../components/Table";
 
 const ListOfTopics = () => {
    // ======================= Global Data =======================
@@ -23,48 +30,33 @@ const ListOfTopics = () => {
 
    // ======================= Redux Hook =======================
    const dispatch = useDispatch();
+   // For Student Or Admin
    const topicsByDoctor = useSelector((state) => state.topics.topicsByDoctor);
+   // For Coordinator Only
+   const topics = useSelector((state) => state.topics.doctorTopics);
    const workspace = useSelector((state) => state.workspaces);
+   // Use This To Get Selected Tema Information To Send It To Create Workspace With 0 Status
+   const workspaceInfo = useSelector((state) => state.global.workspaceInfo);
+   // Use This To Get Student Status
    const userStatus = useSelector((state) => state.users.studentStatus);
+   // Use This To Get Selected Search Method
+   const searchMethod = useSelector((state) => state.global.searchMethod);
 
    // ======================= Router Hook =======================
    const navigate = useNavigate();
 
    // ======================= Own Function =======================
    /**
-    * Use This Function To Create Paination Beasd in Tema Count (3 Tema in 1 Pagination)
-    * @param Number Count of Teme
-    * @returns Array Of Count Pagination
+    * Use This Function To Get Pagination Value From Each Table And Reset It Based On Search Mode
+    * @param Function UseState Fuction That Contain Pagination Values
+    * @returns Undefined
     */
-   const getPagination = (temeCount) => {
-      const pagination = [];
-      for (let i = 0; i < Math.ceil(temeCount / 3); i++) pagination.push(i);
-      return pagination;
+   const resetPagination = (resetFuc) => {
+      resetFuc({
+         start: 0,
+         end: 3,
+      });
    };
-
-   // ======================= React Hook =======================
-   // Use this to remove selected tema after save your request
-   const [selectedTema, setSelectedTema] = useState(false);
-   // Use this to save selected tema information
-   const [workspaceInfo, setWorkspaceInfo] = useState({
-      tema_id: null,
-      coordonator_id: null,
-   });
-   // Pagination
-   // Store Pagination Defaul Values
-   const [paginationDefault, setPaginationDefault] = useState({
-      start: 0,
-      end: 3,
-   });
-   // Store Pagination New Values
-   const [paginationNewValue, setPaginationNewValue] = useState({
-      start: 0,
-      end: 3,
-   });
-   // Store Doctor's Table Id
-   const [tableId, setTableId] = useState(null);
-   // Use This To Specify Selected Pagin
-   const [selectedPagin, setSelectedPagin] = useState(0);
 
    // ======================= Sweet Alert Labrary =======================
    const processChecking = async (msg, icon, theClassName) => {
@@ -100,16 +92,30 @@ const ListOfTopics = () => {
    };
 
    // ======================= React Hook =======================
+   // Specify Search Method To Send It To Search Compnent
+   const [theSearchMethod, setTheSearchMethod] = useState({
+      searchGlobaly: searchGlobaly,
+      serachByCoordinator: searchByCoordinator,
+   });
+   // To Prevent Show Alert Unless Process Is Success Or Rejected
    const [processDone, setProcessDone] = useState(false);
    useEffect(() => {
-      if (user) {
-         dispatch(getAllTopicsByDoctor({}));
+      // If Student Or Admin => Getting All Doctors teme
+      if (user && (userType === "student" || userType === "admin")) {
+         dispatch(getAllTopicsByDoctor());
+      }
+      // If Coordinator => Getting Only Doctor's teme
+      else if (user && userType === "coordonator") {
+         const doctorId = JSON.parse(user)?.coordonator?.id;
+         if (doctorId) {
+            dispatch(getTopicsByDoctorId(doctorId));
+         }
       }
       if (userType === "student") {
-         dispatch(getStudentStatus({}));
+         dispatch(getStudentStatus());
       }
    }, []);
-   // Variable below to manipulate useEffect and prevente run initial-render
+   // Variable below to manipulate useEffect and prevent run initial-render
    const firstUpdate = useRef(true);
    useEffect(() => {
       if (firstUpdate.current) {
@@ -121,7 +127,6 @@ const ListOfTopics = () => {
             if (!workspace.loading && workspace.error) {
                processChecking(workspace.error, "error", "red-bg");
                setProcessDone(false); // Reset
-               setSelectedTema(false);
             } else if (!workspace.loading && workspace.success) {
                processChecking("Process Successfully", "success", "done");
                setProcessDone(false); // Reset
@@ -129,25 +134,32 @@ const ListOfTopics = () => {
          }
       }
    }, [workspace.error, workspace.success]);
-
    if (user) {
       if (userType === "student") {
          // Names Of Table Columns
-         const tableCol = ["Nr", "Tema", "Type", "Detalii", "Specializare", ""];
+         const tableCols = [
+            { heading: "Nr", val: "" },
+            { heading: "Tema", val: "title" },
+            { heading: "Type", val: "tema_type" },
+            { heading: "Detalii", val: "detalii" },
+            { heading: "Specializare", val: "specializare" },
+            {
+               heading: "Process",
+               val: { select: true },
+            },
+         ];
 
          return (
             <>
                <Header userType={userType} />
                <main className="main list-of-topics-page">
                   <div className="container">
-                     <Search
-                        resetPagination={setPaginationNewValue}
-                        searchMethod={searchTitle}
-                     />
+                     <Search searchMethod={theSearchMethod[searchMethod]} />
                      <Filter
-                        resetPagination={setPaginationNewValue}
+                        coordinator={true}
                         programmingLang={true}
                         topicType={true}
+                        searchMethod={searchGlobaly}
                      />
                      {userStatus?.workspace_status === 1 ||
                      userStatus?.workspace_status === 0 ? null : (
@@ -170,231 +182,12 @@ const ListOfTopics = () => {
                                 <h2 className="title">
                                    {i + 1}. ({doctor.email})
                                 </h2>
-                                <div className="cover">
-                                   <table className="table">
-                                      <thead className="thead">
-                                         <tr className="main-row">
-                                            {tableCol.map((colName, i) => (
-                                               <th
-                                                  key={i}
-                                                  className="main-cell"
-                                               >
-                                                  {colName}
-                                               </th>
-                                            ))}
-                                         </tr>
-                                      </thead>
-                                      <tbody className="tbody">
-                                         {doctor?.teme?.length > 0 &&
-                                         doctor.id !== tableId
-                                            ? doctor.teme
-                                                 .map((cell, i) => {
-                                                    return (
-                                                       <tr
-                                                          key={i}
-                                                          className="row"
-                                                       >
-                                                          <td className="cell">
-                                                             {i + 1}.
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.title}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.tema_type}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.detalii}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.specializare}
-                                                          </td>
-                                                          <td
-                                                             className={`cell ${
-                                                                selectedTema &&
-                                                                workspaceInfo.tema_id ===
-                                                                   cell.id
-                                                                   ? "selected"
-                                                                   : ""
-                                                             } ${
-                                                                userStatus?.workspace_status ===
-                                                                   1 ||
-                                                                userStatus?.workspace_status ===
-                                                                   0
-                                                                   ? "disable"
-                                                                   : ""
-                                                             }`}
-                                                             onClick={() => {
-                                                                setWorkspaceInfo(
-                                                                   {
-                                                                      tema_id:
-                                                                         cell.id,
-                                                                      coordonator_id:
-                                                                         cell.coordonator_id,
-                                                                   }
-                                                                );
-                                                                if (
-                                                                   selectedTema &&
-                                                                   workspaceInfo.tema_id ===
-                                                                      cell.id
-                                                                ) {
-                                                                   setSelectedTema(
-                                                                      false
-                                                                   );
-                                                                } else {
-                                                                   setSelectedTema(
-                                                                      true
-                                                                   );
-                                                                }
-                                                                if (
-                                                                   userStatus?.workspace_status ===
-                                                                      1 ||
-                                                                   userStatus?.workspace_status ===
-                                                                      0
-                                                                ) {
-                                                                   setSelectedTema(
-                                                                      false
-                                                                   );
-                                                                }
-                                                             }}
-                                                          >
-                                                             <div className="wraper">
-                                                                <div className="select-box">
-                                                                   <img
-                                                                      src={
-                                                                         checkIcon
-                                                                      }
-                                                                      alt="check-icon"
-                                                                      className="btn-icon"
-                                                                   />
-                                                                </div>
-                                                             </div>
-                                                          </td>
-                                                       </tr>
-                                                    );
-                                                 })
-                                                 .slice(
-                                                    paginationDefault.start,
-                                                    paginationDefault.end
-                                                 )
-                                            : doctor.teme
-                                                 .map((cell, i) => {
-                                                    return (
-                                                       <tr
-                                                          key={i}
-                                                          className="row"
-                                                       >
-                                                          <td className="cell">
-                                                             {i + 1}.
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.title}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.tema_type}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.detalii}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.specializare}
-                                                          </td>
-                                                          <td
-                                                             className={`cell ${
-                                                                selectedTema &&
-                                                                workspaceInfo.tema_id ===
-                                                                   cell.id
-                                                                   ? "selected"
-                                                                   : ""
-                                                             } ${
-                                                                userStatus?.workspace_status ===
-                                                                   1 ||
-                                                                userStatus?.workspace_status ===
-                                                                   0
-                                                                   ? "disable"
-                                                                   : ""
-                                                             }`}
-                                                             onClick={() => {
-                                                                setWorkspaceInfo(
-                                                                   {
-                                                                      tema_id:
-                                                                         cell.id,
-                                                                      coordonator_id:
-                                                                         cell.coordonator_id,
-                                                                   }
-                                                                );
-                                                                if (
-                                                                   selectedTema &&
-                                                                   workspaceInfo.tema_id ===
-                                                                      cell.id
-                                                                ) {
-                                                                   setSelectedTema(
-                                                                      false
-                                                                   );
-                                                                } else {
-                                                                   setSelectedTema(
-                                                                      true
-                                                                   );
-                                                                }
-                                                                if (
-                                                                   userStatus?.workspace_status ===
-                                                                      1 ||
-                                                                   userStatus?.workspace_status ===
-                                                                      0
-                                                                ) {
-                                                                   setSelectedTema(
-                                                                      false
-                                                                   );
-                                                                }
-                                                             }}
-                                                          >
-                                                             <div className="wraper">
-                                                                <div className="select-box">
-                                                                   <img
-                                                                      src={
-                                                                         checkIcon
-                                                                      }
-                                                                      alt="check-icon"
-                                                                      className="btn-icon"
-                                                                   />
-                                                                </div>
-                                                             </div>
-                                                          </td>
-                                                       </tr>
-                                                    );
-                                                 })
-                                                 .slice(
-                                                    paginationNewValue.start,
-                                                    paginationNewValue.end
-                                                 )}
-                                      </tbody>
-                                   </table>
-                                </div>
-                                <div className="pagination">
-                                   {getPagination(doctor.teme.length).map(
-                                      (pagin, i) => (
-                                         <span
-                                            key={pagin}
-                                            className={`pagin ${
-                                               selectedPagin === pagin &&
-                                               doctor.id === tableId
-                                                  ? "selected-pagin"
-                                                  : ""
-                                            }`}
-                                            onClick={() => {
-                                               setTableId(doctor?.id);
-                                               setPaginationNewValue({
-                                                  start: i * 3,
-                                                  end: (i + 1) * 3,
-                                               });
-                                               setSelectedPagin(pagin);
-                                            }}
-                                         >
-                                            {i + 1}
-                                         </span>
-                                      )
-                                   )}
-                                </div>
+                                <Table
+                                   tableCols={tableCols}
+                                   tableData={doctor.teme}
+                                   resetPagination={resetPagination}
+                                   msg="There Are No Teme To Show"
+                                />
                              </div>
                           ))
                         : null}
@@ -402,21 +195,63 @@ const ListOfTopics = () => {
                </main>
             </>
          );
-      } else if (userType === "coordonator" || userType === "admin") {
+      } else if (userType === "coordonator") {
          // Names Of Table Columns
-         const tableCol = ["Nr", "Tema", "Type", "Detalii", "Specializare"];
+         const tableCols = [
+            { heading: "Nr", val: "" },
+            { heading: "Tema", val: "title" },
+            { heading: "Type", val: "tema_type" },
+            { heading: "Detalii", val: "detalii" },
+            { heading: "Specializare", val: "specializare" },
+         ];
 
          return (
             <>
                <Header userType={userType} />
                <main className="main list-of-topics-page">
                   <div className="container">
-                     <Search
-                        resetPagination={setPaginationNewValue}
-                        searchMethod={searchTitle}
-                     />
+                     <Search searchMethod={searchTeme} />
                      <Filter
-                        resetPagination={setPaginationNewValue}
+                        coordinator={false}
+                        programmingLang={true}
+                        topicType={true}
+                        searchMethod={searchTeme}
+                     />
+                     {topics?.teme ? (
+                        <div className="content">
+                           <h2 className="title">
+                              Coordinator: {JSON.parse(user)?.name}
+                           </h2>
+                           <Table
+                              tableCols={tableCols}
+                              tableData={topics.teme}
+                              resetPagination={resetPagination}
+                              msg="You Don't Any Tema."
+                           />
+                        </div>
+                     ) : null}
+                  </div>
+               </main>
+            </>
+         );
+      } else if (userType === "admin") {
+         // Names Of Table Columns
+         const tableCols = [
+            { heading: "Nr", val: "" },
+            { heading: "Tema", val: "title" },
+            { heading: "Type", val: "tema_type" },
+            { heading: "Detalii", val: "detalii" },
+            { heading: "Specializare", val: "specializare" },
+         ];
+
+         return (
+            <>
+               <Header userType={userType} />
+               <main className="main list-of-topics-page">
+                  <div className="container">
+                     <Search searchMethod={theSearchMethod[searchMethod]} />
+                     <Filter
+                        coordinator={true}
                         programmingLang={true}
                         topicType={true}
                      />
@@ -440,109 +275,12 @@ const ListOfTopics = () => {
                                 <h2 className="title">
                                    {i + 1}. ({doctor.email})
                                 </h2>
-                                <div className="cover">
-                                   <table className="table">
-                                      <thead className="thead">
-                                         <tr className="main-row">
-                                            {tableCol.map((colName, i) => (
-                                               <th
-                                                  key={i}
-                                                  className="main-cell"
-                                               >
-                                                  {colName}
-                                               </th>
-                                            ))}
-                                         </tr>
-                                      </thead>
-                                      <tbody className="tbody">
-                                         {doctor?.teme?.length > 0 &&
-                                         doctor.id !== tableId
-                                            ? doctor.teme
-                                                 .map((cell, i) => {
-                                                    return (
-                                                       <tr
-                                                          key={i}
-                                                          className="row"
-                                                       >
-                                                          <td className="cell">
-                                                             {i + 1}.
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.title}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.tema_type}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.detalii}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.specializare}
-                                                          </td>
-                                                       </tr>
-                                                    );
-                                                 })
-                                                 .slice(
-                                                    paginationDefault.start,
-                                                    paginationDefault.end
-                                                 )
-                                            : doctor.teme
-                                                 .map((cell, i) => {
-                                                    return (
-                                                       <tr
-                                                          key={i}
-                                                          className="row"
-                                                       >
-                                                          <td className="cell">
-                                                             {i + 1}.
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.title}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.tema_type}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.detalii}
-                                                          </td>
-                                                          <td className="cell">
-                                                             {cell.specializare}
-                                                          </td>
-                                                       </tr>
-                                                    );
-                                                 })
-                                                 .slice(
-                                                    paginationNewValue.start,
-                                                    paginationNewValue.end
-                                                 )}
-                                      </tbody>
-                                   </table>
-                                </div>
-                                <div className="pagination">
-                                   {getPagination(doctor.teme.length).map(
-                                      (pagin, i) => (
-                                         <span
-                                            key={pagin}
-                                            className={`pagin ${
-                                               selectedPagin === pagin &&
-                                               doctor.id === tableId
-                                                  ? "selected-pagin"
-                                                  : ""
-                                            }`}
-                                            onClick={() => {
-                                               setTableId(doctor?.id);
-                                               setPaginationNewValue({
-                                                  start: i * 3,
-                                                  end: (i + 1) * 3,
-                                               });
-                                               setSelectedPagin(pagin);
-                                            }}
-                                         >
-                                            {i + 1}
-                                         </span>
-                                      )
-                                   )}
-                                </div>
+                                <Table
+                                   tableCols={tableCols}
+                                   tableData={doctor.teme}
+                                   resetPagination={resetPagination}
+                                   msg="There Are No Teme To Show"
+                                />
                              </div>
                           ))
                         : null}
@@ -551,7 +289,7 @@ const ListOfTopics = () => {
             </>
          );
       } else {
-         return <h1>Please Login or register </h1>;
+         return <Navigate to="/" />;
       }
    } else {
       return <Navigate to="/" />;

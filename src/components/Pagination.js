@@ -1,14 +1,25 @@
-import { useState } from "react";
+// External
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+// Internal
 
 const Pagination = ({ paginationCount, setPaginationValue }) => {
+   // ======================= Redux Hook =======================
+   // Getting Serach Mode Value To Checking If Reset Pagination
+   const searchMode = useSelector((state) => state.global.searchMode);
+
    // ======================= React Hook =======================
    // Use This To Specify Selected Pagin
    const [selectedPagin, setSelectedPagin] = useState(0);
+   useEffect(() => {
+      // Checking To Reset Selected Pagin To Start Point
+      if (searchMode) setSelectedPagin(0);
+   }, [searchMode]);
 
    // ======================= Own Function =======================
    /**
     * Use This Function To Create Paination Beasd in Tema Count (3 Tema in 1 Pagination)
-    * @param Number Count of Teme
+    * @param Number Count Of Items
     * @returns Array Of Count Pagination
     */
    const getPagination = (paginationCount) => {

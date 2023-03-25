@@ -5,6 +5,7 @@ import attachmentsSlice from "./attachments/attachmentsSlice";
 import authSlice from "./auth/authSlice";
 import commentsSlice from "./comments/commentsSlice";
 import eventsSlice from "./events/eventsSlice";
+import globalSlice from "./global/globalSlice";
 import topicsSlice from "./topics/topicsSlice";
 import usersSlice from "./users/usersSlice";
 import workspacesSlice from "./workspaces/workspacesSlice";
@@ -18,6 +19,7 @@ const store = configureStore({
       comments: commentsSlice,
       users: usersSlice,
       attachments: attachmentsSlice,
+      global: globalSlice,
    },
    // Disable Redux DevTools
    // devTools: false,

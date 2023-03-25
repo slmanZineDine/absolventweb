@@ -81,17 +81,11 @@ const Register = () => {
          facultatea: facultyInput.current.value,
          specializare: specializareInput.current.value,
       };
-      if (selectedType !== "student") {
+
+      if (userTypes[selectedType] === "admin") userRegisterInfo["is_admin"] = 1;
+      else if (userTypes[selectedType] === "coordonator")
          userRegisterInfo["is_admin"] = 0;
-      }
-      if (selectedType === "admin") {
-         userRegisterInfo["is_admin"] = 1;
-      }
-      if (selectedType === "student") {
-         userRegisterInfo.type = 0;
-      } else if (selectedType === "coordonator") {
-         userRegisterInfo.type = 1;
-      }
+
       if (fieldsValidation(userRegisterInfo)) {
          dispatch(registerUser(userRegisterInfo));
       }
