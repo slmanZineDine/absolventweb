@@ -709,8 +709,9 @@ input[type=number] {
 }
 .table .row .empty-table {
   text-align: center;
-  padding-block: 0.8rem;
-  letter-spacing: 2px;
+  padding-block: 0.6rem;
+  letter-spacing: 1px;
+  font-size: 1rem;
 }
 .table .main-cell,
 .table .cell {
@@ -1744,17 +1745,25 @@ input[type=number] {
   }
 }
 /*===================== DOCTORS PAGE =====================*/
+.main.doctors-page {
+  background-image: none;
+}
+
 .doctors-page {
   min-height: 100vh;
+  background-color: #eaeaea;
 }
 .doctors-page .container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 1rem;
 }
 .doctors-page .container .content {
-  width: 60%;
+  width: 45%;
+}
+.doctors-page .container .content .box {
+  margin-bottom: 1.5rem;
 }
 .doctors-page .container .content .title {
   font-size: var(--h2-font-size);
@@ -1764,18 +1773,24 @@ input[type=number] {
 .doctors-page .container .content .table th:first-of-type,
 .doctors-page .container .content .table td:first-of-type {
   width: 10px;
+}
+.doctors-page .container .content .table th:last-of-type,
+.doctors-page .container .content .table td:last-of-type {
+  width: 150px;
+}
+.doctors-page .container .content .table th,
+.doctors-page .container .content .table td {
   text-align: center;
 }
-.doctors-page .container .content .table .btn {
-  font-size: 1rem;
-  padding: 0.5rem 1rem;
+.doctors-page .container .university-logo {
+  align-self: flex-start;
 }
 
 /*=============== BREAKPOINTS ===============*/
 /* MEDIUM */
 @media (max-width: 992px) {
   .doctors-page .container .content .cover .table {
-    min-width: 500px;
+    min-width: 400px;
   }
 }
 @media (max-width: 768px) {
@@ -1787,6 +1802,9 @@ input[type=number] {
   .doctors-page .container .content {
     width: 100%;
     margin-top: 1.5rem;
+  }
+  .doctors-page .container .university-logo {
+    align-self: center;
   }
 }
 /*===================== WORKSPACE PAGE =====================*/

@@ -254,6 +254,7 @@ const ListOfTopics = () => {
                         coordinator={true}
                         programmingLang={true}
                         topicType={true}
+                        searchMethod={searchGlobaly}
                      />
                      {userType === "admin" ? (
                         <div className="save-btn-space">

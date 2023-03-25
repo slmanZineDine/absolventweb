@@ -1,12 +1,19 @@
 @use "../abstracts" as *;
 
 /*===================== DOCTORS PAGE =====================*/
+.main.doctors-page {
+   background-image: none;
+}
 .doctors-page {
    min-height: 100vh;
+   background-color: $body-color;
    .container {
-      @include flex(center, space-between, 1rem);
+      @include flex(center, flex-start, 1rem);
       .content {
-         width: 60%;
+         width: 45%;
+         .box {
+            margin-bottom: 1.5rem;
+         }
          .title {
             font-size: var(--h2-font-size);
             font-weight: normal;
@@ -16,13 +23,19 @@
             th:first-of-type,
             td:first-of-type {
                width: 10px;
+            }
+            th:last-of-type,
+            td:last-of-type {
+               width: 150px;
+            }
+            th,
+            td {
                text-align: center;
             }
-            .btn {
-               font-size: 1rem;
-               padding: 0.5rem 1rem;
-            }
          }
+      }
+      .university-logo {
+         align-self: flex-start;
       }
    }
 }
@@ -30,7 +43,7 @@
 /* MEDIUM */
 @media (max-width: 992px) {
    .doctors-page .container .content .cover .table {
-      min-width: 500px;
+      min-width: 400px;
    }
 }
 @media (max-width: 768px) {
@@ -42,5 +55,8 @@
    .doctors-page .container .content {
       width: 100%;
       margin-top: 1.5rem;
+   }
+   .doctors-page .container .university-logo {
+      align-self: center;
    }
 }

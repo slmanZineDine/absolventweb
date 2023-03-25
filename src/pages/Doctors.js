@@ -1,8 +1,12 @@
+// External
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+// Internal
 import Header from "../components/Header";
+import Table from "../components/Table";
 import UniversityLogo from "../components/UniversityLogo";
+import { getAcceptedStudent } from "../redux/users/uersAction";
 
 const Doctors = () => {
    // ======================= Global Data =======================
@@ -13,106 +17,60 @@ const Doctors = () => {
 
    // ======================= Redux Hook =======================
    const dispatch = useDispatch();
-   //    const test = useSelector((state) => state);
+   const acceptedStudent = useSelector((state) => state.users.acceptedStudent);
+
+   console.log(acceptedStudent);
 
    // ======================= React Hook =======================
    useEffect(() => {
-      if (userType === "admin") {
-         //  dispatch();
+      if (user && userType === "admin") {
+         dispatch(getAcceptedStudent());
       }
    }, []);
+
+   // ======================= Own Function =======================
+   /**
+    * Use This Function To Get Pagination Value From Each Table And Reset It Based On Search Mode
+    * @param Function UseState Fuction That Contain Pagination Values
+    * @returns Undefined
+    */
+   const resetPagination = (resetFuc) => {
+      resetFuc({
+         start: 0,
+         end: 3,
+      });
+   };
 
    if (user) {
       if (userType === "admin") {
          // Names Of Table Columns
-         const tableCol = ["Nr", "Student", "Specializare"];
+         const tableCols = [
+            { heading: "Nr", val: "" },
+            { heading: "Student", val: "name" },
+            { heading: "Specializare", val: "specializare" },
+         ];
+
          return (
             <>
                <Header userType={userType} />
                <main className="main doctors-page">
                   <div className="container">
                      <div className="content">
-                        <h2 className="title">1. Zaharie Daniela</h2>
-                        <div className="cover">
-                           <table className="table">
-                              <thead className="thead">
-                                 <tr className="main-row">
-                                    {tableCol.map((colName, i) => (
-                                       <th key={i} className="main-cell">
-                                          {colName}
-                                       </th>
-                                    ))}
-                                 </tr>
-                              </thead>
-                              <tbody className="tbody">
-                                 {/* {acceptedWorkspaces.length > 0 ? (
-                                    acceptedWorkspaces.map((workspace, i) => {
-                                       return (
-                                          <tr key={i} className="row">
-                                             <td className="cell">{i + 1}.</td>
-                                             <td className="cell">
-                                                {workspace.student.email}
-                                             </td>
-                                             <td className="cell">
-                                                {workspace.tema.title}
-                                             </td>
-                                             <td className="cell">
-                                                {workspace.student.specializare}
-                                             </td>
-                                             <td className="cell">
-                                                <div className="wraper">
-                                                   <button
-                                                      className="btn show-btn"
-                                                      onClick={() => {
-                                                         localStorage.setItem(
-                                                            "workspaceInfo",
-                                                            JSON.stringify({
-                                                               student_id:
-                                                                  workspace
-                                                                     .student
-                                                                     .id,
-                                                               student_email:
-                                                                  workspace
-                                                                     .student
-                                                                     .email,
-                                                               workspace_id:
-                                                                  workspace.worspace_id,
-                                                               tema_name:
-                                                                  workspace.tema
-                                                                     .title,
-                                                            })
-                                                         );
-                                                         navigate("/workspace");
-                                                      }}
-                                                   >
-                                                      Show
-                                                   </button>
-                                                </div>
-                                             </td>
-                                          </tr>
-                                       );
-                                    })
-                                 ) : (
-                                    <tr className="row">
-                                       <td
-                                          className="cell empty-table"
-                                          colSpan={tableCol.length}
-                                       >
-                                          There Are No Students To Show.
-                                       </td>
-                                    </tr>
-                                 )} */}
-                                 <tr className="row">
-                                    <td
-                                       className="cell empty-table"
-                                       colSpan={tableCol.length}
-                                    >
-                                       There Are No Students To Show.
-                                    </td>
-                                 </tr>
-                              </tbody>
-                           </table>
-                        </div>
+                        {acceptedStudent
+                           ? acceptedStudent.map((doctor, i) => (
+                                <div className="box" key={i}>
+                                   <h2 className="title">
+                                      {i + 1}. {doctor.name}
+                                   </h2>
+                                   <Table
+                                      tableCols={tableCols}
+                                      tableData={doctor.students}
+                                      resetPagination={resetPagination}
+                                      msg="There Are No Students To Show."
+                                   />
+                                </div>
+                             ))
+                           : null}
                      </div>
                      <UniversityLogo />
                   </div>
@@ -120,7 +78,7 @@ const Doctors = () => {
             </>
          );
       } else {
-         return <Navigate to="/homepage" />;
+         return <Navigate to="/" />;
       }
    } else {
       return <Navigate to="/" />;
