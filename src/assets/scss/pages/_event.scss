@@ -34,6 +34,7 @@
                &_title {
                   font-size: var(--h3-font-size);
                   font-weight: normal;
+                  width: 95px;
                }
                &:nth-of-type(2) {
                   .item_title {
@@ -103,8 +104,8 @@
    }
 }
 /*=============== BREAKPOINTS ===============*/
-/* CUSTOM SIZE */
-@media (max-width: 700px) {
+/* SMALL */
+@media (max-width: 768px) {
    .event-page .container {
       flex-direction: column-reverse;
    }

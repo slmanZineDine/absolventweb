@@ -29,7 +29,6 @@ const AddMeeting = () => {
    // ======================= Select Input Elements =======================
    const titleInput = useRef(null);
    const deadlineInput = useRef(null);
-   const attachmentInput = useRef(null);
 
    // ======================= Sweet Alert Labrary =======================
    const processChecking = async (msg, icon, theClassName) => {
@@ -58,7 +57,6 @@ const AddMeeting = () => {
          title: titleInput.current.value,
          type: "meeting",
          due_date: deadlineInput.current.value,
-         // attachment: attachmentInput.current.files[0],
       };
       if (fieldsValidation(userInput)) {
          dispatch(addNewEvent(userInput));
@@ -111,44 +109,6 @@ const AddMeeting = () => {
                               className="input-field"
                               ref={deadlineInput}
                            />
-                        </li>
-                        <li className="item">
-                           <h3 className="item_title">Attachment:</h3>
-                           <label htmlFor="file" className="file-input">
-                              <img
-                                 src={addIcon}
-                                 alt="btn-icon"
-                                 className="btn-icon"
-                              />
-                              Add
-                              <input
-                                 id="file"
-                                 type="file"
-                                 className="input-field"
-                                 ref={attachmentInput}
-                                 onChange={() =>
-                                    setFileName(
-                                       attachmentInput.current.files[0].name
-                                    )
-                                 }
-                              />
-                           </label>
-                        </li>
-                        <li className="item">
-                           {fileName ? (
-                              <div className="attachName">
-                                 {fileName}
-                                 <img
-                                    src={deleteIcon}
-                                    alt="btn-icon"
-                                    className="btn-icon"
-                                    onClick={() => {
-                                       attachmentInput.current.value = "";
-                                       setFileName(null);
-                                    }}
-                                 />
-                              </div>
-                           ) : null}
                         </li>
                         <div className="save-btn-space">
                            {events.loading ? (

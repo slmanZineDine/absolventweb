@@ -6,8 +6,8 @@
    .container {
       @include flex(center, space-between, 1.5rem);
       .content {
-         width: 72%;
-         > .title {
+         width: 60%;
+         .title {
             @include flex(center, flex-start, 1rem);
             font-size: var(--h2-font-size);
             margin-bottom: 1.5rem;
@@ -23,7 +23,7 @@
          }
          .box {
             background-color: #fff;
-            padding: 1rem 1.7rem;
+            padding: 1rem 1.2rem;
             border-radius: 1rem;
             .item {
                @include flex(center, space-between, 1rem);
@@ -31,6 +31,7 @@
                &_title {
                   font-size: var(--h3-font-size);
                   font-weight: normal;
+                  width: 120px;
                }
                &:nth-of-type(3) {
                   .item_title {
@@ -44,7 +45,7 @@
                   padding-left: 1rem;
                   border: 1px solid #000;
                   border-radius: 1rem;
-                  width: 65%;
+                  width: 75%;
                }
                .textarea {
                   resize: none;
@@ -64,8 +65,8 @@
    }
 }
 /*=============== BREAKPOINTS ===============*/
-/* CUSTOM SIZE */
-@media (max-width: 700px) {
+/* SMALL */
+@media (max-width: 768px) {
    .topic-page .container {
       flex-direction: column-reverse;
    }

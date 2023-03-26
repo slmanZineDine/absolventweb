@@ -69,6 +69,7 @@ const Table = ({ tableCols, tableData, resetPagination, msg }) => {
                                                    tema_name:
                                                       item?.tema?.title || null,
                                                 }}
+                                                temaId={item?.id || null}
                                              />
                                           </td>
                                        );

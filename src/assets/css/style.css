@@ -141,7 +141,7 @@ input[type=number] {
   color: #fff;
 }
 
-.done .swal-text {
+.swal-text {
   color: #000;
 }
 
@@ -1972,9 +1972,9 @@ input[type=number] {
   gap: 1.5rem;
 }
 .topic-page .container .content {
-  width: 72%;
+  width: 60%;
 }
-.topic-page .container .content > .title {
+.topic-page .container .content .title {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -1982,7 +1982,7 @@ input[type=number] {
   font-size: var(--h2-font-size);
   margin-bottom: 1.5rem;
 }
-.topic-page .container .content > .title::before {
+.topic-page .container .content .title::before {
   content: "";
   display: block;
   width: 17px;
@@ -1993,7 +1993,7 @@ input[type=number] {
 }
 .topic-page .container .content .box {
   background-color: #fff;
-  padding: 1rem 1.7rem;
+  padding: 1rem 1.2rem;
   border-radius: 1rem;
 }
 .topic-page .container .content .box .item {
@@ -2006,6 +2006,7 @@ input[type=number] {
 .topic-page .container .content .box .item_title {
   font-size: var(--h3-font-size);
   font-weight: normal;
+  width: 120px;
 }
 .topic-page .container .content .box .item:nth-of-type(3) .item_title {
   align-self: flex-start;
@@ -2017,7 +2018,7 @@ input[type=number] {
   padding-left: 1rem;
   border: 1px solid #000;
   border-radius: 1rem;
-  width: 65%;
+  width: 75%;
 }
 .topic-page .container .content .box .item .textarea {
   resize: none;
@@ -2035,8 +2036,8 @@ input[type=number] {
 }
 
 /*=============== BREAKPOINTS ===============*/
-/* CUSTOM SIZE */
-@media (max-width: 700px) {
+/* SMALL */
+@media (max-width: 768px) {
   .topic-page .container {
     flex-direction: column-reverse;
   }
@@ -2108,6 +2109,7 @@ input[type=number] {
 .event-page .container .content .box .item_title {
   font-size: var(--h3-font-size);
   font-weight: normal;
+  width: 95px;
 }
 .event-page .container .content .box .item:nth-of-type(2) .item_title {
   align-self: flex-start;
@@ -2176,8 +2178,8 @@ input[type=number] {
 }
 
 /*=============== BREAKPOINTS ===============*/
-/* CUSTOM SIZE */
-@media (max-width: 700px) {
+/* SMALL */
+@media (max-width: 768px) {
   .event-page .container {
     flex-direction: column-reverse;
   }

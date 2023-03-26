@@ -60,7 +60,7 @@ const topicsSlice = createSlice({
       },
       searchTeme(state, { payload }) {
          // When Input Is Empty Reset Data
-         if (!payload) {
+         if (!payload || payload === "All") {
             state.doctorTopics = JSON.parse(state.tempData);
             return;
          }
