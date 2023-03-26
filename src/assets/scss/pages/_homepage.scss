@@ -73,6 +73,9 @@
                width: 10px;
                text-align: center;
             }
+            th:last-of-type {
+               width: 200px;
+            }
             .btn {
                font-size: 1rem;
                padding: 0.5rem 1rem;
@@ -84,6 +87,17 @@
 .homepage-admin {
    .container {
       .content {
+         @include flex(center, space-between, 0.5rem);
+         flex-wrap: wrap;
+         .box:first-of-type {
+            width: 48%;
+         }
+         .university-logo {
+            width: 48%;
+         }
+         .box:last-of-type {
+            width: 100%;
+         }
          .title {
             font-size: var(--h2-font-size);
             font-weight: normal;
@@ -114,5 +128,32 @@
    }
    .homepage-student .container .content {
       margin-right: 0;
+   }
+   .homepage-admin .container .content .search {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.7rem;
+   }
+   .homepage-admin .container .content .filter {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.7rem;
+   }
+}
+/* SMALL */
+@media (max-width: 768px) {
+   .homepage-admin .container .content {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+   }
+   .homepage-admin .container .content .university-logo {
+      order: -1;
+      align-self: center;
+      width: auto;
+      margin-bottom: 2rem;
+   }
+   .homepage-admin .container .content .box:first-of-type {
+      width: 100%;
    }
 }

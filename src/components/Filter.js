@@ -2,9 +2,14 @@ import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { ProgrammingLangList, TipTemaList } from "../data/globalDate";
 import { setSearchMethod, setSearchMode } from "../redux/global/globalSlice";
-import { searchGlobaly } from "../redux/topics/topicsSlice";
 
-const Filter = ({ coordinator, programmingLang, topicType, searchMethod }) => {
+const Filter = ({
+   coordinator,
+   student,
+   programmingLang,
+   topicType,
+   searchMethod,
+}) => {
    // ======================= Redux Hook =======================
    const dispatch = useDispatch();
 
@@ -38,6 +43,22 @@ const Filter = ({ coordinator, programmingLang, topicType, searchMethod }) => {
                   }}
                >
                   Coordinator
+               </p>
+            ) : null}
+            {student ? (
+               <p
+                  className={`filter_option ${selected ? "selected" : ""}`}
+                  onClick={(_) => {
+                     if (selected) {
+                        setSelected(false);
+                        dispatch(setSearchMethod("searchCoordinators"));
+                     } else {
+                        setSelected(true);
+                        dispatch(setSearchMethod("searchStudent"));
+                     }
+                  }}
+               >
+                  Student
                </p>
             ) : null}
             {programmingLang ? (

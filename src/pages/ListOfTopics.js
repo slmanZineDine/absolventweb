@@ -20,6 +20,7 @@ import {
    searchTeme,
 } from "../redux/topics/topicsSlice";
 import Table from "../components/Table";
+import { setSearchMethod } from "../redux/global/globalSlice";
 
 const ListOfTopics = () => {
    // ======================= Global Data =======================
@@ -103,6 +104,8 @@ const ListOfTopics = () => {
       // If Student Or Admin => Getting All Doctors teme
       if (user && (userType === "student" || userType === "admin")) {
          dispatch(getAllTopicsByDoctor());
+         // Set Default Search Method To Use It In Search Bar
+         dispatch(setSearchMethod("searchGlobaly"));
       }
       // If Coordinator => Getting Only Doctor's teme
       else if (user && userType === "coordonator") {

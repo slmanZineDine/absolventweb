@@ -17,7 +17,9 @@ import deleteIcon from "../assets/imgs/icons/deleteIcon.png";
 import { getStudents, getStudentStatus } from "../redux/users/uersAction";
 import Search from "../components/Search";
 import Pagination from "../components/Pagination";
-import { searchByName } from "../redux/users/usersSlice";
+import { searchByName, searchTipTema } from "../redux/users/usersSlice";
+import Filter from "../components/Filter";
+import Table from "../components/Table";
 
 const HomePage = () => {
    // ======================= Global Data =======================
@@ -123,6 +125,19 @@ const HomePage = () => {
          dispatch(changeWorkspaceStatus(status));
          setProcessDone(true);
       }
+   };
+
+   // ======================= Own Function =======================
+   /**
+    * Use This Function To Get Pagination Value From Each Table And Reset It Based On Search Mode
+    * @param Function UseState Fuction That Contain Pagination Values
+    * @returns Undefined
+    */
+   const resetPagination = (resetFuc) => {
+      resetFuc({
+         start: 0,
+         end: 3,
+      });
    };
 
    if (user) {
@@ -376,76 +391,40 @@ const HomePage = () => {
          );
       } else if (userType === "admin") {
          // Names Of Table Columns
-         const tableCol = ["Nr", "Student", "Coordonator", "Titlul Temei"];
-
+         const tableCols = [
+            { heading: "Nr", val: "" },
+            { heading: "Student", val: "email" },
+            { heading: "Coordonator", val: "coordonator.email" },
+            { heading: "Titlul Temei", val: "tema.title" },
+         ];
          return (
             <>
                <Header userType={userType} />
                <main className="main homepage-admin">
                   <div className="container">
                      <div className="content">
-                        <Search
-                           resetPagination={setPaginationValue}
-                           searchMethod={searchByName}
-                        />
-                        <h2 className="title">
-                           Detalii La Fiecare Student Pentru Lucrare De Licenta
-                        </h2>
-
-                        <div className="cover">
-                           <table className="table">
-                              <thead className="thead">
-                                 <tr className="main-row">
-                                    {tableCol.map((colName, i) => (
-                                       <th key={i} className="main-cell">
-                                          {colName}
-                                       </th>
-                                    ))}
-                                 </tr>
-                              </thead>
-                              <tbody className="tbody">
-                                 {students.length > 0 ? (
-                                    students
-                                       .map((cell, i) => {
-                                          return (
-                                             <tr key={i} className="row">
-                                                <td className="cell">
-                                                   {i + 1}.
-                                                </td>
-                                                <td className="cell">
-                                                   {cell.email}
-                                                </td>
-                                                <td className="cell">
-                                                   {cell.coordonator.email}
-                                                </td>
-                                                <td className="cell">
-                                                   {cell.tema.title}
-                                                </td>
-                                             </tr>
-                                          );
-                                       })
-                                       .slice(
-                                          paginationValue.start,
-                                          paginationValue.end
-                                       )
-                                 ) : (
-                                    <tr className="row">
-                                       <td
-                                          className="cell empty-table"
-                                          colSpan={tableCol.length}
-                                       >
-                                          There Are No Data To Show.
-                                       </td>
-                                    </tr>
-                                 )}
-                              </tbody>
-                           </table>
+                        <div className="box">
+                           <Search searchMethod={searchByName} />
+                           <Filter
+                              topicType={true}
+                              searchMethod={searchTipTema}
+                           />
                         </div>
-
-                        <Pagination
-                           paginationCount={students.length}
-                           setPaginationValue={setPaginationValue}
-                        />
+                        <UniversityLogo />
+                        <div className="box">
+                           <h2 className="title">
+                              Detalii La Fiecare Student Pentru Lucrare De
+                              Licenta
+                           </h2>
+                           {students ? (
+                              <Table
+                                 tableCols={tableCols}
+                                 tableData={students}
+                                 resetPagination={resetPagination}
+                                 msg="There Are No Data To Show."
+                              />
+                           ) : null}
+                        </div>
                      </div>
                   </div>
                </main>

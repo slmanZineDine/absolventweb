@@ -802,6 +802,112 @@ input[type=number] {
     width: 300px;
   }
 }
+/*=============== FILTER COMPONENT ===============*/
+.filter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.filter_title {
+  font-weight: normal;
+  font-size: 1.25rem;
+}
+.filter_options {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.7rem;
+}
+.filter_options .filter_option {
+  padding-inline: 0.8rem;
+  padding-block: 0.6rem;
+  border: 1px solid #000;
+  border-radius: 2rem;
+  background-color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.filter_options .filter_option:hover, .filter_options .filter_option.selected {
+  background-color: #0081aa;
+  color: #fff;
+}
+.filter_options .custom-select {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  position: relative;
+  padding-inline: 0.8rem 3rem;
+  padding-block: 0.6rem;
+  border: 1px solid #000;
+  border-radius: 2rem;
+  width: fit-content;
+  min-width: 150px;
+  color: #000;
+  font-size: 1rem;
+  background-color: #fff;
+  cursor: pointer;
+  transition: opacity 0.4s;
+}
+.filter_options .custom-select .arrow {
+  position: absolute;
+  top: 50%;
+  right: 1.2rem;
+  display: block;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-left: 2px solid #000;
+  border-bottom: 2px solid #000;
+  transform-origin: center center;
+  transform: translateY(-60%) rotate(-45deg);
+}
+.filter_options .custom-select .select {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 100%;
+  max-height: 0;
+  border-radius: 0 0 0.2rem 0.2rem;
+  text-align: center;
+  background-color: #cecece;
+  transition: max-height 0.4s;
+  overflow: hidden;
+}
+.filter_options .custom-select .select .option {
+  padding: 1rem;
+  border-bottom: 1px solid #000;
+  font-size: var(--normal-font-size);
+}
+.filter_options .custom-select .select .option:hover {
+  background-color: #2575be;
+  color: #fff;
+}
+.filter_options .custom-select .select .option:first-of-type {
+  border-top: 1px solid #000;
+}
+.filter_options .custom-select .select.show-options {
+  max-height: 1000px;
+  z-index: 10;
+}
+
+/*=============== BREAKPOINTS ===============*/
+/* CUSTOM */
+@media (max-width: 615px) {
+  .filter {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.7rem;
+  }
+}
+/* EXTRA SMALL */
+@media (max-width: 560px) {
+  .filter .filter_options {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
 /*=============== PAGINATION COMPONENT ===============*/
 .pagination {
   display: flex;
@@ -1333,11 +1439,30 @@ input[type=number] {
   width: 10px;
   text-align: center;
 }
+.homepage-coordonator .container .content .table th:last-of-type {
+  width: 200px;
+}
 .homepage-coordonator .container .content .table .btn {
   font-size: 1rem;
   padding: 0.5rem 1rem;
 }
 
+.homepage-admin .container .content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.homepage-admin .container .content .box:first-of-type {
+  width: 48%;
+}
+.homepage-admin .container .content .university-logo {
+  width: 48%;
+}
+.homepage-admin .container .content .box:last-of-type {
+  width: 100%;
+}
 .homepage-admin .container .content .title {
   font-size: var(--h2-font-size);
   font-weight: normal;
@@ -1365,102 +1490,41 @@ input[type=number] {
   .homepage-student .container .content {
     margin-right: 0;
   }
+  .homepage-admin .container .content .search {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.7rem;
+  }
+  .homepage-admin .container .content .filter {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.7rem;
+  }
 }
-/*===================== LIST OF TIPICS PAGE PAGE =====================*/
+/* SMALL */
+@media (max-width: 768px) {
+  .homepage-admin .container .content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+  .homepage-admin .container .content .university-logo {
+    order: -1;
+    align-self: center;
+    width: auto;
+    margin-bottom: 2rem;
+  }
+  .homepage-admin .container .content .box:first-of-type {
+    width: 100%;
+  }
+}
+/*===================== LIST OF TIPICS PAGE =====================*/
 .main.list-of-topics-page {
   background-image: none;
 }
 
 .list-of-topics-page {
   background-color: #eaeaea;
-}
-.list-of-topics-page .container .filter {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-.list-of-topics-page .container .filter_title {
-  font-weight: normal;
-  font-size: 1.25rem;
-}
-.list-of-topics-page .container .filter_options {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 0.7rem;
-}
-.list-of-topics-page .container .filter_options .filter_option {
-  padding-inline: 0.8rem;
-  padding-block: 0.6rem;
-  border: 1px solid #000;
-  border-radius: 2rem;
-  background-color: #fff;
-  font-size: 1rem;
-  cursor: pointer;
-}
-.list-of-topics-page .container .filter_options .filter_option:hover, .list-of-topics-page .container .filter_options .filter_option.selected {
-  background-color: #0081aa;
-  color: #fff;
-}
-.list-of-topics-page .container .filter_options .custom-select {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  position: relative;
-  padding-inline: 0.8rem 3rem;
-  padding-block: 0.6rem;
-  border: 1px solid #000;
-  border-radius: 2rem;
-  width: fit-content;
-  min-width: 150px;
-  color: #000;
-  font-size: 1rem;
-  background-color: #fff;
-  cursor: pointer;
-  transition: opacity 0.4s;
-}
-.list-of-topics-page .container .filter_options .custom-select .arrow {
-  position: absolute;
-  top: 50%;
-  right: 1.2rem;
-  display: block;
-  width: 0.7rem;
-  height: 0.7rem;
-  border-left: 2px solid #000;
-  border-bottom: 2px solid #000;
-  transform-origin: center center;
-  transform: translateY(-60%) rotate(-45deg);
-}
-.list-of-topics-page .container .filter_options .custom-select .select {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  width: 100%;
-  max-height: 0;
-  border-radius: 0 0 0.2rem 0.2rem;
-  text-align: center;
-  background-color: #cecece;
-  transition: max-height 0.4s;
-  overflow: hidden;
-}
-.list-of-topics-page .container .filter_options .custom-select .select .option {
-  padding: 1rem;
-  border-bottom: 1px solid #000;
-  font-size: var(--normal-font-size);
-}
-.list-of-topics-page .container .filter_options .custom-select .select .option:hover {
-  background-color: #2575be;
-  color: #fff;
-}
-.list-of-topics-page .container .filter_options .custom-select .select .option:first-of-type {
-  border-top: 1px solid #000;
-}
-.list-of-topics-page .container .filter_options .custom-select .select.show-options {
-  max-height: 1000px;
-  z-index: 10;
 }
 .list-of-topics-page .container .save-btn-space {
   display: flex;
@@ -1483,22 +1547,6 @@ input[type=number] {
   text-align: center;
 }
 
-/*=============== BREAKPOINTS ===============*/
-/* CUSTOM */
-@media (max-width: 615px) {
-  .list-of-topics-page .container .filter {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.7rem;
-  }
-}
-/* EXTRA SMALL */
-@media (max-width: 560px) {
-  .list-of-topics-page .container .filter .filter_options {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
 /*===================== PROFILE PAGE =====================*/
 .profile-student {
   min-height: 100vh;
@@ -1736,7 +1784,7 @@ input[type=number] {
     flex-direction: column;
   }
   .students-page-admin .container .content .cover .table {
-    min-width: 500px;
+    min-width: 300px;
   }
 }
 @media (max-width: 768px) {
@@ -1745,58 +1793,63 @@ input[type=number] {
   }
 }
 /*===================== DOCTORS PAGE =====================*/
-.main.doctors-page {
-  background-image: none;
-}
-
 .doctors-page {
   min-height: 100vh;
-  background-color: #eaeaea;
 }
 .doctors-page .container {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.doctors-page .container .content:first-of-type {
+  width: 48%;
+}
+.doctors-page .container .university-logo {
+  width: 48%;
+}
+.doctors-page .container .content:last-of-type {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
   gap: 1rem;
 }
-.doctors-page .container .content {
-  width: 45%;
-}
-.doctors-page .container .content .box {
+.doctors-page .container .content:last-of-type .box {
   margin-bottom: 1.5rem;
+  flex: 1;
 }
-.doctors-page .container .content .title {
+.doctors-page .container .content:last-of-type .box .title {
   font-size: var(--h2-font-size);
   font-weight: normal;
   margin-bottom: 1rem;
 }
-.doctors-page .container .content .table th:first-of-type,
-.doctors-page .container .content .table td:first-of-type {
+.doctors-page .container .content:last-of-type .box .table th:first-of-type,
+.doctors-page .container .content:last-of-type .box .table td:first-of-type {
   width: 10px;
 }
-.doctors-page .container .content .table th:last-of-type,
-.doctors-page .container .content .table td:last-of-type {
+.doctors-page .container .content:last-of-type .box .table th:last-of-type,
+.doctors-page .container .content:last-of-type .box .table td:last-of-type {
   width: 150px;
 }
-.doctors-page .container .content .table th,
-.doctors-page .container .content .table td {
+.doctors-page .container .content:last-of-type .box .table th,
+.doctors-page .container .content:last-of-type .box .table td {
   text-align: center;
-}
-.doctors-page .container .university-logo {
-  align-self: flex-start;
 }
 
 /*=============== BREAKPOINTS ===============*/
 /* MEDIUM */
 @media (max-width: 992px) {
   .doctors-page .container .content .cover .table {
-    min-width: 400px;
+    min-width: initial;
   }
 }
+/* SMALL */
 @media (max-width: 768px) {
   .doctors-page .container {
-    flex-direction: column-reverse;
-    justify-content: center;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 0;
   }
   .doctors-page .container .content {
@@ -1804,7 +1857,13 @@ input[type=number] {
     margin-top: 1.5rem;
   }
   .doctors-page .container .university-logo {
+    order: -1;
     align-self: center;
+    width: auto;
+    margin-bottom: 2rem;
+  }
+  .doctors-page .container .content:last-of-type {
+    flex-wrap: wrap;
   }
 }
 /*===================== WORKSPACE PAGE =====================*/

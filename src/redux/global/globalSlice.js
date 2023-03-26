@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
    workspaceInfo: { tema_id: null, coordonator_id: null }, // Store Creation Workpace Info
    searchMode: false, // To Determine If Shoud Reset Pagination To Start Point
-   searchMethod: "searchGlobaly", // Specify The Serach Method
+   searchMethod: "", // Specify The Serach Method
 };
 
 const globalSlice = createSlice({

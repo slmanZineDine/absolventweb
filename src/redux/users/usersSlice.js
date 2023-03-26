@@ -35,6 +35,51 @@ const usersSlice = createSlice({
                regexp.test(student?.coordonator?.email)
          );
       },
+      searchTipTema(state, { payload }) {
+         // When Input Is Empty Reset Data
+         if (!payload) {
+            state.students = JSON.parse(state.tempData);
+            return;
+         }
+         // When User Enter Any Thing Reset Data To Re-search
+         state.students = JSON.parse(state.tempData);
+         const regexp = new RegExp(`${payload}`, "i");
+
+         state.students = state.students.filter((student) =>
+            regexp.test(student?.tema?.title)
+         );
+      },
+      searchCoordinators(state, { payload }) {
+         // When Input Is Empty Reset Data
+         if (!payload) {
+            state.acceptedStudent = JSON.parse(state.tempData);
+            return;
+         }
+         // When User Enter Any Thing Reset Data To Re-search
+         state.acceptedStudent = JSON.parse(state.tempData);
+         const regexp = new RegExp(`${payload}`, "i");
+
+         state.acceptedStudent = state.acceptedStudent.filter((coordinator) =>
+            regexp.test(coordinator.name)
+         );
+      },
+      searchStudent(state, { payload }) {
+         // When Input Is Empty Reset Data
+         if (!payload) {
+            state.acceptedStudent = JSON.parse(state.tempData);
+            return;
+         }
+         // When User Enter Any Thing Reset Data To Re-search
+         state.acceptedStudent = JSON.parse(state.tempData);
+         const regexp = new RegExp(`${payload}`, "i");
+
+         state.acceptedStudent = state.acceptedStudent.filter((coordinator) => {
+            coordinator.teme = coordinator.students.filter((student) =>
+               regexp.test(student?.name)
+            );
+            return coordinator.students.length > 0;
+         });
+      },
    },
    extraReducers: {
       // Get Student Status
@@ -86,6 +131,8 @@ const usersSlice = createSlice({
          state.loading = false;
          state.success = true;
          state.acceptedStudent = payload.data;
+         // Save Data In Temporary Variable To  Get It After Any Search
+         state.tempData = JSON.stringify(state.acceptedStudent);
       },
       [getAcceptedStudent.rejected]: (state, { payload }) => {
          state.loading = false;
@@ -94,6 +141,11 @@ const usersSlice = createSlice({
    },
 });
 
-export const { searchByName } = usersSlice.actions;
+export const {
+   searchByName,
+   searchTipTema,
+   searchCoordinators,
+   searchStudent,
+} = usersSlice.actions;
 
 export default usersSlice.reducer;
