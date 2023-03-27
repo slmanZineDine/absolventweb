@@ -78,18 +78,15 @@ const ListOfTopics = () => {
       if (checkBox) {
          dispatch(createWorkspace(workspace));
          setProcessDone(true);
-         navigate("/homepage");
       }
    };
 
    // ======================= Handle User Select =======================
    // Checking If User Select A Tema of Not
    const handleCreation = () => {
-      if (workspaceInfo.tema_id && workspaceInfo.coordonator_id) {
+      if (workspaceInfo.tema_id && workspaceInfo.coordonator_id)
          confirmCreation(workspaceInfo);
-      } else {
-         processChecking("Please Select A Tema.", "warning", "red-bg");
-      }
+      else processChecking("Please Select A Tema.", "warning", "red-bg");
    };
 
    // ======================= React Hook =======================
@@ -118,8 +115,9 @@ const ListOfTopics = () => {
          dispatch(getStudentStatus());
       }
    }, []);
-   // Variable below to manipulate useEffect and prevent run initial-render
+   // Variable Below To Prevent Run useEffect Initial-Render
    const firstUpdate = useRef(true);
+
    useEffect(() => {
       if (firstUpdate.current) {
          firstUpdate.current = false;
@@ -133,6 +131,7 @@ const ListOfTopics = () => {
             } else if (!workspace.loading && workspace.success) {
                processChecking("Process Successfully", "success", "done");
                setProcessDone(false); // Reset
+               navigate("/homepage");
             }
          }
       }

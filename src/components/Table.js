@@ -1,13 +1,25 @@
 // External
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import swal from "sweetalert";
+import { seBtnProcess } from "../redux/global/globalSlice";
 // Internal
 import Pagination from "./Pagination";
 import TableProcess from "./TableProcess";
 
 const Table = ({ tableCols, tableData, resetPagination, msg }) => {
+   // ======================= Global Data =======================
+   // Get User Information To Permission For Enter This Page Or Not
+   const user = localStorage.getItem("user");
+   const userType = JSON.parse(user)?.type;
+
    // ======================= Redux Hook =======================
+   const dispatch = useDispatch();
    const searchMode = useSelector((state) => state.global.searchMode);
+   const topics = useSelector((state) => state.topics);
+   const workspace = useSelector((state) => state.workspaces);
+   // This Object Contain Buttons Status => Use It To Handle Prevent Show Alert Unless Exactly Operation
+   const btnProcess = useSelector((state) => state.global.btnProcess);
 
    // ======================= Reacts Hook =======================
    // Pagination Value For The Table
@@ -20,6 +32,43 @@ const Table = ({ tableCols, tableData, resetPagination, msg }) => {
       // Checking If Serach Mode Ture To Reset Pagination To Start Point
       if (searchMode) resetPagination(setPaginationValueTable);
    }, [searchMode]);
+
+   useEffect(() => {
+      if (userType === "coordonator") {
+         // For Alert Delete Tema Operation
+         if (!topics.loading & btnProcess.deleteTema) {
+            if (topics.success)
+               processChecking("Process Successfully", "success", "done");
+            else if (topics.error)
+               processChecking(topics.error, "error", "red-bg");
+            dispatch(seBtnProcess({ deleteTema: false })); // Reset
+         }
+         // For Alert To Accept Or Reject A Student Operation
+         if (
+            !workspace.loading &&
+            (btnProcess.acceptStudent || btnProcess.rejectStudent)
+         ) {
+            if (workspace.success)
+               processChecking("Process Successfully", "success", "done");
+            else if (workspace.error)
+               processChecking(workspace.error, "error", "red-bg");
+            dispatch(
+               seBtnProcess({ acceptStudent: false, rejectStudent: false })
+            ); // Reset
+         }
+      }
+   }, [topics.loading, workspace.loading]);
+
+   // ======================= Sweet Alert Labrary =======================
+   const processChecking = async (msg, icon, theClassName) => {
+      await swal(msg, {
+         buttons: false,
+         timer: 3000,
+         icon: icon,
+         className: theClassName,
+         closeOnEsc: false,
+      });
+   };
 
    return (
       <>
@@ -70,6 +119,20 @@ const Table = ({ tableCols, tableData, resetPagination, msg }) => {
                                                       item?.tema?.title || null,
                                                 }}
                                                 temaId={item?.id || null}
+                                             />
+                                          </td>
+                                       );
+                                    }
+                                    if (
+                                       cell.heading === "Statutul De Student"
+                                    ) {
+                                       return (
+                                          <td className="cell" key={j}>
+                                             <TableProcess
+                                                process={cell.val}
+                                                workspaceId={
+                                                   item?.worspace_id || null
+                                                }
                                              />
                                           </td>
                                        );

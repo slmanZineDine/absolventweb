@@ -1,22 +1,15 @@
 // External
 import { Link, Navigate } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import swal from "sweetalert";
 // Internal
 import Header from "../components/Header";
 import stepsIcon from "../assets/imgs/icons/stepsIcon.png";
 import statusIcon from "../assets/imgs/icons/statusIcon.png";
 import UniversityLogo from "../components/UniversityLogo";
-import {
-   changeWorkspaceStatus,
-   getWaitingWorkspace,
-} from "../redux/workspaces/workspacesActions";
-import checkIcon from "../assets/imgs/icons/checkIcon.png";
-import deleteIcon from "../assets/imgs/icons/deleteIcon.png";
+import { getWaitingWorkspace } from "../redux/workspaces/workspacesActions";
 import { getStudents, getStudentStatus } from "../redux/users/uersAction";
 import Search from "../components/Search";
-import Pagination from "../components/Pagination";
 import { searchByName, searchTipTema } from "../redux/users/usersSlice";
 import Filter from "../components/Filter";
 import Table from "../components/Table";
@@ -33,99 +26,17 @@ const HomePage = () => {
    const waitingWorkspaces = useSelector(
       (state) => state.workspaces.waitingWorkspaces
    );
-   const workspace = useSelector((state) => state.workspaces);
    const userStatus = useSelector((state) => state.users.studentStatus);
    const students = useSelector((state) => state.users.students).filter(
       (student) => student?.workspace?.status === 1
    );
 
    // ======================= React Hook =======================
-   // Use This To Prevent Show All Alert on First Page Load
-   const [processDone, setProcessDone] = useState(false);
-   // [Homepage Admin] Store Pagination Values
-   const [paginationValue, setPaginationValue] = useState({
-      start: 0,
-      end: 3,
-   });
-   // [Homepage Coordinator] Pagination Values For Each Table
-   const [paginationValueTable1, setPaginationValueTable1] = useState({
-      start: 0,
-      end: 3,
-   });
-   const [paginationValueTable2, setPaginationValueTable2] = useState({
-      start: 0,
-      end: 3,
-   });
-
    useEffect(() => {
-      if (userType === "student") {
-         dispatch(getStudentStatus({}));
-      }
-      if (userType === "coordonator") {
-         dispatch(getWaitingWorkspace({}));
-      }
+      if (userType === "student") dispatch(getStudentStatus());
+      else if (userType === "coordonator") dispatch(getWaitingWorkspace());
+      else if (userType === "admin") dispatch(getStudents());
    }, []);
-   // Variable below to manipulate useEffect and prevente run initial-render
-   const firstUpdate = useRef(true);
-   useEffect(() => {
-      if (firstUpdate.current) {
-         firstUpdate.current = false;
-         if (userType === "admin") {
-            dispatch(getStudents());
-         }
-         return;
-      }
-      if (userType === "coordonator") {
-         if (processDone) {
-            if (!workspace.loading && workspace.error) {
-               processChecking(workspace.error, "error", "red-bg");
-               setProcessDone(false); // Reset
-            } else if (!workspace.loading && workspace.success) {
-               processChecking("Process Successfully", "success", "done");
-               setProcessDone(false); // Reset
-            }
-         }
-      }
-   }, [workspace.error, workspace.success]);
-
-   // ======================= Sweet Alert Labrary =======================
-   const processChecking = async (msg, icon, theClassName) => {
-      await swal(msg, {
-         buttons: false,
-         timer: 3000,
-         icon: icon,
-         className: theClassName,
-         closeOnEsc: false,
-      });
-   };
-   // Checking Box To Confirm Accept A Workspace
-   const confirmAccept = async (status) => {
-      let checkBox = await swal(
-         "Are You Sure You Want To Accept This Student?",
-         {
-            dangerMode: true,
-            buttons: true,
-         }
-      );
-      if (checkBox) {
-         dispatch(changeWorkspaceStatus(status));
-         setProcessDone(true);
-      }
-   };
-   // Checking Box To Confirm Reject A  Workspace
-   const confirmReject = async (status) => {
-      let checkBox = await swal(
-         "Are You Sure You Want To Reject This Student?",
-         {
-            dangerMode: true,
-            buttons: true,
-         }
-      );
-      if (checkBox) {
-         dispatch(changeWorkspaceStatus(status));
-         setProcessDone(true);
-      }
-   };
 
    // ======================= Own Function =======================
    /**
@@ -204,16 +115,24 @@ const HomePage = () => {
          );
       } else if (userType === "coordonator") {
          // Names Of Table Columns
-         const tableCol1 = [
-            "Nr",
-            "Student",
-            "Titlul Lucrării",
-            "Specializare",
-            "Statutul De Student",
+         const tableCols1 = [
+            { heading: "Nr", val: "" },
+            { heading: "Student", val: "student.email" },
+            { heading: "Titlul Lucrării", val: "tema.title" },
+            { heading: "Specializare", val: "tema.specializare" },
+            {
+               heading: "Statutul De Student",
+               val: { acceptBtn: true, rejectBtn: true },
+            },
          ];
 
          // Names Of Table Columns
-         const tableCol2 = ["Nr", "Student", "Title", "Deadline"];
+         const tableCols2 = [
+            { heading: "Nr", val: "" },
+            { heading: "Student", val: "title" },
+            { heading: "Title", val: "tema_type" },
+            { heading: "Deadline", val: "detalii" },
+         ];
 
          return (
             <>
@@ -229,101 +148,14 @@ const HomePage = () => {
                            />
                            <p className="text">Studenților în așteptare</p>
                         </div>
-                        <div className="cover">
-                           <table className="table">
-                              <thead className="thead">
-                                 <tr className="main-row">
-                                    {tableCol1.map((colName, i) => (
-                                       <th key={i} className="main-cell">
-                                          {colName}
-                                       </th>
-                                    ))}
-                                 </tr>
-                              </thead>
-                              <tbody className="tbody">
-                                 {waitingWorkspaces.length > 0 ? (
-                                    waitingWorkspaces
-                                       .map((cell, i) => {
-                                          return (
-                                             <tr key={i} className="row">
-                                                <td className="cell">
-                                                   {i + 1}.
-                                                </td>
-                                                <td className="cell">
-                                                   {cell.student.email}
-                                                </td>
-                                                <td className="cell">
-                                                   {cell.tema.title}
-                                                </td>
-                                                <td className="cell">
-                                                   {cell.tema.specializare}
-                                                </td>
-                                                <td className="cell">
-                                                   <div className="status">
-                                                      <div className="topic-btns ">
-                                                         <button
-                                                            className="btn edite-btn"
-                                                            onClick={() =>
-                                                               confirmAccept([
-                                                                  {
-                                                                     status: 1,
-                                                                  },
-                                                                  cell.worspace_id,
-                                                               ])
-                                                            }
-                                                         >
-                                                            Accept
-                                                            <img
-                                                               src={checkIcon}
-                                                               alt="check-icon"
-                                                               className="btn-icon"
-                                                            />
-                                                         </button>
-                                                         <button
-                                                            className="btn delete-btn"
-                                                            onClick={() =>
-                                                               confirmReject([
-                                                                  {
-                                                                     status: 3,
-                                                                  },
-                                                                  cell.worspace_id,
-                                                               ])
-                                                            }
-                                                         >
-                                                            Reject
-                                                            <img
-                                                               src={deleteIcon}
-                                                               alt="delete-icon"
-                                                               className="btn-icon"
-                                                            />
-                                                         </button>
-                                                      </div>
-                                                   </div>
-                                                </td>
-                                             </tr>
-                                          );
-                                       })
-                                       .slice(
-                                          paginationValueTable1.start,
-                                          paginationValueTable1.end
-                                       )
-                                 ) : (
-                                    <tr className="row">
-                                       <td
-                                          className="cell empty-table"
-                                          colSpan={tableCol1.length}
-                                       >
-                                          You Don't Have Any Request.
-                                       </td>
-                                    </tr>
-                                 )}
-                              </tbody>
-                           </table>
-                        </div>
-                        <Pagination
-                           paginationCount={waitingWorkspaces.length}
-                           setPaginationValue={setPaginationValueTable1}
-                        />
+                        {waitingWorkspaces ? (
+                           <Table
+                              tableCols={tableCols1}
+                              tableData={waitingWorkspaces}
+                              resetPagination={resetPagination}
+                              msg="You Don't Have Any Request."
+                           />
+                        ) : null}
                      </div>
                      <div className="content">
                         <div className="title">
@@ -334,56 +166,14 @@ const HomePage = () => {
                            />
                            <p className="text">Sarcinile tale</p>
                         </div>
-                        <div className="cover">
-                           <table className="table">
-                              <thead className="thead">
-                                 <tr className="main-row">
-                                    {tableCol2.map((colName, i) => (
-                                       <th key={i} className="main-cell">
-                                          {colName}
-                                       </th>
-                                    ))}
-                                 </tr>
-                              </thead>
-                              <tbody className="tbody">
-                                 {/* {waitingWorkspaces.length > 0 ? (
-                                    waitingWorkspaces.map((cell, i) => {
-                                       return (
-                                          <tr key={i} className="row">
-                                             <td className="cell">{i + 1}.</td>
-                                             <td className="cell">
-                                                {cell.student.email}
-                                             </td>
-                                             <td className="cell">
-                                                {cell.tema.title}
-                                             </td>
-                                             <td className="cell">
-                                                {cell.tema.specializare}
-                                             </td>
-                                             </tr>
-                                       );
-                                    })
-                                 ) : (
-                                    <tr className="row">
-                                       <td
-                                          className="cell empty-table"
-                                          colSpan={tableCol1.length}
-                                       >
-                                          You Don't Have Any Request.
-                                       </td>
-                                    </tr>
-                                 )} */}
-                                 <tr className="row">
-                                    <td
-                                       className="cell empty-table"
-                                       colSpan={tableCol1.length}
-                                    >
-                                       You Don't Have Any Request.
-                                    </td>
-                                 </tr>
-                              </tbody>
-                           </table>
-                        </div>
+                        {[] ? (
+                           <Table
+                              tableCols={tableCols2}
+                              tableData={[]}
+                              resetPagination={resetPagination}
+                              msg="You Don't Have Any Event Yet."
+                           />
+                        ) : null}
                      </div>
                   </div>
                </main>

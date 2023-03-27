@@ -62,7 +62,7 @@ export const deleteWorkspace = createAsyncThunk(
 // Get Workspace that 0 Status
 export const getWaitingWorkspace = createAsyncThunk(
    "workspaces/getWaitingWorkspace",
-   async ({}, { rejectWithValue }) => {
+   async (_, { rejectWithValue }) => {
       try {
          const config = {
             headers: {
@@ -89,7 +89,7 @@ export const getWaitingWorkspace = createAsyncThunk(
 // Get Workspace that 1 Status
 export const getAcceptedWorkspace = createAsyncThunk(
    "workspaces/getAcceptedWorkspace",
-   async ({}, { rejectWithValue }) => {
+   async (_, { rejectWithValue }) => {
       try {
          const config = {
             headers: {
