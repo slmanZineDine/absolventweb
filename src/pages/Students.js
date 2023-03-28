@@ -1,5 +1,5 @@
 // External
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 // Internal
@@ -8,8 +8,10 @@ import userOutIcon from "../assets/imgs/icons/userOutIcon.png";
 import userRejectedIcon from "../assets/imgs/icons/userRejectedIcon.png";
 import Header from "../components/Header";
 import Search from "../components/Search";
+import Spinning from "../components/Spinning";
 import Table from "../components/Table";
 import UniversityLogo from "../components/UniversityLogo";
+import { getStudentsStatusTable } from "../redux/export/exportActions";
 import { getStudents } from "../redux/users/uersAction";
 import { searchByName } from "../redux/users/usersSlice";
 import { getAcceptedWorkspace } from "../redux/workspaces/workspacesActions";
@@ -31,8 +33,10 @@ const Students = () => {
       (student) => student?.workspace?.status === 3
    );
    const haveNotSelectedTema = students.filter((student) => !student.workspace);
+   const exportProcess = useSelector((state) => state.export);
 
    // ======================= React Hook =======================
+   const anchorLink = useRef(null);
    useEffect(() => {
       if (userType === "coordonator") {
          dispatch(getAcceptedWorkspace({}));
@@ -99,6 +103,7 @@ const Students = () => {
       } else if (userType === "admin") {
          // Names Of Table Columns
          const tableCols = [
+            { heading: "Student ID", val: "id" },
             { heading: "Studenți", val: "email" },
             { heading: "Specializare", val: "specializare" },
          ];
@@ -109,6 +114,39 @@ const Students = () => {
                   <div className="container">
                      <Search searchMethod={searchByName} />
                      <div className="content">
+                        <div className="btns-space">
+                           <a
+                              ref={anchorLink}
+                              style={{
+                                 display: "none",
+                              }}
+                           ></a>
+                           {exportProcess.loading ? (
+                              <Spinning size="small" />
+                           ) : (
+                              <button
+                                 className="btn save-btn"
+                                 onClick={() => {
+                                    dispatch(getStudentsStatusTable()).then(
+                                       ({ payload }) => {
+                                          const blob = new Blob([payload], {
+                                             type: "octet-stream",
+                                          });
+                                          const href =
+                                             URL.createObjectURL(blob);
+                                          anchorLink.current.href = href;
+                                          anchorLink.current.download =
+                                             "students_status.csv";
+                                          anchorLink.current.click();
+                                          URL.revokeObjectURL(href);
+                                       }
+                                    );
+                                 }}
+                              >
+                                 Export
+                              </button>
+                           )}
+                        </div>
                         <div className="box">
                            <div className="title">
                               <img

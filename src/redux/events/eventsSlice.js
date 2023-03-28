@@ -32,6 +32,7 @@ const eventsSlice = createSlice({
          state.loading = false;
          state.success = true;
          state.workspaceEvents = payload.data;
+         console.log(state.workspaceEvents);
          // Sorting Events by last update
          state.workspaceEvents.sort((a, b) => {
             const firEleDate = new Date(a["updated_at"]);

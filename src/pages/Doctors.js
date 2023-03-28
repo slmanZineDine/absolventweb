@@ -1,5 +1,5 @@
 // External
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import Filter from "../components/Filter";
@@ -7,8 +7,10 @@ import Filter from "../components/Filter";
 import Header from "../components/Header";
 import Pagination from "../components/Pagination";
 import Search from "../components/Search";
+import Spinning from "../components/Spinning";
 import Table from "../components/Table";
 import UniversityLogo from "../components/UniversityLogo";
+import { getStudentsOfCoordinatorTable } from "../redux/export/exportActions";
 import { setSearchMethod } from "../redux/global/globalSlice";
 import { searchGlobaly } from "../redux/topics/topicsSlice";
 import { getAcceptedStudent } from "../redux/users/uersAction";
@@ -26,6 +28,7 @@ const Doctors = () => {
    const acceptedStudent = useSelector((state) => state.users.acceptedStudent);
    // Use This To Get Selected Search Method
    const searchMethod = useSelector((state) => state.global.searchMethod);
+   const exportProcess = useSelector((state) => state.export);
 
    // ======================= React Hook =======================
    // Specify Search Method To Send It To Search Compnent
@@ -38,6 +41,7 @@ const Doctors = () => {
       start: 0,
       end: 3,
    });
+   const anchorLink = useRef(null);
    useEffect(() => {
       if (user && userType === "admin") {
          dispatch(getAcceptedStudent());
@@ -69,6 +73,7 @@ const Doctors = () => {
          const tableCols = [
             { heading: "Nr", val: "" },
             { heading: "Student", val: "name" },
+            { heading: "Tema", val: "tema" },
             { heading: "Specializare", val: "specializare" },
          ];
 
@@ -82,6 +87,38 @@ const Doctors = () => {
                         <Filter student={true} searchMethod={searchGlobaly} />
                      </div>
                      <UniversityLogo />
+                     <div className="btns-space">
+                        <a
+                           ref={anchorLink}
+                           style={{
+                              display: "none",
+                           }}
+                        ></a>
+                        {exportProcess.loading ? (
+                           <Spinning size="small" />
+                        ) : (
+                           <button
+                              className="btn save-btn"
+                              onClick={() => {
+                                 dispatch(getStudentsOfCoordinatorTable()).then(
+                                    ({ payload }) => {
+                                       const blob = new Blob([payload], {
+                                          type: "octet-stream",
+                                       });
+                                       const href = URL.createObjectURL(blob);
+                                       anchorLink.current.href = href;
+                                       anchorLink.current.download =
+                                          "students_of_coordinator.csv";
+                                       anchorLink.current.click();
+                                       URL.revokeObjectURL(href);
+                                    }
+                                 );
+                              }}
+                           >
+                              Export
+                           </button>
+                        )}
+                     </div>
                      <div className="content">
                         {acceptedStudent
                            ? acceptedStudent

@@ -109,23 +109,16 @@ const topicsSlice = createSlice({
          state.loading = false;
          state.success = true;
          state.topicsByDoctor = payload.data;
-         // Sorting Doctor By any update | For list of tpics page
-         state.topicsByDoctor.sort((a, b) => {
-            const firEleDate = new Date(a["updated_at"]);
-            const secEleDate = new Date(b["updated_at"]);
-            return +secEleDate - +firEleDate;
-         });
-         // Sorting Teme By teme's updated time
-         state.topicsByDoctor.forEach((doctor) => {
+         state.topicsByDoctor = state.topicsByDoctor.filter((doctor) => {
+            // Remove Taken Tema Form List Of Topic
+            doctor.teme = doctor.teme.filter((tema) => tema.is_taken === 0);
+            // Sorting Teme By Teme's updated time
             doctor.teme.sort((a, b) => {
                const firEleDate = new Date(a["updated_at"]);
                const secEleDate = new Date(b["updated_at"]);
                return +secEleDate - +firEleDate;
             });
-         });
-         // Remove Taken Tema Form List Of Topic
-         state.topicsByDoctor.forEach((doctor) => {
-            doctor.teme = doctor.teme.filter((tema) => tema.is_taken === 0);
+            return doctor.teme.length > 0;
          });
          // Save Data In Temporary Variable To  Get It After Any Search
          state.tempData = JSON.stringify(state.topicsByDoctor);

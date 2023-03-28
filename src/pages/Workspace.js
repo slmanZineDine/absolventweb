@@ -63,13 +63,14 @@ const Workspace = () => {
    });
    useEffect(() => {
       if (userType === "coordonator" && workspaceInfo?.student_id) {
+         console.log(workspaceInfo?.student_id);
          dispatch(getWorkspaceEvents(workspaceInfo.student_id));
       }
       if (userType === "student") {
          dispatch(getStudentStatus({}));
          // Get Events Only For Students Have Status 1
          if (studentStatus?.workspace_status === 1) {
-            dispatch(getStudentEvents({}));
+            dispatch(getStudentEvents());
          }
       }
    }, []);

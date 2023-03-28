@@ -7,10 +7,6 @@
 .list-of-topics-page {
    background-color: $body-color;
    .container {
-      .save-btn-space {
-         @include flex(center, center);
-         height: 80px;
-      }
       .content {
          margin-bottom: 2rem;
          .title {

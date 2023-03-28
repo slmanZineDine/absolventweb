@@ -1,6 +1,6 @@
 // External
 import { Link, Navigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // Internal
 import Header from "../components/Header";
@@ -13,6 +13,8 @@ import Search from "../components/Search";
 import { searchByName, searchTipTema } from "../redux/users/usersSlice";
 import Filter from "../components/Filter";
 import Table from "../components/Table";
+import { getTemeTable } from "../redux/export/exportActions";
+import Spinning from "../components/Spinning";
 
 const HomePage = () => {
    // ======================= Global Data =======================
@@ -30,8 +32,10 @@ const HomePage = () => {
    const students = useSelector((state) => state.users.students).filter(
       (student) => student?.workspace?.status === 1
    );
+   const exportProcess = useSelector((state) => state.export);
 
    // ======================= React Hook =======================
+   const anchorLink = useRef(null);
    useEffect(() => {
       if (userType === "student") dispatch(getStudentStatus());
       else if (userType === "coordonator") dispatch(getWaitingWorkspace());
@@ -183,6 +187,7 @@ const HomePage = () => {
          // Names Of Table Columns
          const tableCols = [
             { heading: "Nr", val: "" },
+            { heading: "Student Id", val: "id" },
             { heading: "Student", val: "email" },
             { heading: "Coordonator", val: "coordonator.email" },
             { heading: "Titlul Temei", val: "tema.title" },
@@ -195,12 +200,45 @@ const HomePage = () => {
                      <div className="content">
                         <div className="box">
                            <Search searchMethod={searchByName} />
-                           <Filter
+                           {/* <Filter
                               topicType={true}
                               searchMethod={searchTipTema}
-                           />
+                           /> */}
                         </div>
                         <UniversityLogo />
+                        <div className="btns-space">
+                           <a
+                              ref={anchorLink}
+                              style={{
+                                 display: "none",
+                              }}
+                           ></a>
+                           {exportProcess.loading ? (
+                              <Spinning size="small" />
+                           ) : (
+                              <button
+                                 className="btn save-btn"
+                                 onClick={() => {
+                                    dispatch(getTemeTable()).then(
+                                       ({ payload }) => {
+                                          const blob = new Blob([payload], {
+                                             type: "octet-stream",
+                                          });
+                                          const href =
+                                             URL.createObjectURL(blob);
+                                          anchorLink.current.href = href;
+                                          anchorLink.current.download =
+                                             "students_coordinator_teme.csv";
+                                          anchorLink.current.click();
+                                          URL.revokeObjectURL(href);
+                                       }
+                                    );
+                                 }}
+                              >
+                                 Export
+                              </button>
+                           )}
+                        </div>
                         <div className="box">
                            <h2 className="title">
                               Detalii La Fiecare Student Pentru Lucrare De

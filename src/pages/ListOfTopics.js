@@ -21,6 +21,7 @@ import {
 } from "../redux/topics/topicsSlice";
 import Table from "../components/Table";
 import { setSearchMethod } from "../redux/global/globalSlice";
+import { getCoordinatorTemeTable } from "../redux/export/exportActions";
 
 const ListOfTopics = () => {
    // ======================= Global Data =======================
@@ -42,6 +43,7 @@ const ListOfTopics = () => {
    const userStatus = useSelector((state) => state.users.studentStatus);
    // Use This To Get Selected Search Method
    const searchMethod = useSelector((state) => state.global.searchMethod);
+   const exportProcess = useSelector((state) => state.export);
 
    // ======================= Router Hook =======================
    const navigate = useNavigate();
@@ -97,6 +99,7 @@ const ListOfTopics = () => {
    });
    // To Prevent Show Alert Unless Process Is Success Or Rejected
    const [processDone, setProcessDone] = useState(false);
+   const anchorLink = useRef(null);
    useEffect(() => {
       // If Student Or Admin => Getting All Doctors teme
       if (user && (userType === "student" || userType === "admin")) {
@@ -165,7 +168,7 @@ const ListOfTopics = () => {
                      />
                      {userStatus?.workspace_status === 1 ||
                      userStatus?.workspace_status === 0 ? null : (
-                        <div className="save-btn-space">
+                        <div className="btns-space">
                            {workspace.loading ? (
                               <Spinning size="small" />
                            ) : (
@@ -258,20 +261,38 @@ const ListOfTopics = () => {
                         topicType={true}
                         searchMethod={searchGlobaly}
                      />
-                     {userType === "admin" ? (
-                        <div className="save-btn-space">
-                           {workspace.loading ? (
-                              <Spinning size="small" />
-                           ) : (
-                              <button
-                                 className="btn save-btn"
-                                 onClick={() => alert("Export Done")}
-                              >
-                                 Export
-                              </button>
-                           )}
-                        </div>
-                     ) : null}
+                     <div className="btns-space">
+                        <a
+                           ref={anchorLink}
+                           style={{
+                              display: "none",
+                           }}
+                        ></a>
+                        {exportProcess.loading ? (
+                           <Spinning size="small" />
+                        ) : (
+                           <button
+                              className="btn save-btn"
+                              onClick={() => {
+                                 dispatch(getCoordinatorTemeTable()).then(
+                                    ({ payload }) => {
+                                       const blob = new Blob([payload], {
+                                          type: "octet-stream",
+                                       });
+                                       const href = URL.createObjectURL(blob);
+                                       anchorLink.current.href = href;
+                                       anchorLink.current.download =
+                                          "coordinator_teme.csv";
+                                       anchorLink.current.click();
+                                       URL.revokeObjectURL(href);
+                                    }
+                                 );
+                              }}
+                           >
+                              Export
+                           </button>
+                        )}
+                     </div>
                      {topicsByDoctor.length > 0
                         ? topicsByDoctor.map((doctor, i) => (
                              <div key={i} className="content">

@@ -33,8 +33,9 @@
    .container {
       .content {
          @include flex(flex-start, space-between, 2rem);
+         flex-wrap: wrap;
          .box {
-            width: 100%;
+            width: 48%;
             .title {
                @include flex(center, flex-start, 1rem);
                font-size: var(--h2-font-size);
@@ -63,6 +64,9 @@
    }
    .students-page-admin .container .content {
       flex-direction: column;
+   }
+   .students-page-admin .container .content .box {
+      width: 100%;
    }
    .students-page-admin .container .content .cover .table {
       min-width: 300px;

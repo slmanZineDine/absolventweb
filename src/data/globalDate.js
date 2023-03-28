@@ -25,4 +25,9 @@ export const ProgrammingLangList = [
    "Python",
    "Javascript",
 ];
-export const TipTemaList = ["All", "Scientific", "Synthesis"];
+export const TipTemaList = [
+   "All",
+   "Scientific",
+   "Synthesis",
+   "Practical Works",
+];
