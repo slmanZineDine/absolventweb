@@ -68,13 +68,35 @@ const AddPost = () => {
          due_date: deadlineInput.current.value,
       };
       if (fieldsValidation(userInput)) {
-         dispatch(addNewEvent(userInput));
+         // If There Is An Attachment Dispatch Upload Attachment Action
+         if (fileName) {
+            dispatch(addNewEvent(userInput)).then(({ payload }) => {
+               // Save Event ID Get It From Event Response
+               const event_ID = payload.data.id;
+               const fileData = new FormData();
+               fileData.append("event_id", event_ID);
+               fileData.append("file", attachmentInput.current.files[0]);
+               dispatch(uploadeFile(fileData));
+            });
+         }
+         // Dispatch Only Add Event Action
+         else dispatch(addNewEvent(userInput));
       }
    };
-   // 'The file must be a file of type: csv, txt, xlx, xls, pdf, zip.'
+   // Checking File Type
+   const handleFile = (theFileName) => {
+      const fileTypes = ["csv", "txt", "xlx", "xls", "pdf", "zip"];
+      if (fileTypes.includes(theFileName.slice(-3))) {
+         setFileName(theFileName);
+         setFileType(false);
+      } else setFileType(true);
+   };
 
    // ======================= React Hook =======================
+   // Store File Name To Show In The Screen
    const [fileName, setFileName] = useState(null);
+   // For Error File Type
+   const [fileType, setFileType] = useState(false);
    // To Prevent Show Alert When The Previous Process Is Pending
    const [btnClicked, setBtnClicked] = useState(false);
    // Variable below to manipulate useEffect and prevente run initial-render
@@ -85,25 +107,23 @@ const AddPost = () => {
          firstUpdate.current = false;
          return;
       }
-      if (!events.loading && events.error && btnClicked) {
-         processChecking(events.error, "error", "red-bg");
-      } else if (!events.loading && events.success && btnClicked) {
-         // if (attachmentInput.current.files.length > 0) {
-         //    const fileDate = new FormData();
-         //    fileDate.append("event_id", events.newEvent.id);
-         //    fileDate.append("file", attachmentInput.current.files[0]);
-         //    dispatch(uploadeFile(fileDate));
-         // } else {
-         processChecking("Add Successfully", "success", "done");
-         navigate("/workspace");
-         // }
+      if (fileName) {
+         // Show Alert After File Uploaded
+         if (!file.loading && file.error) {
+            processChecking(file.error, "error", "red-bg");
+         } else if (!file.loading && file.success) {
+            processChecking("Add Successfully", "success", "done");
+            navigate("/workspace");
+         }
+         // Case Show Alert If No File Exist
+      } else {
+         if (!events.loading && events.error && btnClicked) {
+            processChecking(events.error, "error", "red-bg");
+         } else if (!events.loading && events.success && btnClicked) {
+            processChecking("Add Successfully", "success", "done");
+            navigate("/workspace");
+         }
       }
-      // if (!file.loading && file.error) {
-      //    processChecking(file.error, "error", "red-bg");
-      // } else if (!file.loading && file.success && btnClicked) {
-      //    processChecking("Add Successfully", "success", "done");
-      //    navigate("/workspace");
-      // }
    }, [events.error, events.success, file.error, file.success]);
 
    if (user) {
@@ -156,7 +176,7 @@ const AddPost = () => {
                                  className="input-field"
                                  ref={attachmentInput}
                                  onChange={() =>
-                                    setFileName(
+                                    handleFile(
                                        attachmentInput.current.files[0].name
                                     )
                                  }
@@ -179,8 +199,19 @@ const AddPost = () => {
                               </div>
                            ) : null}
                         </li>
+                        {fileType ? (
+                           <li
+                              className="item"
+                              style={{ color: "red", justifyContent: "center" }}
+                           >
+                              <p style={{ textAlign: "center" }}>
+                                 The File Must Be A File Of Type: csv, txt, xlx,
+                                 xls, pdf, zip.
+                              </p>
+                           </li>
+                        ) : null}
                         <div className="save-btn-space">
-                           {events.loading ? (
+                           {events.loading && btnClicked ? (
                               <Spinning size="small" />
                            ) : (
                               <button

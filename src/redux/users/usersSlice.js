@@ -27,6 +27,14 @@ const usersSlice = createSlice({
          }
          // When User Enter Any Thing Reset Data To Re-search
          state.students = JSON.parse(state.tempData);
+
+         // Checking If Sting Contains # Or + To Escape With \
+         if (payload.includes("+")) payload = payload.replace(/\+/g, `\\+`);
+         else if (payload.includes("+"))
+            payload = payload.replace(/\#/g, `\\#`);
+         // Checking If String Contains Any Unexpected Char
+         else if (payload.search(/[*&$^]/) !== -1) return;
+
          const regexp = new RegExp(`${payload}`, "i");
 
          state.students = state.students.filter(
@@ -57,6 +65,13 @@ const usersSlice = createSlice({
          }
          // When User Enter Any Thing Reset Data To Re-search
          state.acceptedStudent = JSON.parse(state.tempData);
+
+         // Checking If Sting Contains # Or + To Escape With \
+         if (payload.includes("+")) payload = payload.replace(/\+/g, `\\+`);
+         else if (payload.includes("+"))
+            payload = payload.replace(/\#/g, `\\#`);
+         // Checking If String Contains Any Unexpected Char
+         else if (payload.search(/[*&$^]/) !== -1) return;
          const regexp = new RegExp(`${payload}`, "i");
 
          state.acceptedStudent = state.acceptedStudent.filter((coordinator) =>
@@ -71,10 +86,17 @@ const usersSlice = createSlice({
          }
          // When User Enter Any Thing Reset Data To Re-search
          state.acceptedStudent = JSON.parse(state.tempData);
+         // Checking If Sting Contains # Or + To Escape With \
+         if (payload.includes("+")) payload = payload.replace(/\+/g, `\\+`);
+         else if (payload.includes("+"))
+            payload = payload.replace(/\#/g, `\\#`);
+         // Checking If String Contains Any Unexpected Char
+         else if (payload.search(/[*&$^]/) !== -1) return;
+
          const regexp = new RegExp(`${payload}`, "i");
 
          state.acceptedStudent = state.acceptedStudent.filter((coordinator) => {
-            coordinator.teme = coordinator.students.filter((student) =>
+            coordinator.students = coordinator.students.filter((student) =>
                regexp.test(student?.name)
             );
             return coordinator.students.length > 0;

@@ -72,11 +72,14 @@ const EditePost = () => {
          dispatch(
             editeEvent({ eventID: state.eventId, eventContent: userInput })
          );
+         setBtnClicked(true);
       }
    };
 
    // ======================= React Hook =======================
    const [fileName, setFileName] = useState(null);
+   // To Prevent Show Alert When The Previous Process Is Pending
+   const [btnClicked, setBtnClicked] = useState(false);
    // Variable below to manipulate useEffect and prevente run initial-render
    const firstUpdate = useRef(true);
    useEffect(() => {
@@ -98,10 +101,12 @@ const EditePost = () => {
          firstUpdate.current = false;
          return;
       }
-      if (!events.loading && events.error) {
+      if (!events.loading && events.error && btnClicked) {
          processChecking(events.error, "error", "red-bg");
-      } else if (!events.loading && events.success) {
+         setBtnClicked(false);
+      } else if (!events.loading && events.success && btnClicked) {
          processChecking("Edite Successfully", "success", "done");
+         setBtnClicked(false);
          navigate("/workspace");
       }
    }, [events.error, events.success]);
@@ -180,7 +185,7 @@ const EditePost = () => {
                            ) : null}
                         </li>
                         <div className="save-btn-space">
-                           {events.loading ? (
+                           {events.loading && btnClicked ? (
                               <Spinning size="small" />
                            ) : (
                               <button

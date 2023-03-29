@@ -1,7 +1,7 @@
 // External
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 // Internal
 import Header from "../components/Header";
@@ -17,11 +17,11 @@ import Spinning from "../components/Spinning";
 import {
    searchByCoordinator,
    searchGlobaly,
-   searchTeme,
 } from "../redux/topics/topicsSlice";
 import Table from "../components/Table";
 import { setSearchMethod } from "../redux/global/globalSlice";
 import { getCoordinatorTemeTable } from "../redux/export/exportActions";
+import arrowUpIcon from "../assets/imgs/icons/arrowUpIcon.png";
 
 const ListOfTopics = () => {
    // ======================= Global Data =======================
@@ -32,10 +32,7 @@ const ListOfTopics = () => {
 
    // ======================= Redux Hook =======================
    const dispatch = useDispatch();
-   // For Student Or Admin
    const topicsByDoctor = useSelector((state) => state.topics.topicsByDoctor);
-   // For Coordinator Only
-   const topics = useSelector((state) => state.topics.doctorTopics);
    const workspace = useSelector((state) => state.workspaces);
    // Use This To Get Selected Tema Information To Send It To Create Workspace With 0 Status
    const workspaceInfo = useSelector((state) => state.global.workspaceInfo);
@@ -43,6 +40,8 @@ const ListOfTopics = () => {
    const userStatus = useSelector((state) => state.users.studentStatus);
    // Use This To Get Selected Search Method
    const searchMethod = useSelector((state) => state.global.searchMethod);
+   // For Table Msg [Coordinator] Show Diff Msg Based On SearchMode
+   const { searchMode } = useSelector((state) => state.global);
    const exportProcess = useSelector((state) => state.export);
 
    // ======================= Router Hook =======================
@@ -97,6 +96,8 @@ const ListOfTopics = () => {
       searchGlobaly: searchGlobaly,
       serachByCoordinator: searchByCoordinator,
    });
+   // Get Scroll Top Btn To Scroll Top When Use Select A Tema
+   const scrollTopBtn = useRef();
    // To Prevent Show Alert Unless Process Is Success Or Rejected
    const [processDone, setProcessDone] = useState(false);
    const anchorLink = useRef(null);
@@ -118,9 +119,11 @@ const ListOfTopics = () => {
          dispatch(getStudentStatus());
       }
    }, []);
+   useEffect(() => {
+      if (userType === "student") scrollTopBtn.current.click();
+   }, [workspaceInfo]);
    // Variable Below To Prevent Run useEffect Initial-Render
    const firstUpdate = useRef(true);
-
    useEffect(() => {
       if (firstUpdate.current) {
          firstUpdate.current = false;
@@ -173,7 +176,11 @@ const ListOfTopics = () => {
                               <Spinning size="small" />
                            ) : (
                               <button
-                                 className="btn save-btn"
+                                 className={`btn save-btn ${
+                                    workspaceInfo.tema_id
+                                       ? "save-btn-animation"
+                                       : null
+                                 }`}
                                  onClick={handleCreation}
                               >
                                  Save
@@ -197,6 +204,13 @@ const ListOfTopics = () => {
                           ))
                         : null}
                   </div>
+                  <a href="#" className="scroll-top" ref={scrollTopBtn}>
+                     <img
+                        src={arrowUpIcon}
+                        alt="arrow-up"
+                        className="btn-icon"
+                     />
+                  </a>
                </main>
             </>
          );
@@ -215,26 +229,43 @@ const ListOfTopics = () => {
                <Header userType={userType} />
                <main className="main list-of-topics-page">
                   <div className="container">
-                     <Search searchMethod={searchTeme} />
+                     <Search searchMethod={searchGlobaly} />
                      <Filter
                         coordinator={false}
                         programmingLang={true}
                         topicType={true}
-                        searchMethod={searchTeme}
+                        searchMethod={searchGlobaly}
                      />
-                     {topics?.teme ? (
-                        <div className="content">
-                           <h2 className="title">
-                              Coordinator: {JSON.parse(user)?.name}
-                           </h2>
-                           <Table
-                              tableCols={tableCols}
-                              tableData={topics.teme}
-                              resetPagination={resetPagination}
-                              msg="You Don't Any Tema."
-                           />
-                        </div>
-                     ) : null}
+                     <div className="content">
+                        <h2 className="title">
+                           Coordinator: {JSON.parse(user)?.name}
+                        </h2>
+                        <Table
+                           tableCols={tableCols}
+                           tableData={topicsByDoctor?.[0]?.teme || []}
+                           resetPagination={resetPagination}
+                           msg={
+                              searchMode ? (
+                                 "There Are No Matched Teme."
+                              ) : (
+                                 <p>
+                                    You Don't Any Tema Yet. Go To{" "}
+                                    <Link
+                                       to="/profile"
+                                       style={{
+                                          textDecoration: "underLine",
+                                          color: "blue",
+                                          fontWeight: "bold",
+                                       }}
+                                    >
+                                       Profile
+                                    </Link>{" "}
+                                    To Add A New Tema.
+                                 </p>
+                              )
+                           }
+                        />
+                     </div>
                   </div>
                </main>
             </>

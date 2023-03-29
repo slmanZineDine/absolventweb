@@ -21,6 +21,7 @@ export const ProgrammingLangList = [
    "PHP",
    "C",
    "C++",
+   "C#",
    "Java",
    "Python",
    "Javascript",

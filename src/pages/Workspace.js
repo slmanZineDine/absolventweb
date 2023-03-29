@@ -63,15 +63,13 @@ const Workspace = () => {
    });
    useEffect(() => {
       if (userType === "coordonator" && workspaceInfo?.student_id) {
-         console.log(workspaceInfo?.student_id);
          dispatch(getWorkspaceEvents(workspaceInfo.student_id));
       }
       if (userType === "student") {
-         dispatch(getStudentStatus({}));
+         dispatch(getStudentStatus());
          // Get Events Only For Students Have Status 1
-         if (studentStatus?.workspace_status === 1) {
+         if (studentStatus?.workspace_status === 1)
             dispatch(getStudentEvents());
-         }
       }
    }, []);
 
@@ -87,10 +85,11 @@ const Workspace = () => {
                         <div className="content">
                            <ul className="workspace-info">
                               <li className="item">
-                                 Titlul: Aplicație web pentru asignarea
-                                 lucrarilor de licență
+                                 Titlul: {workspaceInfo.tema_name}
                               </li>
-                              <li className="item">Coordinator: john doe</li>
+                              <li className="item">
+                                 Coordinator: {workspaceInfo.coordinator_name}
+                              </li>
                               <li className="item">
                                  Student: {JSON.parse(user)?.name}
                               </li>

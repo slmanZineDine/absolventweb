@@ -31,6 +31,14 @@
             margin-block: 2rem;
             @include flex(center, flex-start, 0.5rem);
          }
+         table {
+            td:first-of-type {
+               text-align: center;
+            }
+            td:last-of-type {
+               text-align: center;
+            }
+         }
       }
       .university-logo {
          width: 25%;

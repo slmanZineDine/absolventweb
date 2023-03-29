@@ -112,9 +112,17 @@ const EditeTask = () => {
          firstUpdate.current = false;
          return;
       }
-      if (!events.loading && events.error) {
+      if (
+         !events.loading &&
+         events.error &&
+         (processType.delete || processType.edite)
+      ) {
          processChecking(events.error, "error", "red-bg");
-      } else if (!events.loading && events.success) {
+      } else if (
+         !events.loading &&
+         events.success &&
+         (processType.delete || processType.edite)
+      ) {
          processChecking("Process Successfully", "success", "done");
          navigate("/workspace");
       }

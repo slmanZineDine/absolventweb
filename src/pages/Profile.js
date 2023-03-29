@@ -18,7 +18,7 @@ const Profile = () => {
 
    // ======================= Redux Hook =======================
    const dispatch = useDispatch();
-   const topics = useSelector((state) => state.topics.doctorTopics);
+   const topicsByDoctor = useSelector((state) => state.topics.topicsByDoctor);
 
    // ======================= React Hook =======================
    useEffect(() => {
@@ -125,14 +125,12 @@ const Profile = () => {
                               className="btn-icon"
                            />
                         </button>
-                        {topics?.teme ? (
-                           <Table
-                              tableCols={tableCols}
-                              tableData={topics.teme}
-                              resetPagination={resetPagination}
-                              msg="You Don't Any Tema."
-                           />
-                        ) : null}
+                        <Table
+                           tableCols={tableCols}
+                           tableData={topicsByDoctor?.[0]?.teme || []}
+                           resetPagination={resetPagination}
+                           msg="You Don't Any Tema Yet."
+                        />
                      </div>
                   </section>
                ) : null}

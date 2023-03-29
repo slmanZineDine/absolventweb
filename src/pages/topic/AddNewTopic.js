@@ -126,7 +126,7 @@ const AddNewTopic = () => {
                            />
                         </li>
                         <div className="save-btn-space">
-                           {topics.loading ? (
+                           {topics.loading && btnClicked ? (
                               <Spinning size="small" />
                            ) : (
                               <button

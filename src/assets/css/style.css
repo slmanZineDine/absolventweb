@@ -633,6 +633,25 @@ input[type=number] {
   background-color: rgba(40, 167, 69, 0.6901960784);
 }
 
+/* Scroll Top Button */
+.scroll-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 3rem;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  background-color: rgba(0, 123, 255, 0.6274509804);
+  transition: background-color 0.3s;
+}
+.scroll-top:hover {
+  background-color: #007bff;
+}
+
 /* Page Not Found button */
 .retrun-btn {
   background-color: #007bff;
@@ -1548,7 +1567,34 @@ input[type=number] {
   width: 10px;
   text-align: center;
 }
+.list-of-topics-page .container .save-btn-animation {
+  animation: wiggle 1.5s linear infinite;
+}
 
+/* Animation For Save Btn */
+@keyframes wiggle {
+  0%, 7% {
+    transform: rotateZ(0);
+  }
+  15% {
+    transform: rotateZ(-15deg);
+  }
+  20% {
+    transform: rotateZ(10deg);
+  }
+  25% {
+    transform: rotateZ(-10deg);
+  }
+  30% {
+    transform: rotateZ(6deg);
+  }
+  35% {
+    transform: rotateZ(-4deg);
+  }
+  40%, 100% {
+    transform: rotateZ(0);
+  }
+}
 /*===================== PROFILE PAGE =====================*/
 .profile-student {
   min-height: 100vh;
@@ -1915,6 +1961,12 @@ input[type=number] {
   align-items: center;
   justify-content: flex-start;
   gap: 0.5rem;
+}
+.workspace-page .container .content table td:first-of-type {
+  text-align: center;
+}
+.workspace-page .container .content table td:last-of-type {
+  text-align: center;
 }
 .workspace-page .container .university-logo {
   width: 25%;

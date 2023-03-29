@@ -14,7 +14,6 @@ const initialState = {
    success: false, // Checking if auth is done
    workspaceEvents: [], // All workspace Events
    eventById: [], // Exactly Event By Its Id
-   newEvent: {}, // Store New Event To Use Event_id with Attachment
 };
 
 const eventsSlice = createSlice({
@@ -22,7 +21,7 @@ const eventsSlice = createSlice({
    initialState,
    reducers: {},
    extraReducers: {
-      // Add All Workspace Events
+      // Get Doctor's Workspace Events To Specific Student
       [getWorkspaceEvents.pending]: (state) => {
          state.loading = true;
          state.success = false; // Reset a value every Request
@@ -31,8 +30,8 @@ const eventsSlice = createSlice({
       [getWorkspaceEvents.fulfilled]: (state, { payload }) => {
          state.loading = false;
          state.success = true;
-         state.workspaceEvents = payload.data;
-         console.log(state.workspaceEvents);
+         state.workspaceEvents = payload.workspace_info.events;
+
          // Sorting Events by last update
          state.workspaceEvents.sort((a, b) => {
             const firEleDate = new Date(a["updated_at"]);
@@ -54,7 +53,16 @@ const eventsSlice = createSlice({
       [getStudentEvents.fulfilled]: (state, { payload }) => {
          state.loading = false;
          state.success = true;
-         state.workspaceEvents = payload.data;
+         // Workspace Information
+         const workspaceInfo = {
+            coordinator_name:
+               payload.workspace_info["coordonator name"] || null,
+            workspace_id: payload.workspace_info.workspace_id || null,
+            tema_name: payload.workspace_info["tema title"] || null,
+         };
+         // Store Workspace Information Inside LocalStorage
+         localStorage.setItem("workspaceInfo", JSON.stringify(workspaceInfo));
+         state.workspaceEvents = payload.events;
          // Sorting Events by last update
          state.workspaceEvents.sort((a, b) => {
             const firEleDate = new Date(a["updated_at"]);
@@ -92,7 +100,6 @@ const eventsSlice = createSlice({
       [addNewEvent.fulfilled]: (state, { payload }) => {
          state.loading = false;
          state.success = true;
-         state.newEvent = payload.data;
       },
       [addNewEvent.rejected]: (state, { payload }) => {
          state.loading = false;

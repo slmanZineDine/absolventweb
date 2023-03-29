@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { ProgrammingLangList, TipTemaList } from "../data/globalDate";
 import { setSearchMethod, setSearchMode } from "../redux/global/globalSlice";
+import { searchByProgrammingLang } from "../redux/topics/topicsSlice";
 
 const Filter = ({
    coordinator,
@@ -85,7 +86,7 @@ const Filter = ({
                               className="option"
                               onClick={(_) => {
                                  setSelectedLang(i);
-                                 dispatch(searchMethod(lang));
+                                 dispatch(searchByProgrammingLang(lang));
                                  // Making Search Mode Ture To Reset All Pagination To Start Point
                                  dispatch(setSearchMode(true));
                               }}
@@ -120,7 +121,6 @@ const Filter = ({
                               onClick={(_) => {
                                  setSelectedTip(i);
                                  dispatch(searchMethod(tip));
-                                 // Reset Pagination On Serach Opreation
                                  // Making Search Mode Ture To Reset All Pagination To Start Point
                                  dispatch(setSearchMode(true));
                               }}

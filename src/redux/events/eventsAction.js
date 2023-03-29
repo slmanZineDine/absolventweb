@@ -18,7 +18,6 @@ export const getWorkspaceEvents = createAsyncThunk(
             `${baseURL}/api/event/student/${studentId}`,
             config
          );
-         console.log(data);
          return data;
       } catch (error) {
          // return custom error message from API if any

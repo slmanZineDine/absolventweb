@@ -111,7 +111,7 @@ const AddMeeting = () => {
                            />
                         </li>
                         <div className="save-btn-space">
-                           {events.loading ? (
+                           {events.loading && btnClicked ? (
                               <Spinning size="small" />
                            ) : (
                               <button

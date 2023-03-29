@@ -71,8 +71,8 @@ export const EditeTopic = () => {
    // ======================= React Hook =======================
    useEffect(() => {
       // Prevent User Enter This Page Directly
-      if (state?.id && topics.doctorTopics?.teme?.length > 0) {
-         const topic = topics.doctorTopics.teme.find(
+      if (state?.id && topics.topicsByDoctor.length > 0) {
+         const topic = topics.topicsByDoctor[0].teme.find(
             (tema) => tema.id === state.id
          );
          titleInput.current.focus();

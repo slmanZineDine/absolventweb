@@ -76,9 +76,9 @@ const Register = () => {
          type: selectedType,
          password: passwordInput.current.value,
          password_confirmation: passwordConFirmInput.current.value,
-         phone: phoneInput.current.value,
-         address: addressInput.current.value,
-         facultatea: facultyInput.current.value,
+         // phone: phoneInput.current.value,
+         // address: addressInput.current.value,
+         // facultatea: facultyInput.current.value,
          specializare: specializareInput.current.value,
       };
 
@@ -201,7 +201,7 @@ const Register = () => {
                               ref={passwordConFirmInput}
                            />
                         </div>
-                        <div className="form-group">
+                        {/* <div className="form-group">
                            <label htmlFor="phone">Phone</label>
                            <div className="img-input">
                               <img src={phoneIcon} alt="phone-icon" />
@@ -214,8 +214,8 @@ const Register = () => {
                               placeholder="Write here"
                               ref={phoneInput}
                            />
-                        </div>
-                        <div className="form-group">
+                        </div> */}
+                        {/* <div className="form-group">
                            <label htmlFor="address">Address</label>
                            <div className="img-input">
                               <img src={addressIcon} alt="address-icon" />
@@ -228,7 +228,18 @@ const Register = () => {
                               placeholder="Write here"
                               ref={addressInput}
                            />
-                        </div>
+                        </div> */}
+                        {/* <div className="form-group">
+                           <label htmlFor="facultatea">Facultatea</label>
+                           <input
+                              type="text"
+                              className="form-input"
+                              required
+                              id="facultatea"
+                              placeholder="Write here"
+                              ref={facultyInput}
+                           />
+                        </div> */}
                         <div className="form-group">
                            <label htmlFor="specializare">Specializare</label>
                            <input
@@ -238,17 +249,6 @@ const Register = () => {
                               id="specializare"
                               placeholder="Write here"
                               ref={specializareInput}
-                           />
-                        </div>
-                        <div className="form-group">
-                           <label htmlFor="facultatea">Facultatea</label>
-                           <input
-                              type="text"
-                              className="form-input"
-                              required
-                              id="facultatea"
-                              placeholder="Write here"
-                              ref={facultyInput}
                            />
                         </div>
 

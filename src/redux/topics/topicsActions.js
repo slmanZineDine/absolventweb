@@ -3,57 +3,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const baseURL = "http://127.0.0.1:8000";
 
-// Getting all topics
-export const getTopics = createAsyncThunk(
-   "topics/getTopics",
-   async ({}, { rejectWithValue }) => {
-      try {
-         const config = {
-            headers: {
-               Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-            },
-         };
-
-         const { data } = await axios.get(`${baseURL}/api/teme`, config);
-         return data;
-      } catch (error) {
-         // return custom error message from API if any
-         if (error.response && error.response.data.message) {
-            return rejectWithValue(error.response.data.message);
-         } else {
-            return rejectWithValue(error.message);
-         }
-      }
-   }
-);
-
-// Getting topic by Id
-export const getTopicById = createAsyncThunk(
-   "topics/getTopicById",
-   async (TopicId, { rejectWithValue }) => {
-      try {
-         const config = {
-            headers: {
-               Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-            },
-         };
-
-         const { data } = await axios.get(
-            `${baseURL}/api/teme/${TopicId}`,
-            config
-         );
-         return data;
-      } catch (error) {
-         // return custom error message from API if any
-         if (error.response && error.response.data.message) {
-            return rejectWithValue(error.response.data.message);
-         } else {
-            return rejectWithValue(error.message);
-         }
-      }
-   }
-);
-
 // Getting All Teme By Doctor
 export const getAllTopicsByDoctor = createAsyncThunk(
    "topics/getAllTopicsByDoctor",
