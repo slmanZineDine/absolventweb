@@ -72,9 +72,9 @@ const Doctors = () => {
          // Names Of Table Columns
          const tableCols = [
             { heading: "Nr", val: "" },
+            { heading: "Workspace ID", val: "workspace_id" },
             { heading: "Student", val: "name" },
             { heading: "Tema", val: "tema" },
-            { heading: "Specializare", val: "specializare" },
          ];
 
          return (

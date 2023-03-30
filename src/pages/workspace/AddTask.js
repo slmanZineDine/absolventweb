@@ -70,13 +70,16 @@ const AddTask = () => {
       if (fieldsValidation(userInput)) {
          // If There Is An Attachment Dispatch Upload Attachment Action
          if (fileName) {
+            let file = attachmentInput.current.files[0];
             dispatch(addNewEvent(userInput)).then(({ payload }) => {
                // Save Event ID Get It From Event Response
                const event_ID = payload.data.id;
                const fileData = new FormData();
+               console.log(attachmentInput.current.files[0]);
                fileData.append("event_id", event_ID);
-               fileData.append("file", attachmentInput.current.files[0]);
+               fileData.append("file", file);
                dispatch(uploadeFile(fileData));
+               setFileUploaded(true);
             });
          }
          // Dispatch Only Add Event Action
@@ -85,6 +88,11 @@ const AddTask = () => {
    };
    // Checking File Type
    const handleFile = (theFileName) => {
+      // Checking If File removed
+      if (!theFileName) {
+         setFileName(null);
+         return;
+      }
       const fileTypes = ["csv", "txt", "xlx", "xls", "pdf", "zip"];
       if (fileTypes.includes(theFileName.slice(-3))) {
          setFileName(theFileName);
@@ -96,6 +104,7 @@ const AddTask = () => {
    const [fileName, setFileName] = useState(null);
    // For Error File Type
    const [fileType, setFileType] = useState(false);
+   const [fileUploaded, setFileUploaded] = useState(false);
    // To Prevent Show Alert When The Previous Process Is Pending
    const [btnClicked, setBtnClicked] = useState(false);
    // Variable below to manipulate useEffect and prevente run initial-render
@@ -108,23 +117,24 @@ const AddTask = () => {
       }
       if (fileName) {
          // Show Alert After File Uploaded
-         if (!file.loading && file.error) {
+         if (!file.loading && file.error && fileUploaded) {
             processChecking(file.error, "error", "red-bg");
-         } else if (!file.loading && file.success) {
-            processChecking("Add Successfully", "success", "done");
-            navigate("/workspace");
+         } else if (!file.loading && file.success && fileUploaded) {
+            processChecking("Add Successfully", "success", "done").then(() =>
+               navigate("/workspace")
+            );
          }
          // Case Show Alert If No File Exist
       } else {
          if (!events.loading && events.error && btnClicked) {
             processChecking(events.error, "error", "red-bg");
          } else if (!events.loading && events.success && btnClicked) {
-            processChecking("Add Successfully", "success", "done");
-            navigate("/workspace");
+            processChecking("Add Successfully", "success", "done").then(() =>
+               navigate("/workspace")
+            );
          }
       }
    }, [events.error, events.success, file.error, file.success]);
-
    if (user) {
       return (
          <>
@@ -176,7 +186,7 @@ const AddTask = () => {
                                  ref={attachmentInput}
                                  onChange={() =>
                                     handleFile(
-                                       attachmentInput.current.files[0].name
+                                       attachmentInput.current?.files[0]?.name
                                     )
                                  }
                               />
@@ -210,7 +220,7 @@ const AddTask = () => {
                            </li>
                         ) : null}
                         <div className="save-btn-space">
-                           {events.loading && btnClicked ? (
+                           {(events.loading && btnClicked) || file.loading ? (
                               <Spinning size="small" />
                            ) : (
                               <button

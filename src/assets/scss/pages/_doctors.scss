@@ -15,6 +15,7 @@
       .content:last-of-type {
          width: 100%;
          @include flex(flex-start, space-between, 1rem);
+         flex-wrap: wrap;
          .box {
             margin-bottom: 1.5rem;
             flex: 1;
@@ -75,8 +76,5 @@
       align-self: center;
       width: auto;
       margin-bottom: 2rem;
-   }
-   .doctors-page .container .content:last-of-type {
-      flex-wrap: wrap;
    }
 }

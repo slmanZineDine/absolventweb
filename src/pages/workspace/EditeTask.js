@@ -68,7 +68,6 @@ const EditeTask = () => {
          descriere: contentInput.current.value,
          type: "task",
          due_date: deadlineInput.current.value,
-         // attachment: attachmentInput.current.files[0],
       };
       if (fieldsValidation(userInput)) {
          setProcessType({ delete: false, edite: true });
@@ -77,10 +76,21 @@ const EditeTask = () => {
          );
       }
    };
-
+   // Checking File Type And Remove Old File If Exist
+   const handleFile = (theFileName) => {
+      if (fileName) {
+      } // show alert to Remove old file
+      const fileTypes = ["csv", "txt", "xlx", "xls", "pdf", "zip"];
+      if (fileTypes.includes(theFileName.slice(-3))) {
+         setFileName(theFileName);
+         setFileType(false);
+      } else setFileType(true);
+   };
    // ======================= React Hook =======================
    const [fileName, setFileName] = useState(null);
    // Store Event Id To Use It Inside Delete Event Action
+   // For Error File Type
+   const [fileType, setFileType] = useState(false);
    const [eventId, setEventId] = useState(null);
    // Select Process Type For Specific Button That Change To Spining
    const [processType, setProcessType] = useState({
@@ -95,6 +105,7 @@ const EditeTask = () => {
          const postEvent = workspaceEvents.find(
             (post) => post.id === state.eventId
          );
+         console.log(postEvent);
          // Compare User ID With Author ID To Prevent Not Author' Meeting Edite Or Delete
          if (userId !== postEvent.author_id) navigate("/workspace");
          setEventId(postEvent.id);
@@ -102,6 +113,8 @@ const EditeTask = () => {
          titleInput.current.value = postEvent?.title ?? "";
          contentInput.current.value = postEvent?.descriere ?? "";
          deadlineInput.current.value = postEvent?.due_date ?? "";
+         // Checking If There Is A file
+         if (postEvent?.attachment) setFileName(postEvent.attachment.file_name);
       } else {
          navigate("/workspace");
       }
@@ -193,7 +206,7 @@ const EditeTask = () => {
                                  className="input-field"
                                  ref={attachmentInput}
                                  onChange={() =>
-                                    setFileName(
+                                    handleFile(
                                        attachmentInput.current.files[0].name
                                     )
                                  }

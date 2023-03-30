@@ -1867,6 +1867,7 @@ input[type=number] {
   align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 .doctors-page .container .content:last-of-type .box {
   margin-bottom: 1.5rem;
@@ -1913,9 +1914,6 @@ input[type=number] {
     align-self: center;
     width: auto;
     margin-bottom: 2rem;
-  }
-  .doctors-page .container .content:last-of-type {
-    flex-wrap: wrap;
   }
 }
 /*===================== WORKSPACE PAGE =====================*/

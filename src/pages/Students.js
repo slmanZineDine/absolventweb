@@ -103,8 +103,9 @@ const Students = () => {
       } else if (userType === "admin") {
          // Names Of Table Columns
          const tableCols = [
-            { heading: "Student ID", val: "id" },
-            { heading: "Studenți", val: "email" },
+            { heading: "Studenți ID", val: "id" },
+            { heading: "Studenți", val: "student_name" },
+            { heading: "Studenți Email", val: "email" },
             { heading: "Specializare", val: "specializare" },
          ];
          return (

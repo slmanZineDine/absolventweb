@@ -2,6 +2,7 @@
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import swal from "sweetalert";
 
 // Internal
 import Header from "../../components/Header";
@@ -27,11 +28,23 @@ const Post = () => {
    // ======================= Redux Hook =======================
    const dispatch = useDispatch();
    const event = useSelector((state) => state.events.eventById);
+   const eventsGlobal = useSelector((state) => state.events);
    const comments = useSelector((state) => state.comments.comments);
 
    // ======================= Router Hook =======================
    const navigate = useNavigate();
    const { state } = useLocation();
+
+   // ======================= Sweet Alert Labrary =======================
+   const processChecking = async (msg, icon, theClassName) => {
+      await swal(msg, {
+         buttons: false,
+         timer: 3000,
+         icon: icon,
+         className: theClassName,
+         closeOnEsc: false,
+      });
+   };
 
    // ======================= Own Function =======================
    /**
@@ -81,6 +94,8 @@ const Post = () => {
    const [editeMode, setEidteMode] = useState(false);
    // For Show Post Dropdown Option, Edite Post, Delete Post
    const [showPostOption, setPostOption] = useState(false);
+   // To Prevent Show Alert When The Previous Process Is Pending
+   const [btnClicked, setBtnClicked] = useState(false);
 
    useEffect(() => {
       if (state?.eventId) {
@@ -90,6 +105,21 @@ const Post = () => {
          navigate("/workspace");
       }
    }, []);
+   // Variable below to manipulate useEffect and prevente run initial-render
+   const firstUpdate = useRef(true);
+   useEffect(() => {
+      if (firstUpdate.current) {
+         firstUpdate.current = false;
+         return;
+      }
+      if (!eventsGlobal.loading && eventsGlobal.error && btnClicked) {
+         processChecking(eventsGlobal.error, "error", "red-bg");
+      } else if (!eventsGlobal.loading && eventsGlobal.success && btnClicked) {
+         processChecking("Delete Successfully", "success", "done").then(() =>
+            navigate("/workspace")
+         );
+      }
+   }, [eventsGlobal.error, eventsGlobal.success]);
 
    if (user) {
       return (
@@ -140,7 +170,7 @@ const Post = () => {
                                           onClick={() => {
                                              dispatch(deleteEvent(event.id));
                                              setPostOption(false);
-                                             navigate("/workspace");
+                                             setBtnClicked(true);
                                           }}
                                        >
                                           Delete

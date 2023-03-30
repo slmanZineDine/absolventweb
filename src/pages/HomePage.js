@@ -188,8 +188,10 @@ const HomePage = () => {
          const tableCols = [
             { heading: "Nr", val: "" },
             { heading: "Student Id", val: "id" },
-            { heading: "Student", val: "email" },
-            { heading: "Coordonator", val: "coordonator.email" },
+            { heading: "Student", val: "student_name" },
+            { heading: "Student Email", val: "email" },
+            { heading: "Coordonator", val: "coordonator.coordinator_name" },
+            { heading: "Coordonator Email", val: "coordonator.email" },
             { heading: "Titlul Temei", val: "tema.title" },
          ];
          return (

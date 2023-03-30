@@ -96,6 +96,7 @@ const usersSlice = createSlice({
          const regexp = new RegExp(`${payload}`, "i");
 
          state.acceptedStudent = state.acceptedStudent.filter((coordinator) => {
+            console.log(coordinator.students);
             coordinator.students = coordinator.students.filter((student) =>
                regexp.test(student?.name)
             );

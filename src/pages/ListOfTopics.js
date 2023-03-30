@@ -192,7 +192,7 @@ const ListOfTopics = () => {
                         ? topicsByDoctor.map((doctor, i) => (
                              <div key={i} className="content">
                                 <h2 className="title">
-                                   {i + 1}. ({doctor.email})
+                                   {i + 1}. {doctor.name} ({doctor.email})
                                 </h2>
                                 <Table
                                    tableCols={tableCols}
@@ -328,7 +328,8 @@ const ListOfTopics = () => {
                         ? topicsByDoctor.map((doctor, i) => (
                              <div key={i} className="content">
                                 <h2 className="title">
-                                   {i + 1}. ({doctor.email})
+                                   {i + 1}. {doctor.name} ({doctor.email})
+                                   (Coordinator ID: {doctor.id})
                                 </h2>
                                 <Table
                                    tableCols={tableCols}
