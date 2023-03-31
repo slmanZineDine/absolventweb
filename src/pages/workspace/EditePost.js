@@ -10,7 +10,10 @@ import addIcon from "../../assets/imgs/icons/addIcon.png";
 import deleteIcon from "../../assets/imgs/icons/deleteIcon.png";
 import { editeEvent } from "../../redux/events/eventsAction";
 import Spinning from "../../components/Spinning";
-import { removeFile } from "../../redux/attachments/attachmentsActions";
+import {
+   removeFile,
+   uploadeFile,
+} from "../../redux/attachments/attachmentsActions";
 
 const EditePost = () => {
    // ======================= Global Data =======================
@@ -57,11 +60,11 @@ const EditePost = () => {
          const postEvent = workspaceEvents.find(
             (post) => post.id === state.eventId
          );
-         console.log(postEvent);
          titleInput.current.focus();
          titleInput.current.value = postEvent?.title ?? "";
          contentInput.current.value = postEvent?.descriere ?? "";
          deadlineInput.current.value = postEvent?.due_date ?? "";
+         // Checking If There Is A file
          if (postEvent.attachment) {
             setFileName(postEvent.attachment.file_name);
             setFileID(postEvent.attachment.id);
@@ -73,20 +76,31 @@ const EditePost = () => {
 
    // ############## Alert Logic ##############
    useEffect(() => {
+      titleInput.current.focus();
       if (firstUpdate.current) {
          firstUpdate.current = false;
          return;
       }
-      if (!events.loading && events.error && btnClicked) {
-         processChecking(events.error, "error", "red-bg");
-         setBtnClicked(false);
-      } else if (!events.loading && events.success && btnClicked) {
-         processChecking("Edite Successfully", "success", "done").then(() =>
-            navigate("/workspace")
-         );
-         setBtnClicked(false);
+      if (fileName) {
+         // Show Alert After File Uploaded
+         if (!file.loading && file.error && fileUploaded) {
+            processChecking(file.error, "error", "red-bg");
+         } else if (!file.loading && file.success && fileUploaded) {
+            processChecking("Add Successfully", "success", "done").then(() =>
+               navigate("/workspace")
+            );
+         }
+         // Case Show Alert If No File Exist
+      } else {
+         if (!events.loading && events.error && btnClicked) {
+            processChecking(events.error, "error", "red-bg");
+         } else if (!events.loading && events.success && btnClicked) {
+            processChecking("Add Successfully", "success", "done").then(() =>
+               navigate("/workspace")
+            );
+         }
       }
-   }, [events.error, events.success]);
+   }, [events.error, events.success, file.error, file.success]);
 
    // ======================= Sweet Alert Labrary =======================
    const processChecking = async (msg, icon, theClassName) => {
@@ -111,8 +125,7 @@ const EditePost = () => {
          return true;
       }
    };
-
-   // ======================= Handle Request =======================
+   // ======================= Handler =======================
    const handleProcess = () => {
       const userInput = {
          workspace_id: workspaceInfo.workspace_id,
@@ -122,11 +135,41 @@ const EditePost = () => {
          due_date: deadlineInput.current.value,
       };
       if (fieldsValidation(userInput)) {
-         dispatch(
-            editeEvent({ eventID: state.eventId, eventContent: userInput })
-         );
-         setBtnClicked(true);
+         // If There Is An Attachment Dispatch Upload Attachment Action
+         if (fileName) {
+            let file = attachmentInput.current.files[0];
+            dispatch(
+               editeEvent({ eventID: state.eventId, eventContent: userInput })
+            ).then(({ payload }) => {
+               // Save Event ID Get It From Event Response
+               const event_ID = payload.data.id;
+               const fileData = new FormData();
+               fileData.append("event_id", event_ID);
+               fileData.append("file", file);
+               dispatch(uploadeFile(fileData));
+               setFileUploaded(true);
+            });
+         }
+         // If There Is No An Attachment Dispatch Only Add Event Action
+         else {
+            dispatch(
+               editeEvent({ eventID: state.eventId, eventContent: userInput })
+            );
+         }
       }
+   };
+   // Checking File Type
+   const handleFile = (theFileName) => {
+      // Checking If File removed
+      if (!theFileName) {
+         setFileName(null);
+         return;
+      }
+      const fileTypes = ["csv", "txt", "xlx", "xls", "pdf", "zip"];
+      if (fileTypes.includes(theFileName.slice(-3))) {
+         setFileName(theFileName);
+         setFileType(false);
+      } else setFileType(true);
    };
 
    if (user) {
@@ -179,8 +222,8 @@ const EditePost = () => {
                                  className="input-field"
                                  ref={attachmentInput}
                                  onChange={() =>
-                                    setFileName(
-                                       attachmentInput.current.files[0].name
+                                    handleFile(
+                                       attachmentInput.current?.files[0]?.name
                                     )
                                  }
                               />
@@ -224,7 +267,10 @@ const EditePost = () => {
                            ) : (
                               <button
                                  className="btn save-btn"
-                                 onClick={handleProcess}
+                                 onClick={() => {
+                                    handleProcess();
+                                    setBtnClicked(true);
+                                 }}
                               >
                                  Save
                               </button>

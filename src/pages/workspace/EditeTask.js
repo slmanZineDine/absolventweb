@@ -10,6 +10,10 @@ import addIcon from "../../assets/imgs/icons/addIcon.png";
 import deleteIcon from "../../assets/imgs/icons/deleteIcon.png";
 import { deleteEvent, editeEvent } from "../../redux/events/eventsAction";
 import Spinning from "../../components/Spinning";
+import {
+   removeFile,
+   uploadeFile,
+} from "../../redux/attachments/attachmentsActions";
 
 const EditeTask = () => {
    // ======================= Global Data =======================
@@ -25,16 +29,95 @@ const EditeTask = () => {
    const dispatch = useDispatch();
    const events = useSelector((state) => state.events);
    const workspaceEvents = useSelector((state) => state.events.workspaceEvents);
-   const { state } = useLocation();
+   const file = useSelector((state) => state.attachments);
 
    // ======================= Router Hook =======================
    const navigate = useNavigate();
+   const { state } = useLocation();
 
    // ======================= Select Input Elements =======================
    const titleInput = useRef(null);
    const contentInput = useRef(null);
    const deadlineInput = useRef(null);
    const attachmentInput = useRef(null);
+
+   // ======================= React Hook =======================
+   // Store File Name To Show In The Screen
+   const [fileName, setFileName] = useState(null);
+   // For Error File Type
+   const [fileType, setFileType] = useState(false);
+   // Store File ID
+   const [fileId, setFileID] = useState(null);
+   // Checking If File Uploaded
+   const [fileUploaded, setFileUploaded] = useState(false);
+   // To Prevent Show Alert When The Previous Process Is Pending
+   const [btnClicked, setBtnClicked] = useState(false);
+   // Variable below to manipulate useEffect and prevente run initial-render
+   const firstUpdate = useRef(true);
+   // Store Event Id To Use It Inside Delete Event Action
+   const [eventId, setEventId] = useState(null);
+   // Select Process Type For Specific Button That Change To Spining
+   const [processType, setProcessType] = useState({
+      delete: false,
+      edite: false,
+   });
+   // ############## Getting And Setting Event Infomation ##############
+   useEffect(() => {
+      // Prevent user to enter this page directly
+      if (state?.eventId && workspaceEvents.length > 0) {
+         const taskEvent = workspaceEvents.find(
+            (task) => task.id === state.eventId
+         );
+         // Compare User ID With Author ID To Prevent Not Author's Task Edite Or Delete
+         if (userId !== taskEvent.author_id) navigate("/workspace");
+         setEventId(taskEvent.id);
+         titleInput.current.focus();
+         titleInput.current.value = taskEvent?.title ?? "";
+         contentInput.current.value = taskEvent?.descriere ?? "";
+         deadlineInput.current.value = taskEvent?.due_date ?? "";
+         // Checking If There Is A file
+         if (taskEvent.attachment) {
+            setFileName(taskEvent.attachment.file_name);
+            setFileID(taskEvent.attachment.id);
+         }
+      } else {
+         navigate("/workspace");
+      }
+   }, []);
+   // ############## Alert Logic ##############
+   useEffect(() => {
+      if (firstUpdate.current) {
+         firstUpdate.current = false;
+         return;
+      }
+
+      if (fileName) {
+         // Show Alert After File Uploaded
+         if (!file.loading && file.error && fileUploaded) {
+            processChecking(file.error, "error", "red-bg");
+         } else if (!file.loading && file.success && fileUploaded) {
+            processChecking("Add Successfully", "success", "done").then(() =>
+               navigate("/workspace")
+            );
+         }
+         // Case Show Alert If No File Exist
+      } else {
+         if (
+            !events.loading &&
+            events.error &&
+            (processType.delete || processType.edite)
+         ) {
+            processChecking(events.error, "error", "red-bg");
+         } else if (
+            !events.loading &&
+            events.success &&
+            (processType.delete || processType.edite)
+         ) {
+            processChecking("Process Successfully", "success", "done");
+            navigate("/workspace");
+         }
+      }
+   }, [events.error, events.success, file.error, file.success]);
 
    // ======================= Sweet Alert Labrary =======================
    const processChecking = async (msg, icon, theClassName) => {
@@ -60,7 +143,7 @@ const EditeTask = () => {
       }
    };
 
-   // ======================= Handle Request =======================
+   // ======================= Handlder =======================
    const handleProcess = () => {
       const userInput = {
          workspace_id: workspaceInfo.workspace_id,
@@ -71,9 +154,27 @@ const EditeTask = () => {
       };
       if (fieldsValidation(userInput)) {
          setProcessType({ delete: false, edite: true });
-         dispatch(
-            editeEvent({ eventID: state.eventId, eventContent: userInput })
-         );
+         // If There Is An Attachment Dispatch Upload Attachment Action
+         if (fileName) {
+            let file = attachmentInput.current.files[0];
+            dispatch(
+               editeEvent({ eventID: state.eventId, eventContent: userInput })
+            ).then(({ payload }) => {
+               // Save Event ID Get It From Event Response
+               const event_ID = payload.data.id;
+               const fileData = new FormData();
+               fileData.append("event_id", event_ID);
+               fileData.append("file", file);
+               dispatch(uploadeFile(fileData));
+               setFileUploaded(true);
+            });
+         }
+         // If There Is No An Attachment Dispatch Only Add Event Action
+         else {
+            dispatch(
+               editeEvent({ eventID: state.eventId, eventContent: userInput })
+            );
+         }
       }
    };
    // Checking File Type And Remove Old File If Exist
@@ -86,60 +187,6 @@ const EditeTask = () => {
          setFileType(false);
       } else setFileType(true);
    };
-   // ======================= React Hook =======================
-   const [fileName, setFileName] = useState(null);
-   // Store Event Id To Use It Inside Delete Event Action
-   // For Error File Type
-   const [fileType, setFileType] = useState(false);
-   const [eventId, setEventId] = useState(null);
-   // Select Process Type For Specific Button That Change To Spining
-   const [processType, setProcessType] = useState({
-      delete: false,
-      edite: false,
-   });
-   // Variable below to manipulate useEffect and prevente run initial-render
-   const firstUpdate = useRef(true);
-   useEffect(() => {
-      // Prevent user to enter this page directly
-      if (state?.eventId && workspaceEvents.length > 0) {
-         const postEvent = workspaceEvents.find(
-            (post) => post.id === state.eventId
-         );
-         console.log(postEvent);
-         // Compare User ID With Author ID To Prevent Not Author' Meeting Edite Or Delete
-         if (userId !== postEvent.author_id) navigate("/workspace");
-         setEventId(postEvent.id);
-         titleInput.current.focus();
-         titleInput.current.value = postEvent?.title ?? "";
-         contentInput.current.value = postEvent?.descriere ?? "";
-         deadlineInput.current.value = postEvent?.due_date ?? "";
-         // Checking If There Is A file
-         if (postEvent?.attachment) setFileName(postEvent.attachment.file_name);
-      } else {
-         navigate("/workspace");
-      }
-   }, []);
-   // Checking Process
-   useEffect(() => {
-      if (firstUpdate.current) {
-         firstUpdate.current = false;
-         return;
-      }
-      if (
-         !events.loading &&
-         events.error &&
-         (processType.delete || processType.edite)
-      ) {
-         processChecking(events.error, "error", "red-bg");
-      } else if (
-         !events.loading &&
-         events.success &&
-         (processType.delete || processType.edite)
-      ) {
-         processChecking("Process Successfully", "success", "done");
-         navigate("/workspace");
-      }
-   }, [events.error, events.success]);
 
    if (user) {
       return (
@@ -224,13 +271,19 @@ const EditeTask = () => {
                                     onClick={() => {
                                        attachmentInput.current.value = "";
                                        setFileName(null);
+                                       // To Make This Btn Remove File From Database If Exist Only.
+                                       if (fileId) {
+                                          dispatch(removeFile(fileId));
+                                          setFileID(null);
+                                       }
                                     }}
                                  />
                               </div>
                            ) : null}
                         </li>
                         <div className="save-btn-space">
-                           {events.loading && processType.edite ? (
+                           {(events.loading && processType.edite) ||
+                           file.loading ? (
                               <Spinning size="small" />
                            ) : (
                               <button

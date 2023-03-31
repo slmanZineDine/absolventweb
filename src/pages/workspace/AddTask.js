@@ -75,7 +75,6 @@ const AddTask = () => {
                // Save Event ID Get It From Event Response
                const event_ID = payload.data.id;
                const fileData = new FormData();
-               console.log(attachmentInput.current.files[0]);
                fileData.append("event_id", event_ID);
                fileData.append("file", file);
                dispatch(uploadeFile(fileData));

@@ -121,11 +121,12 @@ export const editeEvent = createAsyncThunk(
                "Content-Type": "application/json",
             },
          };
-         await axios.put(
+         const { data } = await axios.put(
             `${baseURL}/api/event/${eventID}`,
             eventContent,
             config
          );
+         return data;
       } catch (error) {
          // return custom error message from API if any
          if (error.response && error.response.data.message) {
