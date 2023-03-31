@@ -110,7 +110,9 @@ const ListOfTopics = () => {
       }
       // If Coordinator => Getting Only Doctor's teme
       else if (user && userType === "coordonator") {
-         const doctorId = JSON.parse(user)?.coordonator?.id;
+         const doctorId =
+            JSON.parse(user)?.coordonator?.id ||
+            JSON.parse(user)?.corrdonator_id;
          if (doctorId) {
             dispatch(getTopicsByDoctorId(doctorId));
          }
@@ -341,6 +343,13 @@ const ListOfTopics = () => {
                           ))
                         : null}
                   </div>
+                  <a href="#" className="scroll-top" ref={scrollTopBtn}>
+                     <img
+                        src={arrowUpIcon}
+                        alt="arrow-up"
+                        className="btn-icon"
+                     />
+                  </a>
                </main>
             </>
          );

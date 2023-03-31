@@ -23,7 +23,9 @@ const Profile = () => {
    // ======================= React Hook =======================
    useEffect(() => {
       if (user && userType === "coordonator") {
-         const doctorId = JSON.parse(user)?.coordonator?.id;
+         const doctorId =
+            JSON.parse(user)?.coordonator?.id ||
+            JSON.parse(user)?.corrdonator_id;
          if (doctorId) dispatch(getTopicsByDoctorId(doctorId));
       }
    }, []);
