@@ -38,6 +38,7 @@ export const getFile = createAsyncThunk(
    async (eventId, { rejectWithValue }) => {
       try {
          const config = {
+            responseType: "arraybuffer",
             headers: {
                Authorization: `Bearer ${localStorage.getItem("userToken")}`,
             },
@@ -60,28 +61,28 @@ export const getFile = createAsyncThunk(
 );
 
 // Remove File
-// export const removeFile = createAsyncThunk(
-//    "attachments/removeFile",
-//    async (eventId, { rejectWithValue }) => {
-//       try {
-//          const config = {
-//             headers: {
-//                Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-//             },
-//          };
+export const removeFile = createAsyncThunk(
+   "attachments/removeFile",
+   async (fileId, { rejectWithValue }) => {
+      try {
+         const config = {
+            headers: {
+               Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+            },
+         };
 
-//          const { data } = await axios.get(
-//             `${baseURL}/api/get-file/${eventId}`,
-//             config
-//          );
-//          return data;
-//       } catch (error) {
-//          // return custom error message from API if any
-//          if (error.response && error.response.data.message) {
-//             return rejectWithValue(error.response.data.message);
-//          } else {
-//             return rejectWithValue(error.message);
-//          }
-//       }
-//    }
-// );
+         const { data } = await axios.get(
+            `${baseURL}/api/remove-file/${fileId}`,
+            config
+         );
+         return data;
+      } catch (error) {
+         // return custom error message from API if any
+         if (error.response && error.response.data.message) {
+            return rejectWithValue(error.response.data.message);
+         } else {
+            return rejectWithValue(error.message);
+         }
+      }
+   }
+);

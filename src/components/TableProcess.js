@@ -1,16 +1,18 @@
 // External
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 // Internal
 import checkIcon from "../assets/imgs/icons/checkIcon.png";
 import editeIcon from "../assets/imgs/icons/editeIcon.png";
 import deleteIcon from "../assets/imgs/icons/deleteIcon.png";
-import { seBtnProcess, setWorkspaceInfo } from "../redux/global/globalSlice";
+import attachIcon from "../assets/imgs/icons/attachIcon.png";
 import Spinning from "./Spinning";
+import { seBtnProcess, setWorkspaceInfo } from "../redux/global/globalSlice";
 import { deleteTopic } from "../redux/topics/topicsActions";
 import { changeWorkspaceStatus } from "../redux/workspaces/workspacesActions";
+import { getFile } from "../redux/attachments/attachmentsActions";
 
 const TableProcess = ({
    process,
@@ -18,6 +20,10 @@ const TableProcess = ({
    workspaceInfo,
    temaId,
    workspaceId,
+   eventType,
+   eventId,
+   eventTitle,
+   fileName,
 }) => {
    // ======================= Redux Hook =======================
    const dispatch = useDispatch();
@@ -28,14 +34,41 @@ const TableProcess = ({
    const topics = useSelector((state) => state.topics);
    const workspace = useSelector((state) => state.workspaces);
    const btnProcess = useSelector((state) => state.global.btnProcess);
+   const file = useSelector((state) => state.attachments);
 
    // ======================= Redux Hook =======================
    // To Prevent Show Loading Spin Unless Selected Tema
    const [selectedTemaId, setSelectedTemaId] = useState(null);
    const [selectedWorkspaceId, setSelectedWorkspaceId] = useState(null);
+   const [selectedEventId, setSelectedEventId] = useState(null);
 
    // ======================= Router Hook =======================
    const navigate = useNavigate();
+
+   // ======================= Handlder =======================
+   const handleDownloade = () => {
+      // Save Event ID To Make Exactly File Spining
+      setSelectedEventId(eventId);
+      // Send Request
+      dispatch(getFile(eventId)).then(({ payload }) => {
+         const blob = new Blob([payload]);
+         const href = URL.createObjectURL(blob);
+         // Create Anhor Link Element
+         const anchorLink = document.createElement("a");
+         // Hide Element
+         anchorLink.style.display = "none";
+         // Add Href And File Name
+         anchorLink.href = href;
+         anchorLink.download = fileName;
+         // Append Element To Document
+         document.body.append(anchorLink);
+         // Auto Click To Start Download
+         anchorLink.click();
+         // Remove Element And URL After End Download Process
+         anchorLink.remove();
+         URL.revokeObjectURL(href);
+      });
+   };
 
    // Check Box To Confirm Process
    const confirmProcess = async (method, token, msg, processStatus) => {
@@ -50,6 +83,75 @@ const TableProcess = ({
          dispatch(seBtnProcess(processStatus));
       }
    };
+   // Workspace Page => For Cell Contain Title As Link Route You To Event By Event_ID
+   if (process?.link) {
+      if (eventType === "post") {
+         return (
+            <Link
+               to="post"
+               state={{
+                  eventId: eventId,
+               }}
+            >
+               {eventTitle}
+            </Link>
+         );
+      } else if (eventType === "task") {
+         return (
+            <Link
+               to="task"
+               state={{
+                  eventId: eventId,
+               }}
+            >
+               {eventTitle}
+            </Link>
+         );
+      } else if (eventType === "meeting") {
+         return (
+            <Link
+               to="edite-meeting"
+               state={{
+                  eventId: eventId,
+               }}
+            >
+               {eventTitle}
+            </Link>
+         );
+      }
+   } else if (process?.file) {
+      return (
+         <div className="wraper">
+            {file.loading && selectedEventId ? (
+               <Spinning size="small" />
+            ) : (
+               <img
+                  src={attachIcon}
+                  alt="download-icon"
+                  style={{ cursor: "pointer" }}
+                  onClick={handleDownloade}
+               />
+            )}
+         </div>
+      );
+   } else if (process?.show) {
+      return (
+         <div className="wraper">
+            <button
+               className="btn show-btn"
+               onClick={() => {
+                  localStorage.setItem(
+                     "workspaceInfo",
+                     JSON.stringify(workspaceInfo)
+                  );
+                  navigate("/workspace");
+               }}
+            >
+               Show
+            </button>
+         </div>
+      );
+   }
 
    return (
       <>
@@ -94,7 +196,7 @@ const TableProcess = ({
                </div>
             </div>
          ) : null}
-         {process?.show ? (
+         {process?.links ? (
             <div className="wraper">
                <button
                   className="btn show-btn"

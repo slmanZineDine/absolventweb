@@ -1,5 +1,5 @@
 // External
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 // Internal
 import attachmentsSlice from "./attachments/attachmentsSlice";
 import authSlice from "./auth/authSlice";
@@ -23,6 +23,10 @@ const store = configureStore({
       global: globalSlice,
       export: exportSlice,
    },
+   middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+         serializableCheck: false,
+      }),
    // Disable Redux DevTools
    // devTools: false,
 });

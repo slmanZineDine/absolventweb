@@ -78,8 +78,9 @@ const AddMeeting = () => {
       if (!events.loading && events.error && btnClicked) {
          processChecking(events.error, "error", "red-bg");
       } else if (!events.loading && events.success && btnClicked) {
-         processChecking("Add Successfully", "success", "done");
-         navigate("/workspace");
+         processChecking("Add Successfully", "success", "done").then(() =>
+            navigate("/workspace")
+         );
       }
    }, [events.error, events.success]);
 

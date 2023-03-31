@@ -58,7 +58,7 @@ const AddPost = () => {
       }
    };
 
-   // ======================= Handle Request =======================
+   // ======================= Handler =======================
    const handleProcess = () => {
       const userInput = {
          workspace_id: workspaceInfo.workspace_id,
@@ -81,8 +81,10 @@ const AddPost = () => {
                setFileUploaded(true);
             });
          }
-         // Dispatch Only Add Event Action
-         else dispatch(addNewEvent(userInput));
+         // If There Is No An Attachment Dispatch Only Add Event Action
+         else {
+            dispatch(addNewEvent(userInput));
+         }
       }
    };
    // Checking File Type
@@ -104,11 +106,14 @@ const AddPost = () => {
    const [fileName, setFileName] = useState(null);
    // For Error File Type
    const [fileType, setFileType] = useState(false);
+   // Checking If File Uploaded
    const [fileUploaded, setFileUploaded] = useState(false);
    // To Prevent Show Alert When The Previous Process Is Pending
    const [btnClicked, setBtnClicked] = useState(false);
    // Variable below to manipulate useEffect and prevente run initial-render
    const firstUpdate = useRef(true);
+
+   // ############## Alert Logic ##############
    useEffect(() => {
       titleInput.current.focus();
       if (firstUpdate.current) {

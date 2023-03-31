@@ -109,6 +109,8 @@ const AddTask = () => {
    const [btnClicked, setBtnClicked] = useState(false);
    // Variable below to manipulate useEffect and prevente run initial-render
    const firstUpdate = useRef(true);
+
+   // ############## Alert Logic
    useEffect(() => {
       titleInput.current.focus();
       if (firstUpdate.current) {

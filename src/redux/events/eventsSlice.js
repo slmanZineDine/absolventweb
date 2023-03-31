@@ -97,7 +97,7 @@ const eventsSlice = createSlice({
          state.success = false; // Reset a value every Request
          state.error = null; // Reset a value every Request
       },
-      [addNewEvent.fulfilled]: (state, { payload }) => {
+      [addNewEvent.fulfilled]: (state) => {
          state.loading = false;
          state.success = true;
       },
@@ -127,7 +127,7 @@ const eventsSlice = createSlice({
          state.success = false; // Reset a value every Request
          state.error = null; // Reset a value every Request
       },
-      [deleteEvent.fulfilled]: (state) => {
+      [deleteEvent.fulfilled]: (state, { payload }) => {
          state.loading = false;
          state.success = true;
       },

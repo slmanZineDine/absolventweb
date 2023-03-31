@@ -137,6 +137,43 @@ const Table = ({ tableCols, tableData, resetPagination, msg }) => {
                                           </td>
                                        );
                                     }
+                                    if (cell?.process?.link) {
+                                       return (
+                                          <td className="cell" key={j}>
+                                             <TableProcess
+                                                process={cell.process}
+                                                eventType={
+                                                   item.type || "No Type"
+                                                }
+                                                eventTitle={
+                                                   item.title || "No Title"
+                                                }
+                                                eventId={item.id || null}
+                                             />
+                                          </td>
+                                       );
+                                    }
+                                    if (cell.heading === "Attachment") {
+                                       if (item.attachment) {
+                                          return (
+                                             <td className="cell" key={j}>
+                                                <TableProcess
+                                                   process={cell.process}
+                                                   eventId={item.id || null}
+                                                   fileName={
+                                                      item.attachment.file_name
+                                                   }
+                                                />
+                                             </td>
+                                          );
+                                       } else {
+                                          return (
+                                             <td className="cell" key={j}>
+                                                No File
+                                             </td>
+                                          );
+                                       }
+                                    }
                                     // Checking If Object Has Nested Object To Extract it
                                     if (cell.val.includes(".")) {
                                        const arr = cell.val.split(".");

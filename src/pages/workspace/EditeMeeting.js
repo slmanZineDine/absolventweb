@@ -54,7 +54,7 @@ const EditeMeeting = () => {
       }
    };
 
-   // ======================= Handle Request =======================
+   // ======================= Handlder =======================
    const handleProcess = () => {
       const userInput = {
          workspace_id: workspaceInfo.workspace_id,
@@ -67,11 +67,13 @@ const EditeMeeting = () => {
          dispatch(
             editeEvent({ eventID: state.eventId, eventContent: userInput })
          );
+         setBtnClicked(true);
       }
    };
 
    // ======================= React Hook =======================
-   const [fileName, setFileName] = useState(null);
+   // To Prevent Show Alert When The Previous Process Is Pending
+   const [btnClicked, setBtnClicked] = useState(false);
    // Store Event Id To Use It Inside Delete Event Action
    const [eventId, setEventId] = useState(null);
    // Select Process Type For Specific Button That Change To Spining
@@ -103,11 +105,14 @@ const EditeMeeting = () => {
          firstUpdate.current = false;
          return;
       }
-      if (!events.loading && events.error) {
+      if (!events.loading && events.error && btnClicked) {
          processChecking(events.error, "error", "red-bg");
-      } else if (!events.loading && events.success) {
-         processChecking("Process Successfully", "success", "done");
-         navigate("/workspace");
+         setBtnClicked(false);
+      } else if (!events.loading && events.success && btnClicked) {
+         processChecking("Process Successfully", "success", "done").then(() =>
+            navigate("/workspace")
+         );
+         setBtnClicked(false);
       }
    }, [events.error, events.success]);
 

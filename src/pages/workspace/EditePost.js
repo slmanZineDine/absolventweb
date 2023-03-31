@@ -10,6 +10,7 @@ import addIcon from "../../assets/imgs/icons/addIcon.png";
 import deleteIcon from "../../assets/imgs/icons/deleteIcon.png";
 import { editeEvent } from "../../redux/events/eventsAction";
 import Spinning from "../../components/Spinning";
+import { removeFile } from "../../redux/attachments/attachmentsActions";
 
 const EditePost = () => {
    // ======================= Global Data =======================
@@ -23,16 +24,69 @@ const EditePost = () => {
    const dispatch = useDispatch();
    const events = useSelector((state) => state.events);
    const workspaceEvents = useSelector((state) => state.events.workspaceEvents);
-   const { state } = useLocation();
+   const file = useSelector((state) => state.attachments);
 
    // ======================= Router Hook =======================
    const navigate = useNavigate();
+   const { state } = useLocation();
 
    // ======================= Select Input Elements =======================
    const titleInput = useRef(null);
    const contentInput = useRef(null);
    const deadlineInput = useRef(null);
    const attachmentInput = useRef(null);
+
+   // ======================= React Hook =======================
+   // Store File Name To Show In The Screen
+   const [fileName, setFileName] = useState(null);
+   // For Error File Type
+   const [fileType, setFileType] = useState(false);
+   // Store File ID
+   const [fileId, setFileID] = useState(null);
+   // Checking If File Uploaded
+   const [fileUploaded, setFileUploaded] = useState(false);
+   // To Prevent Show Alert When The Previous Process Is Pending
+   const [btnClicked, setBtnClicked] = useState(false);
+   // Variable below to manipulate useEffect and prevente run initial-render
+   const firstUpdate = useRef(true);
+
+   // ############## Getting And Setting Event Infomation ##############
+   useEffect(() => {
+      // Prevent user to enter this page directly
+      if (state?.eventId && workspaceEvents.length > 0) {
+         const postEvent = workspaceEvents.find(
+            (post) => post.id === state.eventId
+         );
+         console.log(postEvent);
+         titleInput.current.focus();
+         titleInput.current.value = postEvent?.title ?? "";
+         contentInput.current.value = postEvent?.descriere ?? "";
+         deadlineInput.current.value = postEvent?.due_date ?? "";
+         if (postEvent.attachment) {
+            setFileName(postEvent.attachment.file_name);
+            setFileID(postEvent.attachment.id);
+         }
+      } else {
+         navigate("/workspace");
+      }
+   }, []);
+
+   // ############## Alert Logic ##############
+   useEffect(() => {
+      if (firstUpdate.current) {
+         firstUpdate.current = false;
+         return;
+      }
+      if (!events.loading && events.error && btnClicked) {
+         processChecking(events.error, "error", "red-bg");
+         setBtnClicked(false);
+      } else if (!events.loading && events.success && btnClicked) {
+         processChecking("Edite Successfully", "success", "done").then(() =>
+            navigate("/workspace")
+         );
+         setBtnClicked(false);
+      }
+   }, [events.error, events.success]);
 
    // ======================= Sweet Alert Labrary =======================
    const processChecking = async (msg, icon, theClassName) => {
@@ -66,7 +120,6 @@ const EditePost = () => {
          descriere: contentInput.current.value,
          type: "post",
          due_date: deadlineInput.current.value,
-         // attachment: attachmentInput.current.files[0],
       };
       if (fieldsValidation(userInput)) {
          dispatch(
@@ -75,41 +128,6 @@ const EditePost = () => {
          setBtnClicked(true);
       }
    };
-
-   // ======================= React Hook =======================
-   const [fileName, setFileName] = useState(null);
-   // To Prevent Show Alert When The Previous Process Is Pending
-   const [btnClicked, setBtnClicked] = useState(false);
-   // Variable below to manipulate useEffect and prevente run initial-render
-   const firstUpdate = useRef(true);
-   useEffect(() => {
-      // Prevent user to enter this page directly
-      if (state?.eventId && workspaceEvents.length > 0) {
-         const postEvent = workspaceEvents.find(
-            (post) => post.id === state.eventId
-         );
-         titleInput.current.focus();
-         titleInput.current.value = postEvent?.title ?? "";
-         contentInput.current.value = postEvent?.descriere ?? "";
-         deadlineInput.current.value = postEvent?.due_date ?? "";
-      } else {
-         navigate("/workspace");
-      }
-   }, []);
-   useEffect(() => {
-      if (firstUpdate.current) {
-         firstUpdate.current = false;
-         return;
-      }
-      if (!events.loading && events.error && btnClicked) {
-         processChecking(events.error, "error", "red-bg");
-         setBtnClicked(false);
-      } else if (!events.loading && events.success && btnClicked) {
-         processChecking("Edite Successfully", "success", "done");
-         setBtnClicked(false);
-         navigate("/workspace");
-      }
-   }, [events.error, events.success]);
 
    if (user) {
       return (
@@ -179,13 +197,29 @@ const EditePost = () => {
                                     onClick={() => {
                                        attachmentInput.current.value = "";
                                        setFileName(null);
+                                       // To Make This Btn Remove File From Database If Exist Only.
+                                       if (fileId) {
+                                          dispatch(removeFile(fileId));
+                                          setFileID(null);
+                                       }
                                     }}
                                  />
                               </div>
                            ) : null}
                         </li>
+                        {fileType ? (
+                           <li
+                              className="item"
+                              style={{ color: "red", justifyContent: "center" }}
+                           >
+                              <p style={{ textAlign: "center" }}>
+                                 The File Must Be A File Of Type: csv, txt, xlx,
+                                 xls, pdf, zip.
+                              </p>
+                           </li>
+                        ) : null}
                         <div className="save-btn-space">
-                           {events.loading && btnClicked ? (
+                           {(events.loading && btnClicked) || file.loading ? (
                               <Spinning size="small" />
                            ) : (
                               <button

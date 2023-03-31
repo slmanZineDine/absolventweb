@@ -15,6 +15,7 @@ const Login = () => {
    // ======================= Global Data =======================
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
+   // Set Page Title
    document.title = "Absolventweb | Login";
 
    // ======================= Select Input Elements =======================
@@ -42,19 +43,17 @@ const Login = () => {
    // ======================= Vaidation =======================
    const fieldsValidation = (userInput) => {
       const emailValidation = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-      if (!Object.values(userInput).every((e) => e !== "")) {
+      if (!Object.values(userInput).every((e) => e !== ""))
          processChecking("Please Fill All Fields.", "warning", "red-bg");
-      } else if (!emailValidation.test(userInput.email)) {
+      else if (!emailValidation.test(userInput.email)) {
          processChecking(
             "You Have Entered An Invalid Email Address.",
             "warning",
             "red-bg"
          );
-      } else if (userInput.password.length < 6) {
+      } else if (userInput.password.length < 6)
          processChecking("Your Password Is Too Short.", "warning", "red-bg");
-      } else {
-         return true;
-      }
+      else return true;
    };
 
    // ======================= Handle Request =======================
@@ -63,19 +62,6 @@ const Login = () => {
       const userLoginInfo = {
          email: emailInput.current.value,
          password: passwordInput.current.value,
-         // ================ Dev mode ==================
-         // email: "drslman@gmail.com",
-         // password: "123456",
-         // email: "drsammar@gmail.com",
-         // password: "123456",
-         // email: "ali@gmail.com",
-         // password: "123456",
-         // email: "ziad@gmail.com",
-         // password: "123456",
-         // email: "rami@gmail.com",
-         // password: "123456",
-         // email: "fadi@gmail.com",
-         // password: "123456",
       };
 
       if (fieldsValidation(userLoginInfo)) {

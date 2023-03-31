@@ -1,12 +1,11 @@
 // External
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
 // Internal
 import Header from "../components/Header";
 import UniversityLogo from "../components/UniversityLogo";
-import attachIcon from "../assets/imgs/icons/attachIcon.png";
 import addIcon from "../assets/imgs/icons/addIcon.png";
 import {
    getStudentEvents,
@@ -17,7 +16,7 @@ import {
    changeWorkspaceStatus,
    deleteWorkspace,
 } from "../redux/workspaces/workspacesActions";
-import Pagination from "../components/Pagination";
+import Table from "../components/Table";
 
 const Workspace = () => {
    // ======================= Global Data =======================
@@ -26,8 +25,19 @@ const Workspace = () => {
    const userType = JSON.parse(user)?.type;
    const workspaceInfo = JSON.parse(localStorage.getItem("workspaceInfo"));
    const studentStatus = JSON.parse(localStorage.getItem("studentStatus"));
+
    // Names Of Table Columns
-   const tableCol = ["Author", "Titlu", "Type", "Deadline", "Attachment"];
+   const tableCols = [
+      { heading: "Author", val: "author_type" },
+      { heading: "Titlu", val: "title", process: { link: true } },
+      { heading: "Type", val: "type" },
+      { heading: "Deadline", val: "due_date" },
+      {
+         heading: "Attachment",
+         val: "attachment",
+         process: { file: true },
+      },
+   ];
    document.title = "Absolventweb | Workspace";
 
    // ======================= Redux Hook =======================
@@ -56,11 +66,6 @@ const Workspace = () => {
    };
 
    // ======================= React Hook =======================
-   // Store Pagination Values
-   const [paginationValue, setPaginationValue] = useState({
-      start: 0,
-      end: 3,
-   });
    useEffect(() => {
       if (userType === "coordonator" && workspaceInfo?.student_id) {
          dispatch(getWorkspaceEvents(workspaceInfo.student_id));
@@ -72,7 +77,6 @@ const Workspace = () => {
             dispatch(getStudentEvents());
       }
    }, []);
-
    if (user) {
       if (userType === "student") {
          // Status 1 => Access to Workspace page
@@ -135,116 +139,11 @@ const Workspace = () => {
                                  />
                               </button>
                            </div>
-                           <div className="cover">
-                              <table className="table">
-                                 <thead className="thead">
-                                    <tr className="main-row">
-                                       {tableCol.map((colName, i) => (
-                                          <th key={i} className="main-cell">
-                                             {colName}
-                                          </th>
-                                       ))}
-                                    </tr>
-                                 </thead>
-                                 <tbody className="tbody">
-                                    {workspaceEvents.length > 0 ? (
-                                       workspaceEvents
-                                          .map((cell, i) => {
-                                             return (
-                                                <tr key={i} className="row">
-                                                   <td className="cell">
-                                                      {cell.author_type}
-                                                   </td>
-                                                   <td className="cell">
-                                                      {cell.type === "post" ? (
-                                                         <Link
-                                                            to="post"
-                                                            state={{
-                                                               eventId: cell.id,
-                                                            }}
-                                                         >
-                                                            {cell.title}
-                                                         </Link>
-                                                      ) : null}
-                                                      {cell.type ===
-                                                      "meeting" ? (
-                                                         <Link
-                                                            to="edite-meeting"
-                                                            state={{
-                                                               eventId: cell.id,
-                                                            }}
-                                                         >
-                                                            {cell.title}
-                                                         </Link>
-                                                      ) : null}
-                                                      {cell.type === "task" ? (
-                                                         <Link
-                                                            to="task"
-                                                            state={{
-                                                               eventId: cell.id,
-                                                            }}
-                                                         >
-                                                            {cell.title}
-                                                         </Link>
-                                                      ) : null}
-                                                   </td>
-                                                   <td className="cell">
-                                                      {cell.type}
-                                                   </td>
-                                                   <td className="cell">
-                                                      {cell.due_date}
-                                                   </td>
-                                                   <td className="cell">
-                                                      {cell.attachment ? (
-                                                         <>
-                                                            <a
-                                                               href={
-                                                                  cell
-                                                                     .attachment
-                                                                     .file_path
-                                                               }
-                                                               download={
-                                                                  cell
-                                                                     .attachment
-                                                                     .file_name
-                                                               }
-                                                            >
-                                                               <img
-                                                                  src={
-                                                                     attachIcon
-                                                                  }
-                                                                  alt="attachment-icon"
-                                                                  className="icon"
-                                                               />
-                                                            </a>
-                                                         </>
-                                                      ) : (
-                                                         ""
-                                                      )}
-                                                   </td>
-                                                </tr>
-                                             );
-                                          })
-                                          .slice(
-                                             paginationValue.start,
-                                             paginationValue.end
-                                          )
-                                    ) : (
-                                       <tr className="row">
-                                          <td
-                                             className="cell empty-table"
-                                             colSpan={tableCol.length}
-                                          >
-                                             There Are No Events To Show.
-                                          </td>
-                                       </tr>
-                                    )}
-                                 </tbody>
-                              </table>
-                           </div>
-                           <Pagination
-                              paginationCount={workspaceEvents.length}
-                              setPaginationValue={setPaginationValue}
+                           <Table
+                              tableCols={tableCols}
+                              tableData={workspaceEvents}
+                              //   resetPagination={resetPagination}
+                              msg="There Are No Events To Show."
                            />
                         </div>
                         <UniversityLogo />
@@ -378,116 +277,11 @@ const Workspace = () => {
                                  />
                               </button>
                            </div>
-                           <div className="cover">
-                              <table className="table">
-                                 <thead className="thead">
-                                    <tr className="main-row">
-                                       {tableCol.map((colName, i) => (
-                                          <th key={i} className="main-cell">
-                                             {colName}
-                                          </th>
-                                       ))}
-                                    </tr>
-                                 </thead>
-                                 <tbody className="tbody">
-                                    {workspaceEvents.length > 0 ? (
-                                       workspaceEvents
-                                          .map((cell, i) => {
-                                             return (
-                                                <tr key={i} className="row">
-                                                   <td className="cell">
-                                                      {cell.author_type}
-                                                   </td>
-                                                   <td className="cell">
-                                                      {cell.type === "post" ? (
-                                                         <Link
-                                                            to="post"
-                                                            state={{
-                                                               eventId: cell.id,
-                                                            }}
-                                                         >
-                                                            {cell.title}
-                                                         </Link>
-                                                      ) : null}
-                                                      {cell.type ===
-                                                      "meeting" ? (
-                                                         <Link
-                                                            to="edite-meeting"
-                                                            state={{
-                                                               eventId: cell.id,
-                                                            }}
-                                                         >
-                                                            {cell.title}
-                                                         </Link>
-                                                      ) : null}
-                                                      {cell.type === "task" ? (
-                                                         <Link
-                                                            to="task"
-                                                            state={{
-                                                               eventId: cell.id,
-                                                            }}
-                                                         >
-                                                            {cell.title}
-                                                         </Link>
-                                                      ) : null}
-                                                   </td>
-                                                   <td className="cell">
-                                                      {cell.type}
-                                                   </td>
-                                                   <td className="cell">
-                                                      {cell.due_date}
-                                                   </td>
-                                                   <td className="cell">
-                                                      {cell.attachment ? (
-                                                         <>
-                                                            <a
-                                                               href={
-                                                                  cell
-                                                                     .attachment
-                                                                     .file_path
-                                                               }
-                                                               download={
-                                                                  cell
-                                                                     .attachment
-                                                                     .file_name
-                                                               }
-                                                            >
-                                                               <img
-                                                                  src={
-                                                                     attachIcon
-                                                                  }
-                                                                  alt="attachment-icon"
-                                                                  className="icon"
-                                                               />
-                                                            </a>
-                                                         </>
-                                                      ) : (
-                                                         ""
-                                                      )}
-                                                   </td>
-                                                </tr>
-                                             );
-                                          })
-                                          .slice(
-                                             paginationValue.start,
-                                             paginationValue.end
-                                          )
-                                    ) : (
-                                       <tr className="row">
-                                          <td
-                                             className="cell empty-table"
-                                             colSpan={tableCol.length}
-                                          >
-                                             There Are No Events To Show.
-                                          </td>
-                                       </tr>
-                                    )}
-                                 </tbody>
-                              </table>
-                           </div>
-                           <Pagination
-                              paginationCount={workspaceEvents.length}
-                              setPaginationValue={setPaginationValue}
+                           <Table
+                              tableCols={tableCols}
+                              tableData={workspaceEvents}
+                              //   resetPagination={resetPagination}
+                              msg="There Are No Events To Show."
                            />
                         </div>
                         <UniversityLogo />
