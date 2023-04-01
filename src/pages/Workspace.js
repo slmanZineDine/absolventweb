@@ -26,18 +26,6 @@ const Workspace = () => {
    const workspaceInfo = JSON.parse(localStorage.getItem("workspaceInfo"));
    const studentStatus = JSON.parse(localStorage.getItem("studentStatus"));
 
-   // Names Of Table Columns
-   const tableCols = [
-      { heading: "Author", val: "author_type" },
-      { heading: "Titlu", val: "title", process: { link: true } },
-      { heading: "Type", val: "type" },
-      { heading: "Deadline", val: "due_date" },
-      {
-         heading: "Attachment",
-         val: "attachment",
-         process: { file: true },
-      },
-   ];
    document.title = "Absolventweb | Workspace";
 
    // ======================= Redux Hook =======================
@@ -78,6 +66,18 @@ const Workspace = () => {
       }
    }, []);
    if (user) {
+      // Names Of Table Columns
+      const tableCols = [
+         { heading: "Author", val: "author_type" },
+         { heading: "Titlu", val: "title", process: { link: true } },
+         { heading: "Type", val: "type" },
+         { heading: "Deadline", val: "due_date" },
+         {
+            heading: "Attachment",
+            val: "attachment",
+            process: { file: true },
+         },
+      ];
       if (userType === "student") {
          // Status 1 => Access to Workspace page
          if (studentStatus?.workspace_status === 1) {
@@ -89,10 +89,11 @@ const Workspace = () => {
                         <div className="content">
                            <ul className="workspace-info">
                               <li className="item">
-                                 Titlul: {workspaceInfo.tema_name}
+                                 Titlul: {workspaceInfo?.tema_name || ""}
                               </li>
                               <li className="item">
-                                 Coordinator: {workspaceInfo.coordinator_name}
+                                 Coordinator:{" "}
+                                 {workspaceInfo?.coordinator_name || ""}
                               </li>
                               <li className="item">
                                  Student: {JSON.parse(user)?.name}
