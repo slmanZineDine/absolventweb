@@ -2374,6 +2374,27 @@ input[type=number] {
   gap: 1rem;
   margin-top: 0.5rem;
 }
+.post-page .container .content .box .attatchment-download {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+.post-page .container .content .box .attatchment-download .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  border-radius: 2rem;
+  font-weight: bold;
+  background-color: #ddd;
+  transition: color 0.4s, background-color 0.4s;
+}
+.post-page .container .content .box .attatchment-download .btn:hover {
+  color: #fff;
+  background-color: #007bff;
+}
 .post-page .container .content .comments {
   margin-top: 0.5rem;
 }
@@ -2564,6 +2585,27 @@ input[type=number] {
 .task-page .container .content .box .edite-btn-space .save-btn {
   padding: 0.5rem 1rem;
   font-size: 1rem;
+}
+.task-page .container .content .box .attatchment-download {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+.task-page .container .content .box .attatchment-download .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  border-radius: 2rem;
+  font-weight: bold;
+  background-color: #ddd;
+  transition: color 0.4s, background-color 0.4s;
+}
+.task-page .container .content .box .attatchment-download .btn:hover {
+  color: #fff;
+  background-color: #007bff;
 }
 
 /*=============== BREAKPOINTS ===============*/

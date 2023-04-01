@@ -5,9 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
 
 // Internal
-import Header from "../../components/Header";
 import avatarIcon from "../../assets/imgs/icons/avatarIcon.png";
+import attachIcon from "../../assets/imgs/icons/attachIcon.png";
 import addCommentIcon from "../../assets/imgs/icons/addCommentIcon.png";
+import Header from "../../components/Header";
 import { deleteEvent, getEventById } from "../../redux/events/eventsAction";
 import {
    addComment,
@@ -15,6 +16,8 @@ import {
    editeComment,
    getComments,
 } from "../../redux/comments/commentsAction";
+import { getFile } from "../../redux/attachments/attachmentsActions";
+import Spinning from "../../components/Spinning";
 
 const Post = () => {
    // ======================= Global Data =======================
@@ -30,12 +33,62 @@ const Post = () => {
    const event = useSelector((state) => state.events.eventById);
    const eventsGlobal = useSelector((state) => state.events);
    const comments = useSelector((state) => state.comments.comments);
+   const file = useSelector((state) => state.attachments);
+
+   // ======================= Select Input Elements =======================
+   const commentInput = useRef(null);
+   const commentField = useRef(null);
+
+   // ======================= React Hook =======================
+   const [showOption, setShowOption] = useState(false);
+   const [commentId, setCommentId] = useState(null);
+   const [editeMode, setEidteMode] = useState(false);
+   // For Show Post Dropdown Option, Edite Post, Delete Post
+   const [showPostOption, setPostOption] = useState(false);
+   // To Prevent Show Alert When The Previous Process Is Pending
+   const [btnClicked, setBtnClicked] = useState(false);
+   // Variable below to manipulate useEffect and prevente run initial-render
+   const firstUpdate = useRef(true);
+
+   useEffect(() => {
+      if (state?.eventId) {
+         dispatch(getEventById(state.eventId));
+         dispatch(getComments(state.eventId));
+      } else {
+         navigate("/workspace");
+      }
+   }, []);
+   useEffect(() => {
+      if (firstUpdate.current) {
+         firstUpdate.current = false;
+         return;
+      }
+      if (!eventsGlobal.loading && eventsGlobal.error && btnClicked) {
+         processChecking(eventsGlobal.error, "error", "red-bg");
+      } else if (!eventsGlobal.loading && eventsGlobal.success && btnClicked) {
+         processChecking("Delete Successfully", "success", "done").then(() =>
+            navigate("/workspace")
+         );
+      }
+   }, [eventsGlobal.error, eventsGlobal.success]);
 
    // ======================= Router Hook =======================
    const navigate = useNavigate();
    const { state } = useLocation();
 
    // ======================= Sweet Alert Labrary =======================
+   // Check Box To Confirm Process
+   const confirmDeletion = async () => {
+      let checkBox = await swal("Do You Want To Delete This Post?", {
+         dangerMode: true,
+         buttons: true,
+      });
+      if (checkBox) {
+         dispatch(deleteEvent(event.id));
+         setPostOption(false);
+         setBtnClicked(true);
+      }
+   };
    const processChecking = async (msg, icon, theClassName) => {
       await swal(msg, {
          buttons: false,
@@ -84,42 +137,28 @@ const Post = () => {
       element.style.height = `${10 + element.scrollHeight}px`;
    };
 
-   // ======================= Select Input Elements =======================
-   const commentInput = useRef(null);
-   const commentField = useRef(null);
-
-   // ======================= React Hook =======================
-   const [showOption, setShowOption] = useState(false);
-   const [commentId, setCommentId] = useState(null);
-   const [editeMode, setEidteMode] = useState(false);
-   // For Show Post Dropdown Option, Edite Post, Delete Post
-   const [showPostOption, setPostOption] = useState(false);
-   // To Prevent Show Alert When The Previous Process Is Pending
-   const [btnClicked, setBtnClicked] = useState(false);
-
-   useEffect(() => {
-      if (state?.eventId) {
-         dispatch(getEventById(state.eventId));
-         dispatch(getComments(state.eventId));
-      } else {
-         navigate("/workspace");
-      }
-   }, []);
-   // Variable below to manipulate useEffect and prevente run initial-render
-   const firstUpdate = useRef(true);
-   useEffect(() => {
-      if (firstUpdate.current) {
-         firstUpdate.current = false;
-         return;
-      }
-      if (!eventsGlobal.loading && eventsGlobal.error && btnClicked) {
-         processChecking(eventsGlobal.error, "error", "red-bg");
-      } else if (!eventsGlobal.loading && eventsGlobal.success && btnClicked) {
-         processChecking("Delete Successfully", "success", "done").then(() =>
-            navigate("/workspace")
-         );
-      }
-   }, [eventsGlobal.error, eventsGlobal.success]);
+   // ======================= Handler =======================
+   const handleDownloade = () => {
+      // Send Request
+      dispatch(getFile(event.id)).then(({ payload }) => {
+         const blob = new Blob([payload]);
+         const href = URL.createObjectURL(blob);
+         // Create Anhor Link Element
+         const anchorLink = document.createElement("a");
+         // Hide Element
+         anchorLink.style.display = "none";
+         // Add Href And File Name
+         anchorLink.href = href;
+         anchorLink.download = event.attachment.file_name;
+         // Append Element To Document
+         document.body.append(anchorLink);
+         // Auto Click To Start Download
+         anchorLink.click();
+         // Remove Element And URL After End Download Process
+         anchorLink.remove();
+         URL.revokeObjectURL(href);
+      });
+   };
 
    if (user) {
       return (
@@ -167,11 +206,7 @@ const Post = () => {
                                     >
                                        <li
                                           className="option"
-                                          onClick={() => {
-                                             dispatch(deleteEvent(event.id));
-                                             setPostOption(false);
-                                             setBtnClicked(true);
-                                          }}
+                                          onClick={confirmDeletion}
                                        >
                                           Delete
                                        </li>
@@ -199,11 +234,31 @@ const Post = () => {
                            </div>
                         </div>
                         <div className="text">
-                           <p>{event?.descriere}</p>
+                           <p style={{ whiteSpace: "pre-wrap" }}>
+                              {event?.descriere}
+                           </p>
                            <div className="post-deadlin">
                               <h4>Deadline:</h4>
                               <p className="text">{event?.due_date}</p>
                            </div>
+                           {event.attachment ? (
+                              <div className="attatchment-download">
+                                 {file.loading ? (
+                                    <Spinning size="small" />
+                                 ) : (
+                                    <button
+                                       className="btn"
+                                       onClick={handleDownloade}
+                                    >
+                                       Attachment{" "}
+                                       <img
+                                          src={attachIcon}
+                                          alt="download-icon"
+                                       />
+                                    </button>
+                                 )}
+                              </div>
+                           ) : null}
                         </div>
                         <div className="comments">
                            <div className="add-comment">

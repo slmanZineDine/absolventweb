@@ -1,10 +1,13 @@
 // External
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 // Internal
+import attachIcon from "../../assets/imgs/icons/attachIcon.png";
 import Header from "../../components/Header";
 import UniversityLogo from "../../components/UniversityLogo";
+import { getFile } from "../../redux/attachments/attachmentsActions";
+import Spinning from "../../components/Spinning";
 
 const Task = () => {
    // ======================= Global Data =======================
@@ -16,15 +19,14 @@ const Task = () => {
    document.title = "Absolventweb | Task";
 
    // ======================= Redux Hook =======================
+   const dispatch = useDispatch();
    const workspaceEvents = useSelector((state) => state.events.workspaceEvents);
-
-   // ======================= Router Hook =======================
-   const navigate = useNavigate();
-   const { state } = useLocation();
+   const file = useSelector((state) => state.attachments);
 
    // ======================= React Hook =======================
-   // Store Task
+   // Store Task_ID
    const [taskById, setTaskById] = useState({});
+
    useEffect(() => {
       // Prevent User Enter This Page Directly
       if (state?.eventId && workspaceEvents.length > 0) {
@@ -34,6 +36,33 @@ const Task = () => {
          navigate("/workspace");
       }
    }, []);
+
+   // ======================= Router Hook =======================
+   const navigate = useNavigate();
+   const { state } = useLocation();
+
+   // ======================= Handler =======================
+   const handleDownloade = () => {
+      // Send Request
+      dispatch(getFile(taskById.id)).then(({ payload }) => {
+         const blob = new Blob([payload]);
+         const href = URL.createObjectURL(blob);
+         // Create Anhor Link Element
+         const anchorLink = document.createElement("a");
+         // Hide Element
+         anchorLink.style.display = "none";
+         // Add Href And File Name
+         anchorLink.href = href;
+         anchorLink.download = taskById.attachment.file_name;
+         // Append Element To Document
+         document.body.append(anchorLink);
+         // Auto Click To Start Download
+         anchorLink.click();
+         // Remove Element And URL After End Download Process
+         anchorLink.remove();
+         URL.revokeObjectURL(href);
+      });
+   };
 
    if (user) {
       return (
@@ -45,13 +74,33 @@ const Task = () => {
                      <h2 className="title">Task</h2>
                      <div className="box">
                         <h3 className="task-title">{taskById?.title}</h3>
-                        <p className="task-content">{taskById?.descriere}</p>
+                        <p
+                           className="task-content"
+                           style={{ whiteSpace: "pre-wrap" }}
+                        >
+                           {taskById?.descriere}
+                        </p>
                         <div className="task-deadlin">
                            <h4>Deadline:</h4>
                            <p className="text">{taskById?.due_date}</p>
                         </div>
-                        <div className="edite-btn-space">
-                           {taskById.author_id === userId ? (
+                        {taskById.attachment ? (
+                           <div className="attatchment-download">
+                              {file.loading ? (
+                                 <Spinning size="small" />
+                              ) : (
+                                 <button
+                                    className="btn"
+                                    onClick={handleDownloade}
+                                 >
+                                    Attachment{" "}
+                                    <img src={attachIcon} alt="download-icon" />
+                                 </button>
+                              )}
+                           </div>
+                        ) : null}
+                        {taskById.author_id === userId ? (
+                           <div className="edite-btn-space">
                               <button
                                  className="btn save-btn"
                                  onClick={() => {
@@ -64,8 +113,8 @@ const Task = () => {
                               >
                                  Edite
                               </button>
-                           ) : null}
-                        </div>
+                           </div>
+                        ) : null}
                      </div>
                   </div>
                   <UniversityLogo />

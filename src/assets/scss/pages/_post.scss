@@ -101,6 +101,21 @@
                   margin-top: 0.5rem;
                }
             }
+            .attatchment-download {
+               @include flex(center, center);
+               .btn {
+                  @include flex(center, center, 0.5rem);
+                  margin-top: 1rem;
+                  border-radius: 2rem;
+                  font-weight: bold;
+                  background-color: #ddd;
+                  transition: color 0.4s, background-color 0.4s;
+                  &:hover {
+                     color: #fff;
+                     background-color: #007bff;
+                  }
+               }
+            }
          }
          .comments {
             margin-top: 0.5rem;

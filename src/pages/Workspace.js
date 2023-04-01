@@ -65,6 +65,20 @@ const Workspace = () => {
             dispatch(getStudentEvents());
       }
    }, []);
+
+   // ======================= Own Function =======================
+   /**
+    * Use This Function To Get Pagination Value From Each Table And Reset It Based On Search Mode
+    * @param Function UseState Fuction That Contain Pagination Values
+    * @returns Undefined
+    */
+   const resetPagination = (resetFuc) => {
+      resetFuc({
+         start: 0,
+         end: 3,
+      });
+   };
+
    if (user) {
       // Names Of Table Columns
       const tableCols = [
@@ -143,7 +157,7 @@ const Workspace = () => {
                            <Table
                               tableCols={tableCols}
                               tableData={workspaceEvents}
-                              //   resetPagination={resetPagination}
+                              resetPagination={resetPagination}
                               msg="There Are No Events To Show."
                            />
                         </div>
@@ -281,7 +295,7 @@ const Workspace = () => {
                            <Table
                               tableCols={tableCols}
                               tableData={workspaceEvents}
-                              //   resetPagination={resetPagination}
+                              resetPagination={resetPagination}
                               msg="There Are No Events To Show."
                            />
                         </div>

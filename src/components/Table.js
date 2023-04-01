@@ -73,7 +73,7 @@ const Table = ({ tableCols, tableData, resetPagination, msg }) => {
    return (
       <>
          <div className="cover">
-            <table className="table">
+            <table className="table" style={{ whiteSpace: "pre-wrap" }}>
                <thead className="thead">
                   <tr className="main-row">
                      {tableCols.map((colName, i) => (
