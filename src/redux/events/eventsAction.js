@@ -3,7 +3,34 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const baseURL = "http://127.0.0.1:8000";
 
-// Get All Student Events
+// Get All Coordinator's Events => For Coordiator Homepage
+export const getAllCoordinatorEvent = createAsyncThunk(
+   "events/getAllCoordinatorEvent",
+   async (_, { rejectWithValue }) => {
+      try {
+         const config = {
+            headers: {
+               Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+            },
+         };
+
+         const { data } = await axios.get(
+            `${baseURL}/api/event/coordinator/homepage`,
+            config
+         );
+         return data;
+      } catch (error) {
+         // return custom error message from API if any
+         if (error.response && error.response.data.message) {
+            return rejectWithValue(error.response.data.message);
+         } else {
+            return rejectWithValue(error.message);
+         }
+      }
+   }
+);
+
+// Get All Student Events => For Coordinator By Student_ID
 export const getWorkspaceEvents = createAsyncThunk(
    "events/getWorkspaceEvents",
    async (studentId, { rejectWithValue }) => {

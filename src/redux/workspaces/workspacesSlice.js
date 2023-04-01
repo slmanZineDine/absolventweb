@@ -40,6 +40,25 @@ const workspacesSlice = createSlice({
          state.error = payload;
       },
 
+      // Change Workspace Status
+      [changeWorkspaceStatus.pending]: (state) => {
+         state.loading = true;
+         state.success = false; // Reset a value every Request
+         state.error = null; // Reset a value every Request
+      },
+      [changeWorkspaceStatus.fulfilled]: (state, { payload }) => {
+         state.loading = false;
+         state.success = true;
+         // Remove The Workspace From Waiting Workspace List
+         state.waitingWorkspaces = state.waitingWorkspaces.filter(
+            (workspace) => workspace.worspace_id !== payload.data.id
+         );
+      },
+      [changeWorkspaceStatus.rejected]: (state, { payload }) => {
+         state.loading = false;
+         state.error = payload;
+      },
+
       // Delete Exist Workspace
       [deleteWorkspace.pending]: (state) => {
          state.loading = true;
@@ -83,25 +102,6 @@ const workspacesSlice = createSlice({
          state.acceptedWorkspaces = payload.data;
       },
       [getAcceptedWorkspace.rejected]: (state, { payload }) => {
-         state.loading = false;
-         state.error = payload;
-      },
-
-      // Change Workspace Status
-      [changeWorkspaceStatus.pending]: (state) => {
-         state.loading = true;
-         state.success = false; // Reset a value every Request
-         state.error = null; // Reset a value every Request
-      },
-      [changeWorkspaceStatus.fulfilled]: (state, { payload }) => {
-         state.loading = false;
-         state.success = true;
-         // Remove The Workspace From Waiting Workspace List
-         state.waitingWorkspaces = state.waitingWorkspaces.filter(
-            (workspace) => workspace.worspace_id !== payload.data.id
-         );
-      },
-      [changeWorkspaceStatus.rejected]: (state, { payload }) => {
          state.loading = false;
          state.error = payload;
       },

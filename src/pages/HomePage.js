@@ -3,18 +3,19 @@ import { Link, Navigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // Internal
-import Header from "../components/Header";
 import stepsIcon from "../assets/imgs/icons/stepsIcon.png";
 import statusIcon from "../assets/imgs/icons/statusIcon.png";
+import Header from "../components/Header";
+import Search from "../components/Search";
+import Filter from "../components/Filter";
+import Table from "../components/Table";
+import Spinning from "../components/Spinning";
 import UniversityLogo from "../components/UniversityLogo";
 import { getWaitingWorkspace } from "../redux/workspaces/workspacesActions";
 import { getStudents, getStudentStatus } from "../redux/users/uersAction";
-import Search from "../components/Search";
 import { searchByName, searchTipTema } from "../redux/users/usersSlice";
-import Filter from "../components/Filter";
-import Table from "../components/Table";
 import { getTemeTable } from "../redux/export/exportActions";
-import Spinning from "../components/Spinning";
+import { getAllCoordinatorEvent } from "../redux/events/eventsAction";
 
 const HomePage = () => {
    // ======================= Global Data =======================
@@ -28,6 +29,9 @@ const HomePage = () => {
    const waitingWorkspaces = useSelector(
       (state) => state.workspaces.waitingWorkspaces
    );
+   const coordinatorEvents = useSelector(
+      (state) => state.events.coordinatorEvents
+   );
    const userStatus = useSelector((state) => state.users.studentStatus);
    const students = useSelector((state) => state.users.students).filter(
       (student) => student?.workspace?.status === 1
@@ -38,8 +42,10 @@ const HomePage = () => {
    const anchorLink = useRef(null);
    useEffect(() => {
       if (userType === "student") dispatch(getStudentStatus());
-      else if (userType === "coordonator") dispatch(getWaitingWorkspace());
-      else if (userType === "admin") dispatch(getStudents());
+      else if (userType === "coordonator") {
+         dispatch(getWaitingWorkspace());
+         dispatch(getAllCoordinatorEvent());
+      } else if (userType === "admin") dispatch(getStudents());
    }, []);
 
    // ======================= Own Function =======================
@@ -133,9 +139,9 @@ const HomePage = () => {
          // Names Of Table Columns
          const tableCols2 = [
             { heading: "Nr", val: "" },
-            { heading: "Student", val: "title" },
-            { heading: "Title", val: "tema_type" },
-            { heading: "Deadline", val: "detalii" },
+            { heading: "Student", val: "student_name" },
+            { heading: "Title", val: "event_title" },
+            { heading: "Deadline", val: "event_deadline" },
          ];
 
          return (
@@ -173,7 +179,7 @@ const HomePage = () => {
                         {[] ? (
                            <Table
                               tableCols={tableCols2}
-                              tableData={[]}
+                              tableData={coordinatorEvents}
                               resetPagination={resetPagination}
                               msg="You Don't Have Any Event Yet."
                            />

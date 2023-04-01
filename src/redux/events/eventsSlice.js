@@ -3,6 +3,7 @@ import {
    addNewEvent,
    deleteEvent,
    editeEvent,
+   getAllCoordinatorEvent,
    getEventById,
    getStudentEvents,
    getWorkspaceEvents,
@@ -14,6 +15,7 @@ const initialState = {
    success: false, // Checking if auth is done
    workspaceEvents: [], // All workspace Events
    eventById: [], // Exactly Event By Its Id
+   coordinatorEvents: [], // All Coordinator's Events
 };
 
 const eventsSlice = createSlice({
@@ -21,6 +23,22 @@ const eventsSlice = createSlice({
    initialState,
    reducers: {},
    extraReducers: {
+      // Get All Coordinator's Events
+      [getAllCoordinatorEvent.pending]: (state) => {
+         state.loading = true;
+         state.success = false; // Reset a value every Request
+         state.error = null; // Reset a value every Request
+      },
+      [getAllCoordinatorEvent.fulfilled]: (state, { payload }) => {
+         state.loading = false;
+         state.success = true;
+         state.coordinatorEvents = payload.data;
+      },
+      [getAllCoordinatorEvent.rejected]: (state, { payload }) => {
+         state.loading = false;
+         state.error = payload;
+      },
+
       // Get Doctor's Workspace Events To Specific Student
       [getWorkspaceEvents.pending]: (state) => {
          state.loading = true;
