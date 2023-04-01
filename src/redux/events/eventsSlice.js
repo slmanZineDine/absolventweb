@@ -80,7 +80,7 @@ const eventsSlice = createSlice({
          };
          // Store Workspace Information Inside LocalStorage
          localStorage.setItem("workspaceInfo", JSON.stringify(workspaceInfo));
-         state.workspaceEvents = payload.events;
+         state.workspaceEvents = payload.workspace_info.events;
          // Sorting Events by last update
          state.workspaceEvents.sort((a, b) => {
             const firEleDate = new Date(a["updated_at"]);
