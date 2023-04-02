@@ -39,14 +39,16 @@ const TableProcess = ({
    // ======================= Redux Hook =======================
    // To Prevent Show Loading Spin Unless Selected Tema
    const [selectedTemaId, setSelectedTemaId] = useState(null);
+   // To Prevent Show Loading Spin Unless Selected Workspace => Used Inside [Accept, Reject]
    const [selectedWorkspaceId, setSelectedWorkspaceId] = useState(null);
+   // To Prevent Show Loading Spin Unless Selected Event
    const [selectedEventId, setSelectedEventId] = useState(null);
 
    // ======================= Router Hook =======================
    const navigate = useNavigate();
 
    // ======================= Handler =======================
-   const handleDownloade = () => {
+   const handleDownload = () => {
       // Save Event ID To Make Exactly File Spining
       setSelectedEventId(eventId);
       // Send Request
@@ -69,7 +71,28 @@ const TableProcess = ({
          URL.revokeObjectURL(href);
       });
    };
-
+   const handleSelection = () => {
+      // Prevent User Click If His Status Equal 0 Or 1
+      if (
+         userStatus?.workspace_status === 1 ||
+         userStatus?.workspace_status === 0
+      ) {
+         return;
+      } // Allow User Click If His Status Doesn't Equal 0 Or 1
+      else {
+         if (selectedTema === selectionInfo.tema_id) {
+            dispatch(
+               setWorkspaceInfo({
+                  tema_id: null,
+                  coordonator_id: null,
+               })
+            );
+         } else {
+            dispatch(setWorkspaceInfo(selectionInfo));
+         }
+      }
+   };
+   // ======================= Sweet Alert Labrary =======================
    // Check Box To Confirm Process
    const confirmProcess = async (method, token, msg, processStatus) => {
       let checkBox = await swal(msg, {
@@ -83,6 +106,7 @@ const TableProcess = ({
          dispatch(seBtnProcess(processStatus));
       }
    };
+
    // Workspace Page => For Cell Contain Title As Link Route You To Event By Event_ID
    if (process?.link) {
       if (eventType === "post") {
@@ -119,7 +143,8 @@ const TableProcess = ({
             </Link>
          );
       }
-   } else if (process?.file) {
+   } // Workspace Page => For Cell Contain Download Btn To Download An Attachment By Event_ID
+   else if (process?.file) {
       return (
          <div className="wraper">
             {file.loading && selectedEventId ? (
@@ -129,12 +154,13 @@ const TableProcess = ({
                   src={attachIcon}
                   alt="download-icon"
                   style={{ cursor: "pointer" }}
-                  onClick={handleDownloade}
+                  onClick={handleDownload}
                />
             )}
          </div>
       );
-   } else if (process?.show) {
+   } // Students Page => For Cell Contain Btn To Show Student's Workspace By Student_ID
+   else if (process?.show) {
       return (
          <div className="wraper">
             <button
@@ -151,95 +177,127 @@ const TableProcess = ({
             </button>
          </div>
       );
-   }
-
-   return (
-      <>
-         {process?.select ? (
-            <div
-               className={`wraper ${
-                  selectedTema === selectionInfo.tema_id ? "selected" : ""
-               } 
-               ${
-                  userStatus?.workspace_status === 1 ||
-                  userStatus?.workspace_status === 0
-                     ? "disable"
-                     : ""
-               }            
-               `}
+   } // List Of Topic Page => For Cell Contain Select Btn To Select One Tema
+   else if (process?.select) {
+      return (
+         <div
+            className={`wraper ${
+               selectedTema === selectionInfo.tema_id ? "selected" : ""
+            } 
+         ${
+            userStatus?.workspace_status === 1 ||
+            userStatus?.workspace_status === 0
+               ? "disable"
+               : ""
+         }            
+         `}
+         >
+            <div className="select-box" onClick={handleSelection}>
+               <img src={checkIcon} alt="check-icon" className="btn-icon" />
+            </div>
+         </div>
+      );
+   } // Profile Page => For Cell Contain Edite And Delete Btns
+   else if (process?.edite && process?.delete) {
+      return (
+         <div className="topic-btns">
+            <button
+               className="btn edite-btn"
+               onClick={() =>
+                  navigate("edite-topic", {
+                     state: {
+                        id: temaId,
+                     },
+                  })
+               }
             >
-               <div
-                  className="select-box"
+               Edite
+               <img src={editeIcon} alt="edite-icon" className="btn-icon" />
+            </button>
+            {topics.loading && selectedTemaId === temaId ? (
+               <Spinning size="small" />
+            ) : (
+               <button
+                  className="btn delete-btn"
                   onClick={() => {
-                     // Prevent User Click If His Status Equal 0 Or 1
-                     if (
-                        userStatus?.workspace_status === 1 ||
-                        userStatus?.workspace_status === 0
-                     ) {
-                        return;
-                        // Allow User Click If His Status Doesn't Equal 0 Or 1
-                     } else {
-                        if (selectedTema === selectionInfo.tema_id) {
-                           dispatch(
-                              setWorkspaceInfo({
-                                 tema_id: null,
-                                 coordonator_id: null,
-                              })
-                           );
-                        } else {
-                           dispatch(setWorkspaceInfo(selectionInfo));
-                        }
-                     }
+                     confirmProcess(deleteTopic, temaId, "Are you sure?", {
+                        deleteTema: true,
+                     });
+                     setSelectedTemaId(temaId);
                   }}
                >
-                  <img src={checkIcon} alt="check-icon" className="btn-icon" />
-               </div>
-            </div>
-         ) : null}
-         {process?.links ? (
-            <div className="wraper">
-               <button
-                  className="btn show-btn"
-                  onClick={() => {
-                     localStorage.setItem(
-                        "workspaceInfo",
-                        JSON.stringify(workspaceInfo)
-                     );
-                     navigate("/workspace");
-                  }}
-               >
-                  Show
+                  Delete
+                  <img
+                     src={deleteIcon}
+                     alt="delete-icon"
+                     className="btn-icon"
+                  />
                </button>
-            </div>
-         ) : null}
-         {process?.edite && process?.delete ? (
-            <div className="topic-btns">
-               <button
-                  className="btn edite-btn"
-                  onClick={() =>
-                     navigate("edite-topic", {
-                        state: {
-                           id: temaId,
-                        },
-                     })
-                  }
-               >
-                  Edite
-                  <img src={editeIcon} alt="edite-icon" className="btn-icon" />
-               </button>
-               {topics.loading && selectedTemaId === temaId ? (
+            )}
+         </div>
+      );
+   } // Homepage Coordinator => For Cell Contain Accept And Reject Btns
+   else if (process?.acceptBtn && process?.rejectBtn) {
+      return (
+         <div className="status">
+            <div className="topic-btns ">
+               {workspace.loading &&
+               workspaceId === selectedWorkspaceId &&
+               btnProcess.acceptStudent ? (
+                  <Spinning size="small" />
+               ) : (
+                  <button
+                     className="btn edite-btn"
+                     onClick={() => {
+                        confirmProcess(
+                           changeWorkspaceStatus,
+                           [
+                              {
+                                 status: 1,
+                              },
+                              workspaceId,
+                           ],
+                           "Are You Sure You Want To Accept This Student?",
+                           {
+                              acceptStudent: true,
+                           }
+                        );
+                        setSelectedWorkspaceId(workspaceId);
+                     }}
+                  >
+                     Accept
+                     <img
+                        src={checkIcon}
+                        alt="check-icon"
+                        className="btn-icon"
+                     />
+                  </button>
+               )}
+               {workspace.loading &&
+               workspaceId === selectedWorkspaceId &&
+               btnProcess.rejectStudent ? (
                   <Spinning size="small" />
                ) : (
                   <button
                      className="btn delete-btn"
                      onClick={() => {
-                        confirmProcess(deleteTopic, temaId, "Are you sure?", {
-                           deleteTema: true,
-                        });
-                        setSelectedTemaId(temaId);
+                        confirmProcess(
+                           changeWorkspaceStatus,
+                           [
+                              {
+                                 status: 3,
+                              },
+                              workspaceId,
+                           ],
+                           "Are You Sure You Want To Reject This Student?",
+                           {
+                              rejectStudent: true,
+                           }
+                        );
+                        setSelectedWorkspaceId(workspaceId);
                      }}
                   >
-                     Delete
+                     Reject
                      <img
                         src={deleteIcon}
                         alt="delete-icon"
@@ -248,79 +306,9 @@ const TableProcess = ({
                   </button>
                )}
             </div>
-         ) : null}
-         {process?.acceptBtn && process?.rejectBtn ? (
-            <div className="status">
-               <div className="topic-btns ">
-                  {workspace.loading &&
-                  workspaceId === selectedWorkspaceId &&
-                  btnProcess.acceptStudent ? (
-                     <Spinning size="small" />
-                  ) : (
-                     <button
-                        className="btn edite-btn"
-                        onClick={() => {
-                           confirmProcess(
-                              changeWorkspaceStatus,
-                              [
-                                 {
-                                    status: 1,
-                                 },
-                                 workspaceId,
-                              ],
-                              "Are You Sure You Want To Accept This Student?",
-                              {
-                                 acceptStudent: true,
-                              }
-                           );
-                           setSelectedWorkspaceId(workspaceId);
-                        }}
-                     >
-                        Accept
-                        <img
-                           src={checkIcon}
-                           alt="check-icon"
-                           className="btn-icon"
-                        />
-                     </button>
-                  )}
-                  {workspace.loading &&
-                  workspaceId === selectedWorkspaceId &&
-                  btnProcess.rejectStudent ? (
-                     <Spinning size="small" />
-                  ) : (
-                     <button
-                        className="btn delete-btn"
-                        onClick={() => {
-                           confirmProcess(
-                              changeWorkspaceStatus,
-                              [
-                                 {
-                                    status: 3,
-                                 },
-                                 workspaceId,
-                              ],
-                              "Are You Sure You Want To Reject This Student?",
-                              {
-                                 rejectStudent: true,
-                              }
-                           );
-                           setSelectedWorkspaceId(workspaceId);
-                        }}
-                     >
-                        Reject
-                        <img
-                           src={deleteIcon}
-                           alt="delete-icon"
-                           className="btn-icon"
-                        />
-                     </button>
-                  )}
-               </div>
-            </div>
-         ) : null}
-      </>
-   );
+         </div>
+      );
+   } else return <p>Empty</p>;
 };
 
 export default TableProcess;

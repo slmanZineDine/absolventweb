@@ -23,12 +23,13 @@ const store = configureStore({
       global: globalSlice,
       export: exportSlice,
    },
+   // Prevent serializableCheck Checking
    middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
          serializableCheck: false,
       }),
    // Disable Redux DevTools
-   // devTools: false,
+   devTools: false,
 });
 
 export default store;

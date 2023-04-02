@@ -44,8 +44,73 @@ const ListOfTopics = () => {
    const { searchMode } = useSelector((state) => state.global);
    const exportProcess = useSelector((state) => state.export);
 
+   // ======================= React Hook =======================
+   // Specify Search Method To Send It To Search Compnent
+   const [theSearchMethod, setTheSearchMethod] = useState({
+      searchGlobaly: searchGlobaly,
+      serachByCoordinator: searchByCoordinator,
+   });
+   // To Prevent Show Alert Unless Process Is Success Or Rejected
+   const [processDone, setProcessDone] = useState(false);
+   // Get Scroll Top Btn To Scroll Top When Use Select A Tema
+   const scrollTopBtn = useRef();
+   // To Prevent useEffect Run Initial-Render
+   const firstUpdate = useRef(true);
+   const anchorLink = useRef(null);
+
+   useEffect(() => {
+      // If Student Or Admin => Getting All Doctors teme
+      if (user && (userType === "student" || userType === "admin")) {
+         dispatch(getAllTopicsByDoctor());
+         // Set Default Search Method To Use It In Search Bar
+         dispatch(setSearchMethod("searchGlobaly"));
+      }
+      // If Coordinator => Getting Only Doctor's teme
+      else if (user && userType === "coordonator") {
+         const doctorId =
+            JSON.parse(user)?.coordonator?.id ||
+            JSON.parse(user)?.corrdonator_id;
+         if (doctorId) {
+            dispatch(getTopicsByDoctorId(doctorId));
+         }
+      }
+      if (userType === "student") {
+         dispatch(getStudentStatus());
+      }
+   }, []);
+   useEffect(() => {
+      if (userType === "student") scrollTopBtn.current.click();
+   }, [workspaceInfo]);
+   useEffect(() => {
+      if (firstUpdate.current) {
+         firstUpdate.current = false;
+         return;
+      }
+      if (userType === "student") {
+         if (processDone) {
+            if (!workspace.loading && workspace.error) {
+               processChecking(workspace.error, "error", "red-bg");
+               setProcessDone(false); // Reset
+            } else if (!workspace.loading && workspace.success) {
+               processChecking("Process Successfully", "success", "done").then(
+                  () => navigate("/homepage")
+               );
+               setProcessDone(false); // Reset
+            }
+         }
+      }
+   }, [workspace.error, workspace.success]);
+
    // ======================= Router Hook =======================
    const navigate = useNavigate();
+
+   // ======================= Handler =======================
+   // Checking If User Select A Tema of Not
+   const handleCreation = () => {
+      if (workspaceInfo.tema_id && workspaceInfo.coordonator_id)
+         confirmCreation(workspaceInfo);
+      else processChecking("Please Select A Tema.", "warning", "red-bg");
+   };
 
    // ======================= Own Function =======================
    /**
@@ -82,68 +147,6 @@ const ListOfTopics = () => {
       }
    };
 
-   // ======================= Handle User Select =======================
-   // Checking If User Select A Tema of Not
-   const handleCreation = () => {
-      if (workspaceInfo.tema_id && workspaceInfo.coordonator_id)
-         confirmCreation(workspaceInfo);
-      else processChecking("Please Select A Tema.", "warning", "red-bg");
-   };
-
-   // ======================= React Hook =======================
-   // Specify Search Method To Send It To Search Compnent
-   const [theSearchMethod, setTheSearchMethod] = useState({
-      searchGlobaly: searchGlobaly,
-      serachByCoordinator: searchByCoordinator,
-   });
-   // Get Scroll Top Btn To Scroll Top When Use Select A Tema
-   const scrollTopBtn = useRef();
-   // To Prevent Show Alert Unless Process Is Success Or Rejected
-   const [processDone, setProcessDone] = useState(false);
-   const anchorLink = useRef(null);
-   useEffect(() => {
-      // If Student Or Admin => Getting All Doctors teme
-      if (user && (userType === "student" || userType === "admin")) {
-         dispatch(getAllTopicsByDoctor());
-         // Set Default Search Method To Use It In Search Bar
-         dispatch(setSearchMethod("searchGlobaly"));
-      }
-      // If Coordinator => Getting Only Doctor's teme
-      else if (user && userType === "coordonator") {
-         const doctorId =
-            JSON.parse(user)?.coordonator?.id ||
-            JSON.parse(user)?.corrdonator_id;
-         if (doctorId) {
-            dispatch(getTopicsByDoctorId(doctorId));
-         }
-      }
-      if (userType === "student") {
-         dispatch(getStudentStatus());
-      }
-   }, []);
-   useEffect(() => {
-      if (userType === "student") scrollTopBtn.current.click();
-   }, [workspaceInfo]);
-   // Variable Below To Prevent Run useEffect Initial-Render
-   const firstUpdate = useRef(true);
-   useEffect(() => {
-      if (firstUpdate.current) {
-         firstUpdate.current = false;
-         return;
-      }
-      if (userType === "student") {
-         if (processDone) {
-            if (!workspace.loading && workspace.error) {
-               processChecking(workspace.error, "error", "red-bg");
-               setProcessDone(false); // Reset
-            } else if (!workspace.loading && workspace.success) {
-               processChecking("Process Successfully", "success", "done");
-               setProcessDone(false); // Reset
-               navigate("/homepage");
-            }
-         }
-      }
-   }, [workspace.error, workspace.success]);
    if (user) {
       if (userType === "student") {
          // Names Of Table Columns
@@ -253,7 +256,7 @@ const ListOfTopics = () => {
                                  <p>
                                     You Don't Any Tema Yet. Go To{" "}
                                     <Link
-                                       to="/profile"
+                                       to="/profile/add-new-topic"
                                        style={{
                                           textDecoration: "underLine",
                                           color: "blue",

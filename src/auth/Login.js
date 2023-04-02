@@ -7,9 +7,9 @@ import swal from "sweetalert";
 import mailIcon from "../assets/imgs/icons/mailIcon.png";
 import lockIcon from "../assets/imgs/icons/lockIcon.png";
 import { Logo } from "../components/Logo";
-import { userLogin } from "../redux/auth/authActions";
-import Spinning from "../components/Spinning";
 import UniversityLogo from "../components/UniversityLogo";
+import Spinning from "../components/Spinning";
+import { userLogin } from "../redux/auth/authActions";
 
 const Login = () => {
    // ======================= Global Data =======================
@@ -25,6 +25,28 @@ const Login = () => {
    // ======================= Redux Hook =======================
    const dispatch = useDispatch();
    const userInfo = useSelector((state) => state.auth);
+
+   // ======================= React Hook =======================
+   // To Prevent useEffect Run Initial-Render
+   const firstUpdate = useRef(true);
+
+   useEffect(() => {
+      if (!user) emailInput.current.focus();
+   }, []);
+   // ############## Alert Logic ##############
+   useEffect(() => {
+      if (firstUpdate.current) {
+         firstUpdate.current = false;
+         return;
+      }
+      if (!userInfo.loading && userInfo.error) {
+         processChecking(userInfo.error, "error", "red-bg");
+      } else if (!userInfo.loading && userInfo.success) {
+         processChecking("Logging in Success", "success", "done").then(() =>
+            navigate("/homepage", { replace: true })
+         );
+      }
+   }, [userInfo.error, userInfo.success]);
 
    // ======================= Router Hook =======================
    const navigate = useNavigate();
@@ -69,20 +91,8 @@ const Login = () => {
       }
    };
 
-   // ======================= React Hook =======================
-   useEffect(() => {
-      if (!user) {
-         emailInput.current.focus();
-      }
-      if (!userInfo.loading && userInfo.error) {
-         processChecking(userInfo.error, "error", "red-bg");
-      } else if (!userInfo.loading && userInfo.success) {
-         processChecking("Logging in Success", "success", "done");
-         navigate("/homepage", { replace: true });
-      }
-   }, [userInfo.error, userInfo.success]);
    if (user) {
-      return <Navigate to="/homepage" />;
+      return <Navigate to="/homepage" replace={true} />;
    } else {
       return (
          <div className="auth login-page">

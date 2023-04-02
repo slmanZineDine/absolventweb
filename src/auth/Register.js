@@ -17,21 +17,49 @@ const Register = () => {
    // ======================= Global Data =======================
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
+   // Set Page Title
    document.title = "Absolventweb | Register";
 
    // ======================= Select Input Elements =======================
+   const userTypeSelect = useRef(null);
    const nameInput = useRef(null);
    const emailInput = useRef(null);
    const passwordInput = useRef(null);
    const passwordConFirmInput = useRef(null);
-   const phoneInput = useRef(null);
-   const addressInput = useRef(null);
-   const facultyInput = useRef(null);
+   // const phoneInput = useRef(null);
+   // const addressInput = useRef(null);
+   // const facultyInput = useRef(null);
    const specializareInput = useRef(null);
 
    // ======================= Redux Hook =======================
    const dispatch = useDispatch();
    const userInfo = useSelector((state) => state.auth);
+
+   // ======================= React Hook =======================
+   // Store Selected User Type
+   const [selectedType, setSelectedType] = useState(null);
+   // User Types
+   const userTypes = ["student", "coordonator", "admin"];
+   // To Prevent useEffect Run Initial-Render
+   const firstUpdate = useRef(true);
+
+   useEffect(() => {
+      if (!user) nameInput.current.focus();
+   }, []);
+   // ############## Alert Logic ##############
+   useEffect(() => {
+      if (firstUpdate.current) {
+         firstUpdate.current = false;
+         return;
+      }
+      if (!userInfo.loading && userInfo.error) {
+         processChecking(userInfo.error, "error", "red-bg");
+      } else if (!userInfo.loading && userInfo.success) {
+         processChecking("Register Success", "success", "done").then(() =>
+            navigate("/homepage", { replace: true })
+         );
+      }
+   }, [userInfo.error, userInfo.success]);
 
    // ======================= Router Hook =======================
    const navigate = useNavigate();
@@ -91,24 +119,8 @@ const Register = () => {
       }
    };
 
-   // ======================= React Hook =======================
-   // To Select User Type
-   const userTypeSelect = useRef(null);
-   const userTypes = ["student", "coordonator", "admin"];
-   const [selectedType, setSelectedType] = useState(null);
-   useEffect(() => {
-      if (!user) {
-         nameInput.current.focus();
-      }
-      if (!userInfo.loading && userInfo.error) {
-         processChecking(userInfo.error, "error", "red-bg");
-      } else if (!userInfo.loading && userInfo.success) {
-         processChecking("Register Success", "success", "done");
-         navigate("/homepage", { replace: true });
-      }
-   }, [userInfo.error, userInfo.success]);
    if (user) {
-      return <Navigate to="/homepage" />;
+      return <Navigate to="/homepage" replace={true} />;
    } else {
       return (
          <div className="auth">

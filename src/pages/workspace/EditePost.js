@@ -50,7 +50,7 @@ const EditePost = () => {
    const [fileUploaded, setFileUploaded] = useState(false);
    // To Prevent Show Alert When The Previous Process Is Pending
    const [btnClicked, setBtnClicked] = useState(false);
-   // Variable below to manipulate useEffect and prevente run initial-render
+   // To Prevent useEffect Run Initial-Render
    const firstUpdate = useRef(true);
 
    // ############## Getting And Setting Event Infomation ##############
