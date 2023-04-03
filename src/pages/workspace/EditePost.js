@@ -81,12 +81,13 @@ const EditePost = () => {
          firstUpdate.current = false;
          return;
       }
-      if (fileName) {
+      let file = attachmentInput.current.files[0];
+      if (file) {
          // Show Alert After File Uploaded
          if (!file.loading && file.error && fileUploaded) {
             processChecking(file.error, "error", "red-bg");
          } else if (!file.loading && file.success && fileUploaded) {
-            processChecking("Add Successfully", "success", "done").then(() =>
+            processChecking("Edite Successfully", "success", "done").then(() =>
                navigate("/workspace")
             );
          }
@@ -95,7 +96,7 @@ const EditePost = () => {
          if (!events.loading && events.error && btnClicked) {
             processChecking(events.error, "error", "red-bg");
          } else if (!events.loading && events.success && btnClicked) {
-            processChecking("Add Successfully", "success", "done").then(() =>
+            processChecking("Edite Successfully", "success", "done").then(() =>
                navigate("/workspace")
             );
          }
@@ -136,8 +137,8 @@ const EditePost = () => {
       };
       if (fieldsValidation(userInput)) {
          // If There Is An Attachment Dispatch Upload Attachment Action
-         if (fileName) {
-            let file = attachmentInput.current.files[0];
+         let file = attachmentInput.current.files[0];
+         if (file) {
             dispatch(
                editeEvent({ eventID: state.eventId, eventContent: userInput })
             ).then(({ payload }) => {
@@ -146,8 +147,6 @@ const EditePost = () => {
                const fileData = new FormData();
                fileData.append("event_id", event_ID);
                fileData.append("file", file);
-               console.log(fileData);
-               console.log(file);
                dispatch(uploadeFile(fileData));
                setFileUploaded(true);
             });

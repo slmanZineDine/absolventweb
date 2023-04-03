@@ -73,12 +73,14 @@ const AddTask = () => {
             let file = attachmentInput.current.files[0];
             dispatch(addNewEvent(userInput)).then(({ payload }) => {
                // Save Event ID Get It From Event Response
-               const event_ID = payload.data.id;
-               const fileData = new FormData();
-               fileData.append("event_id", event_ID);
-               fileData.append("file", file);
-               dispatch(uploadeFile(fileData));
-               setFileUploaded(true);
+               const event_ID = payload?.data?.id;
+               if (event_ID) {
+                  const fileData = new FormData();
+                  fileData.append("event_id", event_ID);
+                  fileData.append("file", file);
+                  dispatch(uploadeFile(fileData));
+                  setFileUploaded(true);
+               }
             });
          }
          // Dispatch Only Add Event Action

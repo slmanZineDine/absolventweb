@@ -74,9 +74,9 @@ const eventsSlice = createSlice({
          // Workspace Information
          const workspaceInfo = {
             coordinator_name:
-               payload.workspace_info["coordonator name"] || null,
+               payload.workspace_info["coordonator_name"] || null,
             workspace_id: payload.workspace_info.workspace_id || null,
-            tema_name: payload.workspace_info["tema title"] || null,
+            tema_name: payload.workspace_info["tema_title"] || null,
          };
          // Store Workspace Information Inside LocalStorage
          localStorage.setItem("workspaceInfo", JSON.stringify(workspaceInfo));

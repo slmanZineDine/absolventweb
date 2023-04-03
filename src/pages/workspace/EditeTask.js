@@ -90,13 +90,13 @@ const EditeTask = () => {
          firstUpdate.current = false;
          return;
       }
-
-      if (fileName) {
+      let file = attachmentInput.current.files[0];
+      if (file) {
          // Show Alert After File Uploaded
          if (!file.loading && file.error && fileUploaded) {
             processChecking(file.error, "error", "red-bg");
          } else if (!file.loading && file.success && fileUploaded) {
-            processChecking("Add Successfully", "success", "done").then(() =>
+            processChecking("Edite Successfully", "success", "done").then(() =>
                navigate("/workspace")
             );
          }
@@ -113,7 +113,7 @@ const EditeTask = () => {
             events.success &&
             (processType.delete || processType.edite)
          ) {
-            processChecking("Process Successfully", "success", "done");
+            processChecking("Edite Successfully", "success", "done");
             navigate("/workspace");
          }
       }
@@ -155,8 +155,8 @@ const EditeTask = () => {
       if (fieldsValidation(userInput)) {
          setProcessType({ delete: false, edite: true });
          // If There Is An Attachment Dispatch Upload Attachment Action
-         if (fileName) {
-            let file = attachmentInput.current.files[0];
+         let file = attachmentInput.current.files[0];
+         if (file) {
             dispatch(
                editeEvent({ eventID: state.eventId, eventContent: userInput })
             ).then(({ payload }) => {
@@ -281,6 +281,17 @@ const EditeTask = () => {
                               </div>
                            ) : null}
                         </li>
+                        {fileType ? (
+                           <li
+                              className="item"
+                              style={{ color: "red", justifyContent: "center" }}
+                           >
+                              <p style={{ textAlign: "center" }}>
+                                 The File Must Be A File Of Type: csv, txt, xlx,
+                                 xls, pdf, zip.
+                              </p>
+                           </li>
+                        ) : null}
                         <div className="save-btn-space">
                            {(events.loading && processType.edite) ||
                            file.loading ? (
