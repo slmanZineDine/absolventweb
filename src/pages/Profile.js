@@ -13,6 +13,7 @@ const Profile = () => {
    // ======================= Global Data =======================
    // Get User Information To Permission For Enter This Page Or Not
    const user = localStorage.getItem("user");
+   const userDetail = JSON.parse(user);
    const userType = JSON.parse(user)?.type;
    document.title = "Absolventweb | Profile";
 
@@ -34,30 +35,21 @@ const Profile = () => {
    const navigate = useNavigate();
 
    // ======================= User Details Showing In Profile Page =======================
+   // This Trick Because Reponse Deal Admin Like Coordinator
+   let userProfile = "student";
+   if (userType === "admin" || userType === "coordonator")
+      userProfile = "coordonator";
    const userDetails = [
-      "Tip De Utilizator",
-      "Prenuma Si Numa",
-      "Email",
-      "Telefon",
-      "Facultatea",
-      "Specializare",
+      { heading: "Tip De Utilizator", val: "type" },
+      // { heading: "Prenuma Si Numa", val: "name" },
+      // { heading: "Email", val: "email" },
+      // { heading: "Telefon", val: `${userProfile}.phone` },
+      // { heading: "Facultatea", val: `${userProfile}.facultatea` },
+      {
+         heading: "Specializare",
+         val: `${userProfile}.specializare`,
+      },
    ];
-
-   // ======================= Extract Data Compatible With User Details ======================
-   const profileData = (data) => {
-      if (data?.length > 0) {
-         return data.map((e) => {
-            return [
-               e["type"],
-               e["name"],
-               e["email"],
-               e[userType]?.["phone"],
-               e[userType]?.["facultatea"],
-               e[userType]?.["specializare"],
-            ];
-         });
-      }
-   };
 
    // ======================= Own Function =======================
    /**
@@ -99,16 +91,40 @@ const Profile = () => {
                <section className="section user-info">
                   <div className="container">
                      <ul className="detils">
-                        {profileData([JSON.parse(user)])?.[0].map(
-                           (userInfo, i) => (
-                              <li key={i} className="item">
-                                 <h3 className="title">{userDetails[i]}:</h3>
-                                 <p className="text">
-                                    {userInfo ?? "No Data Yet"}
-                                 </p>
-                              </li>
+                        {userDetails.map((userInfo, i) => {
+                           // Checking If User Type Is An Admin To Remove Specializare
+                           if (
+                              userType === "admin" &&
+                              userInfo.heading === "Specializare"
                            )
-                        )}
+                              return;
+                           // Checking If Object Has Nested Object To Extract it
+                           if (userInfo.val.includes(".")) {
+                              const arr = userInfo.val.split(".");
+                              return (
+                                 <li key={i} className="item">
+                                    <h3 className="title">
+                                       {userInfo.heading}:
+                                    </h3>
+                                    <p className="text">
+                                       {userDetail?.[arr[0]]?.[arr[1]] ||
+                                          "No Data"}
+                                    </p>
+                                 </li>
+                              );
+                           } else {
+                              return (
+                                 <li key={i} className="item">
+                                    <h3 className="title">
+                                       {userInfo.heading}:
+                                    </h3>
+                                    <p className="text">
+                                       {userDetail[userInfo.val]}
+                                    </p>
+                                 </li>
+                              );
+                           }
+                        })}
                      </ul>
                      <UniversityLogo />
                   </div>

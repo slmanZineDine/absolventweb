@@ -183,7 +183,25 @@ const Workspace = () => {
                </>
             );
          }
-         // Status null, 0, 3 => You Don't have workspace
+         // Status 0 => Waiting For Coordinator Accept Or Reject
+         else if (studentStatus?.workspace_status === 0) {
+            return (
+               <>
+                  <Header userType={userType} />
+                  <main className="main workspace-page">
+                     <div className="container empty-workspace">
+                        <div className="content">
+                           <p className="text">
+                              Încă nu aveți workspace. Starea de așteptare
+                              coordonatorului.
+                           </p>
+                        </div>
+                        <UniversityLogo />
+                     </div>
+                  </main>
+               </>
+            );
+         } // Status null, 3 => You Don't have workspace
          else {
             return (
                <>

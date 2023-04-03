@@ -146,6 +146,8 @@ const EditePost = () => {
                const fileData = new FormData();
                fileData.append("event_id", event_ID);
                fileData.append("file", file);
+               console.log(fileData);
+               console.log(file);
                dispatch(uploadeFile(fileData));
                setFileUploaded(true);
             });

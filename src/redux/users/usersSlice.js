@@ -154,6 +154,10 @@ const usersSlice = createSlice({
          state.loading = false;
          state.success = true;
          state.acceptedStudent = payload.data;
+         // Remove Doctocs Don't Have Student
+         state.acceptedStudent = state.acceptedStudent.filter(
+            (doctor) => doctor.students.length > 0
+         );
          // Save Data In Temporary Variable To  Get It After Any Search
          state.tempData = JSON.stringify(state.acceptedStudent);
       },

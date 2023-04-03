@@ -107,9 +107,12 @@ const Register = () => {
          // phone: phoneInput.current.value,
          // address: addressInput.current.value,
          // facultatea: facultyInput.current.value,
-         specializare: specializareInput.current.value,
       };
+      // Add Specializare For All Users Except Admin
+      if (userTypes[selectedType] !== "admin")
+         userRegisterInfo.specializare = specializareInput.current.value;
 
+      // Add is_admin Value For Admin And Coordinator
       if (userTypes[selectedType] === "admin") userRegisterInfo["is_admin"] = 1;
       else if (userTypes[selectedType] === "coordonator")
          userRegisterInfo["is_admin"] = 0;
@@ -252,17 +255,19 @@ const Register = () => {
                               ref={facultyInput}
                            />
                         </div> */}
-                        <div className="form-group">
-                           <label htmlFor="specializare">Specializare</label>
-                           <input
-                              type="text"
-                              className="form-input"
-                              required
-                              id="specializare"
-                              placeholder="Write here"
-                              ref={specializareInput}
-                           />
-                        </div>
+                        {userTypes[selectedType] === "admin" ? null : (
+                           <div className="form-group">
+                              <label htmlFor="specializare">Specializare</label>
+                              <input
+                                 type="text"
+                                 className="form-input"
+                                 required
+                                 id="specializare"
+                                 placeholder="Write here"
+                                 ref={specializareInput}
+                              />
+                           </div>
+                        )}
 
                         {userInfo.loading ? (
                            <Spinning size="full" />

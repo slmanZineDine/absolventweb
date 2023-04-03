@@ -69,6 +69,7 @@ const TableProcess = ({
          // Remove Element And URL After End Download Process
          anchorLink.remove();
          URL.revokeObjectURL(href);
+         setSelectedEventId(null); // Reset
       });
    };
    const handleSelection = () => {
@@ -147,7 +148,7 @@ const TableProcess = ({
    else if (process?.file) {
       return (
          <div className="wraper">
-            {file.loading && selectedEventId ? (
+            {file.loading && selectedEventId === eventId ? (
                <Spinning size="small" />
             ) : (
                <img

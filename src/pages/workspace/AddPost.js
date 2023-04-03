@@ -20,19 +20,59 @@ const AddPost = () => {
    const workspaceInfo = JSON.parse(localStorage.getItem("workspaceInfo"));
    document.title = "Absolventweb | Add Post";
 
-   // ======================= Redux Hook =======================
-   const dispatch = useDispatch();
-   const events = useSelector((state) => state.events);
-   const file = useSelector((state) => state.attachments);
-
-   // ======================= Router Hook =======================
-   const navigate = useNavigate();
-
    // ======================= Select Input Elements =======================
    const titleInput = useRef(null);
    const contentInput = useRef(null);
    const deadlineInput = useRef(null);
    const attachmentInput = useRef(null);
+
+   // ======================= Redux Hook =======================
+   const dispatch = useDispatch();
+   const events = useSelector((state) => state.events);
+   const file = useSelector((state) => state.attachments);
+
+   // ======================= React Hook =======================
+   // Store File Name To Show In The Screen
+   const [fileName, setFileName] = useState(null);
+   // For Error File Type
+   const [fileType, setFileType] = useState(false);
+   // Checking If File Uploaded
+   const [fileUploaded, setFileUploaded] = useState(false);
+   // To Prevent Show Alert When The Previous Process Is Pending
+   const [btnClicked, setBtnClicked] = useState(false);
+   // Variable below to manipulate useEffect and prevente run initial-render
+   const firstUpdate = useRef(true);
+
+   // ############## Alert Logic ##############
+   useEffect(() => {
+      titleInput.current.focus();
+      if (firstUpdate.current) {
+         firstUpdate.current = false;
+         return;
+      }
+      if (fileName) {
+         // Show Alert After File Uploaded
+         if (!file.loading && file.error && fileUploaded) {
+            processChecking(file.error, "error", "red-bg");
+         } else if (!file.loading && file.success && fileUploaded) {
+            processChecking("Add Successfully", "success", "done").then(() =>
+               navigate("/workspace")
+            );
+         }
+         // Case Show Alert If No File Exist
+      } else {
+         if (!events.loading && events.error && btnClicked) {
+            processChecking(events.error, "error", "red-bg");
+         } else if (!events.loading && events.success && btnClicked) {
+            processChecking("Add Successfully", "success", "done").then(() =>
+               navigate("/workspace")
+            );
+         }
+      }
+   }, [events.error, events.success, file.error, file.success]);
+
+   // ======================= Router Hook =======================
+   const navigate = useNavigate();
 
    // ======================= Sweet Alert Labrary =======================
    const processChecking = async (msg, icon, theClassName) => {
@@ -100,46 +140,6 @@ const AddPost = () => {
          setFileType(false);
       } else setFileType(true);
    };
-
-   // ======================= React Hook =======================
-   // Store File Name To Show In The Screen
-   const [fileName, setFileName] = useState(null);
-   // For Error File Type
-   const [fileType, setFileType] = useState(false);
-   // Checking If File Uploaded
-   const [fileUploaded, setFileUploaded] = useState(false);
-   // To Prevent Show Alert When The Previous Process Is Pending
-   const [btnClicked, setBtnClicked] = useState(false);
-   // Variable below to manipulate useEffect and prevente run initial-render
-   const firstUpdate = useRef(true);
-
-   // ############## Alert Logic ##############
-   useEffect(() => {
-      titleInput.current.focus();
-      if (firstUpdate.current) {
-         firstUpdate.current = false;
-         return;
-      }
-      if (fileName) {
-         // Show Alert After File Uploaded
-         if (!file.loading && file.error && fileUploaded) {
-            processChecking(file.error, "error", "red-bg");
-         } else if (!file.loading && file.success && fileUploaded) {
-            processChecking("Add Successfully", "success", "done").then(() =>
-               navigate("/workspace")
-            );
-         }
-         // Case Show Alert If No File Exist
-      } else {
-         if (!events.loading && events.error && btnClicked) {
-            processChecking(events.error, "error", "red-bg");
-         } else if (!events.loading && events.success && btnClicked) {
-            processChecking("Add Successfully", "success", "done").then(() =>
-               navigate("/workspace")
-            );
-         }
-      }
-   }, [events.error, events.success, file.error, file.success]);
 
    if (user) {
       return (

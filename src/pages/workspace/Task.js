@@ -93,7 +93,7 @@ const Task = () => {
                                     className="btn"
                                     onClick={handleDownloade}
                                  >
-                                    Attachment{" "}
+                                    {taskById.attachment.file_name}
                                     <img src={attachIcon} alt="download-icon" />
                                  </button>
                               )}

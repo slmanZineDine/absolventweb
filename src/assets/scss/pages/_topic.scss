@@ -45,7 +45,8 @@
                   padding-left: 1rem;
                   border: 1px solid #000;
                   border-radius: 1rem;
-                  width: 75%;
+                  // width: 75%;
+                  flex: 1;
                }
                .textarea {
                   resize: none;
@@ -85,5 +86,8 @@
    .topic-page .container .content .box .item .input-field,
    .topic-page .container .content .box .item .textarea {
       width: 100%;
+   }
+   .topic-page .container .content .box .item .textarea {
+      min-height: 150px;
    }
 }

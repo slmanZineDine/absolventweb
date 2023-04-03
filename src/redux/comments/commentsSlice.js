@@ -40,10 +40,9 @@ const commentsSlice = createSlice({
          state.success = false; // Reset a value every Request
          state.error = null; // Reset a value every Request
       },
-      [addComment.fulfilled]: (state, { payload }) => {
+      [addComment.fulfilled]: (state) => {
          state.loading = false;
          state.success = true;
-         state.comments.push(payload.data);
       },
       [addComment.rejected]: (state, { payload }) => {
          state.loading = false;
@@ -56,15 +55,9 @@ const commentsSlice = createSlice({
          state.success = false; // Reset a value every Request
          state.error = null; // Reset a value every Request
       },
-      [editeComment.fulfilled]: (state, { payload }) => {
+      [editeComment.fulfilled]: (state) => {
          state.loading = false;
          state.success = true;
-         // Get Updated Comment Id
-         const index = state.comments.findIndex(
-            (comment, i) => comment.id === payload.data.id
-         );
-         // Replace Updated Comment With New Value
-         state.comments[index] = payload.data;
       },
       [editeComment.rejected]: (state, { payload }) => {
          state.loading = false;

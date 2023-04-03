@@ -250,7 +250,7 @@ const Post = () => {
                                        className="btn"
                                        onClick={handleDownloade}
                                     >
-                                       Attachment{" "}
+                                       {event.attachment.file_name}
                                        <img
                                           src={attachIcon}
                                           alt="download-icon"
@@ -285,6 +285,8 @@ const Post = () => {
                                              content:
                                                 commentInput.current.value,
                                           })
+                                       ).then(() =>
+                                          dispatch(getComments(state.eventId))
                                        );
                                        commentInput.current.value = "";
                                     }
@@ -391,6 +393,10 @@ const Post = () => {
                                                               .value,
                                                      },
                                                   })
+                                               ).then(() =>
+                                                  dispatch(
+                                                     getComments(state.eventId)
+                                                  )
                                                );
                                             }}
                                          >
