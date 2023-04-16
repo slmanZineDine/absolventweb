@@ -4,10 +4,10 @@ import { useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 // Internal
 import Header from "../components/Header";
+import Table from "../components/Table";
 import UniversityLogo from "../components/UniversityLogo";
 import addIcon from "../assets/imgs/icons/addIcon.png";
 import { getTopicsByDoctorId } from "../redux/topics/topicsActions";
-import Table from "../components/Table";
 
 const Profile = () => {
    // ======================= Global Data =======================
@@ -35,7 +35,7 @@ const Profile = () => {
    const navigate = useNavigate();
 
    // ======================= User Details Showing In Profile Page =======================
-   // This Trick Because Reponse Deal Admin Like Coordinator
+   // This Trick Because Response Deal Admin Like Coordinator
    let userProfile = "student";
    if (userType === "admin" || userType === "coordonator")
       userProfile = "coordonator";

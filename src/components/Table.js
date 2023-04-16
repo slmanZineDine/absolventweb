@@ -184,8 +184,14 @@ const Table = ({ tableCols, tableData, resetPagination, msg }) => {
                                        );
                                     } else {
                                        return (
-                                          <td className="cell" key={j}>
-                                             {item[cell.val]}
+                                          <td
+                                             className="cell"
+                                             key={j}
+                                             dangerouslySetInnerHTML={{
+                                                __html: item[cell.val],
+                                             }}
+                                          >
+                                             {/* {item[cell.val]} */}
                                           </td>
                                        );
                                     }

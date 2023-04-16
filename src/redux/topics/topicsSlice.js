@@ -37,13 +37,33 @@ const topicsSlice = createSlice({
 
          const regexp = new RegExp(`${payload}`, "i");
 
+         // state.topicsByDoctor = state.topicsByDoctor.filter((doctor) => {
+         //    doctor.teme = doctor.teme.filter(
+         //       (tema) =>
+         //          regexp.test(tema?.title) ||
+         //          regexp.test(tema?.detalii) ||
+         //          regexp.test(tema?.tema_type)
+         //    );
+         //    return doctor.teme.length > 0;
+         // });
          state.topicsByDoctor = state.topicsByDoctor.filter((doctor) => {
-            doctor.teme = doctor.teme.filter(
-               (tema) =>
+            doctor.teme = doctor.teme.filter((tema) => {
+               if (
                   regexp.test(tema?.title) ||
                   regexp.test(tema?.detalii) ||
                   regexp.test(tema?.tema_type)
-            );
+               ) {
+                  tema.title = tema.title.replace(
+                     regexp,
+                     `<span class="search-result">${payload}</span>`
+                  );
+                  tema.detalii = tema.detalii.replace(
+                     regexp,
+                     `<span class="search-result">${payload}</span>`
+                  );
+                  return true;
+               } else if (regexp.test(tema?.tema_type)) return true;
+            });
             return doctor.teme.length > 0;
          });
       },

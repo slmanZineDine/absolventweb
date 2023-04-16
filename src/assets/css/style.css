@@ -133,6 +133,11 @@ input[type=number] {
   background-repeat: no-repeat;
 }
 
+.search-result {
+  background-color: #ffff00;
+  padding-block: 0.2rem;
+}
+
 .btns-space {
   display: flex;
   align-items: center;
