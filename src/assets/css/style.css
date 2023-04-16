@@ -1609,7 +1609,7 @@ input[type=number] {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 0.4rem;
+  gap: 10rem;
 }
 .profile-page .user-info .container .detils {
   margin-right: 1rem;
@@ -1631,7 +1631,7 @@ input[type=number] {
 .profile-page .user-info .container .detils .item .title {
   font-size: var(--h3-font-size);
   font-weight: normal;
-  width: 160px;
+  width: 180px;
 }
 .profile-page .user-info .container .detils .item .text {
   font-size: var(--normal-font-size);
@@ -1661,6 +1661,7 @@ input[type=number] {
 @media (max-width: 992px) {
   .profile-page .user-info .container {
     flex-direction: column-reverse;
+    gap: 0.5rem;
   }
   .profile-page .user-info .container .detils {
     margin-top: 2rem;
@@ -1706,7 +1707,7 @@ input[type=number] {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 0.4rem;
+  gap: 3rem;
 }
 .support-page .container .box {
   background-color: #d9d9d9;
@@ -1735,6 +1736,7 @@ input[type=number] {
 @media (max-width: 992px) {
   .support-page .container {
     flex-direction: column-reverse;
+    gap: 0.4rem;
   }
   .support-page .container .box {
     margin-right: 0;

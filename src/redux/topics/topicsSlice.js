@@ -37,15 +37,6 @@ const topicsSlice = createSlice({
 
          const regexp = new RegExp(`${payload}`, "i");
 
-         // state.topicsByDoctor = state.topicsByDoctor.filter((doctor) => {
-         //    doctor.teme = doctor.teme.filter(
-         //       (tema) =>
-         //          regexp.test(tema?.title) ||
-         //          regexp.test(tema?.detalii) ||
-         //          regexp.test(tema?.tema_type)
-         //    );
-         //    return doctor.teme.length > 0;
-         // });
          state.topicsByDoctor = state.topicsByDoctor.filter((doctor) => {
             doctor.teme = doctor.teme.filter((tema) => {
                if (
@@ -91,9 +82,9 @@ const topicsSlice = createSlice({
          state.topicsByDoctor = JSON.parse(state.tempData);
          // Checking Of Sting Containe # Or + To Escape With \
          if (payload.includes("+")) payload = payload.replace(/\+/g, `\\+`);
-         else if (payload.includes("+"))
+         else if (payload.includes("#"))
             payload = payload.replace(/\#/g, `\\#`);
-         const regexp = new RegExp(`\\s?${payload}\\s`, "i");
+         const regexp = new RegExp(`\\s?${payload}[)(,_-\\s]`, "i");
 
          state.topicsByDoctor = state.topicsByDoctor.filter((doctor) => {
             doctor.teme = doctor.teme.filter(

@@ -7,7 +7,7 @@
 .profile-page {
    .user-info {
       .container {
-         @include flex(center, flex-start, 0.4rem);
+         @include flex(center, flex-start, 10rem);
          .detils {
             margin-right: 1rem;
             background-color: #d9d9d9;
@@ -23,7 +23,7 @@
                .title {
                   font-size: var(--h3-font-size);
                   font-weight: normal;
-                  width: 160px;
+                  width: 180px;
                }
                .text {
                   font-size: var(--normal-font-size);
@@ -61,6 +61,7 @@
 @media (max-width: 992px) {
    .profile-page .user-info .container {
       flex-direction: column-reverse;
+      gap: 0.5rem;
    }
    .profile-page .user-info .container .detils {
       margin-top: 2rem;

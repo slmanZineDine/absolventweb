@@ -41,8 +41,8 @@ const Profile = () => {
       userProfile = "coordonator";
    const userDetails = [
       { heading: "Tip De Utilizator", val: "type" },
-      // { heading: "Prenuma Si Numa", val: "name" },
-      // { heading: "Email", val: "email" },
+      { heading: "Prenuma Si Numa", val: "name" },
+      { heading: "Email", val: "email" },
       // { heading: "Telefon", val: `${userProfile}.phone` },
       // { heading: "Facultatea", val: `${userProfile}.facultatea` },
       {
