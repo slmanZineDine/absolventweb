@@ -64,7 +64,6 @@ const AddMeeting = () => {
    };
 
    // ======================= React Hook =======================
-   const [fileName, setFileName] = useState(null);
    // To Prevent Show Alert When The Previous Process Is Pending
    const [btnClicked, setBtnClicked] = useState(false);
    // Variable below to manipulate useEffect and prevente run initial-render

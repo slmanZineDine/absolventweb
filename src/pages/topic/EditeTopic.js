@@ -1,13 +1,14 @@
 // External
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import swal from "sweetalert";
 // Internal
 import Header from "../../components/Header";
 import UniversityLogo from "../../components/UniversityLogo";
 import { editeTopic } from "../../redux/topics/topicsActions";
 import Spinning from "../../components/Spinning";
+import { temaTypes } from "../../data/globalDate";
 
 export const EditeTopic = () => {
    // ======================= Global Data =======================
@@ -26,9 +27,46 @@ export const EditeTopic = () => {
 
    // ======================= Select Input Elements =======================
    const titleInput = useRef(null);
-   const temaTypeInput = useRef(null);
+   const TipTema = useRef(null);
    const detailsInput = useRef(null);
    const specInput = useRef(null);
+
+   // ======================= React Hook =======================
+   // Store Selected Option Index
+   const [selectedTip, setSelectedTip] = useState(null);
+   // Variable below to manipulate useEffect and prevente run initial-render
+   const firstUpdate = useRef(true);
+   useEffect(() => {
+      // Prevent User Enter This Page Directly
+      if (state?.id && topics.topicsByDoctor.length > 0) {
+         const topic = topics.topicsByDoctor[0].teme.find(
+            (tema) => tema.id === state.id
+         );
+         titleInput.current.focus();
+         titleInput.current.value = topic?.title ?? "";
+         const type = temaTypes.indexOf(topic?.tema_type);
+         if (type === -1) setSelectedTip(null);
+         else setSelectedTip(type);
+         detailsInput.current.value = topic?.detalii ?? "";
+         specInput.current.value = topic?.specializare ?? "";
+      } else {
+         navigate("/profile");
+      }
+   }, []);
+
+   // ############## Alert Logic ##############
+   useEffect(() => {
+      if (firstUpdate.current) {
+         firstUpdate.current = false;
+         return;
+      }
+      if (!topics.loading && topics.error) {
+         processChecking(topics.error, "error", "red-bg");
+      } else if (!topics.loading && topics.success) {
+         processChecking("Edite Successfully", "success", "done");
+         navigate("/profile");
+      }
+   }, [topics.error, topics.success]);
 
    // ======================= Sweet Alert Labrary =======================
    const processChecking = async (msg, icon, theClassName) => {
@@ -54,7 +92,7 @@ export const EditeTopic = () => {
    const handleProcess = () => {
       const userInput = {
          title: titleInput.current.value,
-         tema_type: temaTypeInput.current.value,
+         tema_type: temaTypes[selectedTip],
          detalii: detailsInput.current.value,
          specializare: specInput.current.value,
       };
@@ -67,38 +105,6 @@ export const EditeTopic = () => {
          );
       }
    };
-
-   // ======================= React Hook =======================
-   useEffect(() => {
-      // Prevent User Enter This Page Directly
-      if (state?.id && topics.topicsByDoctor.length > 0) {
-         const topic = topics.topicsByDoctor[0].teme.find(
-            (tema) => tema.id === state.id
-         );
-         titleInput.current.focus();
-         titleInput.current.value = topic?.title ?? "";
-         temaTypeInput.current.value = topic?.tema_type ?? "";
-         detailsInput.current.value = topic?.detalii ?? "";
-         specInput.current.value = topic?.specializare ?? "";
-      } else {
-         navigate("/profile");
-      }
-   }, []);
-
-   // Variable below to manipulate useEffect and prevente run initial-render
-   const firstUpdate = useRef(true);
-   useEffect(() => {
-      if (firstUpdate.current) {
-         firstUpdate.current = false;
-         return;
-      }
-      if (!topics.loading && topics.error) {
-         processChecking(topics.error, "error", "red-bg");
-      } else if (!topics.loading && topics.success) {
-         processChecking("Edite Successfully", "success", "done");
-         navigate("/profile");
-      }
-   }, [topics.error, topics.success]);
 
    if (user && userType === "coordonator") {
       return (
@@ -120,12 +126,36 @@ export const EditeTopic = () => {
                         </li>
                         <li className="item">
                            <h3 className="item_title">Tema Type:</h3>
-                           <input
-                              type="text"
-                              placeholder="Scrie aici"
-                              className="input-field"
-                              ref={temaTypeInput}
-                           />
+                           <div
+                              className="custom-select"
+                              onClick={(_) => {
+                                 TipTema.current.classList.toggle(
+                                    "show-options"
+                                 );
+                              }}
+                           >
+                              {selectedTip !== null ? (
+                                 <p>{temaTypes[selectedTip]}</p>
+                              ) : (
+                                 <p>Tema Type</p>
+                              )}
+                              <span className="arrow"></span>
+                              <ul className="select" ref={TipTema}>
+                                 {temaTypes.map((tip, i) => {
+                                    return (
+                                       <li
+                                          key={i}
+                                          className="option"
+                                          onClick={(_) => {
+                                             setSelectedTip(i);
+                                          }}
+                                       >
+                                          {tip}
+                                       </li>
+                                    );
+                                 })}
+                              </ul>
+                           </div>
                         </li>
                         <li className="item">
                            <h3 className="item_title">Detalii Tema:</h3>

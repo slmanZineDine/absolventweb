@@ -32,3 +32,4 @@ export const TipTemaList = [
    "Synthesis",
    "Practical Works",
 ];
+export const temaTypes = TipTemaList.slice(1);

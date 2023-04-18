@@ -56,6 +56,61 @@
                      width: 10px;
                   }
                }
+               .custom-select {
+                  @include flex(center, space-between, 1rem);
+                  position: relative;
+                  padding-inline: 0.8rem 3rem;
+                  padding-block: 0.6rem;
+                  border: 1px solid #000;
+                  border-radius: 2rem;
+                  flex: 1;
+                  min-width: 150px;
+                  color: #000;
+                  font-size: 1rem;
+                  background-color: #fff;
+                  cursor: pointer;
+                  transition: opacity 0.4s;
+                  .arrow {
+                     position: absolute;
+                     top: 50%;
+                     right: 1.2rem;
+                     display: block;
+                     width: 0.7rem;
+                     height: 0.7rem;
+                     border-left: 2px solid #000;
+                     border-bottom: 2px solid #000;
+                     transform-origin: center center;
+                     transform: translateY(-60%) rotate(-45deg);
+                  }
+                  .select {
+                     position: absolute;
+                     top: 100%;
+                     right: 0;
+                     width: 100%;
+                     max-height: 0;
+                     border-radius: 0 0 0.2rem 0.2rem;
+                     text-align: center;
+                     background-color: #cecece;
+                     transition: max-height 0.4s;
+                     overflow: hidden;
+                     .option {
+                        padding: 1rem;
+                        border-bottom: 1px solid #000;
+                        font-size: var(--normal-font-size);
+                        &:hover {
+                           background-color: #2575be;
+                           color: #fff;
+                        }
+                        &:first-of-type {
+                           border-top: 1px solid #000;
+                        }
+                     }
+                  }
+                  .select.show-options {
+                     max-height: 1000px;
+                     z-index: 10;
+                  }
+               }
             }
             .save-btn-space {
                @include flex(center, center);
@@ -84,7 +139,8 @@
       align-self: flex-start;
    }
    .topic-page .container .content .box .item .input-field,
-   .topic-page .container .content .box .item .textarea {
+   .topic-page .container .content .box .item .textarea,
+   .topic-page .container .content .box .item .custom-select {
       width: 100%;
    }
    .topic-page .container .content .box .item .textarea {
