@@ -1,8 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-const baseURL = "http://127.0.0.1:8000";
-
 // Get Comments By Event Id
 export const getComments = createAsyncThunk(
    "comments/getComments",
@@ -14,10 +12,7 @@ export const getComments = createAsyncThunk(
             },
          };
 
-         const { data } = await axios.get(
-            `${baseURL}/api/comment/${eventId}`,
-            config
-         );
+         const { data } = await axios.get(`/api/comment/${eventId}`, config);
          return data;
       } catch (error) {
          // return custom error message from API if any
@@ -43,7 +38,7 @@ export const addComment = createAsyncThunk(
          };
 
          const { data } = await axios.post(
-            `${baseURL}/api/comment`,
+            `/api/comment`,
             commentContent,
             config
          );
@@ -72,7 +67,7 @@ export const editeComment = createAsyncThunk(
          };
 
          const { data } = await axios.put(
-            `${baseURL}/api/comment/${commentId}`,
+            `/api/comment/${commentId}`,
             commentContent,
             config
          );
@@ -99,7 +94,7 @@ export const deleteComment = createAsyncThunk(
             },
          };
 
-         await axios.delete(`${baseURL}/api/comment/${commentId}`, config);
+         await axios.delete(`/api/comment/${commentId}`, config);
          return commentId;
       } catch (error) {
          // return custom error message from API if any

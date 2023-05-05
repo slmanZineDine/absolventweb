@@ -27,6 +27,7 @@ const Search = ({ searchMethod }) => {
                   if (e.target.value === "") {
                      // Making Search Mode False To Reset All Pagination To Start Point
                      dispatch(setSearchMode(false));
+                     console.log("here", dispatch(setSearchMode(false)));
                      // When Input Is Empty Reset Data In Table
                      dispatch(searchMethod(e.target.value));
                   }

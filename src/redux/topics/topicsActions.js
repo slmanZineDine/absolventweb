@@ -1,8 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-const baseURL = "http://127.0.0.1:8000";
-
 // Getting All Teme By Doctor
 export const getAllTopicsByDoctor = createAsyncThunk(
    "topics/getAllTopicsByDoctor",
@@ -15,7 +13,7 @@ export const getAllTopicsByDoctor = createAsyncThunk(
          };
 
          const { data } = await axios.get(
-            `${baseURL}/api/coordinators-with-subjects`,
+            `/api/coordinators-with-subjects`,
             config
          );
          return data;
@@ -40,9 +38,8 @@ export const getTopicsByDoctorId = createAsyncThunk(
                Authorization: `Bearer ${localStorage.getItem("userToken")}`,
             },
          };
-
          const { data } = await axios.get(
-            `${baseURL}/api/teme/coordonator/${doctorId}`,
+            `/api/teme/coordonator/${doctorId}`,
             config
          );
          return data;
@@ -69,11 +66,7 @@ export const addNewTopic = createAsyncThunk(
             },
          };
 
-         const { data } = await axios.post(
-            `${baseURL}/api/teme`,
-            topic,
-            config
-         );
+         const { data } = await axios.post(`/api/teme`, topic, config);
          return data;
       } catch (error) {
          // return custom error message from API if any
@@ -99,7 +92,7 @@ export const editeTopic = createAsyncThunk(
          };
 
          const { data } = await axios.put(
-            `${baseURL}/api/teme/${topicId}`,
+            `/api/teme/${topicId}`,
             topic,
             config
          );
@@ -126,10 +119,7 @@ export const deleteTopic = createAsyncThunk(
             },
          };
 
-         const data = await axios.delete(
-            `${baseURL}/api/teme/${topicId}`,
-            config
-         );
+         await axios.delete(`/api/teme/${topicId}`, config);
          return topicId;
       } catch (error) {
          // return custom error message from API if any

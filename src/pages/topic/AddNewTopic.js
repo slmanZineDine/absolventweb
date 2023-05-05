@@ -35,22 +35,10 @@ const AddNewTopic = () => {
    const [selectedTip, setSelectedTip] = useState(null);
    // To Prevent Show Alert When The Previous Process Is Pending
    const [btnClicked, setBtnClicked] = useState(false);
-   // Variable below to manipulate useEffect and prevente run initial-render
-   const firstUpdate = useRef(true);
-   // ############## Alert Logic ##############
+
    useEffect(() => {
       titleInput.current.focus();
-      if (firstUpdate.current) {
-         firstUpdate.current = false;
-         return;
-      }
-      if (!topics.loading && topics.error && btnClicked) {
-         processChecking(topics.error, "error", "red-bg");
-      } else if (!topics.loading && topics.success && btnClicked) {
-         processChecking("Add Successfully", "success", "done");
-         navigate("/profile");
-      }
-   }, [topics.error, topics.success]);
+   }, []);
 
    // ======================= Sweet Alert Labrary =======================
    const processChecking = async (msg, icon, theClassName) => {
@@ -65,11 +53,9 @@ const AddNewTopic = () => {
 
    // ======================= Vaidation =======================
    const fieldsValidation = (userInput) => {
-      if (!Object.values(userInput).every((e) => e !== "")) {
+      if (!Object.values(userInput).every((e) => e !== ""))
          processChecking("Please Fill All Fields.", "warning", "red-bg");
-      } else {
-         return true;
-      }
+      else return true;
    };
 
    // ======================= Handle Request =======================
@@ -80,7 +66,16 @@ const AddNewTopic = () => {
          detalii: detailsInput.current.value,
          specializare: specInput.current.value,
       };
-      if (fieldsValidation(userInput)) dispatch(addNewTopic(userInput));
+      if (fieldsValidation(userInput))
+         dispatch(addNewTopic(userInput))
+            .unwrap()
+            .then(async () => {
+               await processChecking("Add Successfully", "success", "done");
+               navigate("/profile");
+            })
+            .catch((err) => {
+               processChecking(err, "error", "red-bg");
+            });
    };
 
    if (user && userType === "coordonator") {

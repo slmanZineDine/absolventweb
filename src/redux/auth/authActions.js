@@ -1,8 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-const baseURL = "http://127.0.0.1:8000";
-
 export const userLogin = createAsyncThunk(
    "user/login",
    async ({ email, password }, { rejectWithValue }) => {
@@ -14,7 +12,7 @@ export const userLogin = createAsyncThunk(
          };
 
          const { data } = await axios.post(
-            `${baseURL}/api/login`,
+            `/api/login`,
             { email, password },
             config
          );
@@ -45,7 +43,7 @@ export const registerUser = createAsyncThunk(
          };
 
          const { data } = await axios.post(
-            `${baseURL}/api/register`,
+            `/api/register`,
             userRegInfo,
             config
          );
@@ -73,7 +71,7 @@ export const userLogout = createAsyncThunk(
                Authorization: `Bearer ${localStorage.getItem("userToken")}`,
             },
          };
-         const { data } = await axios.get(`${baseURL}/api/logout`, config);
+         const { data } = await axios.get(`/api/logout`, config);
          localStorage.clear();
          return data;
       } catch (error) {

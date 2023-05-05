@@ -1,8 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-const baseURL = "http://127.0.0.1:8000";
-
 // Get Students - Coordinators - Teme Table
 export const getTemeTable = createAsyncThunk(
    "export/getTemeTable",
@@ -15,7 +13,7 @@ export const getTemeTable = createAsyncThunk(
          };
 
          const { data } = await axios.get(
-            `${baseURL}/api/export-students-coordinators-teme`,
+            `/api/export-students-coordinators-teme`,
             config
          );
          return data;
@@ -41,10 +39,7 @@ export const getStudentsStatusTable = createAsyncThunk(
             },
          };
 
-         const { data } = await axios.get(
-            `${baseURL}/api/export-student-status`,
-            config
-         );
+         const { data } = await axios.get(`/api/export-student-status`, config);
          return data;
       } catch (error) {
          // return custom error message from API if any
@@ -69,7 +64,7 @@ export const getStudentsOfCoordinatorTable = createAsyncThunk(
          };
 
          const { data } = await axios.get(
-            `${baseURL}/api/export-students-coordinators`,
+            `/api/export-students-coordinators`,
             config
          );
          return data;
@@ -96,7 +91,7 @@ export const getCoordinatorTemeTable = createAsyncThunk(
          };
 
          const { data } = await axios.get(
-            `${baseURL}/api/export-coordinators-teme`,
+            `/api/export-coordinators-teme`,
             config
          );
          return data;

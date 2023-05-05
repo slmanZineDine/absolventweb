@@ -1,8 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-const baseURL = "http://127.0.0.1:8000";
-
 // Get All Coordinator's Events => For Coordiator Homepage
 export const getAllCoordinatorEvent = createAsyncThunk(
    "events/getAllCoordinatorEvent",
@@ -15,7 +13,7 @@ export const getAllCoordinatorEvent = createAsyncThunk(
          };
 
          const { data } = await axios.get(
-            `${baseURL}/api/event/coordinator/homepage`,
+            `/api/event/coordinator/homepage`,
             config
          );
          return data;
@@ -42,7 +40,7 @@ export const getWorkspaceEvents = createAsyncThunk(
          };
 
          const { data } = await axios.get(
-            `${baseURL}/api/event/student/${studentId}`,
+            `/api/event/student/${studentId}`,
             config
          );
          return data;
@@ -68,7 +66,7 @@ export const getStudentEvents = createAsyncThunk(
             },
          };
 
-         const { data } = await axios.get(`${baseURL}/api/event`, config);
+         const { data } = await axios.get(`/api/event`, config);
          return data;
       } catch (error) {
          // return custom error message from API if any
@@ -92,10 +90,7 @@ export const getEventById = createAsyncThunk(
             },
          };
 
-         const { data } = await axios.get(
-            `${baseURL}/api/event/${eventId}`,
-            config
-         );
+         const { data } = await axios.get(`/api/event/${eventId}`, config);
          return data;
       } catch (error) {
          // return custom error message from API if any
@@ -120,11 +115,7 @@ export const addNewEvent = createAsyncThunk(
             },
          };
 
-         const { data } = await axios.post(
-            `${baseURL}/api/event`,
-            eventInfo,
-            config
-         );
+         const { data } = await axios.post(`/api/event`, eventInfo, config);
          return data;
       } catch (error) {
          // return custom error message from API if any
@@ -149,7 +140,7 @@ export const editeEvent = createAsyncThunk(
             },
          };
          const { data } = await axios.put(
-            `${baseURL}/api/event/${eventID}`,
+            `/api/event/${eventID}`,
             eventContent,
             config
          );
@@ -175,7 +166,7 @@ export const deleteEvent = createAsyncThunk(
                Authorization: `Bearer ${localStorage.getItem("userToken")}`,
             },
          };
-         await axios.delete(`${baseURL}/api/event/${eventID}`, config);
+         await axios.delete(`/api/event/${eventID}`, config);
       } catch (error) {
          // return custom error message from API if any
          if (error.response && error.response.data.message) {

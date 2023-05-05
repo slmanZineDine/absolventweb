@@ -1,8 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-const baseURL = "http://127.0.0.1:8000";
-
 // Get Student Status
 export const getStudentStatus = createAsyncThunk(
    "users/getStudentStatus",
@@ -14,10 +12,7 @@ export const getStudentStatus = createAsyncThunk(
             },
          };
 
-         const { data } = await axios.get(
-            `${baseURL}/api/student/statue`,
-            config
-         );
+         const { data } = await axios.get(`/api/student/statue`, config);
          return data;
       } catch (error) {
          // return custom error message from API if any
@@ -41,10 +36,7 @@ export const getStudents = createAsyncThunk(
             },
          };
 
-         const { data } = await axios.get(
-            `${baseURL}/api/students-with-subject`,
-            config
-         );
+         const { data } = await axios.get(`/api/students-with-subject`, config);
          return data;
       } catch (error) {
          // return custom error message from API if any
@@ -69,7 +61,7 @@ export const getAcceptedStudent = createAsyncThunk(
          };
 
          const { data } = await axios.get(
-            `${baseURL}/api/coordinators-accepted-students`,
+            `/api/coordinators-accepted-students`,
             config
          );
          return data;

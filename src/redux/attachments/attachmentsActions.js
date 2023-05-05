@@ -1,8 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-const baseURL = "http://127.0.0.1:8000";
-
 // Uploade File
 export const uploadeFile = createAsyncThunk(
    "attachments/UploadeFile",
@@ -16,7 +14,7 @@ export const uploadeFile = createAsyncThunk(
          };
 
          const { data } = await axios.post(
-            `${baseURL}/api/upload-file`,
+            `/api/upload-file`,
             fileInfo,
             config
          );
@@ -44,10 +42,7 @@ export const getFile = createAsyncThunk(
             },
          };
 
-         const { data } = await axios.get(
-            `${baseURL}/api/get-file/${eventId}`,
-            config
-         );
+         const { data } = await axios.get(`/api/get-file/${eventId}`, config);
          return data;
       } catch (error) {
          // return custom error message from API if any
@@ -71,10 +66,7 @@ export const removeFile = createAsyncThunk(
             },
          };
 
-         const { data } = await axios.get(
-            `${baseURL}/api/remove-file/${fileId}`,
-            config
-         );
+         const { data } = await axios.get(`/api/remove-file/${fileId}`, config);
          return data;
       } catch (error) {
          // return custom error message from API if any

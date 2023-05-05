@@ -1,8 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-const baseURL = "http://127.0.0.1:8000";
-
 // Create New Workspace
 export const createWorkspace = createAsyncThunk(
    "workspaces/createWorkspace",
@@ -16,7 +14,7 @@ export const createWorkspace = createAsyncThunk(
          };
 
          const { data } = await axios.post(
-            `${baseURL}/api/workspace`,
+            `/api/workspace`,
             workspaceInfo,
             config
          );
@@ -45,7 +43,7 @@ export const changeWorkspaceStatus = createAsyncThunk(
          };
 
          const { data } = await axios.put(
-            `${baseURL}/api/workspace/${workspaceId}`,
+            `/api/workspace/${workspaceId}`,
             status,
             config
          );
@@ -73,7 +71,7 @@ export const deleteWorkspace = createAsyncThunk(
          };
 
          const { data } = await axios.delete(
-            `${baseURL}/api/workspace/${workspaceId}`,
+            `/api/workspace/${workspaceId}`,
             config
          );
          return data;
@@ -100,7 +98,7 @@ export const getWaitingWorkspace = createAsyncThunk(
          };
 
          const { data } = await axios.get(
-            `${baseURL}/api/coordinators-workspaces/0`,
+            `/api/coordinators-workspaces/0`,
             config
          );
          return data;
@@ -127,7 +125,7 @@ export const getAcceptedWorkspace = createAsyncThunk(
          };
 
          const { data } = await axios.get(
-            `${baseURL}/api/coordinators-workspaces/1`,
+            `/api/coordinators-workspaces/1`,
             config
          );
          return data;
