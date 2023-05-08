@@ -79,7 +79,7 @@ const Post = () => {
    // ======================= Sweet Alert Labrary =======================
    // Check Box To Confirm Process
    const confirmDeletion = async () => {
-      let checkBox = await swal("Do You Want To Delete This Post?", {
+      let checkBox = await swal("Doriți să ștergeți această postare?", {
          dangerMode: true,
          buttons: true,
       });
@@ -208,7 +208,7 @@ const Post = () => {
                                           className="option"
                                           onClick={confirmDeletion}
                                        >
-                                          Delete
+                                          Șterge
                                        </li>
                                        <li
                                           className="option"
@@ -220,7 +220,7 @@ const Post = () => {
                                              });
                                           }}
                                        >
-                                          Edite
+                                          Modificare
                                        </li>
                                     </ul>
                                  </li>
@@ -302,7 +302,7 @@ const Post = () => {
                         </div>
                      </div>
                      <div className="comments-list">
-                        <h3 className="title">({comments.length}) Comments</h3>
+                        <h3 className="title">({comments.length}) Comentarii</h3>
                         {comments.length > 0
                            ? comments.map((comment, i) => (
                                 <div key={i} className="comment">
@@ -353,7 +353,7 @@ const Post = () => {
                                                   );
                                                }}
                                             >
-                                               Delete
+                                               Șterge
                                             </li>
                                             <li
                                                className="option"
@@ -409,7 +409,7 @@ const Post = () => {
                                                setEidteMode(false);
                                             }}
                                          >
-                                            Cancel
+                                            Anulare
                                          </span>
                                       </>
                                    ) : (

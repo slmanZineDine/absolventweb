@@ -124,7 +124,7 @@ const EditeMeeting = () => {
                <div className="container">
                   <div className="content">
                      <div className="meta">
-                        <h2 className="title">Edite Meeting</h2>
+                        <h2 className="title">Modificare Meeting</h2>
                         {events.loading && processType.delete ? (
                            <Spinning size="small" />
                         ) : (
@@ -135,7 +135,7 @@ const EditeMeeting = () => {
                                  dispatch(deleteEvent(eventId));
                               }}
                            >
-                              Delete
+                              Șterge
                            </button>
                         )}
                      </div>
@@ -166,7 +166,7 @@ const EditeMeeting = () => {
                                  className="btn save-btn"
                                  onClick={handleProcess}
                               >
-                                 Save
+                                 Salvare
                               </button>
                            )}
                         </div>

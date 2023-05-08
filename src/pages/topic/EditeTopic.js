@@ -116,7 +116,7 @@ export const EditeTopic = () => {
                      <h2 className="title">Modificare detalii unei teme</h2>
                      <ul className="box">
                         <li className="item">
-                           <h3 className="item_title">Tema Title:</h3>
+                           <h3 className="item_title">Titlul temei:</h3>
                            <input
                               type="text"
                               placeholder="Scrie aici"
@@ -125,7 +125,7 @@ export const EditeTopic = () => {
                            />
                         </li>
                         <li className="item">
-                           <h3 className="item_title">Tema Type:</h3>
+                           <h3 className="item_title">Tip temă:</h3>
                            <div
                               className="custom-select"
                               onClick={(_) => {
@@ -183,7 +183,7 @@ export const EditeTopic = () => {
                                  className="btn save-btn"
                                  onClick={handleProcess}
                               >
-                                 Save
+                                 Salvare
                               </button>
                            )}
                         </div>

@@ -238,7 +238,7 @@ const AddPost = () => {
                                     setBtnClicked(true);
                                  }}
                               >
-                                 Save
+                                 Salvare
                               </button>
                            )}
                         </div>

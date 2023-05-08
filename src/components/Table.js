@@ -96,6 +96,19 @@ const Table = ({ tableCols, tableData, resetPagination, msg }) => {
                                              {i + 1}.
                                           </td>
                                        );
+                                       if (cell.heading === "istaken") {
+                                          return (
+                                             <td
+                                                className="cell"
+                                                key={j}
+                                                dangerouslySetInnerHTML={{
+                                                   __html: item[cell.val] == 1 ? "Taken" : "Availabe",
+                                                }}
+                                             >
+                                                {/* {item[cell.val]} */}
+                                             </td>
+                                          );
+                                       }
                                     if (cell.heading === "Process") {
                                        return (
                                           <td className="cell" key={j}>
@@ -175,8 +188,9 @@ const Table = ({ tableCols, tableData, resetPagination, msg }) => {
                                        }
                                     }
                                     // Checking If Object Has Nested Object To Extract it
-                                    if (cell.val.includes(".")) {
+                                    if (typeof cell.val == 'string' && cell.val.includes(".")) {
                                        const arr = cell.val.split(".");
+
                                        return (
                                           <td className="cell" key={j}>
                                              {item[arr[0]][arr[1]]}

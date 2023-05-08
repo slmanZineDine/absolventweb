@@ -4,6 +4,7 @@ import registerIcon from "../assets/imgs/icons/registerIcon.png";
 import { Link, Navigate } from "react-router-dom";
 import UniversityLogo from "../components/UniversityLogo";
 import { greetingPageContent } from "../data/globalDate";
+import { greetingPageContent3 } from "../data/globalDate";
 
 const Greeting = () => {
    // ======================= Global Data =======================
@@ -24,7 +25,8 @@ const Greeting = () => {
                         {greetingPageContent.message}
                      </p>
                      <p className="website-info">
-                        {greetingPageContent.about_website}
+                        {greetingPageContent.about_website}<br></br> <br></br>
+                        {greetingPageContent3.test}
                      </p>
                      <div className="auth-btn">
                         <Link to="/login" className="btn login-btn">

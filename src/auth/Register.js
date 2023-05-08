@@ -133,7 +133,7 @@ const Register = () => {
                      <Logo />
                      <form className="form-element">
                         <div className="form-group">
-                           <label>User type</label>
+                           <label>Tipul utilizator</label>
                            <div
                               className="custom-select"
                               onClick={(_) =>
@@ -162,7 +162,7 @@ const Register = () => {
                            </div>
                         </div>
                         <div className="form-group">
-                           <label htmlFor="username">User name</label>
+                           <label htmlFor="username">Numele utilizatorului</label>
                            <input
                               type="text"
                               className="form-input"
@@ -173,7 +173,7 @@ const Register = () => {
                            />
                         </div>
                         <div className="form-group">
-                           <label htmlFor="email">User email</label>
+                           <label htmlFor="email">Email utilizatorului</label>
                            <div className="img-input">
                               <img src={mailIcon} alt="mail-icon" />
                            </div>
@@ -187,7 +187,7 @@ const Register = () => {
                            />
                         </div>
                         <div className="form-group">
-                           <label htmlFor="password">Password</label>
+                           <label htmlFor="password">Parola</label>
                            <div className="img-input">
                               <img src={lockIcon} alt="lock-icon" />
                            </div>
@@ -202,7 +202,7 @@ const Register = () => {
                         </div>
                         <div className="form-group">
                            <label htmlFor="password-confirm">
-                              Password Confirm
+                           Confirmarea parolei
                            </label>
                            <div className="img-input">
                               <img src={lockIcon} alt="lock-icon" />
@@ -277,13 +277,13 @@ const Register = () => {
                               className="btn auth-page-btn"
                               onClick={handleRegister}
                            >
-                              Rigister
+                              Inregistrare
                            </button>
                         )}
                         <p className="note">
-                           Already have an account?{" "}
+                           Aveți deja un cont?{" "}
                            <Link to="/login" className="link">
-                              Login
+                              Logare
                            </Link>
                         </p>
                      </form>

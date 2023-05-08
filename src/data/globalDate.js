@@ -1,23 +1,28 @@
 // ======================= Greeting Page Text Content =======================
 export const greetingPageContent = {
-   message: "Welcome To Our Website",
-   about_website: `Lorem ipsum, dolor sit amet consectetur adipisicing
-    elit. Fugiat, consequatur, voluptatum, ex reprehenderit
-    minima doloremque numquam voluptate explicabo nostrum
-    excepturi error optio nobis? Eligendi excepturi
-    consequatur vero, vitae corrupti veniam!`,
+   message: "Serviciile AbsolventWeb",
+   about_website:`Aplicație web pentru asignarea și organizarea funcţionalitatea sau etapele fiecare utilizator legat de lucrare de licenţă.`
+    
+
 };
 
+export const greetingPageContent3 = {
+   message3: "",
+
+   test: "Se pun la dispozitia utilizatorilor urmatoarele servicii (@e-uvt.ro): Serviciile platformei sunt disponibile pentru (studenți, coordonatori și administratori). Logare se poate cu useremail  & parola  ale eUVT"
+    
+
+};
 // ======================= Support Page Text Content =======================
 export const supportPageContent = {
-   support_email: "Contact us at support@uvt.ro or info@e-uvt.ro",
+   support_email: "Contact us at suport@uvt.ro or info@e-uvt.ro",
    phone: "+40 256 592 111",
    email: "secretariat.uvt@e-uvt.ro",
 };
 
 // ======================= Filter Options =======================
 export const ProgrammingLangList = [
-   "All",
+   "Toate",
    "PHP",
    "C",
    "C++",
@@ -27,9 +32,9 @@ export const ProgrammingLangList = [
    "Javascript",
 ];
 export const TipTemaList = [
-   "All",
-   "Scientific",
-   "Synthesis",
-   "Practical Works",
+   "Toate",
+   "Științifică",
+   "Sinteză",
+   "Practice",
 ];
 export const temaTypes = TipTemaList.slice(1);

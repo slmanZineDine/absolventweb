@@ -100,17 +100,17 @@ const HomePage = () => {
                                  <li className="student-status">
                                     {userStatus?.workspace_status === 0 ? (
                                        <span className="pending status">
-                                          Pending
+                                          În aşteptarea
                                        </span>
                                     ) : null}
                                     {userStatus?.workspace_status === 1 ? (
                                        <span className="accepted status">
-                                          Accepted
+                                          Acceptat
                                        </span>
                                     ) : null}
                                     {userStatus?.workspace_status === 3 ? (
                                        <span className="rejected status">
-                                          Rejected
+                                          Respins
                                        </span>
                                     ) : null}
                                  </li>
@@ -249,7 +249,7 @@ const HomePage = () => {
                         </div>
                         <div className="box">
                            <h2 className="title">
-                              Detalii La Fiecare Student Pentru Lucrare De
+                           Detalii la fiecare student pentru lucrare de licenta
                               Licenta
                            </h2>
                            {students ? (

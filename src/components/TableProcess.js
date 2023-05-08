@@ -212,7 +212,7 @@ const TableProcess = ({
                   })
                }
             >
-               Edite
+            Modificare
                <img src={editeIcon} alt="edite-icon" className="btn-icon" />
             </button>
             {topics.loading && selectedTemaId === temaId ? (
@@ -221,13 +221,13 @@ const TableProcess = ({
                <button
                   className="btn delete-btn"
                   onClick={() => {
-                     confirmProcess(deleteTopic, temaId, "Are you sure?", {
+                     confirmProcess(deleteTopic, temaId, "Dumneavoastră Sunteţi sigur cu șterge temă?", {
                         deleteTema: true,
                      });
                      setSelectedTemaId(temaId);
                   }}
                >
-                  Delete
+                  Șterge
                   <img
                      src={deleteIcon}
                      alt="delete-icon"
@@ -258,7 +258,7 @@ const TableProcess = ({
                               },
                               workspaceId,
                            ],
-                           "Are You Sure You Want To Accept This Student?",
+                           "Sunteţi sigur că vreţi să acceptaţi acest student?",
                            {
                               acceptStudent: true,
                            }
@@ -290,7 +290,7 @@ const TableProcess = ({
                               },
                               workspaceId,
                            ],
-                           "Are You Sure You Want To Reject This Student?",
+                           "Sunteţi sigur că vreți să respingeţi acest student?",
                            {
                               rejectStudent: true,
                            }
@@ -298,7 +298,7 @@ const TableProcess = ({
                         setSelectedWorkspaceId(workspaceId);
                      }}
                   >
-                     Reject
+                     Respinge
                      <img
                         src={deleteIcon}
                         alt="delete-icon"
