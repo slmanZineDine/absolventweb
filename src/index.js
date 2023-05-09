@@ -11,7 +11,10 @@ axios.defaults.baseURL = "http://127.0.0.1:8000";
 axios.interceptors.response.use(
    (response) => response,
    (error) => {
-      if (error.response.data.message === "Unauthenticated.") {
+      if (
+         error.response.status === 401 ||
+         error.response.data.message === "Unauthenticated."
+      ) {
          window.location.href = "/login";
          localStorage.clear();
       }

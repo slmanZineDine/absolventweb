@@ -84,7 +84,10 @@ const topicsSlice = createSlice({
          if (payload.includes("+")) payload = payload.replace(/\+/g, `\\+`);
          else if (payload.includes("#"))
             payload = payload.replace(/\#/g, `\\#`);
-         const regexp = new RegExp(`\\s?${payload}[)(,_-\\s]`, "i");
+
+         let regexp = new RegExp(`\\b${payload}\\b`, "i");
+         if (payload === "C")
+            regexp = new RegExp(`\\b${payload}\\b(?![\\+\\#])`, "i");
 
          state.topicsByDoctor = state.topicsByDoctor.filter((doctor) => {
             doctor.teme = doctor.teme.filter(
