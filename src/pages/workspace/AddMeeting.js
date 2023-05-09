@@ -121,7 +121,7 @@ const AddMeeting = () => {
                                     setBtnClicked(true);
                                  }}
                               >
-                                 Save
+                                 Salvare
                               </button>
                            )}
                         </div>

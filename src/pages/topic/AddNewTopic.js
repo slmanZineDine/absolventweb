@@ -85,10 +85,10 @@ const AddNewTopic = () => {
             <main className="main topic-page">
                <div className="container">
                   <div className="content">
-                     <h2 className="title">Adăugarea unui subiect nou</h2>
+                     <h2 className="title">Adăugarea o temă nouă</h2>
                      <ul className="box">
                         <li className="item">
-                           <h3 className="item_title">Tema Title:</h3>
+                           <h3 className="item_title">Titlul temei:</h3>
                            <input
                               type="text"
                               placeholder="Scrie aici"
@@ -97,7 +97,7 @@ const AddNewTopic = () => {
                            />
                         </li>
                         <li className="item">
-                           <h3 className="item_title">Tema Type:</h3>
+                           <h3 className="item_title">Tip tema:</h3>
                            <div
                               className="custom-select"
                               onClick={(_) => {
@@ -109,7 +109,7 @@ const AddNewTopic = () => {
                               {selectedTip !== null ? (
                                  <p>{temaTypes[selectedTip]}</p>
                               ) : (
-                                 <p>Tema Type</p>
+                                 <p>Tip tema</p>
                               )}
                               <span className="arrow"></span>
                               <ul className="select" ref={TipTema}>
@@ -155,7 +155,7 @@ const AddNewTopic = () => {
                                     setBtnClicked(true);
                                  }}
                               >
-                                 Save
+                                 Salvare
                               </button>
                            )}
                         </div>

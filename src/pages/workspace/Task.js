@@ -111,7 +111,7 @@ const Task = () => {
                                     });
                                  }}
                               >
-                                 Edite
+                                 Modificare
                               </button>
                            </div>
                         ) : null}

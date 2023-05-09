@@ -196,7 +196,7 @@ const EditeTask = () => {
                <div className="container">
                   <div className="content">
                      <div className="meta">
-                        <h2 className="title">Edite Task</h2>
+                        <h2 className="title">Modificare Task</h2>
                         {events.loading && processType.delete ? (
                            <Spinning size="small" />
                         ) : (
@@ -207,7 +207,7 @@ const EditeTask = () => {
                                  dispatch(deleteEvent(eventId));
                               }}
                            >
-                              Delete
+                              Șterge
                            </button>
                         )}
                      </div>
@@ -222,7 +222,7 @@ const EditeTask = () => {
                            />
                         </li>
                         <li className="item">
-                           <h3 className="item_title">Content:</h3>
+                           <h3 className="item_title">Conţinut:</h3>
                            <textarea
                               placeholder="Scrie aici"
                               className="textarea"
@@ -239,14 +239,14 @@ const EditeTask = () => {
                            />
                         </li>
                         <li className="item">
-                           <h3 className="item_title">Attachment:</h3>
+                           <h3 className="item_title">Atașament:</h3>
                            <label htmlFor="file" className="file-input">
                               <img
                                  src={addIcon}
                                  alt="btn-icon"
                                  className="btn-icon"
                               />
-                              Add
+                              Adaugare
                               <input
                                  id="file"
                                  type="file"
@@ -287,7 +287,7 @@ const EditeTask = () => {
                               style={{ color: "red", justifyContent: "center" }}
                            >
                               <p style={{ textAlign: "center" }}>
-                                 The File Must Be A File Of Type: csv, txt, xlx,
+                              Fișierul trebuie să fie un fișier de tip: csv, txt, xlx,
                                  xls, pdf, zip.
                               </p>
                            </li>
@@ -301,7 +301,7 @@ const EditeTask = () => {
                                  className="btn save-btn"
                                  onClick={handleProcess}
                               >
-                                 Save
+                                 Salvare
                               </button>
                            )}
                         </div>

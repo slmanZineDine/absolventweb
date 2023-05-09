@@ -40,8 +40,8 @@ const Profile = () => {
    if (userType === "admin" || userType === "coordonator")
       userProfile = "coordonator";
    const userDetails = [
-      { heading: "Tip De Utilizator", val: "type" },
-      { heading: "Prenuma Si Numa", val: "name" },
+      { heading: "Tipul utilizator", val: "type" },
+      { heading: "Numele şi prenumele", val: "name" },
       { heading: "Email", val: "email" },
       // { heading: "Telefon", val: `${userProfile}.phone` },
       // { heading: "Facultatea", val: `${userProfile}.facultatea` },
@@ -68,8 +68,8 @@ const Profile = () => {
       // Names Of Table Columns
       const tableCols = [
          { heading: "Nr", val: "" },
-         { heading: "Tema", val: "title" },
-         { heading: "Type", val: "tema_type" },
+         { heading: "Temă", val: "title" },
+         { heading: "Tip", val: "tema_type" },
          { heading: "Detalii", val: "detalii" },
          { heading: "Specializare", val: "specializare" },
          {
@@ -136,7 +136,7 @@ const Profile = () => {
                            className="btn add-btn"
                            onClick={() => navigate("add-new-topic")}
                         >
-                           Add
+                           Adăugare
                            <img
                               src={addIcon}
                               alt="btn-icon"

@@ -137,7 +137,7 @@ const ListOfTopics = () => {
    };
    // Checking Box To Confirm Creation A New Workspace
    const confirmCreation = async (workspace) => {
-      let checkBox = await swal("Are you sure?", {
+      let checkBox = await swal("Dumneavoastră Sunteţi sigur?", {
          dangerMode: true,
          buttons: true,
       });
@@ -152,10 +152,11 @@ const ListOfTopics = () => {
          // Names Of Table Columns
          const tableCols = [
             { heading: "Nr", val: "" },
-            { heading: "Tema", val: "title" },
-            { heading: "Type", val: "tema_type" },
+            { heading: "Temă", val: "title" },
+            { heading: "Tip", val: "tema_type" },
             { heading: "Detalii", val: "detalii" },
             { heading: "Specializare", val: "specializare" },
+            { heading: "istaken", val: "is_taken" },
             {
                heading: "Process",
                val: { select: true },
@@ -188,7 +189,7 @@ const ListOfTopics = () => {
                                  }`}
                                  onClick={handleCreation}
                               >
-                                 Save
+                                 Salvare
                               </button>
                            )}
                         </div>
@@ -254,7 +255,7 @@ const ListOfTopics = () => {
                                  "There Are No Matched Teme."
                               ) : (
                                  <p>
-                                    You Don't Any Tema Yet. Go To{" "}
+                                    Încă nu aveți nici-o temă propusă. Vă rugăm să clicați  {" "}
                                     <Link
                                        to="/profile/add-new-topic"
                                        style={{
@@ -263,9 +264,9 @@ const ListOfTopics = () => {
                                           fontWeight: "bold",
                                        }}
                                     >
-                                       Profile
+                                       Profil
                                     </Link>{" "}
-                                    To Add A New Tema.
+                                    pentru adaugare o temă.
                                  </p>
                               )
                            }
@@ -334,7 +335,7 @@ const ListOfTopics = () => {
                              <div key={i} className="content">
                                 <h2 className="title">
                                    {i + 1}. {doctor.name} ({doctor.email})
-                                   (Coordinator ID: {doctor.id})
+                                   {/* (Coordinator ID: {doctor.id}) */}
                                 </h2>
                                 <Table
                                    tableCols={tableCols}

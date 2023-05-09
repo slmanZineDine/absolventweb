@@ -29,8 +29,8 @@ const Students = () => {
       (state) => state.workspaces.acceptedWorkspaces
    );
    const students = useSelector((state) => state.users.students);
-   const rejectedStudent = students.filter(
-      (student) => student?.workspace?.status === 3
+   const StudentLaAsteptatre = students.filter(
+      (student) => student?.workspace?.status === 0
    );
    const haveNotSelectedTema = students.filter((student) => !student.workspace);
    const exportProcess = useSelector((state) => state.export);
@@ -155,12 +155,12 @@ const Students = () => {
                                  alt="status-icon"
                                  className="icon"
                               />
-                              <p className="text">Studenților Respinși</p>
+                              <p className="text">Studenților in asteptare</p>
                            </div>
-                           {rejectedStudent ? (
+                           {StudentLaAsteptatre ? (
                               <Table
                                  tableCols={tableCols}
-                                 tableData={rejectedStudent}
+                                 tableData={StudentLaAsteptatre}
                                  resetPagination={resetPagination}
                                  msg="There Are No Data To Show."
                               />
@@ -174,7 +174,7 @@ const Students = () => {
                                  className="icon"
                               />
                               <p className="text">
-                                 Studenți Care Nu Au Selectat Teme
+                                 Studenți Care Nu Au Selectat Teme sau Respinși
                               </p>
                            </div>
                            {haveNotSelectedTema ? (
