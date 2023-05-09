@@ -21,7 +21,7 @@ const topicsSlice = createSlice({
    reducers: {
       searchGlobaly(state, { payload }) {
          // When Input Is Empty Reset Data
-         if (!payload || payload === "All") {
+         if (!payload || payload === "Toate") {
             state.topicsByDoctor = JSON.parse(state.tempData);
             return;
          }
@@ -74,7 +74,7 @@ const topicsSlice = createSlice({
       },
       searchByProgrammingLang(state, { payload }) {
          // When Input Is Empty Reset Data
-         if (!payload || payload === "All") {
+         if (!payload || payload === "Toate") {
             state.topicsByDoctor = JSON.parse(state.tempData);
             return;
          }
@@ -85,9 +85,11 @@ const topicsSlice = createSlice({
          else if (payload.includes("#"))
             payload = payload.replace(/\#/g, `\\#`);
 
-         let regexp = new RegExp(`\\b${payload}\\b`, "i");
+         let regexp = new RegExp(`${payload}`, "i");
          if (payload === "C")
             regexp = new RegExp(`\\b${payload}\\b(?![\\+\\#])`, "i");
+         else if (payload === "Java")
+            regexp = new RegExp(`\\b${payload}\\b`, "i");
 
          state.topicsByDoctor = state.topicsByDoctor.filter((doctor) => {
             doctor.teme = doctor.teme.filter(
@@ -111,12 +113,12 @@ const topicsSlice = createSlice({
          state.loading = false;
          state.success = true;
          state.topicsByDoctor = payload.data;
-         
+
          // remove tema if it is taken
          state.topicsByDoctor = state.topicsByDoctor.filter((doctor) => {
             // Remove Taken Tema Form List Of Topic
             // doctor.teme = doctor.teme.filter((tema) => tema.is_taken === 0);
-            
+
             // Sorting Teme By Teme's updated time
             doctor.teme.sort((a, b) => {
                const firEleDate = new Date(a["updated_at"]);

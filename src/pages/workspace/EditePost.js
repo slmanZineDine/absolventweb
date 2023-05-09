@@ -46,15 +46,12 @@ const EditePost = () => {
    const [fileType, setFileType] = useState(false);
    // Store File ID
    const [fileId, setFileID] = useState(null);
-   // Checking If File Uploaded
-   const [fileUploaded, setFileUploaded] = useState(false);
    // To Prevent Show Alert When The Previous Process Is Pending
    const [btnClicked, setBtnClicked] = useState(false);
-   // To Prevent useEffect Run Initial-Render
-   const firstUpdate = useRef(true);
 
    // ############## Getting And Setting Event Infomation ##############
    useEffect(() => {
+      titleInput.current.focus();
       // Prevent user to enter this page directly
       if (state?.eventId && workspaceEvents.length > 0) {
          const postEvent = workspaceEvents.find(
@@ -73,35 +70,6 @@ const EditePost = () => {
          navigate("/workspace");
       }
    }, []);
-
-   // ############## Alert Logic ##############
-   useEffect(() => {
-      titleInput.current.focus();
-      if (firstUpdate.current) {
-         firstUpdate.current = false;
-         return;
-      }
-      let file = attachmentInput.current.files[0];
-      if (file) {
-         // Show Alert After File Uploaded
-         if (!file.loading && file.error && fileUploaded) {
-            processChecking(file.error, "error", "red-bg");
-         } else if (!file.loading && file.success && fileUploaded) {
-            processChecking("Edite Successfully", "success", "done").then(() =>
-               navigate("/workspace")
-            );
-         }
-         // Case Show Alert If No File Exist
-      } else {
-         if (!events.loading && events.error && btnClicked) {
-            processChecking(events.error, "error", "red-bg");
-         } else if (!events.loading && events.success && btnClicked) {
-            processChecking("Edite Successfully", "success", "done").then(() =>
-               navigate("/workspace")
-            );
-         }
-      }
-   }, [events.error, events.success, file.error, file.success]);
 
    // ======================= Sweet Alert Labrary =======================
    const processChecking = async (msg, icon, theClassName) => {
@@ -127,36 +95,46 @@ const EditePost = () => {
       }
    };
    // ======================= Handler =======================
-   const handleProcess = () => {
-      const userInput = {
-         workspace_id: workspaceInfo.workspace_id,
-         title: titleInput.current.value,
-         descriere: contentInput.current.value,
-         type: "post",
-         due_date: deadlineInput.current.value,
-      };
-      if (fieldsValidation(userInput)) {
-         // If There Is An Attachment Dispatch Upload Attachment Action
-         let file = attachmentInput.current.files[0];
-         if (file) {
-            dispatch(
-               editeEvent({ eventID: state.eventId, eventContent: userInput })
-            ).then(({ payload }) => {
-               // Save Event ID Get It From Event Response
-               const event_ID = payload.data.id;
+   const handleProcess = async () => {
+      try {
+         const userInput = {
+            workspace_id: workspaceInfo.workspace_id,
+            title: titleInput.current.value,
+            descriere: contentInput.current.value,
+            type: "post",
+            due_date: deadlineInput.current.value,
+         };
+         if (fieldsValidation(userInput)) {
+            let file = attachmentInput.current.files[0];
+
+            // If There Is An Attachment Dispatch Upload Attachment Action
+            if (file) {
+               const { data } = await dispatch(
+                  editeEvent({
+                     eventID: state.eventId,
+                     eventContent: userInput,
+                  })
+               ).unwrap();
+               const event_ID = data.id;
                const fileData = new FormData();
                fileData.append("event_id", event_ID);
                fileData.append("file", file);
-               dispatch(uploadeFile(fileData));
-               setFileUploaded(true);
-            });
+               await dispatch(uploadeFile(fileData)).unwrap();
+            }
+            // If There Is No An Attachment Dispatch Only Add Event Action
+            else {
+               await dispatch(
+                  editeEvent({
+                     eventID: state.eventId,
+                     eventContent: userInput,
+                  })
+               ).unwrap();
+            }
+            await processChecking("Edite Successfully", "success", "done");
+            navigate("/workspace");
          }
-         // If There Is No An Attachment Dispatch Only Add Event Action
-         else {
-            dispatch(
-               editeEvent({ eventID: state.eventId, eventContent: userInput })
-            );
-         }
+      } catch (err) {
+         processChecking(err, "error", "red-bg");
       }
    };
    // Checking File Type
@@ -257,8 +235,8 @@ const EditePost = () => {
                               style={{ color: "red", justifyContent: "center" }}
                            >
                               <p style={{ textAlign: "center" }}>
-                              Fișierul trebuie să fie un fișier de tip: csv, txt, xlx,
-                                 xls, pdf, zip.
+                                 Fișierul trebuie să fie un fișier de tip: csv,
+                                 txt, xlx, xls, pdf, zip.
                               </p>
                            </li>
                         ) : null}

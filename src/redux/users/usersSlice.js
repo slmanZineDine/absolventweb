@@ -37,11 +37,67 @@ const usersSlice = createSlice({
 
          const regexp = new RegExp(`${payload}`, "i");
 
-         state.students = state.students.filter(
-            (student) =>
+         state.students = state.students.filter((student) => {
+            if (
                regexp.test(student.email) ||
-               regexp.test(student?.coordonator?.email)
-         );
+               regexp.test(student?.coordonator?.email) ||
+               regexp.test(student?.tema?.title)
+            ) {
+               student.email = student.email.replace(
+                  regexp,
+                  `<span class="search-result">${payload}</span>`
+               );
+               student.coordonator.email = student.coordonator.email.replace(
+                  regexp,
+                  `<span class="search-result">${payload}</span>`
+               );
+               student.tema.title = student.tema.title.replace(
+                  regexp,
+                  `<span class="search-result">${payload}</span>`
+               );
+               return true;
+            }
+         });
+      },
+      searchStudentPage(state, { payload }) {
+         // When Input Is Empty Reset Data
+         if (!payload) {
+            state.students = JSON.parse(state.tempData);
+            return;
+         }
+         // When User Enter Any Thing Reset Data To Re-search
+         state.students = JSON.parse(state.tempData);
+
+         // Checking If Sting Contains # Or + To Escape With \
+         if (payload.includes("+")) payload = payload.replace(/\+/g, `\\+`);
+         else if (payload.includes("+"))
+            payload = payload.replace(/\#/g, `\\#`);
+         // Checking If String Contains Any Unexpected Char
+         else if (payload.search(/[*&$^]/) !== -1) return;
+
+         const regexp = new RegExp(`${payload}`, "i");
+
+         state.students = state.students.filter((student) => {
+            if (
+               regexp.test(student?.email) ||
+               regexp.test(student?.student_name) ||
+               regexp.test(student?.specializare)
+            ) {
+               student.email = student.email.replace(
+                  regexp,
+                  `<span class="search-result">${payload}</span>`
+               );
+               student.student_name = student.student_name.replace(
+                  regexp,
+                  `<span class="search-result">${payload}</span>`
+               );
+               student.specializare = student.specializare.replace(
+                  regexp,
+                  `<span class="search-result">${payload}</span>`
+               );
+               return true;
+            }
+         });
       },
       searchTipTema(state, { payload }) {
          // When Input Is Empty Reset Data
@@ -96,9 +152,32 @@ const usersSlice = createSlice({
          const regexp = new RegExp(`${payload}`, "i");
 
          state.acceptedStudent = state.acceptedStudent.filter((coordinator) => {
-            console.log(coordinator.students);
             coordinator.students = coordinator.students.filter((student) =>
                regexp.test(student?.name)
+            );
+            return coordinator.students.length > 0;
+         });
+      },
+      searchTema(state, { payload }) {
+         // When Input Is Empty Reset Data
+         if (!payload) {
+            state.acceptedStudent = JSON.parse(state.tempData);
+            return;
+         }
+         // When User Enter Any Thing Reset Data To Re-search
+         state.acceptedStudent = JSON.parse(state.tempData);
+         // Checking If Sting Contains # Or + To Escape With \
+         if (payload.includes("+")) payload = payload.replace(/\+/g, `\\+`);
+         else if (payload.includes("+"))
+            payload = payload.replace(/\#/g, `\\#`);
+         // Checking If String Contains Any Unexpected Char
+         else if (payload.search(/[*&$^]/) !== -1) return;
+
+         const regexp = new RegExp(`${payload}`, "i");
+
+         state.acceptedStudent = state.acceptedStudent.filter((coordinator) => {
+            coordinator.students = coordinator.students.filter((student) =>
+               regexp.test(student?.tema)
             );
             return coordinator.students.length > 0;
          });
@@ -173,6 +252,8 @@ export const {
    searchTipTema,
    searchCoordinators,
    searchStudent,
+   searchTema,
+   searchStudentPage,
 } = usersSlice.actions;
 
 export default usersSlice.reducer;

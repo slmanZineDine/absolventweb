@@ -50,9 +50,11 @@ const workspacesSlice = createSlice({
          state.loading = false;
          state.success = true;
          // Remove The Workspace From Waiting Workspace List
+         console.log(payload.data.id);
          state.waitingWorkspaces = state.waitingWorkspaces.filter(
             (workspace) => workspace.worspace_id !== payload.data.id
          );
+         console.log(state.waitingWorkspaces);
       },
       [changeWorkspaceStatus.rejected]: (state, { payload }) => {
          state.loading = false;

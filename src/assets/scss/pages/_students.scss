@@ -35,13 +35,14 @@
          @include flex(flex-start, space-between, 2rem);
          flex-wrap: wrap;
          .box {
-            width: 48%;
+            width: 100%;
             .title {
                @include flex(center, flex-start, 1rem);
                font-size: var(--h2-font-size);
                margin-bottom: 1rem;
             }
             .table {
+               min-width: 400px;
                td {
                   text-align: center;
                }
@@ -61,15 +62,6 @@
    .students-page-coordonator .container .content {
       margin-top: 2rem;
       width: 100%;
-   }
-   .students-page-admin .container .content {
-      flex-direction: column;
-   }
-   .students-page-admin .container .content .box {
-      width: 100%;
-   }
-   .students-page-admin .container .content .cover .table {
-      min-width: 300px;
    }
 }
 // Added This Because container take auto width and that occure problem with flex

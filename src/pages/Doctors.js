@@ -14,7 +14,11 @@ import { getStudentsOfCoordinatorTable } from "../redux/export/exportActions";
 import { setSearchMethod } from "../redux/global/globalSlice";
 import { searchGlobaly } from "../redux/topics/topicsSlice";
 import { getAcceptedStudent } from "../redux/users/uersAction";
-import { searchCoordinators, searchStudent } from "../redux/users/usersSlice";
+import {
+   searchCoordinators,
+   searchStudent,
+   searchTema,
+} from "../redux/users/usersSlice";
 
 const Doctors = () => {
    // ======================= Global Data =======================
@@ -35,6 +39,7 @@ const Doctors = () => {
    const [theSearchMethod, setTheSearchMethod] = useState({
       searchCoordinators: searchCoordinators,
       searchStudent: searchStudent,
+      searchTema: searchTema,
    });
    // Store Pagination Values For All Page.
    const [paginationValue, setPaginationValue] = useState({
@@ -84,7 +89,11 @@ const Doctors = () => {
                   <div className="container">
                      <div className="content">
                         <Search searchMethod={theSearchMethod[searchMethod]} />
-                        <Filter student={true} searchMethod={searchGlobaly} />
+                        <Filter
+                           student={true}
+                           tema={true}
+                           searchMethod={searchGlobaly}
+                        />
                      </div>
                      <UniversityLogo />
                      <div className="btns-space">

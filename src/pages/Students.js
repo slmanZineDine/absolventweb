@@ -13,7 +13,7 @@ import Table from "../components/Table";
 import UniversityLogo from "../components/UniversityLogo";
 import { getStudentsStatusTable } from "../redux/export/exportActions";
 import { getStudents } from "../redux/users/uersAction";
-import { searchByName } from "../redux/users/usersSlice";
+import { searchStudentPage } from "../redux/users/usersSlice";
 import { getAcceptedWorkspace } from "../redux/workspaces/workspacesActions";
 
 const Students = () => {
@@ -113,7 +113,7 @@ const Students = () => {
                <Header userType={userType} />
                <main className="main students-page-admin">
                   <div className="container">
-                     <Search searchMethod={searchByName} />
+                     <Search searchMethod={searchStudentPage} />
                      <div className="content">
                         <div className="btns-space">
                            <a

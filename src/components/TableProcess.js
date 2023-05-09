@@ -76,7 +76,8 @@ const TableProcess = ({
       // Prevent User Click If His Status Equal 0 Or 1
       if (
          userStatus?.workspace_status === 1 ||
-         userStatus?.workspace_status === 0
+         userStatus?.workspace_status === 0 ||
+         selectionInfo.is_taken === 1
       ) {
          return;
       } // Allow User Click If His Status Doesn't Equal 0 Or 1
@@ -187,7 +188,8 @@ const TableProcess = ({
             } 
          ${
             userStatus?.workspace_status === 1 ||
-            userStatus?.workspace_status === 0
+            userStatus?.workspace_status === 0 ||
+            selectionInfo.is_taken === 1
                ? "disable"
                : ""
          }            
@@ -212,7 +214,7 @@ const TableProcess = ({
                   })
                }
             >
-            Modificare
+               Modificare
                <img src={editeIcon} alt="edite-icon" className="btn-icon" />
             </button>
             {topics.loading && selectedTemaId === temaId ? (
@@ -221,9 +223,14 @@ const TableProcess = ({
                <button
                   className="btn delete-btn"
                   onClick={() => {
-                     confirmProcess(deleteTopic, temaId, "Dumneavoastră Sunteţi sigur cu șterge temă?", {
-                        deleteTema: true,
-                     });
+                     confirmProcess(
+                        deleteTopic,
+                        temaId,
+                        "Dumneavoastră Sunteţi sigur cu șterge temă?",
+                        {
+                           deleteTema: true,
+                        }
+                     );
                      setSelectedTemaId(temaId);
                   }}
                >

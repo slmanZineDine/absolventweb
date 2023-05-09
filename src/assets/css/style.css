@@ -1810,7 +1810,7 @@ input[type=number] {
   flex-wrap: wrap;
 }
 .students-page-admin .container .content .box {
-  width: 48%;
+  width: 100%;
 }
 .students-page-admin .container .content .box .title {
   display: flex;
@@ -1819,6 +1819,9 @@ input[type=number] {
   gap: 1rem;
   font-size: var(--h2-font-size);
   margin-bottom: 1rem;
+}
+.students-page-admin .container .content .box .table {
+  min-width: 400px;
 }
 .students-page-admin .container .content .box .table td {
   text-align: center;
@@ -1835,15 +1838,6 @@ input[type=number] {
   .students-page-coordonator .container .content {
     margin-top: 2rem;
     width: 100%;
-  }
-  .students-page-admin .container .content {
-    flex-direction: column;
-  }
-  .students-page-admin .container .content .box {
-    width: 100%;
-  }
-  .students-page-admin .container .content .cover .table {
-    min-width: 300px;
   }
 }
 @media (max-width: 768px) {

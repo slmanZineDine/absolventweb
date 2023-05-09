@@ -7,6 +7,7 @@ import { searchByProgrammingLang } from "../redux/topics/topicsSlice";
 const Filter = ({
    coordinator,
    student,
+   tema,
    programmingLang,
    topicType,
    searchMethod,
@@ -19,12 +20,13 @@ const Filter = ({
    const [selectedLang, setSelectedLang] = useState(null);
    // Store Selected Option Index
    const [selectedTip, setSelectedTip] = useState(null);
-   // Checking If Coordinator Filter Is Selected;
-   const [selected, setSelected] = useState(false);
 
    // ======================= Select Elements =======================
    const programmingLangFilter = useRef(null);
    const TipTema = useRef(null);
+   const doctorFiter = useRef(null);
+   const studentFilter = useRef(null);
+   const temaFilter = useRef(null);
 
    return (
       <div className="filter">
@@ -32,13 +34,14 @@ const Filter = ({
          <div className="filter_options">
             {coordinator ? (
                <p
-                  className={`filter_option ${selected ? "selected" : ""}`}
+                  className="filter_option"
+                  ref={doctorFiter}
                   onClick={(_) => {
-                     if (selected) {
-                        setSelected(false);
+                     if (doctorFiter.current.classList.contains("selected")) {
+                        doctorFiter.current.classList.remove("selected");
                         dispatch(setSearchMethod("searchGlobaly"));
                      } else {
-                        setSelected(true);
+                        doctorFiter.current.classList.add("selected");
                         dispatch(setSearchMethod("serachByCoordinator"));
                      }
                   }}
@@ -48,18 +51,36 @@ const Filter = ({
             ) : null}
             {student ? (
                <p
-                  className={`filter_option ${selected ? "selected" : ""}`}
+                  className="filter_option"
+                  ref={studentFilter}
                   onClick={(_) => {
-                     if (selected) {
-                        setSelected(false);
+                     if (studentFilter.current.classList.contains("selected")) {
+                        studentFilter.current.classList.remove("selected");
                         dispatch(setSearchMethod("searchCoordinators"));
                      } else {
-                        setSelected(true);
+                        studentFilter.current.classList.add("selected");
                         dispatch(setSearchMethod("searchStudent"));
                      }
                   }}
                >
                   Student
+               </p>
+            ) : null}
+            {tema ? (
+               <p
+                  className="filter_option"
+                  ref={temaFilter}
+                  onClick={(_) => {
+                     if (temaFilter.current.classList.contains("selected")) {
+                        temaFilter.current.classList.remove("selected");
+                        dispatch(setSearchMethod("searchCoordinators"));
+                     } else {
+                        temaFilter.current.classList.add("selected");
+                        dispatch(setSearchMethod("searchTema"));
+                     }
+                  }}
+               >
+                  Tema
                </p>
             ) : null}
             {programmingLang ? (
