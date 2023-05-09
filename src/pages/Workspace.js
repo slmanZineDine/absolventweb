@@ -210,10 +210,9 @@ const Workspace = () => {
                      <div className="container empty-workspace">
                         <div className="content">
                            <p className="text">
-                              Your Don't Have Any Workspace Yet. Please Select a
-                              Tema From{" "}
+                           Nu aveți încă niciun workspace. Vă rugăm să selectați o temă de la{" "}
                               <Link to="/list-of-topics" className="text_href">
-                                 List Of Topics
+                                 List De Teme
                               </Link>
                               .
                            </p>
@@ -232,29 +231,29 @@ const Workspace = () => {
                   <main className="main workspace-page">
                      <div className="container">
                         <div className="workspace-end">
-                           <button
+                           {/* <button
                               className="btn delete-btn"
                               onClick={() => {
                                  confirmProcess(
                                     "delete-workspace",
                                     workspaceInfo.workspace_id,
-                                    "Are You Sure, You Want To Delete This Workspace?"
+                                    "Sunteți sigur că vreți să ștergeți acest Workspace?"
                                  );
                               }}
                            >
-                              Delete
-                           </button>
+                              Șterge
+                           </button> */}
                            <button
                               className="btn post-btn"
                               onClick={() => {
                                  confirmProcess(
                                     "finish-workspace",
                                     [{ status: 2 }, workspaceInfo.workspace_id],
-                                    "Are You Sure, You Want To Finish This Workspace?"
+                                    "Sunteți sigur că vreți să terminați acest Workspace?"
                                  );
                               }}
                            >
-                              Finish
+                              Finalizarea
                            </button>
                         </div>
                         <div className="content">
@@ -329,11 +328,11 @@ const Workspace = () => {
                   <main className="main workspace-page">
                      <div className="empty-workspace container">
                         <p className="text">
-                           Please Select A Student From{" "}
+                           VVă rog să selectați un student din pagina {" "}
                            <Link to="/students" className="text_href">
-                              Studends
+                              Studenți
                            </Link>{" "}
-                           Page
+                           {/* Page */}
                         </p>
                         <UniversityLogo />
                      </div>

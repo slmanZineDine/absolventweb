@@ -180,7 +180,7 @@ const EditePost = () => {
             <main className="main event-page">
                <div className="container">
                   <div className="content">
-                     <h2 className="title">Edite Post</h2>
+                     <h2 className="title">Modificare Post</h2>
                      <ul className="box">
                         <li className="item">
                            <h3 className="item_title">Titlu:</h3>
@@ -192,7 +192,7 @@ const EditePost = () => {
                            />
                         </li>
                         <li className="item">
-                           <h3 className="item_title">Content:</h3>
+                           <h3 className="item_title">Conţinut:</h3>
                            <textarea
                               placeholder="Scrie aici"
                               className="textarea"
@@ -209,14 +209,14 @@ const EditePost = () => {
                            />
                         </li>
                         <li className="item">
-                           <h3 className="item_title">Attachment:</h3>
+                           <h3 className="item_title">Atașament:</h3>
                            <label htmlFor="file" className="file-input">
                               <img
                                  src={addIcon}
                                  alt="btn-icon"
                                  className="btn-icon"
                               />
-                              Add
+                              Adaugare
                               <input
                                  id="file"
                                  type="file"
@@ -257,7 +257,7 @@ const EditePost = () => {
                               style={{ color: "red", justifyContent: "center" }}
                            >
                               <p style={{ textAlign: "center" }}>
-                                 The File Must Be A File Of Type: csv, txt, xlx,
+                              Fișierul trebuie să fie un fișier de tip: csv, txt, xlx,
                                  xls, pdf, zip.
                               </p>
                            </li>
@@ -273,7 +273,7 @@ const EditePost = () => {
                                     setBtnClicked(true);
                                  }}
                               >
-                                 Save
+                                 Salvare
                               </button>
                            )}
                         </div>

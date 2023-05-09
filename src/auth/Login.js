@@ -102,7 +102,7 @@ const Login = () => {
                      <Logo />
                      <form className="form-element">
                         <div className="form-group">
-                           <label htmlFor="email">User email</label>
+                           <label htmlFor="email">Email utilizatorului</label>
                            <div className="img-input">
                               <img src={mailIcon} alt="mail-icon" />
                            </div>
@@ -116,7 +116,7 @@ const Login = () => {
                            />
                         </div>
                         <div className="form-group">
-                           <label htmlFor="password">Password</label>
+                           <label htmlFor="password">Parola</label>
                            <div className="img-input">
                               <img src={lockIcon} alt="lock-icon" />
                            </div>
@@ -137,13 +137,13 @@ const Login = () => {
                               className="btn auth-page-btn"
                               onClick={handleLogin}
                            >
-                              Login
+                              Logare
                            </button>
                         )}
                         <p className="note">
                            Don't have an account?{" "}
                            <Link to="/register" className="link">
-                              Register
+                              Inregistrare
                            </Link>
                         </p>
                      </form>
