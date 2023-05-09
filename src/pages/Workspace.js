@@ -231,7 +231,7 @@ const Workspace = () => {
                   <main className="main workspace-page">
                      <div className="container">
                         <div className="workspace-end">
-                           <button
+                           {/* <button
                               className="btn delete-btn"
                               onClick={() => {
                                  confirmProcess(
@@ -242,7 +242,7 @@ const Workspace = () => {
                               }}
                            >
                               Șterge
-                           </button>
+                           </button> */}
                            <button
                               className="btn post-btn"
                               onClick={() => {
