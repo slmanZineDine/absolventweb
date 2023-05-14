@@ -328,7 +328,7 @@ const Workspace = () => {
                   <main className="main workspace-page">
                      <div className="empty-workspace container">
                         <p className="text">
-                           VVă rog să selectați un student din pagina {" "}
+                           Vă rog să selectați un student din pagina {" "}
                            <Link to="/students" className="text_href">
                               Studenți
                            </Link>{" "}

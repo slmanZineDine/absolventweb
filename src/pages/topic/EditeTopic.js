@@ -63,7 +63,7 @@ export const EditeTopic = () => {
       if (!topics.loading && topics.error) {
          processChecking(topics.error, "error", "red-bg");
       } else if (!topics.loading && topics.success) {
-         processChecking("Edite Successfully", "success", "done");
+         processChecking("Edit Successfully", "success", "done");
          navigate("/profile");
       }
    }, [topics.error, topics.success]);
