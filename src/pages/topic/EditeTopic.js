@@ -6,8 +6,8 @@ import swal from "sweetalert";
 // Internal
 import Header from "../../components/Header";
 import UniversityLogo from "../../components/UniversityLogo";
-import { editeTopic } from "../../redux/topics/topicsActions";
 import Spinning from "../../components/Spinning";
+import { editeTopic } from "../../redux/topics/topicsActions";
 import { temaTypes } from "../../data/globalDate";
 
 export const EditeTopic = () => {
@@ -34,8 +34,7 @@ export const EditeTopic = () => {
    // ======================= React Hook =======================
    // Store Selected Option Index
    const [selectedTip, setSelectedTip] = useState(null);
-   // Variable below to manipulate useEffect and prevente run initial-render
-   const firstUpdate = useRef(true);
+
    useEffect(() => {
       // Prevent User Enter This Page Directly
       if (state?.id && topics.topicsByDoctor.length > 0) {
@@ -53,20 +52,6 @@ export const EditeTopic = () => {
          navigate("/profile");
       }
    }, []);
-
-   // ############## Alert Logic ##############
-   useEffect(() => {
-      if (firstUpdate.current) {
-         firstUpdate.current = false;
-         return;
-      }
-      if (!topics.loading && topics.error) {
-         processChecking(topics.error, "error", "red-bg");
-      } else if (!topics.loading && topics.success) {
-         processChecking("Edite Successfully", "success", "done");
-         navigate("/profile");
-      }
-   }, [topics.error, topics.success]);
 
    // ======================= Sweet Alert Labrary =======================
    const processChecking = async (msg, icon, theClassName) => {
@@ -102,7 +87,15 @@ export const EditeTopic = () => {
                topicId: state?.id,
                topic: userInput,
             })
-         );
+         )
+            .unwrap()
+            .then(async () => {
+               await processChecking("Edite Successfully", "success", "done");
+               navigate("/profile");
+            })
+            .catch((err) => {
+               processChecking(err, "error", "red-bg");
+            });
       }
    };
 

@@ -27,26 +27,10 @@ const Login = () => {
    const userInfo = useSelector((state) => state.auth);
 
    // ======================= React Hook =======================
-   // To Prevent useEffect Run Initial-Render
-   const firstUpdate = useRef(true);
 
    useEffect(() => {
       if (!user) emailInput.current.focus();
    }, []);
-   // ############## Alert Logic ##############
-   useEffect(() => {
-      if (firstUpdate.current) {
-         firstUpdate.current = false;
-         return;
-      }
-      if (!userInfo.loading && userInfo.error) {
-         processChecking(userInfo.error, "error", "red-bg");
-      } else if (!userInfo.loading && userInfo.success) {
-         processChecking("Logging in Success", "success", "done").then(() =>
-            navigate("/homepage", { replace: true })
-         );
-      }
-   }, [userInfo.error, userInfo.success]);
 
    // ======================= Router Hook =======================
    const navigate = useNavigate();
@@ -79,15 +63,21 @@ const Login = () => {
    };
 
    // ======================= Handle Request =======================
-   const handleLogin = (e) => {
-      e.preventDefault();
-      const userLoginInfo = {
-         email: emailInput.current.value,
-         password: passwordInput.current.value,
-      };
+   const handleLogin = async (e) => {
+      try {
+         e.preventDefault();
+         const userLoginInfo = {
+            email: emailInput.current.value,
+            password: passwordInput.current.value,
+         };
 
-      if (fieldsValidation(userLoginInfo)) {
-         dispatch(userLogin(userLoginInfo));
+         if (fieldsValidation(userLoginInfo)) {
+            await dispatch(userLogin(userLoginInfo)).unwrap();
+            await processChecking("Logging in Success", "success", "done");
+            navigate("/homepage", { replace: true });
+         }
+      } catch (err) {
+         processChecking(err, "error", "red-bg");
       }
    };
 

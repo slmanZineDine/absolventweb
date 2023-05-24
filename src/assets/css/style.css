@@ -415,7 +415,7 @@ input[type=number] {
 .login-btn {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 0.2rem;
   width: 120px;
   padding: 0.6rem 1.3rem;
@@ -434,7 +434,7 @@ input[type=number] {
   transition: opacity 0.5s;
 }
 .login-btn:hover {
-  padding-inline: 0.7rem 1.5rem;
+  padding-inline: 0.2rem 1.5rem;
   color: #fff;
   background-color: #28a745;
 }
@@ -445,7 +445,7 @@ input[type=number] {
 .register-btn {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 0.2rem;
   width: 120px;
   padding: 0.6rem 1.3rem;
@@ -464,7 +464,7 @@ input[type=number] {
   transition: opacity 0.5s;
 }
 .register-btn:hover {
-  padding-inline: 0.7rem 1.5rem;
+  padding-inline: 0.2rem 1.5rem;
   color: #fff;
   background-color: #007bff;
 }
@@ -475,9 +475,9 @@ input[type=number] {
 .logout-btn {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 0.2rem;
-  width: 100px;
+  width: 115px;
   padding: 0.6rem 1.3rem;
   background: #fc4855;
   color: #fff;
@@ -494,7 +494,7 @@ input[type=number] {
   transition: opacity 0.5s;
 }
 .logout-btn:hover {
-  padding-inline: 0.7rem 1.5rem;
+  padding-inline: 0.2rem 1.5rem;
   color: #fff;
   background-color: #fc4855;
 }
@@ -522,9 +522,9 @@ input[type=number] {
 .meeting-btn {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 0.2rem;
-  width: 100px;
+  width: 115px;
   padding: 0.6rem 1.3rem;
   background: #007bff;
   color: #fff;
@@ -545,7 +545,7 @@ input[type=number] {
 .add-btn:hover,
 .post-btn:hover,
 .meeting-btn:hover {
-  padding-inline: 0.7rem 1.5rem;
+  padding-inline: 0.2rem 1.5rem;
   color: #fff;
   background-color: #007bff;
 }
@@ -559,9 +559,9 @@ input[type=number] {
 .task-btn {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 0.2rem;
-  width: 100px;
+  width: 115px;
   padding: 0.6rem 1.3rem;
   background: #28a745;
   color: #fff;
@@ -580,7 +580,7 @@ input[type=number] {
 }
 .edite-btn:hover,
 .task-btn:hover {
-  padding-inline: 0.7rem 1.5rem;
+  padding-inline: 0.2rem 1.5rem;
   color: #fff;
   background-color: #28a745;
 }
@@ -592,9 +592,9 @@ input[type=number] {
 .delete-btn {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 0.2rem;
-  width: 100px;
+  width: 115px;
   padding: 0.6rem 1.3rem;
   background: #f00;
   color: #fff;
@@ -611,7 +611,7 @@ input[type=number] {
   transition: opacity 0.5s;
 }
 .delete-btn:hover {
-  padding-inline: 0.7rem 1.5rem;
+  padding-inline: 0.2rem 1.5rem;
   color: #fff;
   background-color: #f00;
 }

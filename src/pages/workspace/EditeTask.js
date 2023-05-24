@@ -173,9 +173,24 @@ const EditeTask = () => {
                         ) : (
                            <button
                               className="btn delete-btn"
-                              onClick={() => {
-                                 setProcessType({ delete: true, edite: false });
-                                 dispatch(deleteEvent(eventId));
+                              onClick={async () => {
+                                 try {
+                                    setProcessType({
+                                       delete: true,
+                                       edite: false,
+                                    });
+                                    await dispatch(
+                                       deleteEvent(eventId)
+                                    ).unwrap();
+                                    await processChecking(
+                                       "Deletion Successfully",
+                                       "success",
+                                       "done"
+                                    );
+                                    navigate("/workspace");
+                                 } catch (err) {
+                                    processChecking(err, "error", "red-bg");
+                                 }
                               }}
                            >
                               Șterge

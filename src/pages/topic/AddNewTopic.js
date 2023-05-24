@@ -66,7 +66,7 @@ const AddNewTopic = () => {
          detalii: detailsInput.current.value,
          specializare: specInput.current.value,
       };
-      if (fieldsValidation(userInput))
+      if (fieldsValidation(userInput)) {
          dispatch(addNewTopic(userInput))
             .unwrap()
             .then(async () => {
@@ -76,6 +76,7 @@ const AddNewTopic = () => {
             .catch((err) => {
                processChecking(err, "error", "red-bg");
             });
+      }
    };
 
    if (user && userType === "coordonator") {

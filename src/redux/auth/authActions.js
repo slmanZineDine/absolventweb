@@ -64,7 +64,7 @@ export const registerUser = createAsyncThunk(
 );
 export const userLogout = createAsyncThunk(
    "user/logout",
-   async ({}, { rejectWithValue }) => {
+   async (_, { rejectWithValue }) => {
       try {
          const config = {
             headers: {

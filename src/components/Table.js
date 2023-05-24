@@ -6,6 +6,7 @@ import { seBtnProcess } from "../redux/global/globalSlice";
 // Internal
 import Pagination from "./Pagination";
 import TableProcess from "./TableProcess";
+import linkIcon from "../assets/imgs/icons/linkIcon.png";
 
 const Table = ({ tableCols, tableData, resetPagination, msg }) => {
    // ======================= Global Data =======================
@@ -182,6 +183,20 @@ const Table = ({ tableCols, tableData, resetPagination, msg }) => {
                                                       item.attachment.file_name
                                                    }
                                                 />
+                                             </td>
+                                          );
+                                       } else if (item.type === "meeting") {
+                                          return (
+                                             <td className="cell" key={j}>
+                                                <a
+                                                   href={item.title}
+                                                   target="_blank"
+                                                >
+                                                   <img
+                                                      src={linkIcon}
+                                                      alt="Link-Icon"
+                                                   />
+                                                </a>
                                              </td>
                                           );
                                        } else {

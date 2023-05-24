@@ -1,26 +1,32 @@
+// Css File
 import "./assets/css/style.css";
+// External
 import { Outlet, Route, Routes } from "react-router-dom";
+// Auth Pages
 import Login from "./auth/Login";
 import Register from "./auth/Register";
-import Greeting from "./pages/Greeting";
-import HomePage from "./pages/HomePage";
-import ListOfTopics from "./pages/ListOfTopics";
-import Profile from "./pages/Profile";
-import Workspace from "./pages/Workspace";
-import AddNewTopic from "./pages/topic/AddNewTopic";
-import EditeTopic from "./pages/topic/EditeTopic";
-import Support from "./pages/Support";
-import PageNotFound from "./pages/PageNotFound";
-import Student from "./pages/Students";
-import AddPost from "./pages/workspace/AddPost";
-import AddTask from "./pages/workspace/AddTask";
-import AddMeeting from "./pages/workspace/AddMeeting";
-import Post from "./pages/workspace/Post";
-import EditePost from "./pages/workspace/EditePost";
-import EditeMeeting from "./pages/workspace/EditeMeeting";
-import EditeTask from "./pages/workspace/EditeTask";
-import Task from "./pages/workspace/Task";
-import Doctors from "./pages/Doctors";
+// Pages
+import {
+   Greeting,
+   HomePage,
+   ListOfTopics,
+   Students,
+   Workspace,
+   Support,
+   Profile,
+   AddNewTopic,
+   EditeTopic,
+   AddMeeting,
+   AddPost,
+   AddTask,
+   EditePost,
+   EditeMeeting,
+   EditeTask,
+   Post,
+   Task,
+   Doctors,
+   PageNotFound,
+} from "./pages";
 
 function App() {
    return (
@@ -47,7 +53,7 @@ function App() {
                <Route path="add-new-topic" element={<AddNewTopic />} />
                <Route path="edite-topic" element={<EditeTopic />} />
             </Route>
-            <Route path="/students" element={<Student />} />
+            <Route path="/students" element={<Students />} />
             <Route path="/doctors" element={<Doctors />} />
             <Route path="/support" element={<Support />} />
             <Route path="*" element={<PageNotFound />} />

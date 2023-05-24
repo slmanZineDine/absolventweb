@@ -50,12 +50,8 @@ const ListOfTopics = () => {
       searchGlobaly: searchGlobaly,
       serachByCoordinator: searchByCoordinator,
    });
-   // To Prevent Show Alert Unless Process Is Success Or Rejected
-   const [processDone, setProcessDone] = useState(false);
    // Get Scroll Top Btn To Scroll Top When Use Select A Tema
    const scrollTopBtn = useRef();
-   // To Prevent useEffect Run Initial-Render
-   const firstUpdate = useRef(true);
    const anchorLink = useRef(null);
 
    useEffect(() => {
@@ -81,25 +77,6 @@ const ListOfTopics = () => {
    useEffect(() => {
       if (userType === "student") scrollTopBtn.current.click();
    }, [workspaceInfo]);
-   useEffect(() => {
-      if (firstUpdate.current) {
-         firstUpdate.current = false;
-         return;
-      }
-      if (userType === "student") {
-         if (processDone) {
-            if (!workspace.loading && workspace.error) {
-               processChecking(workspace.error, "error", "red-bg");
-               setProcessDone(false); // Reset
-            } else if (!workspace.loading && workspace.success) {
-               processChecking("Process Successfully", "success", "done").then(
-                  () => navigate("/homepage")
-               );
-               setProcessDone(false); // Reset
-            }
-         }
-      }
-   }, [workspace.error, workspace.success]);
 
    // ======================= Router Hook =======================
    const navigate = useNavigate();
@@ -137,13 +114,18 @@ const ListOfTopics = () => {
    };
    // Checking Box To Confirm Creation A New Workspace
    const confirmCreation = async (workspace) => {
-      let checkBox = await swal("Dumneavoastră Sunteţi sigur?", {
-         dangerMode: true,
-         buttons: true,
-      });
-      if (checkBox) {
-         dispatch(createWorkspace(workspace));
-         setProcessDone(true);
+      try {
+         let checkBox = await swal("Dumneavoastră Sunteţi sigur?", {
+            dangerMode: true,
+            buttons: true,
+         });
+         if (checkBox) {
+            await dispatch(createWorkspace(workspace)).unwrap();
+            await processChecking("Process Successfully", "success", "done");
+            navigate("/homepage");
+         }
+      } catch (err) {
+         processChecking(err, "error", "red-bg");
       }
    };
 
@@ -255,7 +237,8 @@ const ListOfTopics = () => {
                                  "There Are No Matched Teme."
                               ) : (
                                  <p>
-                                    Încă nu aveți nici-o temă propusă. Vă rugăm să clicați  {" "}
+                                    Încă nu aveți nici-o temă propusă. Vă rugăm
+                                    să clicați{" "}
                                     <Link
                                        to="/profile/add-new-topic"
                                        style={{

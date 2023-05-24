@@ -36,7 +36,7 @@ const EditePost = () => {
    // ======================= Select Input Elements =======================
    const titleInput = useRef(null);
    const contentInput = useRef(null);
-   const deadlineInput = useRef(null);
+   // const deadlineInput = useRef(null);
    const attachmentInput = useRef(null);
 
    // ======================= React Hook =======================
@@ -60,7 +60,7 @@ const EditePost = () => {
          titleInput.current.focus();
          titleInput.current.value = postEvent?.title ?? "";
          contentInput.current.value = postEvent?.descriere ?? "";
-         deadlineInput.current.value = postEvent?.due_date ?? "";
+         // deadlineInput.current.value = postEvent?.due_date ?? "";
          // Checking If There Is A file
          if (postEvent.attachment) {
             setFileName(postEvent.attachment.file_name);
@@ -86,8 +86,8 @@ const EditePost = () => {
    const fieldsValidation = (userInput) => {
       if (
          userInput.title === "" ||
-         userInput.descriere === "" ||
-         userInput.due_date === ""
+         userInput.descriere === ""
+         // || userInput.due_date === ""
       ) {
          processChecking("Please Fill All Fields.", "warning", "red-bg");
       } else {
@@ -102,7 +102,7 @@ const EditePost = () => {
             title: titleInput.current.value,
             descriere: contentInput.current.value,
             type: "post",
-            due_date: deadlineInput.current.value,
+            // due_date: deadlineInput.current.value,
          };
          if (fieldsValidation(userInput)) {
             let file = attachmentInput.current.files[0];
@@ -177,7 +177,7 @@ const EditePost = () => {
                               ref={contentInput}
                            ></textarea>
                         </li>
-                        <li className="item">
+                        {/* <li className="item">
                            <h3 className="item_title">Deadline:</h3>
                            <input
                               type="date"
@@ -185,7 +185,7 @@ const EditePost = () => {
                               className="input-field"
                               ref={deadlineInput}
                            />
-                        </li>
+                        </li> */}
                         <li className="item">
                            <h3 className="item_title">Atașament:</h3>
                            <label htmlFor="file" className="file-input">

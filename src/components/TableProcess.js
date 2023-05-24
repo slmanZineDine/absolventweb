@@ -11,7 +11,10 @@ import attachIcon from "../assets/imgs/icons/attachIcon.png";
 import Spinning from "./Spinning";
 import { seBtnProcess, setWorkspaceInfo } from "../redux/global/globalSlice";
 import { deleteTopic } from "../redux/topics/topicsActions";
-import { changeWorkspaceStatus } from "../redux/workspaces/workspacesActions";
+import {
+   changeWorkspaceStatus,
+   getWaitingWorkspace,
+} from "../redux/workspaces/workspacesActions";
 import { getFile } from "../redux/attachments/attachmentsActions";
 
 const TableProcess = ({
@@ -288,21 +291,33 @@ const TableProcess = ({
                ) : (
                   <button
                      className="btn delete-btn"
-                     onClick={() => {
-                        confirmProcess(
-                           changeWorkspaceStatus,
-                           [
-                              {
-                                 status: 3,
-                              },
-                              workspaceId,
-                           ],
+                     onClick={async () => {
+                        setSelectedWorkspaceId(workspaceId);
+                        let checkBox = await swal(
                            "Sunteţi sigur că vreți să respingeţi acest student?",
                            {
-                              rejectStudent: true,
+                              dangerMode: true,
+                              buttons: true,
                            }
                         );
-                        setSelectedWorkspaceId(workspaceId);
+                        if (checkBox) {
+                           // Set Action Method
+                           await dispatch(
+                              changeWorkspaceStatus([
+                                 {
+                                    status: 3,
+                                 },
+                                 workspaceId,
+                              ])
+                           );
+                           // Set Btn Status To Use It Later To Show Alert Or Not
+                           dispatch(
+                              seBtnProcess({
+                                 rejectStudent: true,
+                              })
+                           );
+                           dispatch(getWaitingWorkspace());
+                        }
                      }}
                   >
                      Respinge

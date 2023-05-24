@@ -67,12 +67,15 @@ const Header = ({ userType, hideLinks }) => {
                            <button
                               className="btn logout-btn"
                               onClick={(_) => {
-                                 dispatch(userLogout({}));
-                                 processChecking(
-                                    "Logging out Success",
-                                    "success",
-                                    "done"
-                                 );
+                                 dispatch(userLogout())
+                                    .unwrap()
+                                    .then(() =>
+                                       processChecking(
+                                          "Logging out Success",
+                                          "success",
+                                          "done"
+                                       )
+                                    );
                               }}
                            >
                               Logout
