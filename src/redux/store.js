@@ -29,7 +29,7 @@ const store = configureStore({
          serializableCheck: false,
       }),
    // Disable Redux DevTools
-   // devTools: false,
+   devTools: false,
 });
 
 export default store;
