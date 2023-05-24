@@ -130,7 +130,7 @@ const EditePost = () => {
                   })
                ).unwrap();
             }
-            await processChecking("Edite Successfully", "success", "done");
+            await processChecking("Edit Successfully", "success", "done");
             navigate("/workspace");
          }
       } catch (err) {
