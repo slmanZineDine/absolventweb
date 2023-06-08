@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-// Get All Coordinator's Events => For Coordiator Homepage
+// Get All Coordonator's Events => For Coordiator Homepage
 export const getAllCoordinatorEvent = createAsyncThunk(
    "events/getAllCoordinatorEvent",
    async (_, { rejectWithValue }) => {
@@ -28,7 +28,7 @@ export const getAllCoordinatorEvent = createAsyncThunk(
    }
 );
 
-// Get All Student Events => For Coordinator By Student_ID
+// Get All Student Events => For Coordonator By Student_ID
 export const getWorkspaceEvents = createAsyncThunk(
    "events/getWorkspaceEvents",
    async (studentId, { rejectWithValue }) => {

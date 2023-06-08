@@ -247,7 +247,7 @@ const TableProcess = ({
             )}
          </div>
       );
-   } // Homepage Coordinator => For Cell Contain Accept And Reject Btns
+   } // Homepage Coordonator => For Cell Contain Accept And Reject Btns
    else if (process?.acceptBtn && process?.rejectBtn) {
       return (
          <div className="status">

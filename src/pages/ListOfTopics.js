@@ -226,7 +226,7 @@ const ListOfTopics = () => {
                      />
                      <div className="content">
                         <h2 className="title">
-                           Coordinator: {JSON.parse(user)?.name}
+                           Coordonator: {JSON.parse(user)?.name}
                         </h2>
                         <Table
                            tableCols={tableCols}
@@ -302,7 +302,7 @@ const ListOfTopics = () => {
                                        const href = URL.createObjectURL(blob);
                                        anchorLink.current.href = href;
                                        anchorLink.current.download =
-                                          "coordinator_teme.csv";
+                                          "coordonator_teme.csv";
                                        anchorLink.current.click();
                                        URL.revokeObjectURL(href);
                                     }
@@ -318,7 +318,7 @@ const ListOfTopics = () => {
                              <div key={i} className="content">
                                 <h2 className="title">
                                    {i + 1}. {doctor.name} ({doctor.email})
-                                   {/* (Coordinator ID: {doctor.id}) */}
+                                   {/* (Coordonator ID: {doctor.id}) */}
                                 </h2>
                                 <Table
                                    tableCols={tableCols}

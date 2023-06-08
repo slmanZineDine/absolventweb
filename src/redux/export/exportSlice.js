@@ -17,7 +17,7 @@ const exportSlice = createSlice({
    initialState,
    reducers: {},
    extraReducers: {
-      // Get Students - Coordinators - Teme Table
+      // Get Students - Coordonators - Teme Table
       [getTemeTable.pending]: (state) => {
          state.loading = true;
          state.success = false; // Reset a value every Request
@@ -59,7 +59,7 @@ const exportSlice = createSlice({
          state.loading = false;
          state.error = payload;
       },
-      // Get Coordinator With Subjects
+      // Get Coordonator With Subjects
       [getCoordinatorTemeTable.pending]: (state) => {
          state.loading = true;
          state.success = false; // Reset a value every Request

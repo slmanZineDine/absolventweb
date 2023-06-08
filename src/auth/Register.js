@@ -112,7 +112,7 @@ const Register = () => {
       if (userTypes[selectedType] !== "admin")
          userRegisterInfo.specializare = specializareInput.current.value;
 
-      // Add is_admin Value For Admin And Coordinator
+      // Add is_admin Value For Admin And Coordonator
       if (userTypes[selectedType] === "admin") userRegisterInfo["is_admin"] = 1;
       else if (userTypes[selectedType] === "coordonator")
          userRegisterInfo["is_admin"] = 0;
@@ -162,7 +162,9 @@ const Register = () => {
                            </div>
                         </div>
                         <div className="form-group">
-                           <label htmlFor="username">Numele utilizatorului</label>
+                           <label htmlFor="username">
+                              Numele utilizatorului
+                           </label>
                            <input
                               type="text"
                               className="form-input"
@@ -202,7 +204,7 @@ const Register = () => {
                         </div>
                         <div className="form-group">
                            <label htmlFor="password-confirm">
-                           Confirmarea parolei
+                              Confirmarea parolei
                            </label>
                            <div className="img-input">
                               <img src={lockIcon} alt="lock-icon" />

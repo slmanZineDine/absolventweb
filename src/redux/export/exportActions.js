@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-// Get Students - Coordinators - Teme Table
+// Get Students - Coordonators - Teme Table
 export const getTemeTable = createAsyncThunk(
    "export/getTemeTable",
    async (_, { rejectWithValue }) => {
@@ -52,7 +52,7 @@ export const getStudentsStatusTable = createAsyncThunk(
    }
 );
 
-// Get All Students For Each Coordinator
+// Get All Students For Each Coordonator
 export const getStudentsOfCoordinatorTable = createAsyncThunk(
    "export/getStudentsOfCoordinatorTable",
    async (_, { rejectWithValue }) => {
@@ -79,7 +79,7 @@ export const getStudentsOfCoordinatorTable = createAsyncThunk(
    }
 );
 
-// Get Coordinator With Subjects
+// Get Coordonator With Subjects
 export const getCoordinatorTemeTable = createAsyncThunk(
    "export/getCoordinatorTemeTable",
    async (_, { rejectWithValue }) => {

@@ -236,7 +236,7 @@ const HomePage = () => {
                                              URL.createObjectURL(blob);
                                           anchorLink.current.href = href;
                                           anchorLink.current.download =
-                                             "students_coordinator_teme.csv";
+                                             "students_coordonator_teme.csv";
                                           anchorLink.current.click();
                                           URL.revokeObjectURL(href);
                                        }
@@ -249,8 +249,8 @@ const HomePage = () => {
                         </div>
                         <div className="box">
                            <h2 className="title">
-                           Detalii la fiecare student pentru lucrare de licenta
-                              Licenta
+                              Detalii la fiecare student pentru lucrare de
+                              licenta Licenta
                            </h2>
                            {students ? (
                               <Table

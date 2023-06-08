@@ -35,7 +35,7 @@ const Profile = () => {
    const navigate = useNavigate();
 
    // ======================= User Details Showing In Profile Page =======================
-   // This Trick Because Response Deal Admin Like Coordinator
+   // This Trick Because Response Deal Admin Like Coordonator
    let userProfile = "student";
    if (userType === "admin" || userType === "coordonator")
       userProfile = "coordonator";

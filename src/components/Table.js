@@ -105,8 +105,8 @@ const Table = ({ tableCols, tableData, resetPagination, msg }) => {
                                              dangerouslySetInnerHTML={{
                                                 __html:
                                                    item[cell.val] == 1
-                                                      ? "Taken"
-                                                      : "Availabe",
+                                                      ? "Indisponibil"
+                                                      : "Disponibil",
                                              }}
                                           >
                                              {/* {item[cell.val]} */}

@@ -1,17 +1,13 @@
 // ======================= Greeting Page Text Content =======================
 export const greetingPageContent = {
    message: "Serviciile AbsolventWeb",
-   about_website:`Aplicație web pentru asignarea și organizarea funcţionalitatea sau etapele fiecare utilizator legat de lucrare de licenţă.`
-    
-
+   about_website: `Aplicație web pentru asignarea și organizarea funcţionalitatea sau etapele fiecare utilizator legat de lucrare de licenţă.`,
 };
 
 export const greetingPageContent3 = {
    message3: "",
 
-   test: "Se pun la dispozitia utilizatorilor urmatoarele servicii (@e-uvt.ro): Serviciile platformei sunt disponibile pentru (studenți, coordonatori și administratori). Logare se poate cu useremail  & parola  ale eUVT"
-    
-
+   test: "Se pun la dispozitia utilizatorilor urmatoarele servicii (@e-uvt.ro): Serviciile platformei sunt disponibile pentru (studenți, coordonatori și administratori). Logare se poate cu useremail  & parola  ale eUVT",
 };
 // ======================= Support Page Text Content =======================
 export const supportPageContent = {
@@ -31,10 +27,5 @@ export const ProgrammingLangList = [
    "Python",
    "Javascript",
 ];
-export const TipTemaList = [
-   "Toate",
-   "Științifică",
-   "Sinteză",
-   "Practice",
-];
+export const TipTemaList = ["Toate", "Științifică", "Sinteză", "Practic"];
 export const temaTypes = TipTemaList.slice(1);

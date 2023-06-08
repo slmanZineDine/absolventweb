@@ -155,7 +155,7 @@ const Students = () => {
                                  alt="status-icon"
                                  className="icon"
                               />
-                              <p className="text">Studenților in asteptare</p>
+                              <p className="text">Studenților în așteptare</p>
                            </div>
                            {StudentLaAsteptatre ? (
                               <Table
@@ -174,7 +174,8 @@ const Students = () => {
                                  className="icon"
                               />
                               <p className="text">
-                                 Studenți Care Nu Au Selectat Teme sau Respinși
+                                 Studenți care nu au selectat o temă sau
+                                 respinși
                               </p>
                            </div>
                            {haveNotSelectedTema ? (

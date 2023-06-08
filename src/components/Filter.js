@@ -46,7 +46,7 @@ const Filter = ({
                      }
                   }}
                >
-                  Coordinator
+                  Coordonator
                </p>
             ) : null}
             {student ? (

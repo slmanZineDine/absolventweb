@@ -117,7 +117,7 @@ const Doctors = () => {
                                        const href = URL.createObjectURL(blob);
                                        anchorLink.current.href = href;
                                        anchorLink.current.download =
-                                          "students_of_coordinator.csv";
+                                          "students_of_coordonator.csv";
                                        anchorLink.current.click();
                                        URL.revokeObjectURL(href);
                                     }

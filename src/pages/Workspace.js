@@ -106,7 +106,7 @@ const Workspace = () => {
                                  Titlul: {workspaceInfo?.tema_name || ""}
                               </li>
                               <li className="item">
-                                 Coordinator:{" "}
+                                 Coordonator:{" "}
                                  {workspaceInfo?.coordinator_name || ""}
                               </li>
                               <li className="item">
@@ -183,7 +183,7 @@ const Workspace = () => {
                </>
             );
          }
-         // Status 0 => Waiting For Coordinator Accept Or Reject
+         // Status 0 => Waiting For Coordonator Accept Or Reject
          else if (studentStatus?.workspace_status === 0) {
             return (
                <>
@@ -210,7 +210,8 @@ const Workspace = () => {
                      <div className="container empty-workspace">
                         <div className="content">
                            <p className="text">
-                           Nu aveți încă niciun workspace. Vă rugăm să selectați o temă de la{" "}
+                              Nu aveți încă niciun workspace. Vă rugăm să
+                              selectați o temă de la{" "}
                               <Link to="/list-of-topics" className="text_href">
                                  List De Teme
                               </Link>
@@ -262,7 +263,7 @@ const Workspace = () => {
                                  Titlul: {workspaceInfo.tema_name}
                               </li>
                               <li className="item">
-                                 Coordinator: {JSON.parse(user)?.name}
+                                 Coordonator: {JSON.parse(user)?.name}
                               </li>
                               <li className="item">
                                  Student: {workspaceInfo.student_email}
@@ -328,7 +329,7 @@ const Workspace = () => {
                   <main className="main workspace-page">
                      <div className="empty-workspace container">
                         <p className="text">
-                           Vă rog să selectați un student din pagina {" "}
+                           Vă rog să selectați un student din pagina{" "}
                            <Link to="/students" className="text_href">
                               Studenți
                            </Link>{" "}

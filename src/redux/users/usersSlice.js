@@ -223,7 +223,7 @@ const usersSlice = createSlice({
          state.error = payload;
       },
 
-      // Get Accepted Students For Each Coordinator
+      // Get Accepted Students For Each Coordonator
       [getAcceptedStudent.pending]: (state) => {
          state.loading = true;
          state.success = false; // Reset a value every Request

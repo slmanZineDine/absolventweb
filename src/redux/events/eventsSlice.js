@@ -15,7 +15,7 @@ const initialState = {
    success: false, // Checking if auth is done
    workspaceEvents: [], // All workspace Events
    eventById: [], // Exactly Event By Its Id
-   coordinatorEvents: [], // All Coordinator's Events
+   coordinatorEvents: [], // All Coordonator's Events
 };
 
 const eventsSlice = createSlice({
@@ -23,7 +23,7 @@ const eventsSlice = createSlice({
    initialState,
    reducers: {},
    extraReducers: {
-      // Get All Coordinator's Events
+      // Get All Coordonator's Events
       [getAllCoordinatorEvent.pending]: (state) => {
          state.loading = true;
          state.success = false; // Reset a value every Request

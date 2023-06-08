@@ -3,7 +3,7 @@ export const navLinks = {
    student: [
       { title: "Acasă", path: "/homepage" },
       { title: "Lista De Teme", path: "/list-of-topics" },
-      { title: "Workspace", path: "/workspace" },
+      { title: "Spațiu de lucru", path: "/workspace" },
       { title: "Suport", path: "/support" },
       { title: "Profil", path: "/profile" },
    ],
@@ -11,7 +11,7 @@ export const navLinks = {
       { title: "Acasă", path: "/homepage" },
       { title: "Teme Propuse", path: "/list-of-topics" },
       { title: "Studenți", path: "/students" },
-      { title: "Workspace", path: "/workspace" },
+      { title: "Spațiu de lucru", path: "/workspace" },
       { title: "Suport", path: "/support" },
       { title: "Profil", path: "/profile" },
    ],
