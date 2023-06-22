@@ -1398,15 +1398,15 @@ input[type=number] {
   min-height: 100vh;
 }
 
+.homepage-student {
+  min-height: 100vh;
+}
 .homepage-student .container {
-  height: calc(100vh - var(--header-height) - 5rem);
+  padding-top: 2rem;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 0;
-}
-.homepage-student .container .content {
-  margin-right: 2rem;
+  gap: 7rem;
 }
 .homepage-student .container .content .title {
   color: #085f7b;
@@ -1519,9 +1519,6 @@ input[type=number] {
     flex-direction: column-reverse;
     justify-content: flex-end;
     gap: 2rem;
-  }
-  .homepage-student .container .content {
-    margin-right: 0;
   }
   .homepage-admin .container .content .search {
     flex-direction: column;
@@ -1643,6 +1640,12 @@ input[type=number] {
 }
 .profile-page .topics {
   margin-top: 3rem;
+}
+.profile-page .topics .container {
+  display: grid;
+}
+.profile-page .topics .container .add-btn {
+  justify-self: flex-end;
 }
 .profile-page .topics .container .cover {
   margin-top: 1rem;

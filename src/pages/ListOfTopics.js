@@ -138,7 +138,7 @@ const ListOfTopics = () => {
             { heading: "Tip", val: "tema_type" },
             { heading: "Detalii", val: "detalii" },
             { heading: "Specializare", val: "specializare" },
-            { heading: "istaken", val: "is_taken" },
+            { heading: "Disponibilitate", val: "is_taken" },
             {
                heading: "Process",
                val: { select: true },
