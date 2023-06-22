@@ -37,8 +37,13 @@ const Profile = () => {
    // ======================= User Details Showing In Profile Page =======================
    // This Trick Because Response Deal Admin Like Coordonator
    let userProfile = "student";
+   let label = "Specializare";
    if (userType === "admin" || userType === "coordonator")
       userProfile = "coordonator";
+
+   if ( userType === "coordonator")
+      label = "Domenii de inters";
+      
    const userDetails = [
       { heading: "Tipul utilizator", val: "type" },
       { heading: "Numele şi prenumele", val: "name" },
@@ -46,7 +51,7 @@ const Profile = () => {
       // { heading: "Telefon", val: `${userProfile}.phone` },
       // { heading: "Facultatea", val: `${userProfile}.facultatea` },
       {
-         heading: "Specializare",
+         heading: label,
          val: `${userProfile}.specializare`,
       },
    ];

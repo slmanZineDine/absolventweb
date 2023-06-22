@@ -94,13 +94,12 @@ const HomePage = () => {
                                        alt="status-icon"
                                        className="icon"
                                     />
-                                    Starea de acceptare coordonatorului pentru
-                                    tema de licenta.
+                                    status acceptare
                                  </li>
                                  <li className="student-status">
                                     {userStatus?.workspace_status === 0 ? (
                                        <span className="pending status">
-                                          În aşteptarea
+                                          În aşteptare
                                        </span>
                                     ) : null}
                                     {userStatus?.workspace_status === 1 ? (
@@ -249,8 +248,8 @@ const HomePage = () => {
                         </div>
                         <div className="box">
                            <h2 className="title">
-                              Detalii la fiecare student pentru lucrare de
-                              licenta Licenta
+                           Detalii despre lucrari de licenţă acceptate pentru toţi studenţii
+                        
                            </h2>
                            {students ? (
                               <Table

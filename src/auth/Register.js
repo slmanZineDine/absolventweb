@@ -257,7 +257,21 @@ const Register = () => {
                               ref={facultyInput}
                            />
                         </div> */}
-                        {userTypes[selectedType] === "admin" ? null : (
+                        {userTypes[selectedType] === "coordonator" ?  (
+                           <div className="form-group">
+                              <label htmlFor="specializare">Domenii de inters</label>
+                              <input
+                                 type="text"
+                                 className="form-input"
+                                 required
+                                 id="specializare"
+                                 placeholder="Write here"
+                                 ref={specializareInput}
+                              />
+                           </div>
+                        ) : null}
+
+                        {userTypes[selectedType] === "student" ? (
                            <div className="form-group">
                               <label htmlFor="specializare">Specializare</label>
                               <input
@@ -269,7 +283,7 @@ const Register = () => {
                                  ref={specializareInput}
                               />
                            </div>
-                        )}
+                        ) :  null }
 
                         {userInfo.loading ? (
                            <Spinning size="full" />

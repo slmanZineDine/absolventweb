@@ -115,7 +115,7 @@ const ListOfTopics = () => {
    // Checking Box To Confirm Creation A New Workspace
    const confirmCreation = async (workspace) => {
       try {
-         let checkBox = await swal("Dumneavoastră Sunteţi sigur?", {
+         let checkBox = await swal("Dumneavoastră sunteţi sigur?", {
             dangerMode: true,
             buttons: true,
          });
@@ -209,7 +209,7 @@ const ListOfTopics = () => {
             { heading: "Tema", val: "title" },
             { heading: "Type", val: "tema_type" },
             { heading: "Detalii", val: "detalii" },
-            { heading: "Specializare", val: "specializare" },
+            { heading: "Domenii de inters", val: "specializare" },
          ];
 
          return (
