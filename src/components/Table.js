@@ -97,10 +97,11 @@ const Table = ({ tableCols, tableData, resetPagination, msg }) => {
                                              {i + 1}.
                                           </td>
                                        );
-                                    if (cell.heading === "istaken") {
+                                    if (cell.heading === "Disponibilitate") {
                                        return (
                                           <td
-                                             className="cell"
+                                             className="cell jj"
+                                             style={{ textAlign: "center" }}
                                              key={j}
                                              dangerouslySetInnerHTML={{
                                                 __html:
@@ -108,9 +109,7 @@ const Table = ({ tableCols, tableData, resetPagination, msg }) => {
                                                       ? "Indisponibil"
                                                       : "Disponibil",
                                              }}
-                                          >
-                                             {/* {item[cell.val]} */}
-                                          </td>
+                                          ></td>
                                        );
                                     }
                                     if (cell.heading === "Process") {

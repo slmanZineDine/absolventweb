@@ -7,11 +7,11 @@
    min-height: 100vh;
 }
 .homepage-student {
+   min-height: 100vh;
    .container {
-      height: calc(100vh - var(--header-height) - 5rem);
-      @include flex(center, flex-start);
+      padding-top: 2rem;
+      @include flex(center, flex-start, 7rem);
       .content {
-         margin-right: 2rem;
          .title {
             color: $title-color;
             font-size: var(--h2-font-size);
@@ -125,9 +125,6 @@
       flex-direction: column-reverse;
       justify-content: flex-end;
       gap: 2rem;
-   }
-   .homepage-student .container .content {
-      margin-right: 0;
    }
    .homepage-admin .container .content .search {
       flex-direction: column;
