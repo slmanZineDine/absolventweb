@@ -362,7 +362,7 @@ const Post = () => {
                                                   setShowOption(false);
                                                }}
                                             >
-                                               Edite
+                                               Modificare
                                             </li>
                                          </ul>
                                       </div>

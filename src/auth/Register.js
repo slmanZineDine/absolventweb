@@ -163,7 +163,7 @@ const Register = () => {
                         </div>
                         <div className="form-group">
                            <label htmlFor="username">
-                              Numele utilizatorului
+                              Prenume și nume
                            </label>
                            <input
                               type="text"

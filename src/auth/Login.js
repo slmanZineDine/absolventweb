@@ -131,7 +131,7 @@ const Login = () => {
                            </button>
                         )}
                         <p className="note">
-                           Don't have an account?{" "}
+                           Nu aveți un cont?{" "}
                            <Link to="/register" className="link">
                               Inregistrare
                            </Link>
