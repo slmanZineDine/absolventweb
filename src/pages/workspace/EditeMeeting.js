@@ -32,6 +32,7 @@ const EditeMeeting = () => {
 
    // ======================= Select Input Elements =======================
    const titleInput = useRef(null);
+   const descInput = useRef(null);
    const deadlineInput = useRef(null);
 
    // ======================= Sweet Alert Labrary =======================
@@ -47,7 +48,11 @@ const EditeMeeting = () => {
 
    // ======================= Vaidation =======================
    const fieldsValidation = (userInput) => {
-      if (userInput.title === "" || userInput.due_date === "") {
+      if (
+         userInput.title === "" ||
+         userInput.due_date === "" ||
+         userInput.descriere === ""
+      ) {
          processChecking("Please Fill All Fields.", "warning", "red-bg");
       } else {
          return true;
@@ -60,6 +65,7 @@ const EditeMeeting = () => {
          workspace_id: workspaceInfo.workspace_id,
          title: titleInput.current.value,
          type: "meeting",
+         descriere: descInput.current.value,
          due_date: deadlineInput.current.value,
       };
       if (fieldsValidation(userInput)) {
@@ -95,6 +101,7 @@ const EditeMeeting = () => {
          titleInput.current.focus();
          titleInput.current.value = postEvent?.title ?? "";
          deadlineInput.current.value = postEvent?.due_date ?? "";
+         descInput.current.value = postEvent?.descriere ?? "";
       } else {
          navigate("/workspace");
       }
@@ -147,6 +154,15 @@ const EditeMeeting = () => {
                               placeholder="Scrie aici"
                               className="input-field"
                               ref={titleInput}
+                           />
+                        </li>
+                        <li className="item">
+                           <h3 className="item_title">Conţinut:</h3>
+                           <input
+                              type="text"
+                              placeholder="Scrie aici"
+                              className="input-field"
+                              ref={descInput}
                            />
                         </li>
                         <li className="item">

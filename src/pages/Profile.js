@@ -41,9 +41,8 @@ const Profile = () => {
    if (userType === "admin" || userType === "coordonator")
       userProfile = "coordonator";
 
-   if ( userType === "coordonator")
-      label = "Domenii de inters";
-      
+   if (userType === "coordonator") label = "Domenii de inters";
+
    const userDetails = [
       { heading: "Tipul utilizator", val: "type" },
       { heading: "Numele şi prenumele", val: "name" },
@@ -137,17 +136,6 @@ const Profile = () => {
                {userType === "coordonator" ? (
                   <section className="section topics">
                      <div className="container">
-                        <button
-                           className="btn add-btn"
-                           onClick={() => navigate("add-new-topic")}
-                        >
-                           Adăugare
-                           <img
-                              src={addIcon}
-                              alt="btn-icon"
-                              className="btn-icon"
-                           />
-                        </button>
                         <Table
                            tableCols={tableCols}
                            tableData={topicsByDoctor?.[0]?.teme || []}

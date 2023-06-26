@@ -9,6 +9,11 @@
    .container {
       .content {
          margin-bottom: 2rem;
+         display: grid;
+         .add-btn {
+            justify-self: flex-end;
+            margin-bottom: 0.8rem;
+         }
          .title {
             font-weight: normal;
             font-size: var(--h2-font-size);

@@ -188,7 +188,7 @@ const Table = ({ tableCols, tableData, resetPagination, msg }) => {
                                           return (
                                              <td className="cell" key={j}>
                                                 <a
-                                                   href={item.title}
+                                                   href={item.descriere}
                                                    target="_blank"
                                                 >
                                                    <img

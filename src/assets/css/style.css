@@ -1558,6 +1558,11 @@ input[type=number] {
 }
 .list-of-topics-page .container .content {
   margin-bottom: 2rem;
+  display: grid;
+}
+.list-of-topics-page .container .content .add-btn {
+  justify-self: flex-end;
+  margin-bottom: 0.8rem;
 }
 .list-of-topics-page .container .content .title {
   font-weight: normal;
@@ -1640,12 +1645,6 @@ input[type=number] {
 }
 .profile-page .topics {
   margin-top: 3rem;
-}
-.profile-page .topics .container {
-  display: grid;
-}
-.profile-page .topics .container .add-btn {
-  justify-self: flex-end;
 }
 .profile-page .topics .container .cover {
   margin-top: 1rem;

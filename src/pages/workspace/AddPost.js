@@ -162,7 +162,7 @@ const AddPost = () => {
                            />
                         </li>
                         <li className="item">
-                           <h3 className="item_title">Content:</h3>
+                           <h3 className="item_title">Conţinut:</h3>
                            <textarea
                               placeholder="Scrie aici"
                               className="textarea"

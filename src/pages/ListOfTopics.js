@@ -22,6 +22,7 @@ import Table from "../components/Table";
 import { setSearchMethod } from "../redux/global/globalSlice";
 import { getCoordinatorTemeTable } from "../redux/export/exportActions";
 import arrowUpIcon from "../assets/imgs/icons/arrowUpIcon.png";
+import addIcon from "../assets/imgs/icons/addIcon.png";
 
 const ListOfTopics = () => {
    // ======================= Global Data =======================
@@ -228,6 +229,17 @@ const ListOfTopics = () => {
                         <h2 className="title">
                            Coordonator: {JSON.parse(user)?.name}
                         </h2>
+                        <button
+                           className="btn add-btn"
+                           onClick={() => navigate("/profile/add-new-topic")}
+                        >
+                           Adăugare
+                           <img
+                              src={addIcon}
+                              alt="btn-icon"
+                              className="btn-icon"
+                           />
+                        </button>
                         <Table
                            tableCols={tableCols}
                            tableData={topicsByDoctor?.[0]?.teme || []}
