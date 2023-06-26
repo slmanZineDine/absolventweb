@@ -235,7 +235,7 @@ const HomePage = () => {
                                              URL.createObjectURL(blob);
                                           anchorLink.current.href = href;
                                           anchorLink.current.download =
-                                             "students_coordonator_teme.csv";
+                                             "Detalii_studenti_acceptati.csv";
                                           anchorLink.current.click();
                                           URL.revokeObjectURL(href);
                                        }

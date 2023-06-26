@@ -137,7 +137,7 @@ const Students = () => {
                                              URL.createObjectURL(blob);
                                           anchorLink.current.href = href;
                                           anchorLink.current.download =
-                                             "students_status.csv";
+                                             "Statutul_de_studenti.csv";
                                           anchorLink.current.click();
                                           URL.revokeObjectURL(href);
                                        }

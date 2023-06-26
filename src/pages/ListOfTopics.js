@@ -302,7 +302,7 @@ const ListOfTopics = () => {
                                        const href = URL.createObjectURL(blob);
                                        anchorLink.current.href = href;
                                        anchorLink.current.download =
-                                          "coordonator_teme.csv";
+                                          "lista_de_teme.csv";
                                        anchorLink.current.click();
                                        URL.revokeObjectURL(href);
                                     }
