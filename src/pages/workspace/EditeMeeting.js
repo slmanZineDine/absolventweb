@@ -139,7 +139,11 @@ const EditeMeeting = () => {
                               className="btn delete-btn"
                               onClick={() => {
                                  setProcessType({ delete: true, edite: false });
-                                 dispatch(deleteEvent(eventId));
+                                 dispatch(deleteEvent(eventId))
+                                    .unwrap()
+                                    .then(async () => {
+                                       navigate("/workspace");
+                                    });
                               }}
                            >
                               Șterge
